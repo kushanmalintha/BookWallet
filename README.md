@@ -16,6 +16,18 @@
 
 - This file contains some classes in fandom page
 
+#### home_screen1
+
+- App bar and app bottom bar
+
+#### home_screen1_body
+
+- Include reviews
+
+#### review
+
+- Review structure
+
 #### colors
 
 - To use colors inside the lib file, type 'MyColours.color_name'.
