@@ -8,3 +8,9 @@
 ### Images
 - This folder contains all the images that needed. 
 - Rename new images properly if there is new image.
+
+### lib
+
+#### colors
+- To use colors inside the lib file, type 'MyColours.color_name'.
+- be specific if add new colors.
