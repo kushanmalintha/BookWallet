@@ -24,8 +24,12 @@ The `screens` folder contains different pages of the app:
 
 - `main_screen`
   - `books_screen`: Files related to the books page.
+    - `books_screen_body.dart`: contains books screen body with button panel and book window
+    - `book_list_view.dart`: contains the scrolling view for books
   - `groups_screen`: Files related to the groups page.
+    - `groups_screen_body.dart`: code for group body
   - `home_screen`: Files related to the home page.
+    - `home_screen_body.dart`: scrollable home screen body.
   - `profile_screen`: Files related to the user profile page.
 
 - `main_screen_frame.dart`: Creates the main screen frame with a bottom navigation bar. It dynamically changes the top app bar based on the active page.
