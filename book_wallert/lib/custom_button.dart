@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/colors.dart';
 
 class CustomToggleButton extends StatefulWidget {
   final String text;
@@ -19,8 +18,8 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
 
   @override
   Widget build(BuildContext context) {
-    CustomToggleButton.index = (CustomToggleButton.index + 1) % 4;
-    int myIndex = CustomToggleButton.index; // for future usage
+    // CustomToggleButton.index = (CustomToggleButton.index + 1) % 4;
+    // int myIndex = CustomToggleButton.index; // for future usage
     print(CustomToggleButton.index);
     return GestureDetector(
       onTap: () {

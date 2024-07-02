@@ -24,6 +24,17 @@ class BooksScreenState extends State<HomeScreen>
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      switch (index) {
+        case 0:
+          Navigator.pushReplacementNamed(context, '/home');
+          break;
+        case 1:
+          Navigator.pushReplacementNamed(context, '/groups');
+          break;
+        case 2:
+          Navigator.pushReplacementNamed(context, '/');
+          break;
+      }
     });
   }
 
@@ -36,20 +47,20 @@ class BooksScreenState extends State<HomeScreen>
         // Title of the AppBar.
         title: const TopPanel(title: 'Book'),
         // // TabBar with 4 tabs.
-        // bottom: TabBar(
-        //   isScrollable: false,
-        //   labelColor: MyColors.selectedItemColor,
-        //   unselectedLabelColor: MyColors.nonSelectedItemColor,
-        //   splashBorderRadius: BorderRadius.circular(100),
-        //   indicatorColor: MyColors.selectedItemColor,
-        //   controller: _tabController,
-        //   tabs: const [
-        //     CustomToggleButton(text: 'Recommended'),
-        //     CustomToggleButton(text: 'Trending'),
-        //     CustomToggleButton(text: 'Wishlist'),
-        //     CustomToggleButton(text: 'Completed'),
-        //   ],
-        // ),
+        bottom: TabBar(
+          isScrollable: false,
+          labelColor: MyColors.selectedItemColor,
+          unselectedLabelColor: MyColors.nonSelectedItemColor,
+          splashBorderRadius: BorderRadius.circular(100),
+          indicatorColor: MyColors.selectedItemColor,
+          controller: _tabController,
+          tabs: const [
+            Tab(text: 'Recommended'),
+            Tab(text: 'Trending'),
+            Tab(text: 'Wishlist'),
+            Tab(text: 'Completed'),
+          ],
+        ),
       ),
       // TabBarView with 4 corresponding views.
       body: Column(

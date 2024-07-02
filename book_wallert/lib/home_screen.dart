@@ -1,9 +1,9 @@
 import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:book_wallert/home_screen1_body.dart';
+import 'package:book_wallert/home_screen_body.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeScreen1 extends StatelessWidget {
+  const HomeScreen1({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       backgroundColor: MyColors.bgColor,
-      body: const HomeScreen1Body(),
+      body: const HomeScreenBody(),
       bottomNavigationBar: BottomAppBar(
         color: MyColors.navigationBarColor,
         height: 60,

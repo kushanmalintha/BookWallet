@@ -13,10 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: const HomeScreen(),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: MyColors.bgColor,
-      ),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      //   scaffoldBackgroundColor: MyColors.bgColor,
+      // ),
       routes: {
         '/groups': (context) => const GroupsScreen(),
         '/profile': (context) => const ProfileScreen(),
