@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 
+// ignore: must_be_immutable
 class TopPanel extends StatelessWidget {
-  const TopPanel({super.key, required this.title});
-  final String title;
+  TopPanel({super.key, required this.title});
+  String title;
 
   @override
   Widget build(BuildContext context) {

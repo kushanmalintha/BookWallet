@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:book_wallert/colors.dart';
-// import 'package:book_wallert/bookListView.dart';
-import 'package:book_wallert/book_screen_state.dart';
-import 'groups_screen.dart';
-import 'home_screen.dart';
+import 'package:book_wallert/screens/main_screen/main_screen_frame.dart';
 
 // The main entry point of the application.
 void main() => runApp(const MyApp());
@@ -13,21 +9,19 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // debugShowCheckedModeBanner: false,
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       // The main screen of the application.
-      home: const HomeScreen(),
-      routes: {
-        '/groups': (context) => GroupsScreen(),
-        '/home': (context) => const HomeScreen1(),
-      },
+      home: MainScreen(),
+
+      // ...If need to add new different screen, uncomment below and edit...
+      //Navigator.pushReplacementNamed(context, '/Profile'); call this function replacing the name
+
+      // initialRoute: '/screenname1',
+      // routes: { // adding routes
+      //   '/screenname1': (context) => ScreenName1(),
+      //   '/Profile': (context) => const ScreenName2(),
+      // },
     );
   }
-}
-
-// The main screen of the application, which is stateful.
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-  @override
-  BooksScreenState createState() => BooksScreenState();
 }

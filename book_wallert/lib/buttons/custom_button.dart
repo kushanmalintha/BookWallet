@@ -20,7 +20,6 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
   Widget build(BuildContext context) {
     // CustomToggleButton.index = (CustomToggleButton.index + 1) % 4;
     // int myIndex = CustomToggleButton.index; // for future usage
-    print(CustomToggleButton.index);
     return GestureDetector(
       onTap: () {
         setState(() {
