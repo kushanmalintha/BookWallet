@@ -1,16 +1,16 @@
 import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:book_wallert/review.dart';
+import 'package:book_wallert/cards/review.dart';
 
-class HomeScreen1Body extends StatelessWidget {
-  const HomeScreen1Body({super.key});
+class HomeScreenBody extends StatelessWidget {
+  const HomeScreenBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     // List of review data
     final List<Map<String, String>> reviews = [
       {
-        'imagePath': 'Images/Book Image1.jpg',
+        'imagePath': 'images/Book_Image1.jpg',
         'bookName': 'Dune Messiah',
         'authorName': 'Frank Herbert',
         'description':

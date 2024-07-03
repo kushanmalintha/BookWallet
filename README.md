@@ -1,34 +1,57 @@
 # BookWallet
 
-### Diagrams
+## Overview
 
-- this folder contains all the Diagrams (class diagram, EER diagram and relational diagram).
-- Upload any new diagrams to this folder
+BookWallet is an app designed to help book enthusiasts manage their reading materials, track reviews, and connect with other readers. Below, we'll break down the project structure and explain each section.
 
-### Images
+## Project Structure
 
-- This folder contains all the images that needed.
-- Rename new images properly if there is new image.
+### `lib` Folder
 
-### lib
+#### Buttons
 
-#### fandompage
+- `custom_button.dart`: A green, round button with a white outline.
 
-- This file contains some classes in fandom page
+- `selection_bar.dart`: A button bar where you can copy code (without editing existing code) from `books_screen_body.dart` and customize names and screens.
 
-#### home_screen1
+#### `cards` Folder
+-  This folder contains display cards
+- `review.dart`: A card for displaying book reviews.
 
-- App bar and app bottom bar
+#### `screens` Folder
 
-#### home_screen1_body
+The `screens` folder contains different pages of the app:
 
-- Include reviews
+- `main_screen`
 
-#### review
+  - `books_screen`: Files related to the books page.
+    - `books_screen_body.dart`: contains books screen body with button panel and book window
+    - `book_list_view.dart`: contains the scrolling view for books
 
-- Review structure
+  - `groups_screen`: Files related to the groups page.
+    - `groups_screen_body.dart`: code for group body
 
-#### colors
+  - `home_screen`: Files related to the home page.
+    - `home_screen_body.dart`: scrollable home screen body.
 
-- To use colors inside the lib file, type 'MyColours.color_name'.
-- be specific if add new colors.
+  - `profile_screen`: Files related to the user profile page.
+
+- `main_screen_frame.dart`: Creates the main screen frame with a bottom navigation bar. It dynamically changes the top app bar based on the active page.
+
+- `top_panel.dart`: Implements the top app bar, displaying the current page name.
+
+### `colors.dart`
+
+- Defines custom colors for use within the `lib` files. To use these colors, refer to them as `MyColors.colorName`.
+
+### `main.dart`
+
+- The main entry point for the app.
+
+## `diagrams` Folder
+
+The `diagrams` folder contains various diagrams, including class diagrams, entity-relationship diagrams (EER), and relational diagrams. Feel free to upload any new diagrams to this folder.
+
+## `images` Folder
+
+The `images` folder holds all the necessary images. Make sure to rename new images appropriately if you add any.
