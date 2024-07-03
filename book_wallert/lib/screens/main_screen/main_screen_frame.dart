@@ -46,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
         break;
       case 1:
         pageName = 'Groups';
-        activePage = const GroupsScreenBody();
+        activePage = const GroupScreenBody();
         break;
       case 2:
         pageName = 'Books';
