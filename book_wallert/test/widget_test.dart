@@ -7,9 +7,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:book_wallert/main.dart';
-import 'package:book_wallert/fandompage.dart';
+https://github.com/AIFERNANDOE20100/BookWallet.git
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

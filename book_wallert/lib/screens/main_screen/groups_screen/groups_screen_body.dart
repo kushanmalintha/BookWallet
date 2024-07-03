@@ -1,75 +1,17 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'colors.dart';
+import '../../../colors.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark(), // Using dark theme similar to your design
-      home: FandomsPage(),
-    );
-  }
-}
-
-class FandomsPage extends StatelessWidget {
+class GroupsScreenBody extends StatelessWidget {
+  const GroupsScreenBody({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: MyColors.navigationBarColor,
-        title: Text('Fandoms', style: TextStyle(color: MyColors.titleColor)),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FilterButton(label: 'Your Fandoms'),
-                FilterButton(label: 'Trending'),
-                FilterButton(label: 'Suggestions'),
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 6,
-              itemBuilder: (context, index) {
-                return FandomCard();
-              },
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Fandoms',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+      backgroundColor: MyColors.bgColor,
+      body: ListView.builder(
+        itemCount: 20,
+        itemBuilder: (context, index) {
+          return const FandomCard();
+        },
       ),
     );
   }
@@ -78,7 +20,7 @@ class FandomsPage extends StatelessWidget {
 class FilterButton extends StatelessWidget {
   final String label;
 
-  FilterButton({required this.label});
+  const FilterButton({super.key, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -95,43 +37,51 @@ class FilterButton extends StatelessWidget {
 }
 
 class FandomCard extends StatelessWidget {
+  const FandomCard({super.key});
   @override
   Widget build(BuildContext context) {
     return Card(
       color: MyColors.panelColor,
-      margin: EdgeInsets.all(5),
+      margin: const EdgeInsets.all(5),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               backgroundImage: AssetImage(
-                'Images/Book Image1.jpg', // Replace with actual image URL
+                'images/groupImage1.jpg', // Replace with actual image URL
               ),
               radius: 25,
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Harry Potter Fans',
                     style: TextStyle(
+                      color: MyColors.textColor,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 5),
-                  Row(
+                  const SizedBox(height: 5),
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Members: 23,455'),
-                      Text('Discussions: 23,455'),
+                      Text(
+                        'Members: 23,455',
+                        style: TextStyle(color: MyColors.text2Color),
+                      ),
+                      Text(
+                        'Discussions: 23,455',
+                        style: TextStyle(color: MyColors.text2Color),
+                      ),
                     ],
                   ),
-                  SizedBox(height: 1),
+                  const SizedBox(height: 1),
                   Row(
                     children: [
                       SizedBox(
@@ -145,18 +95,19 @@ class FandomCard extends StatelessWidget {
                             backgroundColor:
                                 MyColors.selectedItemColor, // Button color
                           ),
-                          child: Text(
+                          child: const Text(
                             'Send Request',
                             style: TextStyle(
                                 color: MyColors.bgColor, fontSize: 12),
                           ),
                         ),
                       ),
-                      SizedBox(width: 15),
-                      Expanded(
+                      const SizedBox(width: 15),
+                      const Expanded(
                         child: Text(
                           'Suggested By: Ravindu Pathirage and ...',
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(
+                              color: MyColors.text2Color, fontSize: 12),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
