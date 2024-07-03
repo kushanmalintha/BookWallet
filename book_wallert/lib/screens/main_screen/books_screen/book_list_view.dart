@@ -17,7 +17,7 @@ class BookListView extends StatelessWidget {
           child: ListTile(
             iconColor: MyColors.nonSelectedItemColor,
             leading: Image.asset(
-              'Images/Book_Image1.jpg',
+              'images/Book_Image1.jpg',
               scale: 1,
             ), // Book cover image
             title: const Text(

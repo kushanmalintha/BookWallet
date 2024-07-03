@@ -10,7 +10,7 @@ class HomeScreenBody extends StatelessWidget {
     // List of review data
     final List<Map<String, String>> reviews = [
       {
-        'imagePath': 'Images/Book_Image1.jpg',
+        'imagePath': 'images/Book_Image1.jpg',
         'bookName': 'Dune Messiah',
         'authorName': 'Frank Herbert',
         'description':

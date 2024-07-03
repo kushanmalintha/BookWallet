@@ -8,7 +8,7 @@ class GroupsScreenBody extends StatelessWidget {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
       body: ListView.builder(
-        itemCount: 6,
+        itemCount: 20,
         itemBuilder: (context, index) {
           return const FandomCard();
         },
@@ -50,7 +50,7 @@ class FandomCard extends StatelessWidget {
           children: [
             const CircleAvatar(
               backgroundImage: AssetImage(
-                'Images/groupImage1.jpg', // Replace with actual image URL
+                'images/groupImage1.jpg', // Replace with actual image URL
               ),
               radius: 25,
             ),
