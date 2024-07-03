@@ -5,6 +5,7 @@ import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/screens/main_screen/top_panel.dart';
 import 'package:book_wallert/screens/main_screen/home_screen/home_screen_body.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/books_screen_body.dart';
+import 'package:book_wallert/screens/main_screen/bottom_navigation_bar.dart';
 
 // The main screen of the application, which is stateful.
 class MainScreen extends StatefulWidget {
@@ -55,44 +56,21 @@ class _MainScreenState extends State<MainScreen> {
       case 3:
         pageName = "Profile";
         activePage = const ProfileScreenBody();
+        break;
+      default:
+        pageName = 'Book Wallet';
+        activePage = const HomeScreenBody();
     }
 
     return Scaffold(
       backgroundColor: MyColors.bgColor,
-      appBar: AppBar(
-        backgroundColor: MyColors.navigationBarColor,
-        // Title of the AppBar.
-        title: TopPanel(title: pageName),
-      ),
+      appBar: TopPanel(title: pageName),
       // changing the body of the app screen
       body: activePage,
       // BottomNavigationBar with 4 items.
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        iconSize: 20,
-        backgroundColor: MyColors.navigationBarColor,
-        unselectedItemColor: MyColors.nonSelectedItemColor,
-        selectedItemColor: MyColors.selectedItemColor,
-        currentIndex: _selectedIndex, // changin the colors to the selected icon
-        onTap: _onItemTapped, // calling the function with the tapped icon index
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Groups',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.library_books),
-            label: 'Books',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+      bottomNavigationBar: BottomNavigation(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
     );
   }
