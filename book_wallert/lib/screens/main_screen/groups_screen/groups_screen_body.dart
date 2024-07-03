@@ -20,7 +20,7 @@ class _GroupScreenBodyState extends State<GroupScreenBody>
 
   // add name to buttons on panel
   final List<String> _tabNames = [
-    'Your fandoms',
+    'Your Groups',
     'Trending',
     'Suggestions',
   ];

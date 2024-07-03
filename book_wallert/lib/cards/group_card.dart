@@ -36,11 +36,11 @@ class FilterButton extends StatelessWidget {
   }
 }
 
-class FandomCard extends StatelessWidget {
+class FandomCard extends StatelessWidget { // rename this to Group
   const FandomCard({super.key});
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Card( // sepertae this
       color: MyColors.panelColor,
       margin: const EdgeInsets.all(5),
       child: Padding(

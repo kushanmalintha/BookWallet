@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class TestScreen extends StatelessWidget {
   TestScreen({super.key});
-  final List<String> buttonIndex = [
+  final List<String> buttonIndex = [ // list for indexes for each screen
     '/screen1',
     '/screen2',
     '/screen3',
@@ -25,7 +25,7 @@ class TestScreen extends StatelessWidget {
           style: TextStyle(color: MyColors.text2Color),
         ),
       ),
-      body: Padding(
+      body: Padding( 
         padding: const EdgeInsets.all(8.0),
         child: GridView.count(
           crossAxisCount: 2,
@@ -34,7 +34,7 @@ class TestScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, buttonIndex[index]);
+                  Navigator.pushReplacementNamed(context, buttonIndex[index]); // cliking button to go to relavent screen.
                 },
                 child: Text('Screen ${index + 1}'),
               ),

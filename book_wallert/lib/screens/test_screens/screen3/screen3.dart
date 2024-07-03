@@ -6,10 +6,11 @@ class Screen3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      // replace with your screen
       backgroundColor: MyColors.bgColor,
       body: Center(
         child: Text(
-          'a test screen',
+          'a test screen3',
           style: TextStyle(color: MyColors.text2Color),
         ),
       ),
