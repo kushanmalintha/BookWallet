@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:book_wallert/screens/main_screen/groups_screen/groups_list_view.dart';
+import 'package:book_wallert/cards/group_card.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/buttons/selection_bar.dart';
 
@@ -52,9 +52,9 @@ class _GroupScreenBodyState extends State<GroupScreenBody>
         // adding corrosponding screens to each button on SelectionBar.
         controller: _tabController,
         children: const [
-          Groups_list_view(), // Your fandoms
-          Groups_list_view(), // Trending
-          Groups_list_view(), // Suggestions
+          GroupsListView(), // Your fandoms
+          GroupsListView(), // Trending
+          GroupsListView(), // Suggestions
         ],
       ),
     );
