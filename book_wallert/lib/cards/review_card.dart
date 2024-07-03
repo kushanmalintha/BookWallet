@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 class Review extends StatelessWidget {
   final double height;
-  final double width;
   final Color backgroundColor;
   final String imagePath;
   final String bookName;
@@ -16,7 +15,6 @@ class Review extends StatelessWidget {
   const Review({
     super.key,
     required this.height,
-    required this.width,
     required this.backgroundColor,
     required this.imagePath,
     required this.bookName,
@@ -29,18 +27,24 @@ class Review extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
       height: height,
-      width: width,
+      width: screenWidth,
       color: backgroundColor,
+      // decoration: BoxDecoration(
+      //   color: backgroundColor,
+      //   borderRadius: BorderRadius.circular(2),
+      // ),
       child: Stack(
         children: <Widget>[
           Positioned(
-            top: 10,
-            left: 8,
+            top: 5,
+            left: -5,
             child: Image.asset(
               imagePath,
-              width: width * 0.22,
+              height: 125,
+              width: 115,
             ),
           ),
           Positioned(
@@ -82,7 +86,7 @@ class Review extends StatelessWidget {
               description,
               style: const TextStyle(
                 color: MyColors.text2Color,
-                fontSize: 10,
+                fontSize: 11,
               ),
               textAlign: TextAlign.justify,
             ),
@@ -135,7 +139,7 @@ class Review extends StatelessWidget {
           Positioned(
             bottom: 36,
             child: Container(
-              width: 400,
+              width: screenWidth,
               height: 1,
               color: MyColors.textColor,
             ),
