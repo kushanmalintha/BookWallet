@@ -1,6 +1,6 @@
 import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:book_wallert/cards/review.dart';
+import 'package:book_wallert/cards/review_card.dart';
 
 class HomeScreenBody extends StatelessWidget {
   const HomeScreenBody({super.key});

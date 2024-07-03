@@ -32,10 +32,10 @@ class Review extends StatelessWidget {
       height: height,
       width: screenWidth,
       color: backgroundColor,
-      /*decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(1),
-      ),*/
+      // decoration: BoxDecoration(
+      //   color: backgroundColor,
+      //   borderRadius: BorderRadius.circular(2),
+      // ),
       child: Stack(
         children: <Widget>[
           Positioned(
