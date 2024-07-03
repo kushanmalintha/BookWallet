@@ -47,7 +47,7 @@ class _MainScreenState extends State<MainScreen> {
         break;
       case 1:
         pageName = 'Groups';
-        activePage = const GroupsScreenBody();
+        activePage = const GroupScreenBody();
         break;
       case 2:
         pageName = 'Books';
@@ -66,7 +66,12 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: MyColors.bgColor,
       appBar: TopPanel(title: pageName),
       // changing the body of the app screen
-      body: activePage,
+      body: Column(
+        children: [
+          const SizedBox(height: 1), // Add space between AppBar and body
+          Expanded(child: activePage),
+        ],
+      ),
       // BottomNavigationBar with 4 items.
       bottomNavigationBar: BottomNavigation(
         selectedIndex: _selectedIndex,

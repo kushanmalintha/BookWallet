@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/cards/book_card.dart';
 
 // A stateless widget that represents a list of books.
 class BookListView extends StatelessWidget {
@@ -11,36 +11,7 @@ class BookListView extends StatelessWidget {
       itemCount: 10, // Change this to the number of books
       // Builder function for each list item.
       itemBuilder: (context, index) {
-        return Card(
-          // ListTile representing a book.
-          color: MyColors.panelColor,
-          child: ListTile(
-            iconColor: MyColors.nonSelectedItemColor,
-            leading: Image.asset(
-              'images/Book_Image1.jpg',
-              scale: 1,
-            ), // Book cover image
-            title: const Text(
-              'Dune Messiah',
-              style: TextStyle(
-                color: MyColors.textColor,
-              ),
-            ),
-            subtitle: const Text(
-              'Frank Herbert\nPages: 256\nGenre: Science Fiction\nTotal Rating: 9.8/10',
-              style: TextStyle(
-                color: MyColors.textColor,
-              ),
-            ),
-            // isThreeLine: true,
-            trailing: IconButton(
-              icon: const Icon(Icons.favorite_border),
-              onPressed: () {
-                // Add to wishlist action
-              },
-            ),
-          ),
-        );
+        return const BookCard();
       },
     );
   }

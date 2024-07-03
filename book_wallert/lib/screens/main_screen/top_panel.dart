@@ -34,7 +34,7 @@ class TopPanel extends StatelessWidget implements PreferredSizeWidget {
                 icon: const Icon(Icons.menu_rounded),
                 color: MyColors.nonSelectedItemColor,
                 onPressed: () {
-                  // Add options functionality here
+                  Navigator.pushReplacementNamed(context, '/TestScreen');
                 },
               ),
             ],
