@@ -32,9 +32,9 @@ class HomeScreenBody extends StatelessWidget {
             final review = reviews[index % reviews.length];
             return Column(
               children: [
+                const SizedBox(height: 8),
                 Review(
                   height: 190,
-                  width: 380,
                   backgroundColor: MyColors.panelColor,
                   imagePath: review['imagePath']!,
                   bookName: review['bookName']!,
@@ -44,7 +44,6 @@ class HomeScreenBody extends StatelessWidget {
                   reviewedBy: review['reviewedBy']!,
                   userName: review['userName']!,
                 ),
-                const SizedBox(height: 5),
               ],
             );
           }),
