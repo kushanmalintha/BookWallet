@@ -32,7 +32,7 @@ class HomeScreenBody extends StatelessWidget {
             final review = reviews[index % reviews.length];
             return Column(
               children: [
-                const SizedBox(height: 8),
+                const SizedBox(height: 3),
                 Review(
                   height: 190,
                   backgroundColor: MyColors.panelColor,
