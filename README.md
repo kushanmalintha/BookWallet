@@ -10,13 +10,18 @@ BookWallet is an app designed to help book enthusiasts manage their reading mate
 
 #### Buttons
 
-- `custom_button.dart`: A green, round button with a white outline.
+- `custom_button.dart`: A green, round toggle button with a white outline.
 
 - `selection_bar.dart`: A button bar where you can copy code (without editing existing code) from `books_screen_body.dart` and customize names and screens.
+- `custom_button1.dart`: A customizable text button
+
+#### TextBox
+
+- `custom_textbox.dart` : A customizable input text box.
 
 #### `cards` Folder
 -  This folder contains display cards
-- `review.dart`: A card for displaying book reviews.
+- `review_card.dart`: A card for displaying book reviews.
 
 #### `screens` Folder
 

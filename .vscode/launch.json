@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "book_wallert",
+            "cwd": "book_wallert",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "book_wallert (profile mode)",
+            "cwd": "book_wallert",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "book_wallert (release mode)",
+            "cwd": "book_wallert",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
