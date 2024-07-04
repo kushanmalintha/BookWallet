@@ -1,21 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../colors.dart';
-
-class GroupsListView extends StatelessWidget {
-  const GroupsListView({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: MyColors.bgColor,
-      body: ListView.builder(
-        itemCount: 20,
-        itemBuilder: (context, index) {
-          return const FandomCard();
-        },
-      ),
-    );
-  }
-}
+import '../../../../colors.dart';
 
 class FilterButton extends StatelessWidget {
   final String label;
@@ -36,18 +20,30 @@ class FilterButton extends StatelessWidget {
   }
 }
 
-class FandomCard extends StatelessWidget { // rename this to Group
-  const FandomCard({super.key});
+class TrendingCard extends StatelessWidget {
+  final int rank;
+
+  const TrendingCard({super.key, required this.rank});
   @override
   Widget build(BuildContext context) {
-    return Card( // sepertae this
+    return Card(
       color: MyColors.panelColor,
       margin: const EdgeInsets.all(5),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('$rank',
+                  style: const TextStyle(
+                    color: MyColors.textColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
+            const SizedBox(width: 10),
             const CircleAvatar(
               backgroundImage: AssetImage(
                 'images/groupImage1.jpg', // Replace with actual image URL
@@ -81,7 +77,7 @@ class FandomCard extends StatelessWidget { // rename this to Group
                       ),
                     ],
                   ),
-                  const SizedBox(height: 1),
+                  const SizedBox(height: 4),
                   Row(
                     children: [
                       SizedBox(
@@ -103,14 +99,14 @@ class FandomCard extends StatelessWidget { // rename this to Group
                         ),
                       ),
                       const SizedBox(width: 15),
-                      const Expanded(
-                        child: Text(
-                          'Suggested By: Ravindu Pathirage and ...',
-                          style: TextStyle(
-                              color: MyColors.text2Color, fontSize: 12),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
+                      // const Expanded(
+                      //   // child: Text(
+                      //   //   'Suggested By: Ravindu Pathirage and ...',
+                      //   //   style: TextStyle(
+                      //   //       color: MyColors.text2Color, fontSize: 12),
+                      //   //   overflow: TextOverflow.ellipsis,
+                      //   // ),
+                      // ),
                     ],
                   ),
                 ],
