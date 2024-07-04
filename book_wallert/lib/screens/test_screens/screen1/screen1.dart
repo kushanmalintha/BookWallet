@@ -1,3 +1,4 @@
+//import 'package:book_wallert/buttons/custom_button.dart';
 import 'package:book_wallert/buttons/custom_button1.dart';
 import 'package:book_wallert/textbox/custom_textbox.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class Screen1 extends StatelessWidget {
               type: TextInputType.visiblePassword,
             ),
             const SizedBox(height: 10),
-            CustomToggleButton1(
+            CustomButton1(
               text: "Login",
               press: () {
                 // Add login function here

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // A custom button widget with round edges
-class CustomToggleButton1 extends StatelessWidget {
+class CustomButton1 extends StatelessWidget {
   // Text to be displayed on the button
   final String text;
 
@@ -18,7 +18,7 @@ class CustomToggleButton1 extends StatelessWidget {
   final Color borderColor;
 
   // Constructor to initialize the button properties
-  const CustomToggleButton1({
+  const CustomButton1({
     super.key,
     required this.text,
     required this.press,

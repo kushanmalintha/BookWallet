@@ -31,9 +31,9 @@ class Review extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width; // Get screen width
     return Card(
       color: backgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5), // Rounded corners for the card
-      ),
+      // shape: RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.circular(), // Rounded corners for the card
+      // ),
       child: SizedBox(
         height: height,
         width: screenWidth,
