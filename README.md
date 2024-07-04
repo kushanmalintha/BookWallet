@@ -35,6 +35,7 @@ The `screens` folder contains different pages of the app:
 
   - `groups_screen`: Files related to the groups page.
     - `groups_screen_body.dart`: code for group body
+    - `groups_list_view.dart`: contains the scrolling view for groups
 
   - `home_screen`: Files related to the home page.
     - `home_screen_body.dart`: scrollable home screen body.
