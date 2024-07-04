@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:book_wallert/cards/group_card.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/buttons/selection_bar.dart';
+import 'group_list_view.dart';
 
 class GroupScreenBody extends StatefulWidget {
   const GroupScreenBody({super.key});
@@ -52,9 +52,9 @@ class _GroupScreenBodyState extends State<GroupScreenBody>
         // adding corrosponding screens to each button on SelectionBar.
         controller: _tabController,
         children: const [
-          GroupsListView(), // Your fandoms
-          GroupsListView(), // Trending
-          GroupsListView(), // Suggestions
+          GroupsListViewFandom(), // Your fandoms
+          GroupsListViewTrending(), // Trending
+          GroupsListViewSuggestion(), // Suggestions
         ],
       ),
     );
