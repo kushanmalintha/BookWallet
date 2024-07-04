@@ -2,17 +2,7 @@ import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
 
 class TestScreen extends StatelessWidget {
-  TestScreen({super.key});
-  final List<String> buttonIndex = [ // list for indexes for each screen
-    '/screen1',
-    '/screen2',
-    '/screen3',
-    '/screen4',
-    '/screen5',
-    '/screen6',
-    '/screen7',
-    '/screen8',
-  ];
+  const TestScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +24,7 @@ class TestScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, buttonIndex[index]); // cliking button to go to relavent screen.
+                  Navigator.pushReplacementNamed(context, '/screen${index + 1}'); // routing button to go to relavent screen.
                 },
                 child: Text('Screen ${index + 1}'),
               ),
