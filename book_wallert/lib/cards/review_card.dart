@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // Review widget that displays details of a book review
 class Review extends StatelessWidget {
-  final double height; // Height of the review card
+  final double cardHeight; // Height of the review card
   final Color backgroundColor; // Background color of the review card
   final String imagePath; // Path to the image of the book
   final String bookName; // Name of the book
@@ -15,7 +15,7 @@ class Review extends StatelessWidget {
 
   const Review({
     super.key,
-    required this.height,
+    required this.cardHeight,
     required this.backgroundColor,
     required this.imagePath,
     required this.bookName,
@@ -35,18 +35,24 @@ class Review extends StatelessWidget {
       //   borderRadius: BorderRadius.circular(), // Rounded corners for the card
       // ),
       child: SizedBox(
-        height: height,
+        height: cardHeight,
         width: screenWidth,
         child: Stack(
           children: <Widget>[
             // Book image positioned at the top left
             Positioned(
               top: 5,
-              left: -5,
-              child: Image.asset(
-                imagePath,
-                height: 125,
-                width: 115,
+              left: 5,
+              child: SizedBox(
+                height: 120,
+                width: 90,
+                child: Image.asset(imagePath, fit: BoxFit.cover, errorBuilder:
+                    (BuildContext context, Object exception,
+                        StackTrace? stackTrace) {
+                  return Container(
+                    color: MyColors.text2Color,
+                  );
+                }),
               ),
             ),
             // Book name positioned next to the image
