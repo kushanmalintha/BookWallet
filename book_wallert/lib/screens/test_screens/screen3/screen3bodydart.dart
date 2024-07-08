@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:book_wallert/screens/main_screen/books_screen/book_list_view.dart';
+import 'package:book_wallert/screens/test_screens/screen3/screen3list_veiw.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/buttons/selection_bar.dart';
 
-class BooksScreenBody extends StatefulWidget {
-  const BooksScreenBody({super.key});
+class ProfileScreenBody extends StatefulWidget {
+  const ProfileScreenBody({super.key});
 
   @override
-  State<BooksScreenBody> createState() {
+  State<ProfileScreenBody> createState() {
     // returns a screen as state
-    return _BookScreenBodyState();
+    return _ProfileScreenBodyState();
   }
 }
 
-class _BookScreenBodyState extends State<BooksScreenBody>
+class _ProfileScreenBodyState extends State<ProfileScreenBody>
     with SingleTickerProviderStateMixin {
   // ''with ticker'' is to make sure connnection between clicking and swiping
   late TabController _tabController;
@@ -52,11 +52,11 @@ class _BookScreenBodyState extends State<BooksScreenBody>
       body: TabBarView(
         // adding corrosponding screens to each button on SelectionBar.
         controller: _tabController,
-        children: const [
-          BookListView(), // Recommended
-          BookListView(), // Trending
-          BookListView(), // Wishlist
-          BookListView(), // Completed
+        children: [
+          ProfileListVeiw(screenName: 'Reviews'), // Recommended
+          ProfileListVeiw(screenName: 'Reading'), // Trending
+          ProfileListVeiw(screenName: 'Wishlist'), // Wishlist
+          ProfileListVeiw(screenName: 'Completed'), // Completed
         ],
       ),
     );
