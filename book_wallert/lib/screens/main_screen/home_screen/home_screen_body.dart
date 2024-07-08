@@ -34,7 +34,7 @@ class HomeScreenBody extends StatelessWidget {
               children: [
                 const SizedBox(height: 3),
                 Review(
-                  height: 190,
+                  cardHeight: 190,
                   backgroundColor: MyColors.panelColor,
                   imagePath: review['imagePath']!,
                   bookName: review['bookName']!,
