@@ -33,6 +33,10 @@ class MyApp extends StatelessWidget {
       //   '/Profile': (context) => const ScreenName2(),
       // },
 
+      // or you can use
+      // Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateData()));
+      // as the function to the button click at any place
+
       initialRoute: '/MainScreen',
 
       routes: {
