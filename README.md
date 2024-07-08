@@ -20,8 +20,10 @@ BookWallet is an app designed to help book enthusiasts manage their reading mate
 - `custom_textbox.dart` : A customizable input text box.
 
 #### `cards` Folder
--  This folder contains display cards
+
+- This folder contains display cards
 - `review_card.dart`: A card for displaying book reviews.
+- `review_card2.dart`: A card for displaying book reviews(akash).
 
 #### `screens` Folder
 
@@ -30,14 +32,17 @@ The `screens` folder contains different pages of the app:
 - `main_screen`
 
   - `books_screen`: Files related to the books page.
+
     - `books_screen_body.dart`: contains books screen body with button panel and book window
     - `book_list_view.dart`: contains the scrolling view for books
 
   - `groups_screen`: Files related to the groups page.
+
     - `groups_screen_body.dart`: code for group body
     - `groups_list_view.dart`: contains the scrolling view for groups
 
   - `home_screen`: Files related to the home page.
+
     - `home_screen_body.dart`: scrollable home screen body.
 
   - `profile_screen`: Files related to the user profile page.
