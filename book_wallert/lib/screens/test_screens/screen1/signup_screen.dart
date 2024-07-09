@@ -1,12 +1,12 @@
 //import 'package:book_wallert/buttons/custom_button.dart';
 import 'package:book_wallert/buttons/custom_button1.dart';
-import 'package:book_wallert/screens/test_screens/screen1/signup_screen.dart';
+import 'package:book_wallert/screens/test_screens/screen1/screen1.dart';
 import 'package:book_wallert/textbox/custom_textbox.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 
-class Screen1 extends StatelessWidget {
-  const Screen1({super.key});
+class SignupScreen extends StatelessWidget {
+  const SignupScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,19 +31,13 @@ class Screen1 extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            /*CustomToggleButton(
-              text: "Login",
-              press: () {
-                // add login function
-              },
-              backgroundColorSelected: MyColors.selectedItemColor,
-              backgroundColorNotSelected: MyColors.nonSelectedItemColor,
-              textColorSelected: MyColors.textColor,
-              textColorNotSelected: MyColors.text2Color,
-              borderColor: MyColors.text2Color,
-            ),*/
             const CustomTextBox(
               hintText: "UserName",
+              type: TextInputType.name,
+            ),
+            const SizedBox(height: 10),
+            const CustomTextBox(
+              hintText: "Email",
               type: TextInputType.name,
             ),
             const SizedBox(height: 10),
@@ -54,8 +48,15 @@ class Screen1 extends StatelessWidget {
               isPassword: true,
             ),
             const SizedBox(height: 10),
+            const CustomTextBox(
+              hintText: "Confirm Password",
+              type: TextInputType.visiblePassword,
+              // give isPassword false if it is not a password
+              isPassword: true,
+            ),
+            const SizedBox(height: 10),
             CustomButton1(
-              text: "Login",
+              text: "Sign up",
               press: () {
                 // Add login function here
               },
@@ -66,33 +67,22 @@ class Screen1 extends StatelessWidget {
             const SizedBox(height: 10),
             GestureDetector(
               onTap: () {
-                // forgot password function
-                print("hello");
-              },
-              child: const Text(
-                "I forgot my password",
-                style: TextStyle(color: MyColors.textColor, fontSize: 12),
-              ),
-            ),
-            const SizedBox(height: 10),
-            GestureDetector(
-              onTap: () {
                 // go to the sign in page function
                 //print("hello");
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SignupScreen()),
+                  MaterialPageRoute(builder: (context) => const Screen1()),
                 );
               },
               child: RichText(
                 text: const TextSpan(
                   children: [
                     TextSpan(
-                      text: "Don't have an account? ",
+                      text: "Already have an account? ",
                       style: TextStyle(color: MyColors.textColor, fontSize: 12),
                     ),
                     TextSpan(
-                      text: "SIGN UP",
+                      text: "LOG IN",
                       style: TextStyle(
                           color: Colors.blue,
                           fontSize: 12,
