@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CustomToggleButton extends StatefulWidget {
   // Text to be displayed on the button
-  final String text;
+  final String beforeText;
+  final String afterText;
 
   // Function to be called when the button is pressed
   final Function press;
@@ -28,7 +29,8 @@ class CustomToggleButton extends StatefulWidget {
   // Constructor for initializing the custom button
   CustomToggleButton({
     super.key,
-    required this.text,
+    required this.beforeText,
+    required this.afterText,
     required this.press,
     required this.backgroundColorSelected,
     required this.backgroundColorNotSelected,
@@ -61,19 +63,21 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
         decoration: BoxDecoration(
           color: isSelected
-              ? widget.backgroundColorSelected
-              : widget.backgroundColorNotSelected,
+              ? widget.backgroundColorNotSelected
+              : widget.backgroundColorSelected,
           borderRadius: BorderRadius.circular(200), // Circular border radius
           border: Border.all(
               color: widget.borderColor, width: 1.5), // Border styling
         ),
         child: Text(
-          widget.text, // Display text on the button
+          isSelected
+              ? widget.afterText
+              : widget.beforeText, // Display text on the button
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 15,
             color: isSelected
                 ? widget.textColorSelected
-                : widget.textColorNotSelected,
+                : widget.textColorSelected,
             fontWeight: FontWeight.bold,
           ),
         ),

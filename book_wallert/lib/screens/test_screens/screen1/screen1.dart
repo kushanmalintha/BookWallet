@@ -32,7 +32,8 @@ class Screen1 extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             /*CustomToggleButton(
-              text: "Login",
+              beforeText: "Send",
+              afterText: "Requested",
               press: () {
                 // add login function
               },
