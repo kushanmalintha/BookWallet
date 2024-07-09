@@ -13,7 +13,11 @@ class GroupsListViewFandom extends StatelessWidget {
       body: ListView.builder(
         itemCount: 20,
         itemBuilder: (context, index) {
-          return const FandomCard();
+          return const FandomCard(
+            groupName: 'Harry potter fans',
+            memberCount: '10499',
+            discussionCount: 400,
+          );
         },
       ),
     );

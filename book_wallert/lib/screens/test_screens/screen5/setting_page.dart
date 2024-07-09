@@ -28,25 +28,23 @@ class SettingsPage extends StatelessWidget {
         ),
         sections: [
           SettingsSection(
-            title: const Text('Common'),
-            tiles: [
-              SettingsTile(
-                title: const Text('Language'),
-                //subtitle: Text('English'),
-                leading: const Icon(Icons.language),
-                onPressed: (BuildContext context) {},
-              ),
-              SettingsTile(
-                title: const Text('Environment'),
-                //subtitle: Text('Production'),
-                leading: const Icon(Icons.cloud_queue),
-                onPressed: (BuildContext context) {},
-              ),
-            ],
-          ),
-          SettingsSection(
             title: const Text('Account'),
             tiles: [
+              SettingsTile(
+                title: const Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          'https://example.com/profile_image.jpg'), // Replace with actual image URL
+                    ),
+                    SizedBox(width: 10),
+                    Text('User Name'),
+                  ],
+                ),
+                onPressed: (BuildContext context) {
+                  Navigator.pushReplacementNamed(context, '/EditUserInfo');
+                },
+              ),
               SettingsTile(
                 title: const Text('Phone number'),
                 leading: const Icon(Icons.phone),
@@ -60,6 +58,23 @@ class SettingsPage extends StatelessWidget {
               SettingsTile(
                 title: const Text('Sign out'),
                 leading: const Icon(Icons.exit_to_app),
+                onPressed: (BuildContext context) {},
+              ),
+            ],
+          ),
+          SettingsSection(
+            title: const Text('Common'),
+            tiles: [
+              SettingsTile(
+                title: const Text('Language'),
+                //subtitle: Text('English'),
+                leading: const Icon(Icons.language),
+                onPressed: (BuildContext context) {},
+              ),
+              SettingsTile(
+                title: const Text('Environment'),
+                //subtitle: Text('Production'),
+                leading: const Icon(Icons.cloud_queue),
                 onPressed: (BuildContext context) {},
               ),
             ],
@@ -101,3 +116,5 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
+
+
