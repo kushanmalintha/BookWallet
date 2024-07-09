@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 
-class Screen4 extends StatelessWidget {
-  const Screen4({super.key});
+class PopMenu extends StatelessWidget {
+  const PopMenu({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

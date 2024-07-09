@@ -1,3 +1,4 @@
+import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
 
 // A custom button widget with round edges
@@ -22,9 +23,9 @@ class CustomButton1 extends StatelessWidget {
     super.key,
     required this.text,
     required this.press,
-    required this.backgroundColor,
-    required this.textColor,
-    required this.borderColor,
+    this.backgroundColor = MyColors.selectedItemColor,
+    this.textColor = MyColors.textColor,
+    this.borderColor = MyColors.textColor,
   });
 
   @override

@@ -141,16 +141,28 @@ class Review extends StatelessWidget {
             ),
             // Icon button positioned at the bottom right
             Positioned(
-              bottom: 25,
-              right: -8,
-              child: IconButton(
-                icon: const Icon(Icons.person),
-                color: MyColors.nonSelectedItemColor,
-                iconSize: 20,
-                onPressed: () {
-                  // like function
+              bottom: 40,
+              right: 5,
+              child: GestureDetector(
+                onTap: () {
+                  print("hello");
+                  // add function here
                 },
+                child: const CircleAvatar(
+                  backgroundImage: AssetImage(
+                    'images/Book_Image1.jpg',
+                  ),
+                  radius: 10,
+                ),
               ),
+              // child: IconButton(
+              //   icon: const Icon(Icons.person),
+              //   color: MyColors.nonSelectedItemColor,
+              //   iconSize: 20,
+              //   onPressed: () {
+              //     // like function
+              //   },
+              // ),
             ),
             // Divider line positioned above the action buttons
             Positioned(
