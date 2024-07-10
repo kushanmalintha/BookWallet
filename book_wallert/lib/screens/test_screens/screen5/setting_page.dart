@@ -45,16 +45,16 @@ class SettingsPage extends StatelessWidget {
                   Navigator.pushReplacementNamed(context, '/EditUserInfo');
                 },
               ),
-              SettingsTile(
-                title: const Text('Phone number'),
-                leading: const Icon(Icons.phone),
-                onPressed: (BuildContext context) {},
-              ),
-              SettingsTile(
-                title: const Text('Email'),
-                leading: const Icon(Icons.email),
-                onPressed: (BuildContext context) {},
-              ),
+              // SettingsTile(
+              //   title: const Text('Phone number'),
+              //   leading: const Icon(Icons.phone),
+              //   onPressed: (BuildContext context) {},
+              // ),
+              // SettingsTile(
+              //   title: const Text('Email'),
+              //   leading: const Icon(Icons.email),
+              //   onPressed: (BuildContext context) {},
+              // ),
               SettingsTile(
                 title: const Text('Sign out'),
                 leading: const Icon(Icons.exit_to_app),
@@ -116,5 +116,3 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
-
-

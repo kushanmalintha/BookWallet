@@ -1,3 +1,4 @@
+import 'package:book_wallert/buttons/custom_button.dart';
 import 'package:flutter/material.dart';
 import '../../../../colors.dart';
 
@@ -24,6 +25,7 @@ class TrendingCard extends StatelessWidget {
   final int rank;
 
   const TrendingCard({super.key, required this.rank});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -81,21 +83,20 @@ class TrendingCard extends StatelessWidget {
                   Row(
                     children: [
                       SizedBox(
-                        height: 30,
-                        width: 130,
-                        child: ElevatedButton(
-                          onPressed: () {
+                        height: 40,
+                        width: 150,
+                        child: CustomToggleButton(
+                          beforeText: 'Send Request',
+                          afterText: 'Requested',
+                          press: () {
                             // Add your onPressed functionality here
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                MyColors.selectedItemColor, // Button color
-                          ),
-                          child: const Text(
-                            'Send Request',
-                            style: TextStyle(
-                                color: MyColors.bgColor, fontSize: 12),
-                          ),
+                          backgroundColorSelected: MyColors.selectedItemColor,
+                          backgroundColorNotSelected:
+                              MyColors.nonSelectedItemColor,
+                          textColorSelected: MyColors.bgColor,
+                          textColorNotSelected: MyColors.textColor,
+                          borderColor: MyColors.nonSelectedItemColor,
                         ),
                       ),
                       const SizedBox(width: 15),
