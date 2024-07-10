@@ -1,4 +1,3 @@
-//import 'package:book_wallert/buttons/custom_button.dart';
 import 'package:book_wallert/buttons/custom_button1.dart';
 import 'package:book_wallert/screens/login_screens/signup_screen.dart';
 import 'package:book_wallert/textbox/custom_textbox.dart';
@@ -31,18 +30,6 @@ class Screen1 extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            /*CustomToggleButton(
-              beforeText: "Send",
-              afterText: "Requested",
-              press: () {
-                // add login function
-              },
-              backgroundColorSelected: MyColors.selectedItemColor,
-              backgroundColorNotSelected: MyColors.nonSelectedItemColor,
-              textColorSelected: MyColors.textColor,
-              textColorNotSelected: MyColors.text2Color,
-              borderColor: MyColors.text2Color,
-            ),*/
             const CustomTextBox(
               hintText: "UserName",
               type: TextInputType.name,

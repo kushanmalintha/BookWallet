@@ -1,3 +1,4 @@
+import 'package:book_wallert/buttons/custom_button1.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 
@@ -46,7 +47,7 @@ class EditUserInfo extends StatelessWidget {
                     right: 0,
                     child: CircleAvatar(
                       radius: 15,
-                      backgroundColor: Colors.blue,
+                      backgroundColor: MyColors.selectedItemColor,
                       child: Icon(
                         Icons.edit,
                         size: 15,
@@ -57,31 +58,35 @@ class EditUserInfo extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             const TextField(
               decoration: InputDecoration(
-                  labelText: 'Full Name', fillColor: MyColors.textColor),
+                  labelText: 'Full Name',
+                  labelStyle: TextStyle(color: MyColors.textColor)),
             ),
             const TextField(
               decoration: InputDecoration(
-                labelText: 'Email',
-                hintText: 'damon90@gmail.com',
-                suffixIcon: Icon(Icons.email),
-              ),
+                  labelText: 'Email',
+                  hintText: 'damon90@gmail.com',
+                  hintStyle: TextStyle(color: MyColors.text2Color),
+                  suffixIcon: Icon(
+                    Icons.email,
+                  ),
+                  labelStyle: TextStyle(color: MyColors.textColor)),
             ),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
-                labelText: 'Password',
-                suffixIcon: Icon(Icons.visibility),
-              ),
+                  labelText: 'Password',
+                  suffixIcon: Icon(Icons.visibility),
+                  labelStyle: TextStyle(color: MyColors.textColor)),
               obscureText: true,
             ),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
-                labelText: 'Phone Number',
-              ),
+                  labelText: 'Phone Number',
+                  labelStyle: TextStyle(color: MyColors.textColor)),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -89,22 +94,14 @@ class EditUserInfo extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.black,
                     backgroundColor: Colors.white,
-                    side: BorderSide(color: Colors.grey),
+                    side: const BorderSide(color: Colors.grey),
                   ),
                   onPressed: () {
                     // Handle cancel button press
                   },
-                  child: Text('CANCEL'),
+                  child: const Text('CANCEL'),
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                  ),
-                  onPressed: () {
-                    // Handle save button press
-                  },
-                  child: Text('SAVE'),
-                ),
+                CustomButton1(text: 'SAVE', press: () {}),
               ],
             ),
           ],

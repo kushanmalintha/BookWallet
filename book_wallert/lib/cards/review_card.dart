@@ -43,27 +43,39 @@ class Review extends StatelessWidget {
             Positioned(
               top: 5,
               left: 5,
-              child: SizedBox(
-                height: 120,
-                width: 90,
-                child: Image.asset(imagePath, fit: BoxFit.cover, errorBuilder:
-                    (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                  return Container(
-                    color: MyColors.text2Color,
-                  );
-                }),
+              child: GestureDetector(
+                onTap: () {
+                  // go to the book profile
+                  print("hello");
+                },
+                child: SizedBox(
+                  height: 120,
+                  width: 90,
+                  child: Image.asset(imagePath, fit: BoxFit.cover, errorBuilder:
+                      (BuildContext context, Object exception,
+                          StackTrace? stackTrace) {
+                    return Container(
+                      color: MyColors.text2Color,
+                    );
+                  }),
+                ),
               ),
             ),
             // Book name positioned next to the image
             Positioned(
               top: 2,
               left: 105,
-              child: Text(
-                bookName,
-                style: const TextStyle(
-                  color: MyColors.textColor,
-                  fontSize: 18,
+              child: GestureDetector(
+                onTap: () {
+                  // go to the book profile
+                  print("hello");
+                },
+                child: Text(
+                  bookName,
+                  style: const TextStyle(
+                    color: MyColors.textColor,
+                    fontSize: 18,
+                  ),
                 ),
               ),
             ),
@@ -131,11 +143,17 @@ class Review extends StatelessWidget {
             Positioned(
               bottom: 40,
               left: 250,
-              child: Text(
-                userName,
-                style: const TextStyle(
-                  color: MyColors.text2Color,
-                  fontSize: 12,
+              child: GestureDetector(
+                onTap: () {
+                  // go to the user profile
+                  print("hello");
+                },
+                child: Text(
+                  userName,
+                  style: const TextStyle(
+                    color: MyColors.text2Color,
+                    fontSize: 12,
+                  ),
                 ),
               ),
             ),
@@ -145,8 +163,8 @@ class Review extends StatelessWidget {
               right: 5,
               child: GestureDetector(
                 onTap: () {
+                  // go to the user profile
                   print("hello");
-                  // add function here
                 },
                 child: const CircleAvatar(
                   backgroundImage: AssetImage(

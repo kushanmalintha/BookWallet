@@ -24,7 +24,7 @@ class CustomButton1 extends StatelessWidget {
     required this.text,
     required this.press,
     this.backgroundColor = MyColors.selectedItemColor,
-    this.textColor = MyColors.textColor,
+    this.textColor = MyColors.bgColor,
     this.borderColor = MyColors.textColor,
   });
 
