@@ -1,5 +1,6 @@
 import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 // A custom button widget with round edges
 // ignore: must_be_immutable
@@ -26,6 +27,15 @@ class CustomToggleButton extends StatefulWidget {
   // Border color of the button
   Color borderColor;
 
+  // Horizontal space
+  final double horizontalSpace;
+
+  // Vertical space
+  final double verticalalSpace;
+
+  // Font size
+  final double textSize;
+
   // Constructor for initializing the custom button
   CustomToggleButton({
     super.key,
@@ -37,6 +47,9 @@ class CustomToggleButton extends StatefulWidget {
     this.textColorSelected = MyColors.bgColor,
     this.textColorNotSelected = MyColors.bgColor,
     this.borderColor = MyColors.nonSelectedItemColor,
+    this.horizontalSpace = 40,
+    this.verticalalSpace = 20,
+    this.textSize = 15,
   });
 
   @override
@@ -60,7 +73,9 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
         widget.press(); // Call the function provided in the press parameter
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+        padding: EdgeInsets.symmetric(
+            vertical: widget.verticalalSpace,
+            horizontal: widget.horizontalSpace),
         decoration: BoxDecoration(
           color: isSelected
               ? widget.backgroundColorNotSelected
@@ -74,7 +89,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
               ? widget.afterText
               : widget.beforeText, // Display text on the button
           style: TextStyle(
-            fontSize: 15,
+            fontSize: widget.textSize,
             color: isSelected
                 ? widget.textColorSelected
                 : widget.textColorSelected,

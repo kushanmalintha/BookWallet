@@ -82,23 +82,23 @@ class TrendingCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      SizedBox(
-                        height: 40,
-                        width: 150,
-                        child: CustomToggleButton(
-                          beforeText: 'Send Request',
-                          afterText: 'Requested',
-                          press: () {
-                            // Add your onPressed functionality here
-                          },
-                          backgroundColorSelected: MyColors.selectedItemColor,
-                          backgroundColorNotSelected:
-                              MyColors.nonSelectedItemColor,
-                          textColorSelected: MyColors.bgColor,
-                          textColorNotSelected: MyColors.textColor,
-                          borderColor: MyColors.nonSelectedItemColor,
-                        ),
+                      CustomToggleButton(
+                        beforeText: 'Send Request',
+                        afterText: 'Requested',
+                        press: () {
+                          // Add your onPressed functionality here
+                        },
+                        backgroundColorSelected: MyColors.selectedItemColor,
+                        backgroundColorNotSelected:
+                            MyColors.nonSelectedItemColor,
+                        textColorSelected: MyColors.bgColor,
+                        textColorNotSelected: MyColors.textColor,
+                        borderColor: MyColors.nonSelectedItemColor,
+                        verticalalSpace: 10,
+                        horizontalSpace: 15,
+                        textSize: 12,
                       ),
+
                       const SizedBox(width: 15),
                       // const Expanded(
                       //   // child: Text(
