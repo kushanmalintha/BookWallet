@@ -21,14 +21,6 @@ class EditUserInfo extends StatelessWidget {
             // Handle back button press
           },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              // Handle settings button press
-            },
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -67,7 +59,6 @@ class EditUserInfo extends StatelessWidget {
             const TextField(
               decoration: InputDecoration(
                   labelText: 'Email',
-                  hintText: 'damon90@gmail.com',
                   hintStyle: TextStyle(color: MyColors.text2Color),
                   suffixIcon: Icon(
                     Icons.email,

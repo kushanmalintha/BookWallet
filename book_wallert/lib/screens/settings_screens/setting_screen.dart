@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:book_wallert/colors.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
+class Settingscreen extends StatelessWidget {
+  const Settingscreen({super.key});
 
   @override
   Widget build(BuildContext context) {
