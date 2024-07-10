@@ -12,19 +12,19 @@ class CustomToggleButton extends StatefulWidget {
   final Function press;
 
   // Background color of the button when selected
-  Color backgroundColorSelected = MyColors.selectedItemColor;
+  Color backgroundColorSelected;
 
   // Background color of the button when not selected
-  Color backgroundColorNotSelected = MyColors.nonSelectedItemColor;
+  Color backgroundColorNotSelected;
 
   // Text color of the button when selected
-  Color textColorSelected = MyColors.bgColor;
+  Color textColorSelected;
 
   // Text color of the button when not selected
-  Color textColorNotSelected = MyColors.textColor;
+  Color textColorNotSelected;
 
   // Border color of the button
-  Color borderColor = MyColors.nonSelectedItemColor;
+  Color borderColor;
 
   // Constructor for initializing the custom button
   CustomToggleButton({
@@ -32,11 +32,11 @@ class CustomToggleButton extends StatefulWidget {
     required this.beforeText,
     required this.afterText,
     required this.press,
-    required this.backgroundColorSelected,
-    required this.backgroundColorNotSelected,
-    required this.textColorSelected,
-    required this.textColorNotSelected,
-    required this.borderColor,
+    this.backgroundColorSelected = MyColors.selectedItemColor,
+    this.backgroundColorNotSelected = MyColors.nonSelectedItemColor,
+    this.textColorSelected = MyColors.bgColor,
+    this.textColorNotSelected = MyColors.bgColor,
+    this.borderColor = MyColors.nonSelectedItemColor,
   });
 
   @override
