@@ -10,37 +10,62 @@ class TopPanel extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: MyColors.navigationBarColor,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: MyColors.titleColor,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.search),
-                color: MyColors.nonSelectedItemColor,
-                onPressed: () {
-                  // Add search functionality here
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.menu_rounded),
-                color: MyColors.nonSelectedItemColor,
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/TestScreen');
-                },
-              ),
-            ],
-          ),
-        ],
+      title: Text(
+        title,
+        style: const TextStyle(
+          color: MyColors.titleColor,
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+        ),
       ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.search),
+          color: MyColors.nonSelectedItemColor,
+          onPressed: () {
+            // Add search functionality here
+          },
+        ),
+        PopupMenuButton<String>(
+          elevation: 10,
+          shadowColor: MyColors.bgColor,
+          color: MyColors.nonSelectedItemColor,
+          icon: const Icon(
+            Icons.menu,
+            color: MyColors.nonSelectedItemColor,
+          ),
+          onSelected: (String result) {
+            // Handle menu item selections
+            if (result == 'Test Screens') {
+              Navigator.pushNamed(context, '/TestScreen');
+            } else if (result == 'Settings') {
+              Navigator.pushNamed(context, '/SettingsScreen');
+            }
+          },
+          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+            const PopupMenuItem<String>(
+              value: 'Test Screens',
+              child: Text('Test Screens'),
+            ),
+            const PopupMenuItem<String>(
+              value: 'Settings',
+              child: Text('Settings'),
+            ),
+            const PopupMenuItem<String>(
+              value: 'Settings',
+              child: Text('Settings'),
+            ),
+            const PopupMenuItem<String>(
+              value: 'Settings',
+              child: Text('Settings'),
+            ),
+            const PopupMenuItem<String>(
+              value: 'Settings',
+              child: Text('Settings'),
+            ),
+          ],
+        ),
+      ],
     );
   }
 

@@ -8,7 +8,8 @@ import 'package:book_wallert/cards/book_cards/book_card_completed.dart';
 // A stateless widget that represents a list of books.
 class BookListView extends StatelessWidget {
   final String screenName;
-  final List<String> screens = [ // name to screens
+  final List<String> screens = [
+    // name to screens
     'Recommended',
     'Trending',
     'Wishlist',
@@ -16,11 +17,14 @@ class BookListView extends StatelessWidget {
   ];
 
   Widget getScreen(String screenName) {
-    switch (screenName) { // functions to return a screen
+    switch (screenName) {
+      // functions to return a screen
       case 'Recommended':
-        return const BookRecommendedCard();
+        return const BookRecommendedCard(suggester: 'Ravindu');
       case 'Trending':
-        return const BookTrendingCard();
+        return const BookTrendingCard(
+          trendingNumber: 1,
+        );
       case 'Wishlist':
         return const BookWishlistCard();
       case 'Completed':
@@ -37,7 +41,7 @@ class BookListView extends StatelessWidget {
       itemCount: 10, // Change this to the number of books
       // Builder function for each list item.
       itemBuilder: (context, index) {
-        return getScreen(screenName); // 
+        return getScreen(screenName); //
       },
     );
   }

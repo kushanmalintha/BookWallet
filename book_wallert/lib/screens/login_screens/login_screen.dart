@@ -5,8 +5,8 @@ import 'package:book_wallert/textbox/custom_textbox.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 
-class Screen1 extends StatelessWidget {
-  const Screen1({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

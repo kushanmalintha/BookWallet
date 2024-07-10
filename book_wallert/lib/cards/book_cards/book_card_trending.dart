@@ -2,19 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 
 class BookTrendingCard extends StatelessWidget {
-  const BookTrendingCard({super.key});
+  final int trendingNumber;
+
+  const BookTrendingCard({
+    Key? key,
+    required this.trendingNumber,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      // ListTile representing a book.
       color: MyColors.panelColor,
       child: ListTile(
         iconColor: MyColors.nonSelectedItemColor,
-        leading: Image.asset(
-          'images/Book_Image1.jpg',
-          scale: 1,
-        ), // Book cover image
+        leading: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '#$trendingNumber',
+              style: TextStyle(
+                color: MyColors.textColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(width: 8), // Space between the number and the image
+            Image.asset(
+              'images/Book_Image1.jpg',
+              scale: 1,
+            ),
+          ],
+        ),
         title: const Text(
           'Dune Messiah',
           style: TextStyle(
@@ -27,7 +44,6 @@ class BookTrendingCard extends StatelessWidget {
             color: MyColors.textColor,
           ),
         ),
-        // isThreeLine: true,
         trailing: IconButton(
           icon: const Icon(Icons.favorite_border),
           onPressed: () {

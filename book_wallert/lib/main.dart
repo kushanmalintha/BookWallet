@@ -1,4 +1,5 @@
 import 'package:book_wallert/screens/test_screens/screen5/edit_user_info.dart';
+import 'package:book_wallert/screens/test_screens/screen5/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/main_screen/main_screen_frame.dart';
 import 'package:book_wallert/screens/test_screens/test_screen_frame.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
         '/screen6': (context) => const Screen6(),
         '/screen7': (context) => const Screen7(),
         '/screen8': (context) => const Screen8(),
+        '/SettingsScreen': (context) => const SettingsPage(),
         '/EditUserInfo': (context) => const EditUserInfo(),
       },
     );
