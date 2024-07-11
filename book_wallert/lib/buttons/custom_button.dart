@@ -84,16 +84,18 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
           border: Border.all(
               color: widget.borderColor, width: 1.5), // Border styling
         ),
-        child: Text(
-          isSelected
-              ? widget.afterText
-              : widget.beforeText, // Display text on the button
-          style: TextStyle(
-            fontSize: widget.textSize,
-            color: isSelected
-                ? widget.textColorSelected
-                : widget.textColorSelected,
-            fontWeight: FontWeight.bold,
+        child: Center(
+          child: Text(
+            isSelected
+                ? widget.afterText
+                : widget.beforeText, // Display text on the button
+            style: TextStyle(
+              fontSize: widget.textSize,
+              color: isSelected
+                  ? widget.textColorSelected
+                  : widget.textColorSelected,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
