@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:book_wallert/cards/book_cards/book_card.dart';
-//import 'package:book_wallert/cards/book_cards/book_card_recommended.dart';
-// import 'package:book_wallert/cards/book_cards/book_card_trending.dart';
-// import 'package:book_wallert/cards/book_cards/book_card_wishlist.dart';
-// import 'package:book_wallert/cards/book_cards/book_card_completed.dart';
-
 import 'package:book_wallert/cards/review_card2.dart';
 
 // A stateless widget that represents a list of books.
