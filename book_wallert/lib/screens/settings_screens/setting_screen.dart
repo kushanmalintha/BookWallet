@@ -9,6 +9,7 @@ class Settingscreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: MyColors.navigationBarColor,
         title: const Text(
           'Settings',

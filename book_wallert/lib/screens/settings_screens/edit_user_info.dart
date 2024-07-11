@@ -10,6 +10,7 @@ class EditUserInfo extends StatelessWidget {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: MyColors.navigationBarColor,
         title: const Text(
           'Account Details',

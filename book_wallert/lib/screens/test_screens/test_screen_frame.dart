@@ -9,13 +9,14 @@ class TestScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: MyColors.navigationBarColor,
         title: const Text(
           'Test Screens',
           style: TextStyle(color: MyColors.text2Color),
         ),
       ),
-      body: Padding( 
+      body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: GridView.count(
           crossAxisCount: 2,
@@ -24,7 +25,8 @@ class TestScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/screen${index + 1}'); // routing button to go to relavent screen.
+                  Navigator.pushReplacementNamed(context,
+                      '/screen${index + 1}'); // routing button to go to relavent screen.
                 },
                 child: Text('Screen ${index + 1}'),
               ),

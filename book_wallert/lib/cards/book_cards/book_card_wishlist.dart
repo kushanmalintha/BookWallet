@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 
 class BookWishlistCard extends StatelessWidget {
-  const BookWishlistCard({Key? key}) : super(key: key);
+  const BookWishlistCard({super.key});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,7 +26,7 @@ class BookWishlistCard extends StatelessWidget {
           ),
         ),
         trailing: IconButton(
-          icon: const Icon(Icons.add),
+          icon: const Icon(Icons.favorite_border),
           onPressed: () {
             // Add to wishlist action
           },

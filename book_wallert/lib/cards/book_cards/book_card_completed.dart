@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 
 class BookCompletedCard extends StatelessWidget {
-  const BookCompletedCard({Key? key}) : super(key: key);
+  const BookCompletedCard({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -5,9 +5,9 @@ class BookTrendingCard extends StatelessWidget {
   final int trendingNumber;
 
   const BookTrendingCard({
-    Key? key,
+    super.key,
     required this.trendingNumber,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class BookTrendingCard extends StatelessWidget {
           children: [
             Text(
               '#$trendingNumber',
-              style: TextStyle(
+              style: const TextStyle(
                 color: MyColors.textColor,
                 fontWeight: FontWeight.bold,
               ),

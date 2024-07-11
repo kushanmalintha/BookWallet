@@ -5,9 +5,9 @@ class BookRecommendedCard extends StatelessWidget {
   final String suggester;
 
   const BookRecommendedCard({
-    Key? key,
+    super.key,
     required this.suggester,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class BookRecommendedCard extends StatelessWidget {
         ),
         subtitle: Text(
           'Frank Herbert\nPages: 256\nGenre: Science Fiction\nTotal Rating: 9.8/10\nSuggested by: $suggester',
-          style: TextStyle(
+          style: const TextStyle(
             color: MyColors.textColor,
           ),
         ),
