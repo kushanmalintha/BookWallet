@@ -1,6 +1,6 @@
-import 'package:book_wallert/buttons/custom_button.dart';
+import 'package:book_wallert/widgets/buttons/custom_button.dart';
 import 'package:flutter/material.dart';
-import '../../../../colors.dart';
+import '../../../../../colors.dart';
 
 class FilterButton extends StatelessWidget {
   final String label;

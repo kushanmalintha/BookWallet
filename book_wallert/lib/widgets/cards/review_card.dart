@@ -2,7 +2,7 @@ import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
 
 // Review widget that displays details of a book review
-class Review extends StatelessWidget {
+class ReviewCard extends StatelessWidget {
   final double cardHeight; // Height of the review card
   final Color backgroundColor; // Background color of the review card
   final String imagePath; // Path to the image of the book
@@ -13,7 +13,7 @@ class Review extends StatelessWidget {
   final String reviewedBy; // Name of the reviewer
   final String userName; // Username of the reviewer
 
-  const Review({
+  const ReviewCard({
     super.key,
     required this.cardHeight,
     required this.backgroundColor,

@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import '../../../../colors.dart';
+import '../../../../../colors.dart';
 
 // class FilterButton extends StatelessWidget {
 //   final String label;
@@ -21,17 +20,11 @@ import '../../../../colors.dart';
 //   }
 // }
 
-class FandomCard extends StatelessWidget {
-
-  final String groupName;
-  final String memberCount;
-  final int discussionCount;
-  
-
-  const FandomCard({super.key, required this.groupName, required this.memberCount, required this.discussionCount});
+class SuggestionCard extends StatelessWidget {
+  const SuggestionCard({super.key});
   @override
   Widget build(BuildContext context) {
-    return  Card(
+    return Card(
       color: MyColors.panelColor,
       margin: const EdgeInsets.all(5),
       child: Padding(
@@ -50,15 +43,15 @@ class FandomCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    groupName,
-                    style: const TextStyle(
+                  const Text(
+                    'Harry Potter Fans',
+                    style: TextStyle(
                       color: MyColors.textColor,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 5),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -66,14 +59,44 @@ class FandomCard extends StatelessWidget {
                         'Members: 23,455',
                         style: TextStyle(color: MyColors.text2Color),
                       ),
-                      
                       Text(
                         'Discussions: 23,455',
                         style: TextStyle(color: MyColors.text2Color),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 7),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      SizedBox(
+                        height: 30,
+                        width: 130,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Add your onPressed functionality here
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                MyColors.selectedItemColor, // Button color
+                          ),
+                          child: const Text(
+                            'Send Request',
+                            style: TextStyle(
+                                color: MyColors.bgColor, fontSize: 12),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 15),
+                      const Expanded(
+                        child: Text(
+                          'Suggested By: Ravindu Pathirage and ...',
+                          style: TextStyle(
+                              color: MyColors.text2Color, fontSize: 12),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

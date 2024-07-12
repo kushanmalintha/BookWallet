@@ -1,42 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/screens/test_screens/screen4/screen4bodypart.dart';
 
-class Screen4 extends StatelessWidget {
-  const Screen4({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const BooksListScreenBody();
-  }
-}
-
-class BooksListScreenBody extends StatelessWidget {
-  const BooksListScreenBody({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: MyColors.bgColor,
-        padding: const EdgeInsets.all(16),
-        child: const Column(
-          children: [
-            SizedBox(height: 60), // Added height to move everything down
-            BookScreen(),
-            //SizedBox(height: 10),
-            Expanded(
-              child: ProfileScreenBody(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class BookScreen extends StatelessWidget {
-  const BookScreen({super.key});
+class BookProfileScreenDetails extends StatelessWidget {
+  const BookProfileScreenDetails({super.key});
 
   @override
   Widget build(BuildContext context) {

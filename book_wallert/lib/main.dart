@@ -1,11 +1,12 @@
+import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
 import 'package:book_wallert/screens/settings_screens/edit_user_info.dart';
 import 'package:book_wallert/screens/settings_screens/setting_screen.dart';
+import 'package:book_wallert/screens/test_screens/screen3/screen3.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/main_screen/main_screen_frame.dart';
 import 'package:book_wallert/screens/test_screens/test_screen_frame.dart';
 import 'package:book_wallert/screens/test_screens/screen1/screen1.dart';
 import 'package:book_wallert/screens/test_screens/screen2/screen2.dart';
-import 'package:book_wallert/screens/test_screens/screen3/screen3.dart';
 import 'package:book_wallert/screens/test_screens/screen4/screen4.dart';
 import 'package:book_wallert/screens/test_screens/screen5/screen5.dart';
 import 'package:book_wallert/screens/test_screens/screen6/screen6.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         '/screen8': (context) => const Screen8(),
         '/SettingsScreen': (context) => const Settingscreen(),
         '/EditUserInfo': (context) => const EditUserInfo(),
+        '/Profile': (context) => const UserProfileScreenBody(),
       },
     );
   }

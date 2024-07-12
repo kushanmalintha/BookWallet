@@ -1,9 +1,9 @@
 import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:book_wallert/cards/review_card.dart';
+import 'package:book_wallert/widgets/cards/review_card.dart';
 
-class HomeScreenBody extends StatelessWidget {
-  const HomeScreenBody({super.key});
+class HomeListScreenBody extends StatelessWidget {
+  const HomeListScreenBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class HomeScreenBody extends StatelessWidget {
             return Column(
               children: [
                 const SizedBox(height: 3),
-                Review(
+                ReviewCard(
                   cardHeight: 190,
                   backgroundColor: MyColors.panelColor,
                   imagePath: review['imagePath']!,

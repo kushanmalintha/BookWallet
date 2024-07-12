@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_list_view.dart';
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/buttons/selection_bar.dart';
+import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 
-class BooksScreenBody extends StatefulWidget {
-  const BooksScreenBody({super.key});
+class BookListScreenBody extends StatefulWidget {
+  const BookListScreenBody({super.key});
 
   @override
-  State<BooksScreenBody> createState() {
+  State<BookListScreenBody> createState() {
     // returns a screen as state
     return _BookScreenBodyState();
   }
 }
 
-class _BookScreenBodyState extends State<BooksScreenBody>
+class _BookScreenBodyState extends State<BookListScreenBody>
     with SingleTickerProviderStateMixin {
   // ''with ticker'' is to make sure connnection between clicking and swiping
   late TabController _tabController;

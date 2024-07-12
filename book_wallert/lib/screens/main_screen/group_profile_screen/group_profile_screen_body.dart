@@ -1,21 +1,20 @@
-import 'package:book_wallert/screens/main_screen/group_profile/group_profile_list_view.dart';
-import 'package:book_wallert/screens/main_screen/group_profile/group_profile_toppanel.dart';
-import 'package:book_wallert/screens/main_screen/top_panel.dart';
+import 'package:book_wallert/screens/main_screen/group_profile_screen/group_profile_screen_list_view.dart';
+import 'package:book_wallert/screens/main_screen/group_profile_screen/group_profile_screen_details.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/buttons/selection_bar.dart';
+import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 
-class GroupProfileBody extends StatefulWidget {
-  const GroupProfileBody({super.key});
+class GroupProfileScreenBody extends StatefulWidget {
+  const GroupProfileScreenBody({super.key});
 
   @override
-  State<GroupProfileBody> createState() {
+  State<GroupProfileScreenBody> createState() {
     // returns a screen as state
-    return _GroupProfileBodyState();
+    return _GroupProfileScreenBodyState();
   }
 }
 
-class _GroupProfileBodyState extends State<GroupProfileBody>
+class _GroupProfileScreenBodyState extends State<GroupProfileScreenBody>
     with SingleTickerProviderStateMixin {
   // ''with ticker'' is to make sure connnection between clicking and swiping
   late TabController _tabController;
@@ -38,21 +37,18 @@ class _GroupProfileBodyState extends State<GroupProfileBody>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // making the screen body
       backgroundColor: MyColors.bgColor,
-      appBar: const TopPanel(title: 'Fandoms'),
       body: Column(
         children: [
-          const GroupProfileTopPanel(),
-          // adding the selection bar widget outside the app bar
+          const GroupProfileScreenDetails(),
           SelectionBar(tabController: _tabController, tabNames: _tabNames),
           Expanded(
             child: TabBarView(
               // adding corresponding screens to each button on SelectionBar.
               controller: _tabController,
               children: const [
-                GroupProfileListView(), // Reviews
-                GroupProfileListView(), // Books
+                GroupProfileScreenListView(screenName: 'Reviews'), // Reviews
+                GroupProfileScreenListView(screenName: 'Books'), // Books
               ],
             ),
           ),

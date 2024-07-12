@@ -3,14 +3,13 @@ import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
 import 'package:book_wallert/widgets/cards/review_card2.dart';
 
 // A stateless widget that represents a list of books.
-class ProfileListVeiw extends StatelessWidget {
+class BookProfileScreenListView extends StatelessWidget {
   final String screenName;
   final List<String> screens = [
     // name to screens
     'Reviews',
-    'Reading',
-    'Wishlist',
-    'Completed',
+    'Locations',
+    'Read online',
   ];
 
   Widget getScreen(String screenName) {
@@ -18,17 +17,15 @@ class ProfileListVeiw extends StatelessWidget {
       // functions to return a screen
       case 'Reviews':
         return ReviewCard();
-      case 'Reading':
+      case 'Locations':
         return ReviewCard();
-      case 'Wishlist':
-        return ReviewCard();
-      case 'Completed':
+      case 'Read Online':
         return ReviewCard();
     }
     return const BookCard();
   }
 
-  ProfileListVeiw({super.key, required this.screenName});
+  BookProfileScreenListView({super.key, required this.screenName});
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

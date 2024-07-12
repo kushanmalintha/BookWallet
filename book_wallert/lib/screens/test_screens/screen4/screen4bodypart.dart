@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:book_wallert/screens/test_screens/screen3/screen3list_veiw.dart';
+import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_list_veiw.dart';
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/buttons/selection_bar.dart';
+import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 
 class ProfileScreenBody extends StatefulWidget {
   const ProfileScreenBody({super.key});
@@ -52,10 +52,10 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody>
       body: TabBarView(
         // adding corrosponding screens to each button on SelectionBar.
         controller: _tabController,
-        children: [
-          ProfileListVeiw(screenName: 'Reviews'), // Recommended
-          ProfileListVeiw(screenName: 'Reading'), // Trending
-          ProfileListVeiw(screenName: 'Wishlist'), // Wishlist
+        children: const [
+          UserProfileListVeiw(screenName: 'Reviews'), // Recommended
+          UserProfileListVeiw(screenName: 'Reading'), // Trending
+          UserProfileListVeiw(screenName: 'Wishlist'), // Wishlist
           //ProfileListVeiw(screenName: 'Completed'), // Completed
         ],
       ),

@@ -1,11 +1,11 @@
-import 'package:book_wallert/screens/main_screen/groups_screen/groups_screen_body.dart';
-import 'package:book_wallert/screens/main_screen/profile_screen/profile_screen_body.dart';
+import 'package:book_wallert/screens/main_screen/book_screen_body.dart';
+import 'package:book_wallert/screens/main_screen/group_screen_body.dart';
+import 'package:book_wallert/screens/main_screen/home_screen_body.dart';
+import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/screens/main_screen/top_panel.dart';
-import 'package:book_wallert/screens/main_screen/home_screen/home_screen_body.dart';
-import 'package:book_wallert/screens/main_screen/books_screen/books_screen_body.dart';
-import 'package:book_wallert/screens/main_screen/bottom_navigation_bar.dart';
+import 'package:book_wallert/widgets/top_panel.dart';
+import 'package:book_wallert/widgets/bottom_navigation_bar.dart';
 
 // The main screen of the application, which is stateful.
 class MainScreen extends StatefulWidget {
@@ -25,10 +25,12 @@ class _MainScreenState extends State<MainScreen> {
 
   // Handle bottom navigation bar item tap.
   void _onItemTapped(int index) {
-    setState(() {
-      // to tell refresh the screen(calling the build function), we call using this function
-      _selectedIndex = index; // updating the index
-    });
+    setState(
+      () {
+        // to tell refresh the screen(calling the build function), we call using this function
+        _selectedIndex = index; // updating the index
+      },
+    );
   }
 
   @override
@@ -51,11 +53,11 @@ class _MainScreenState extends State<MainScreen> {
         break;
       case 2:
         pageName = 'Books';
-        activePage = const BooksScreenBody();
+        activePage = const BookScreenBody();
         break;
       case 3:
         pageName = "Profile";
-        activePage = const ProfileScreenBody();
+        activePage = const UserProfileScreenBody();
         break;
       default:
         pageName = 'Book Wallet';
@@ -68,7 +70,6 @@ class _MainScreenState extends State<MainScreen> {
       // changing the body of the app screen
       body: Column(
         children: [
-          const SizedBox(height: 1), // Add space between AppBar and body
           Expanded(child: activePage),
         ],
       ),

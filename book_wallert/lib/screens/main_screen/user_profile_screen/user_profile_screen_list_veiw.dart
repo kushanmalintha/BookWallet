@@ -1,22 +1,15 @@
-import 'package:book_wallert/cards/book_cards/book_card_completed.dart';
+import 'package:book_wallert/widgets/cards/book_cards/book_card_completed.dart';
 import 'package:flutter/material.dart';
-import 'package:book_wallert/cards/book_cards/book_card.dart';
+import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
 //import 'package:book_wallert/cards/book_cards/book_card_recommended.dart';
 //import 'package:book_wallert/cards/book_cards/book_card_trending.dart';
-import 'package:book_wallert/cards/book_cards/book_card_wishlist.dart';
+import 'package:book_wallert/widgets/cards/book_cards/book_card_wishlist.dart';
 
-import 'package:book_wallert/cards/review_card2.dart';
+import 'package:book_wallert/widgets/cards/review_card2.dart';
 
 // A stateless widget that represents a list of books.
-class ProfileListVeiw extends StatelessWidget {
+class UserProfileListVeiw extends StatelessWidget {
   final String screenName;
-  final List<String> screens = [
-    // name to screens
-    'Reviews',
-    'Reading',
-    'Wishlist',
-    'Completed',
-  ];
 
   Widget getScreen(String screenName) {
     switch (screenName) {
@@ -33,7 +26,7 @@ class ProfileListVeiw extends StatelessWidget {
     return const BookCard();
   }
 
-  ProfileListVeiw({super.key, required this.screenName});
+  const UserProfileListVeiw({super.key, required this.screenName});
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

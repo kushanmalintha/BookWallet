@@ -1,6 +1,6 @@
-import 'package:book_wallert/cards/group_cards/group_card_suggestion.dart';
-import 'package:book_wallert/cards/group_cards/group_card_trending.dart';
-import 'package:book_wallert/cards/group_cards/group_card_yourgroup.dart';
+import 'package:book_wallert/widgets/cards/group_cards/group_card_suggestion.dart';
+import 'package:book_wallert/widgets/cards/group_cards/group_card_trending.dart';
+import 'package:book_wallert/widgets/cards/group_cards/group_card_yourgroup.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
 

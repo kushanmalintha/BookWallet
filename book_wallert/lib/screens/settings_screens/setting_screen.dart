@@ -43,7 +43,7 @@ class Settingscreen extends StatelessWidget {
                   ],
                 ),
                 onPressed: (BuildContext context) {
-                  Navigator.pushReplacementNamed(context, '/EditUserInfo');
+                  Navigator.pushNamed(context, '/EditUserInfo');
                 },
               ),
               // SettingsTile(

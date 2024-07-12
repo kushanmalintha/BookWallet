@@ -1,5 +1,5 @@
 //import 'package:book_wallert/buttons/custom_button.dart';
-import 'package:book_wallert/buttons/custom_button1.dart';
+import 'package:book_wallert/widgets/buttons/custom_button1.dart';
 import 'package:book_wallert/screens/test_screens/screen1/screen1.dart';
 import 'package:book_wallert/textbox/custom_textbox.dart';
 import 'package:flutter/material.dart';

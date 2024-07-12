@@ -9,6 +9,7 @@ class TopPanel extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: MyColors.navigationBarColor,
       title: Text(
         title,

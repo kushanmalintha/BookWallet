@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/buttons/selection_bar.dart';
-import 'group_list_view.dart';
+import 'package:book_wallert/widgets/buttons/selection_bar.dart';
+import 'groups_list_list_view.dart';
 
-class GroupScreenBody extends StatefulWidget {
-  const GroupScreenBody({super.key});
+class GroupListScreenBody extends StatefulWidget {
+  const GroupListScreenBody({
+    super.key,
+  });
 
   @override
-  State<GroupScreenBody> createState() {
+  State<GroupListScreenBody> createState() {
     // returns a screen as state
-    return _GroupScreenBodyState();
+    return _GroupListScreenBodyState();
   }
 }
 
-class _GroupScreenBodyState extends State<GroupScreenBody>
+class _GroupListScreenBodyState extends State<GroupListScreenBody>
     with SingleTickerProviderStateMixin {
   // ''with ticker'' is to make sure connnection between clicking and swiping
   late TabController _tabController;

@@ -1,16 +1,14 @@
-import 'package:book_wallert/buttons/custom_button.dart';
+import 'package:book_wallert/widgets/buttons/custom_button.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
 
-class GroupProfileTopPanel extends StatelessWidget {
-  const GroupProfileTopPanel({super.key});
+class GroupProfileScreenDetails extends StatelessWidget {
+  const GroupProfileScreenDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
       height: 160,
-      width: screenWidth,
       color: MyColors.bgColor,
       child: Stack(
         children: [
