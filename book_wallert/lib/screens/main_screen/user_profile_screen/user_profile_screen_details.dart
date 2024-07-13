@@ -1,5 +1,4 @@
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
 import 'package:flutter/material.dart';
 
 // Constants
