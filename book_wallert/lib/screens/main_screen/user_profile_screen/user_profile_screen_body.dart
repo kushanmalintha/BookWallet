@@ -18,6 +18,7 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
     with SingleTickerProviderStateMixin {
   // ''with ticker'' is to make sure connnection between clicking and swiping
   late TabController _tabController;
+  late ScrollController _scrollController;
 
   // add name to buttons on panel
   final List<String> _tabNames = [
@@ -27,6 +28,9 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
     'Completed',
   ];
 
+  // Set a scroll threshold
+  final double scrollThreshold = 330;
+
   @override
   void initState() {
     // Tab controller
@@ -34,19 +38,44 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
     _tabController = TabController(
         length: _tabNames.length,
         vsync: this); // animation details are mentioned here
+
+    // Scroll controller
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
   }
 
+  void _scrollListener() {
+    if (_scrollController.offset >= scrollThreshold &&
+        !_scrollController.position.outOfRange) {
+      _scrollController.jumpTo(scrollThreshold);
+    }
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  // Build widget
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
-      body: Column(
-        children: [
-          const UserProfileDetails(), // Top details section
-          SelectionBar(tabController: _tabController, tabNames: _tabNames),
-          Expanded(
+      body: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          const SliverToBoxAdapter(
+            child: UserProfileDetails(), // Top details section
+          ),
+          SliverToBoxAdapter(
+            child: SelectionBar(
+                tabController: _tabController, tabNames: _tabNames),
+          ),
+          SliverFillRemaining(
             child: TabBarView(
-              // adding corrosponding screens to each button on SelectionBar.
+              // adding corresponding screens to each button on SelectionBar.
               controller: _tabController,
               children: const [
                 UserProfileListVeiw(screenName: 'Reviews'), // Recommended

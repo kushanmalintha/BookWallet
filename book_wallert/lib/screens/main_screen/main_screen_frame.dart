@@ -1,82 +1,92 @@
-import 'package:book_wallert/screens/main_screen/book_screen_body.dart';
-import 'package:book_wallert/screens/main_screen/group_screen_body.dart';
-import 'package:book_wallert/screens/main_screen/home_screen_body.dart';
-import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
 import 'package:flutter/material.dart';
-import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/screens/main_screen/books_screen/books_list_screen_body.dart';
+import 'package:book_wallert/screens/main_screen/groups_screen/groups_list_screen_body.dart';
+import 'package:book_wallert/screens/main_screen/home_screen/home_list_screen_body.dart';
+import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
 import 'package:book_wallert/widgets/top_panel.dart';
 import 'package:book_wallert/widgets/bottom_navigation_bar.dart';
+import 'package:book_wallert/colors.dart';
 
-// The main screen of the application, which is stateful.
 class MainScreen extends StatefulWidget {
-  // since we change the UI we have to use StateFulWidget
   const MainScreen({super.key});
+
   @override
-  State<MainScreen> createState() {
-    // returns a Screen state
-    return _MainScreenState();
-  }
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-// The state for the HomeScreen widget.
 class _MainScreenState extends State<MainScreen> {
-  // Index for the selected bottom navigation bar item.
-  int _selectedIndex = 0; // starting from Home
+  // Current index of the selected tab in the bottom navigation bar
+  int _selectedIndex = 0;
 
-  // Handle bottom navigation bar item tap.
+  // Key for the Navigator to manage the stack of pages
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
+  // Method to handle bottom navigation bar item taps
   void _onItemTapped(int index) {
-    setState(
-      () {
-        // to tell refresh the screen(calling the build function), we call using this function
-        _selectedIndex = index; // updating the index
-      },
+    setState(() {
+      _selectedIndex = index;
+    });
+    _navigatorKey.currentState!.pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => IndexedStack(
+          index: _selectedIndex,
+          children: screens,
+        ),
+      ),
     );
+  }
+
+  // List of screens to display based on the selected index
+  List<Widget> screens = const [
+    HomeListScreenBody(),
+    GroupListScreenBody(),
+    BookListScreenBody(),
+    UserProfileScreenBody(),
+  ];
+
+  // Method to get the title of the current screen based on the selected index
+  String _getName(int index) {
+    switch (index) {
+      case 0:
+        return 'BookWallet';
+      case 1:
+        return 'Groups';
+      case 2:
+        return 'Books';
+      case 3:
+        return 'Profile';
+      default:
+        return 'BookWallet'; // Default to HomeListScreenBody
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // keeping the active page
-    Widget? activePage;
-
-    // page name
-    var pageName = 'Book Wallet';
-
-    switch (_selectedIndex) {
-      // updating the screeen body
-      case 0:
-        pageName = 'Book Wallet';
-        activePage = const HomeScreenBody();
-        break;
-      case 1:
-        pageName = 'Groups';
-        activePage = const GroupScreenBody();
-        break;
-      case 2:
-        pageName = 'Books';
-        activePage = const BookScreenBody();
-        break;
-      case 3:
-        pageName = "Profile";
-        activePage = const UserProfileScreenBody();
-        break;
-      default:
-        pageName = 'Book Wallet';
-        activePage = const HomeScreenBody();
-    }
-
     return Scaffold(
       backgroundColor: MyColors.bgColor,
-      appBar: TopPanel(title: pageName),
-      // changing the body of the app screen
-      body: Column(
-        children: [
-          Expanded(child: activePage),
-        ],
+      appBar: TopPanel(
+        title: _getName(_selectedIndex), // Top panel with dynamic title
       ),
-      // BottomNavigationBar with 4 items.
+      body: PopScope(
+        canPop: false, // Disable popping from the stack
+        onPopInvoked: (didPop) async {
+          if (_navigatorKey.currentState!.canPop()) {
+            _navigatorKey.currentState!.pop();
+          }
+        },
+        child: Navigator(
+          key: _navigatorKey,
+          onGenerateRoute: (routeSettings) {
+            return MaterialPageRoute(
+              builder: (context) =>
+                  screens[_selectedIndex], // Display the selected screen
+            );
+          },
+        ),
+      ),
       bottomNavigationBar: BottomNavigation(
         selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
+        onItemTapped: _onItemTapped, // Handle bottom navigation bar taps
       ),
     );
   }

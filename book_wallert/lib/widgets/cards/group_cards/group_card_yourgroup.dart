@@ -19,9 +19,7 @@ class FandomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (changeGroupsScreenGlobal != null) {
-          changeGroupsScreenGlobal!(const GroupProfileScreenBody());
-        }
+        screenChange(context, const GroupProfileScreenBody());
       },
       child: Card(
         color: MyColors.panelColor,

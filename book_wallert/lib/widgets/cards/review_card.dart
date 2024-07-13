@@ -29,207 +29,209 @@ class ReviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width; // Get screen width
-    return Card(
-      color: backgroundColor,
-      // shape: RoundedRectangleBorder(
-      //   borderRadius: BorderRadius.circular(), // Rounded corners for the card
-      // ),
-      child: SizedBox(
-        height: cardHeight,
-        width: screenWidth,
-        child: Stack(
-          children: <Widget>[
-            // Book image positioned at the top left
-            Positioned(
-              top: 5,
-              left: 5,
-              child: GestureDetector(
-                onTap: () {
-                  // go to the book profile
-                  print("hello");
-                },
-                child: SizedBox(
-                  height: 120,
-                  width: 90,
-                  child: Image.asset(imagePath, fit: BoxFit.cover, errorBuilder:
-                      (BuildContext context, Object exception,
-                          StackTrace? stackTrace) {
-                    return Container(
-                      color: MyColors.text2Color,
-                    );
-                  }),
-                ),
-              ),
-            ),
-            // Book name positioned next to the image
-            Positioned(
-              top: 2,
-              left: 105,
-              child: GestureDetector(
-                onTap: () {
-                  // go to the book profile
-                  print("hello");
-                },
-                child: Text(
-                  bookName,
-                  style: const TextStyle(
-                    color: MyColors.textColor,
-                    fontSize: 18,
+    return Center(
+      child: Card(
+        color: backgroundColor,
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(), // Rounded corners for the card
+        // ),
+        child: SizedBox(
+          height: cardHeight,
+          width: screenWidth,
+          child: Stack(
+            children: <Widget>[
+              // Book image positioned at the top left
+              Positioned(
+                top: 5,
+                left: 5,
+                child: GestureDetector(
+                  onTap: () {
+                    // go to the book profile
+                    print("hello");
+                  },
+                  child: SizedBox(
+                    height: 120,
+                    width: 90,
+                    child: Image.asset(imagePath, fit: BoxFit.cover, errorBuilder:
+                        (BuildContext context, Object exception,
+                            StackTrace? stackTrace) {
+                      return Container(
+                        color: MyColors.text2Color,
+                      );
+                    }),
                   ),
                 ),
               ),
-            ),
-            // Author name positioned next to the book name
-            Positioned(
-              top: 12,
-              left: 225,
-              child: Text(
-                authorName,
-                style: const TextStyle(
-                  color: MyColors.textColor,
-                  fontSize: 8,
+              // Book name positioned next to the image
+              Positioned(
+                top: 2,
+                left: 105,
+                child: GestureDetector(
+                  onTap: () {
+                    // go to the book profile
+                    print("hello");
+                  },
+                  child: Text(
+                    bookName,
+                    style: const TextStyle(
+                      color: MyColors.textColor,
+                      fontSize: 18,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            // Divider line under the book name
-            Positioned(
-              top: 25,
-              left: 105,
-              child: Container(
-                width: 175,
-                height: 1,
-                color: MyColors.textColor,
-              ),
-            ),
-            // Book description positioned below the divider
-            Positioned(
-              top: 30,
-              left: 105,
-              right: 20,
-              child: Text(
-                description,
-                style: const TextStyle(
-                  color: MyColors.text2Color,
-                  fontSize: 11,
-                ),
-                textAlign: TextAlign.justify,
-              ),
-            ),
-            // Rating positioned at the bottom left
-            Positioned(
-              bottom: 40,
-              left: 20,
-              child: Text(
-                rating,
-                style: const TextStyle(
-                  color: MyColors.text2Color,
-                  fontSize: 12,
-                ),
-              ),
-            ),
-            // Reviewed by positioned next to the rating
-            Positioned(
-              bottom: 42,
-              left: 200,
-              child: Text(
-                reviewedBy,
-                style: const TextStyle(
-                  color: MyColors.text2Color,
-                  fontSize: 8,
-                ),
-              ),
-            ),
-            // Username positioned next to the reviewed by text
-            Positioned(
-              bottom: 40,
-              left: 250,
-              child: GestureDetector(
-                onTap: () {
-                  // go to the user profile
-                  print("hello");
-                },
+              // Author name positioned next to the book name
+              Positioned(
+                top: 12,
+                left: 225,
                 child: Text(
-                  userName,
+                  authorName,
+                  style: const TextStyle(
+                    color: MyColors.textColor,
+                    fontSize: 8,
+                  ),
+                ),
+              ),
+              // Divider line under the book name
+              Positioned(
+                top: 25,
+                left: 105,
+                child: Container(
+                  width: 175,
+                  height: 1,
+                  color: MyColors.textColor,
+                ),
+              ),
+              // Book description positioned below the divider
+              Positioned(
+                top: 30,
+                left: 105,
+                right: 20,
+                child: Text(
+                  description,
+                  style: const TextStyle(
+                    color: MyColors.text2Color,
+                    fontSize: 11,
+                  ),
+                  textAlign: TextAlign.justify,
+                ),
+              ),
+              // Rating positioned at the bottom left
+              Positioned(
+                bottom: 40,
+                left: 20,
+                child: Text(
+                  rating,
                   style: const TextStyle(
                     color: MyColors.text2Color,
                     fontSize: 12,
                   ),
                 ),
               ),
-            ),
-            // Icon button positioned at the bottom right
-            Positioned(
-              bottom: 40,
-              right: 5,
-              child: GestureDetector(
-                onTap: () {
-                  // go to the user profile
-                  print("hello");
-                },
-                child: const CircleAvatar(
-                  backgroundImage: AssetImage(
-                    'images/Book_Image1.jpg',
+              // Reviewed by positioned next to the rating
+              Positioned(
+                bottom: 42,
+                left: 200,
+                child: Text(
+                  reviewedBy,
+                  style: const TextStyle(
+                    color: MyColors.text2Color,
+                    fontSize: 8,
                   ),
-                  radius: 10,
                 ),
               ),
-              // child: IconButton(
-              //   icon: const Icon(Icons.person),
-              //   color: MyColors.nonSelectedItemColor,
-              //   iconSize: 20,
-              //   onPressed: () {
-              //     // like function
-              //   },
-              // ),
-            ),
-            // Divider line positioned above the action buttons
-            Positioned(
-              bottom: 36,
-              child: Container(
-                width: screenWidth,
-                height: 1,
-                color: MyColors.textColor,
-              ),
-            ),
-            // Row of action buttons (like, comment, share) at the bottom
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: SizedBox(
-                height: 36,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.thumb_up),
-                      color: MyColors.nonSelectedItemColor,
-                      iconSize: 20,
-                      onPressed: () {
-                        // like function
-                      },
+              // Username positioned next to the reviewed by text
+              Positioned(
+                bottom: 40,
+                left: 250,
+                child: GestureDetector(
+                  onTap: () {
+                    // go to the user profile
+                    print("hello");
+                  },
+                  child: Text(
+                    userName,
+                    style: const TextStyle(
+                      color: MyColors.text2Color,
+                      fontSize: 12,
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.comment),
-                      color: MyColors.nonSelectedItemColor,
-                      iconSize: 20,
-                      onPressed: () {
-                        // comment function
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.share),
-                      color: MyColors.nonSelectedItemColor,
-                      iconSize: 20,
-                      onPressed: () {
-                        // share function
-                      },
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              // Icon button positioned at the bottom right
+              Positioned(
+                bottom: 40,
+                right: 5,
+                child: GestureDetector(
+                  onTap: () {
+                    // go to the user profile
+                    print("hello");
+                  },
+                  child: const CircleAvatar(
+                    backgroundImage: AssetImage(
+                      'images/Book_Image1.jpg',
+                    ),
+                    radius: 10,
+                  ),
+                ),
+                // child: IconButton(
+                //   icon: const Icon(Icons.person),
+                //   color: MyColors.nonSelectedItemColor,
+                //   iconSize: 20,
+                //   onPressed: () {
+                //     // like function
+                //   },
+                // ),
+              ),
+              // Divider line positioned above the action buttons
+              Positioned(
+                bottom: 36,
+                child: Container(
+                  width: screenWidth,
+                  height: 1,
+                  color: MyColors.textColor,
+                ),
+              ),
+              // Row of action buttons (like, comment, share) at the bottom
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: SizedBox(
+                  height: 36,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.thumb_up),
+                        color: MyColors.nonSelectedItemColor,
+                        iconSize: 20,
+                        onPressed: () {
+                          // like function
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.comment),
+                        color: MyColors.nonSelectedItemColor,
+                        iconSize: 20,
+                        onPressed: () {
+                          // comment function
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.share),
+                        color: MyColors.nonSelectedItemColor,
+                        iconSize: 20,
+                        onPressed: () {
+                          // share function
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

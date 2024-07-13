@@ -18,6 +18,7 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
     with SingleTickerProviderStateMixin {
   // ''with ticker'' is to make sure connnection between clicking and swiping
   late TabController _tabController;
+  late ScrollController _scrollController;
 
   // add name to buttons on panel
   final List<String> _tabNames = [
@@ -26,6 +27,9 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
     'Read Online',
   ];
 
+  // Set a scroll threshold
+  final double scrollThreshold = 300;
+
   @override
   void initState() {
     // Tab controller
@@ -33,29 +37,49 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
     _tabController = TabController(
         length: _tabNames.length,
         vsync: this); // animation details are mentioned here
+
+    // Scroll controller
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >= scrollThreshold &&
+        !_scrollController.position.outOfRange) {
+      _scrollController.jumpTo(scrollThreshold);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
-      body: Column(
-        children: [
-          const BookProfileScreenDetails(),
-          SelectionBar(tabController: _tabController, tabNames: _tabNames),
-          Expanded(
-            child: TabBarView(
-              // adding corresponding screens to each button on SelectionBar.
-              controller: _tabController,
-              children: [
-                BookProfileScreenListView(screenName: 'Reviews'), // Reviews
-                BookProfileScreenListView(screenName: 'Locations'), // Locations
-                BookProfileScreenListView(
-                    screenName: 'Read Online'), // Read Online
-              ],
+      body: Center(
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            const SliverToBoxAdapter(
+              child: BookProfileScreenDetails(),
             ),
-          ),
-        ],
+            SliverToBoxAdapter(
+              child: SelectionBar(
+                  tabController: _tabController, tabNames: _tabNames),
+            ),
+            SliverFillRemaining(
+              child: TabBarView(
+                // adding corresponding screens to each button on SelectionBar.
+                controller: _tabController,
+                children: [
+                  BookProfileScreenListView(screenName: 'Reviews'), // Reviews
+                  BookProfileScreenListView(
+                      screenName: 'Locations'), // Locations
+                  BookProfileScreenListView(
+                      screenName: 'Read Online'), // Read Online
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

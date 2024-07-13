@@ -15,9 +15,7 @@ class BookRecommendedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (changeBooksScreenGlobal != null) {
-          changeBooksScreenGlobal!(const BookProfileScreenBody());
-        }
+        screenChange(context, const BookProfileScreenBody());
       },
       child: Card(
         color: MyColors.panelColor,

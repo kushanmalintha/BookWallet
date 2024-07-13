@@ -10,7 +10,7 @@ class EditUserInfo extends StatelessWidget {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false, // to remove the top left back button
         backgroundColor: MyColors.navigationBarColor,
         title: const Text(
           'Account Details',
