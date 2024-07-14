@@ -1,4 +1,3 @@
-import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/dummy_data/review_dummy_data.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/widgets/cards/review_card.dart';
