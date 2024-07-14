@@ -2,12 +2,15 @@ import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/models/book_model.dart';
 
 class BookRecommendedCard extends StatelessWidget {
+  final BookModel book;
   final String suggester;
 
   const BookRecommendedCard({
     super.key,
+    required this.book,
     required this.suggester,
   });
 
@@ -15,26 +18,27 @@ class BookRecommendedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        // Navigate to BookProfileScreenBody when the card is tapped
         screenChange(context, const BookProfileScreenBody());
       },
       child: Card(
-        color: MyColors.panelColor,
+        color: MyColors.panelColor, // Card background color
         child: ListTile(
           iconColor: MyColors.nonSelectedItemColor,
           leading: Image.asset(
-            'images/Book_Image1.jpg',
+            book.imageUrl, // Use imageUrl from the book object
             scale: 1,
-          ), // Book cover image
-          title: const Text(
-            'Dune Messiah',
-            style: TextStyle(
-              color: MyColors.textColor,
+          ),
+          title: Text(
+            book.title, // Use title from the book object
+            style: const TextStyle(
+              color: MyColors.textColor, // Text color
             ),
           ),
           subtitle: Text(
-            'Frank Herbert\nPages: 256\nGenre: Science Fiction\nTotal Rating: 9.8/10\nSuggested by: $suggester',
+            '${book.author}\nPages: ${book.pages}\nGenre: ${book.genre}\nTotal Rating: ${book.totalRating}/10\nSuggested by: $suggester',
             style: const TextStyle(
-              color: MyColors.textColor,
+              color: MyColors.textColor, // Text color
             ),
           ),
           trailing: IconButton(

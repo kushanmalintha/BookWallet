@@ -22,7 +22,7 @@ class CustomTextBox extends StatefulWidget {
   });
 
   @override
-  _CustomTextBoxState createState() => _CustomTextBoxState();
+  State<CustomTextBox> createState() => _CustomTextBoxState();
 }
 
 class _CustomTextBoxState extends State<CustomTextBox> {

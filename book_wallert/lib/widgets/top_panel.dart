@@ -52,18 +52,6 @@ class TopPanel extends StatelessWidget implements PreferredSizeWidget {
               value: 'Settings',
               child: Text('Settings'),
             ),
-            const PopupMenuItem<String>(
-              value: 'Settings',
-              child: Text('Settings'),
-            ),
-            const PopupMenuItem<String>(
-              value: 'Settings',
-              child: Text('Settings'),
-            ),
-            const PopupMenuItem<String>(
-              value: 'Settings',
-              child: Text('Settings'),
-            ),
           ],
         ),
       ],

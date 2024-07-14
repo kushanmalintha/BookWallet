@@ -1,3 +1,4 @@
+import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
 import 'package:book_wallert/widgets/cards/review_card2.dart';
@@ -25,7 +26,7 @@ class ProfileListVeiw extends StatelessWidget {
       case 'Completed':
         return ReviewCard();
     }
-    return const BookCard();
+    return BookCard(book: dummyBook,);
   }
 
   ProfileListVeiw({super.key, required this.screenName});

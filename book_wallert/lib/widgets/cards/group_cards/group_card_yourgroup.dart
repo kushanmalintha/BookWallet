@@ -1,68 +1,72 @@
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/screens/main_screen/group_profile_screen/group_profile_screen_body.dart';
 import 'package:flutter/material.dart';
-import '../../../../../colors.dart';
+import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/models/group_model.dart';
 
-class FandomCard extends StatelessWidget {
-  final String groupName;
-  final String memberCount;
-  final int discussionCount;
+class GroupCardYourgroup extends StatelessWidget {
+  final GroupModel group;
 
-  const FandomCard({
+  const GroupCardYourgroup({
     super.key,
-    required this.groupName,
-    required this.memberCount,
-    required this.discussionCount,
+    required this.group,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        // Navigate to GroupProfileScreenBody when the card is tapped
         screenChange(context, const GroupProfileScreenBody());
       },
       child: Card(
-        color: MyColors.panelColor,
-        margin: const EdgeInsets.all(5),
+        color: MyColors.panelColor, // Card background color
+        margin: const EdgeInsets.all(5), // Margin around the card
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0), // Padding inside the card
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Align items at the start vertically
             children: [
-              const CircleAvatar(
+              // CircleAvatar widget to display the group image
+              CircleAvatar(
                 backgroundImage: AssetImage(
-                  'images/groupImage1.jpg', // Replace with actual image URL
+                  group.imageUrl, // Use imageUrl from the group object
                 ),
                 radius: 25,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 10), // Add space between avatar and text
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment
+                      .start, // Align text at the start horizontally
                   children: [
+                    // Display the group name
                     Text(
-                      groupName,
+                      group.name,
                       style: const TextStyle(
-                        color: MyColors.textColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        color: MyColors.textColor, // Text color
+                        fontSize: 16, // Font size
+                        fontWeight: FontWeight.bold, // Bold font weight
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    const SizedBox(height: 10), // Add space between texts
+                    // Display member count and discussion count in a row
+                    Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween, // Space between texts
                       children: [
                         Text(
-                          'Members: 23,455',
-                          style: TextStyle(color: MyColors.text2Color),
+                          'Members: ${group.memberCount}', // Use memberCount from the group object
+                          style: const TextStyle(color: MyColors.text2Color),
                         ),
                         Text(
-                          'Discussions: 23,455',
-                          style: TextStyle(color: MyColors.text2Color),
+                          'Discussions: ${group.discussionCount}', // Use discussionCount from the group object
+                          style: const TextStyle(color: MyColors.text2Color),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 7),
+                    const SizedBox(height: 7), // Add space at the bottom
                   ],
                 ),
               ),

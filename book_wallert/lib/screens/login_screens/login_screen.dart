@@ -1,32 +1,35 @@
-// login_screen.dart
-
 import 'package:flutter/material.dart';
-import 'package:book_wallert/controllers.dart/login_controller.dart';
 import 'package:book_wallert/screens/login_screens/signup_screen.dart';
 import 'package:book_wallert/textbox/custom_textbox.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/custom_button1.dart';
+import 'package:book_wallert/controllers/login_controller.dart';
 
+// LoginScreen widget to handle user login UI and interaction
 class LoginScreen extends StatelessWidget {
-  final LoginController _loginController = LoginController();
+  // Instance of LoginController to manage login logic
+  final LoginController loginController = LoginController();
 
+  // Constructor
   LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false,
+      canPop: false, // Prevent back navigation
       child: Scaffold(
-        backgroundColor: MyColors.bgColor,
+        backgroundColor: MyColors.bgColor, // Background color for the screen
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center, // Center the content vertically
             children: <Widget>[
+              // CircleAvatar widget to display the app logo
               const CircleAvatar(
                 backgroundImage: AssetImage("images/Book_Image1.jpg"),
                 radius: 60,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 10), // Add some space between widgets
+              // Welcome text
               const Text(
                 "WELCOME TO BOOKWALLET",
                 style: TextStyle(
@@ -35,36 +38,41 @@ class LoginScreen extends StatelessWidget {
                   color: MyColors.textColor,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 10), // Add some space between widgets
+              // CustomTextBox for email input
               CustomTextBox(
-                hintText: "Username",
-                type: TextInputType.text, // Adjusted for username
-                controller: _loginController.usernameController,
+                hintText: "Email",
+                type: TextInputType.emailAddress,
+                controller: loginController.emailController,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 10), // Add some space between widgets
+              // CustomTextBox for password input
               CustomTextBox(
                 hintText: "Password",
                 type: TextInputType.visiblePassword,
                 isPassword: true,
-                controller: _loginController.passwordController,
+                controller: loginController.passwordController,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 10), // Add some space between widgets
+              // CustomButton1 for login action
               CustomButton1(
                 text: "Login",
-                press: () => _loginController.login(context),
+                press: () => loginController.login(context),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 10), // Add some space between widgets
+              // GestureDetector for "Forgot password" action
               GestureDetector(
                 onTap: () {
                   // Forgot password function
-                  print("Forgot password");
+                  print("Forgot password?\nTry to Remember!!");
                 },
                 child: const Text(
                   "I forgot my password",
                   style: TextStyle(color: MyColors.textColor, fontSize: 12),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 10), // Add some space between widgets
+              // GestureDetector for navigation to the signup screen
               GestureDetector(
                 onTap: () {
                   Navigator.push(

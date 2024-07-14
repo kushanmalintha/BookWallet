@@ -1,6 +1,7 @@
+import 'package:book_wallert/dummy_data/book_dummy_data.dart';
+import 'package:book_wallert/dummy_data/review_dummy_data.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
 import 'package:book_wallert/widgets/cards/review_card.dart';
-import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
 
 // A stateless widget that represents a list of books.
@@ -11,22 +12,17 @@ class GroupProfileScreenListView extends StatelessWidget {
     switch (screenName) {
       // functions to return a screen
       case 'Reviews':
-        return const ReviewCard(
-          cardHeight: 190,
-          backgroundColor: MyColors.panelColor,
-          imagePath: 'images/Book_Image1.jpg',
-          bookName: 'Dune Messiah',
-          authorName: 'Frank Herbert',
-          description:
-              "Dune Messiah continues the story of Paul Atredes, now Emperor of the Known Universe and known as Muad'Dib. As he grapples with immense power, political enemies, and a conspiracy within his own",
-          rating: 'Rating : 8.9/10',
-          reviewedBy: 'Reviewed By : ',
-          userName: 'Ravindu Pathirage',
+        return ReviewCard(
+          review: dummyReview,
         );
       case 'Books':
-        return const BookCard();
+        return BookCard(
+          book: dummyBook,
+        );
     }
-    return const BookCard();
+    return BookCard(
+      book: dummyBook,
+    );
   }
 
   const GroupProfileScreenListView({super.key, required this.screenName});

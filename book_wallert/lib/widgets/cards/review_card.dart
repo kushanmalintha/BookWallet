@@ -1,40 +1,23 @@
-import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:book_wallert/models/review_model.dart';
+import 'package:book_wallert/colors.dart';
 
 // Review widget that displays details of a book review
 class ReviewCard extends StatelessWidget {
-  final double cardHeight; // Height of the review card
-  final Color backgroundColor; // Background color of the review card
-  final String imagePath; // Path to the image of the book
-  final String bookName; // Name of the book
-  final String authorName; // Name of the author
-  final String description; // Description of the book
-  final String rating; // Rating of the book
-  final String reviewedBy; // Name of the reviewer
-  final String userName; // Username of the reviewer
+  final ReviewModel review; // Review object
 
-  const ReviewCard({
-    super.key,
-    required this.cardHeight,
-    required this.backgroundColor,
-    required this.imagePath,
-    required this.bookName,
-    required this.authorName,
-    required this.description,
-    required this.rating,
-    required this.reviewedBy,
-    required this.userName,
-  });
+  const ReviewCard({super.key, required this.review});
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width; // Get screen width
+    const double cardHeight = 190; // Hardcoded card height
+    const Color backgroundColor =
+        MyColors.panelColor; // Hardcoded background color
+
     return Center(
       child: Card(
         color: backgroundColor,
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.circular(), // Rounded corners for the card
-        // ),
         child: SizedBox(
           height: cardHeight,
           width: screenWidth,
@@ -52,8 +35,8 @@ class ReviewCard extends StatelessWidget {
                   child: SizedBox(
                     height: 120,
                     width: 90,
-                    child: Image.asset(imagePath, fit: BoxFit.cover, errorBuilder:
-                        (BuildContext context, Object exception,
+                    child: Image.asset(review.imagePath, fit: BoxFit.cover,
+                        errorBuilder: (BuildContext context, Object exception,
                             StackTrace? stackTrace) {
                       return Container(
                         color: MyColors.text2Color,
@@ -72,7 +55,7 @@ class ReviewCard extends StatelessWidget {
                     print("hello");
                   },
                   child: Text(
-                    bookName,
+                    review.bookName,
                     style: const TextStyle(
                       color: MyColors.textColor,
                       fontSize: 18,
@@ -85,7 +68,7 @@ class ReviewCard extends StatelessWidget {
                 top: 12,
                 left: 225,
                 child: Text(
-                  authorName,
+                  review.authorName,
                   style: const TextStyle(
                     color: MyColors.textColor,
                     fontSize: 8,
@@ -108,7 +91,7 @@ class ReviewCard extends StatelessWidget {
                 left: 105,
                 right: 20,
                 child: Text(
-                  description,
+                  review.description,
                   style: const TextStyle(
                     color: MyColors.text2Color,
                     fontSize: 11,
@@ -121,7 +104,7 @@ class ReviewCard extends StatelessWidget {
                 bottom: 40,
                 left: 20,
                 child: Text(
-                  rating,
+                  ('${review.rating}/10'),
                   style: const TextStyle(
                     color: MyColors.text2Color,
                     fontSize: 12,
@@ -133,7 +116,7 @@ class ReviewCard extends StatelessWidget {
                 bottom: 42,
                 left: 200,
                 child: Text(
-                  reviewedBy,
+                  review.reviewedBy,
                   style: const TextStyle(
                     color: MyColors.text2Color,
                     fontSize: 8,
@@ -150,7 +133,7 @@ class ReviewCard extends StatelessWidget {
                     print("hello");
                   },
                   child: Text(
-                    userName,
+                    review.userName,
                     style: const TextStyle(
                       color: MyColors.text2Color,
                       fontSize: 12,
@@ -174,14 +157,6 @@ class ReviewCard extends StatelessWidget {
                     radius: 10,
                   ),
                 ),
-                // child: IconButton(
-                //   icon: const Icon(Icons.person),
-                //   color: MyColors.nonSelectedItemColor,
-                //   iconSize: 20,
-                //   onPressed: () {
-                //     // like function
-                //   },
-                // ),
               ),
               // Divider line positioned above the action buttons
               Positioned(

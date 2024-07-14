@@ -1,4 +1,5 @@
 import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/dummy_data/review_dummy_data.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/widgets/cards/review_card.dart';
 
@@ -33,16 +34,7 @@ class HomeListScreenBody extends StatelessWidget {
             return Column(
               children: [
                 const SizedBox(height: 3),
-                ReviewCard(
-                  cardHeight: 190,
-                  backgroundColor: MyColors.panelColor,
-                  imagePath: review['imagePath']!,
-                  bookName: review['bookName']!,
-                  authorName: review['authorName']!,
-                  description: review['description']!,
-                  rating: review['rating']!,
-                  reviewedBy: review['reviewedBy']!,
-                  userName: review['userName']!,
+                ReviewCard(review: dummyReview,
                 ),
               ],
             );
