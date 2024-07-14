@@ -29,7 +29,6 @@ class HomeListScreenBody extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(reviewCount, (index) {
-            final review = reviews[index % reviews.length];
             return Column(
               children: [
                 const SizedBox(height: 3),
