@@ -1,12 +1,15 @@
-//import 'package:book_wallert/buttons/custom_button.dart';
-import 'package:book_wallert/widgets/buttons/custom_button1.dart';
-import 'package:book_wallert/screens/test_screens/screen1/screen1.dart';
-import 'package:book_wallert/textbox/custom_textbox.dart';
 import 'package:flutter/material.dart';
+import 'package:book_wallert/controllers.dart/signup_controller.dart';
+import 'package:book_wallert/screens/login_screens/login_screen.dart';
+import 'package:book_wallert/widgets/buttons/custom_button1.dart';
+import 'package:book_wallert/textbox/custom_textbox.dart';
 import 'package:book_wallert/colors.dart';
 
 class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+  final SignupController _signupController = SignupController();
+
+  SignupScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,9 +19,7 @@ class SignupScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const CircleAvatar(
-              backgroundImage: AssetImage(
-                "images/Book_Image1.jpg",
-              ),
+              backgroundImage: AssetImage("images/Book_Image1.jpg"),
               radius: 60,
             ),
             const SizedBox(height: 10),
@@ -31,47 +32,42 @@ class SignupScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            const CustomTextBox(
-              hintText: "UserName",
-              type: TextInputType.name,
+            CustomTextBox(
+              hintText: "Username",
+              type: TextInputType.text, // Adjusted for username
+              controller: _signupController.usernameController,
             ),
             const SizedBox(height: 10),
-            const CustomTextBox(
+            CustomTextBox(
               hintText: "Email",
-              type: TextInputType.name,
+              type: TextInputType.emailAddress,
+              controller: _signupController.emailController,
             ),
             const SizedBox(height: 10),
-            const CustomTextBox(
+            CustomTextBox(
               hintText: "Password",
               type: TextInputType.visiblePassword,
-              // give isPassword false if it is not a password
               isPassword: true,
+              controller: _signupController.passwordController,
             ),
             const SizedBox(height: 10),
-            const CustomTextBox(
+            CustomTextBox(
               hintText: "Confirm Password",
               type: TextInputType.visiblePassword,
-              // give isPassword false if it is not a password
               isPassword: true,
+              controller: _signupController.confirmPasswordController,
             ),
             const SizedBox(height: 10),
             CustomButton1(
               text: "Sign up",
-              press: () {
-                // Add login function here
-              },
-              //backgroundColor: MyColors.selectedItemColor,
-              //textColor: MyColors.textColor,
-              //borderColor: MyColors.textColor,
+              press: () => _signupController.signUp(context),
             ),
             const SizedBox(height: 10),
             GestureDetector(
               onTap: () {
-                // go to the sign in page function
-                //print("hello");
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Screen1()),
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
                 );
               },
               child: RichText(
@@ -84,9 +80,10 @@ class SignupScreen extends StatelessWidget {
                     TextSpan(
                       text: "LOG IN",
                       style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold),
+                        color: Colors.blue,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),

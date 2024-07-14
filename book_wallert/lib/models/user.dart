@@ -38,35 +38,35 @@ class User {
 }
 
 
-void main() {
-  // Example usage
-  // Create a User object using the constructor
-  User user = User(id: 1, username: 'john_doe', email: 'john@example.com');
+// void main() {
+//   // Example usage
+//   // Create a User object using the constructor
+//   User user = User(id: 1, username: 'john_doe', email: 'john@example.com');
 
-  // Accessing user data using getters
-  print(user.id); // Output: 1
-  print(user.username); // Output: john_doe
-  print(user.email); // Output: john@example.com
+//   // Accessing user data using getters
+//   print(user.id); // Output: 1
+//   print(user.username); // Output: john_doe
+//   print(user.email); // Output: john@example.com
 
-  // Using setters to update user data
-  user.username = 'jane_doe'; // Update username
-  user.email = 'jane@example.com'; // Update email
+//   // Using setters to update user data
+//   user.username = 'jane_doe'; // Update username
+//   user.email = 'jane@example.com'; // Update email
 
-  // Accessing updated user data using getters
-  print(user.username); // Output: jane_doe (updated value)
-  print(user.email); // Output: jane@example.com (updated value)
+//   // Accessing updated user data using getters
+//   print(user.username); // Output: jane_doe (updated value)
+//   print(user.email); // Output: jane@example.com (updated value)
 
-  // Convert User object to JSON format using toJson method
-  Map<String, dynamic> userJson = user.toJson();
-  print(userJson); // Output: {id: 1, username: jane_doe, email: jane@example.com}
+//   // Convert User object to JSON format using toJson method
+//   Map<String, dynamic> userJson = user.toJson();
+//   print(userJson); // Output: {id: 1, username: jane_doe, email: jane@example.com}
 
-  // Example of creating User object from JSON data using fromJson factory method
-  Map<String, dynamic> json = {
-    'id': 2,
-    'username': 'alice_smith',
-    'email': 'alice@example.com',
-  };
+//   // Example of creating User object from JSON data using fromJson factory method
+//   Map<String, dynamic> json = {
+//     'id': 2,
+//     'username': 'alice_smith',
+//     'email': 'alice@example.com',
+//   };
 
-  User anotherUser = User.fromJson(json);
-  print(anotherUser.username); // Output: alice_smith
-}
+//   User anotherUser = User.fromJson(json);
+//   print(anotherUser.username); // Output: alice_smith
+// }

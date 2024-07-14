@@ -1,12 +1,17 @@
-//import 'package:book_wallert/buttons/custom_button.dart';
-import 'package:book_wallert/widgets/buttons/custom_button1.dart';
+// login_screen.dart
+
+import 'package:flutter/material.dart';
+import 'package:book_wallert/controllers.dart/login_controller.dart';
 import 'package:book_wallert/screens/login_screens/signup_screen.dart';
 import 'package:book_wallert/textbox/custom_textbox.dart';
-import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/widgets/buttons/custom_button1.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final LoginController _loginController = LoginController();
+
+  LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,9 +21,7 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const CircleAvatar(
-              backgroundImage: AssetImage(
-                "images/Book_Image1.jpg",
-              ),
+              backgroundImage: AssetImage("images/Book_Image1.jpg"),
               radius: 60,
             ),
             const SizedBox(height: 10),
@@ -31,44 +34,28 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            /*CustomToggleButton(
-              beforeText: "Send",
-              afterText: "Requested",
-              press: () {
-                // add login function
-              },
-              backgroundColorSelected: MyColors.selectedItemColor,
-              backgroundColorNotSelected: MyColors.nonSelectedItemColor,
-              textColorSelected: MyColors.textColor,
-              textColorNotSelected: MyColors.text2Color,
-              borderColor: MyColors.text2Color,
-            ),*/
-            const CustomTextBox(
-              hintText: "UserName",
-              type: TextInputType.name,
+            CustomTextBox(
+              hintText: "Username",
+              type: TextInputType.text, // Adjusted for username
+              controller: _loginController.usernameController,
             ),
             const SizedBox(height: 10),
-            const CustomTextBox(
+            CustomTextBox(
               hintText: "Password",
               type: TextInputType.visiblePassword,
-              // give isPassword false if it is not a password
               isPassword: true,
+              controller: _loginController.passwordController,
             ),
             const SizedBox(height: 10),
             CustomButton1(
               text: "Login",
-              press: () {
-                // Add login function here
-              },
-              //backgroundColor: MyColors.selectedItemColor,
-              //textColor: MyColors.textColor,
-              //borderColor: MyColors.textColor,
+              press: () => _loginController.login(context),
             ),
             const SizedBox(height: 10),
             GestureDetector(
               onTap: () {
-                // forgot password function
-                print("hello");
+                // Forgot password function
+                print("Forgot password");
               },
               child: const Text(
                 "I forgot my password",
@@ -78,11 +65,9 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 10),
             GestureDetector(
               onTap: () {
-                // go to the sign in page function
-                //print("hello");
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SignupScreen()),
+                  MaterialPageRoute(builder: (context) => SignupScreen()),
                 );
               },
               child: RichText(
@@ -95,9 +80,10 @@ class LoginScreen extends StatelessWidget {
                     TextSpan(
                       text: "SIGN UP",
                       style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold),
+                        color: Colors.blue,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),

@@ -9,16 +9,19 @@ class CustomTextBox extends StatefulWidget {
   final TextInputType type;
   // To make password invisible
   final bool isPassword;
+  // TextEditingController for the text box
+  final TextEditingController controller;
 
-  // Constructor to initialize hintText and type
-  const CustomTextBox(
-      {super.key,
-      required this.hintText,
-      required this.type,
-      this.isPassword = false});
+  // Constructor to initialize hintText, type, isPassword, and controller
+  const CustomTextBox({
+    super.key,
+    required this.hintText,
+    required this.type,
+    required this.controller,
+    this.isPassword = false,
+  });
 
   @override
-  // ignore: library_private_types_in_public_api
   _CustomTextBoxState createState() => _CustomTextBoxState();
 }
 
@@ -34,6 +37,7 @@ class _CustomTextBoxState extends State<CustomTextBox> {
       width: 350,
       // Decoration for inputs
       child: TextField(
+        controller: widget.controller,
         style: const TextStyle(
           color: MyColors.titleColor,
         ),

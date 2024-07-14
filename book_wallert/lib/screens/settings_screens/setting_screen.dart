@@ -59,7 +59,9 @@ class Settingscreen extends StatelessWidget {
               SettingsTile(
                 title: const Text('Sign out'),
                 leading: const Icon(Icons.exit_to_app),
-                onPressed: (BuildContext context) {},
+                onPressed: (BuildContext context) {
+                  Navigator.pushNamed(context, '/LoginScreen');
+                },
               ),
             ],
           ),
