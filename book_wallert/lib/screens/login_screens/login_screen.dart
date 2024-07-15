@@ -21,7 +21,8 @@ class LoginScreen extends StatelessWidget {
         backgroundColor: MyColors.bgColor, // Background color for the screen
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, // Center the content vertically
+            mainAxisAlignment:
+                MainAxisAlignment.center, // Center the content vertically
             children: <Widget>[
               // CircleAvatar widget to display the app logo
               const CircleAvatar(
@@ -57,7 +58,10 @@ class LoginScreen extends StatelessWidget {
               // CustomButton1 for login action
               CustomButton1(
                 text: "Login",
-                press: () => loginController.login(context),
+                press: () => {
+                  loginController.login(context),
+                  Navigator.pushNamed(context, '/MainScreen')
+                },
               ),
               const SizedBox(height: 10), // Add some space between widgets
               // GestureDetector for "Forgot password" action

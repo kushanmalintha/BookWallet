@@ -85,13 +85,13 @@ class ReviewCard extends StatelessWidget {
                   color: MyColors.textColor,
                 ),
               ),
-              // Book description positioned below the divider
+              // Book context positioned below the divider
               Positioned(
                 top: 30,
                 left: 105,
                 right: 20,
                 child: Text(
-                  review.description,
+                  review.context,
                   style: const TextStyle(
                     color: MyColors.text2Color,
                     fontSize: 11,
@@ -112,28 +112,28 @@ class ReviewCard extends StatelessWidget {
                 ),
               ),
               // Reviewed by positioned next to the rating
-              Positioned(
+              const Positioned(
                 bottom: 42,
                 left: 200,
                 child: Text(
-                  review.reviewedBy,
-                  style: const TextStyle(
+                  'ReviewedBy',
+                  style: TextStyle(
                     color: MyColors.text2Color,
                     fontSize: 8,
                   ),
                 ),
               ),
-              // Username positioned next to the reviewed by text
+              // reviwername positioned next to the reviewed by text
               Positioned(
                 bottom: 40,
                 left: 250,
                 child: GestureDetector(
                   onTap: () {
-                    // go to the user profile
+                    // go to the reviwer profile
                     print("hello");
                   },
                   child: Text(
-                    review.userName,
+                    review.reviwerName,
                     style: const TextStyle(
                       color: MyColors.text2Color,
                       fontSize: 12,
@@ -147,7 +147,7 @@ class ReviewCard extends StatelessWidget {
                 right: 5,
                 child: GestureDetector(
                   onTap: () {
-                    // go to the user profile
+                    // go to the reviwer profile
                     print("hello");
                   },
                   child: const CircleAvatar(

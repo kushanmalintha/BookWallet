@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:book_wallert/services/api_services.dart';
+import 'package:book_wallert/services/auth_api_services.dart';
 
 // Controller class for handling login logic
 class LoginController {
@@ -8,7 +8,7 @@ class LoginController {
   final TextEditingController passwordController = TextEditingController();
 
   // Instance of ApiService to handle API calls
-  final ApiService apiService = ApiService();
+  final AuthApiService apiService = AuthApiService();
 
   // Method to handle the login process
   Future<void> login(BuildContext context) async {
@@ -23,13 +23,15 @@ class LoginController {
       print('Token: $token');
 
       // Navigate to the main screen upon successful login
-      Navigator.pushNamed(context, '/MainScreen');
+      if(context.mounted) Navigator.pushNamed(context, '/MainScreen');
     } catch (e) {
       // Print the error and show a failure message if login fails
       print(e);
-      ScaffoldMessenger.of(context).showSnackBar(
+      if(context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Failed to log in')),
       );
+      }
     }
   }
 }

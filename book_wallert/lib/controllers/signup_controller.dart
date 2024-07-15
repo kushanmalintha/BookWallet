@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:book_wallert/services/api_services.dart';
+import 'package:book_wallert/services/auth_api_services.dart';
 import 'package:book_wallert/screens/login_screens/login_screen.dart';
 
 // Controller class for handling signup logic
@@ -11,7 +11,7 @@ class SignupController {
   final TextEditingController confirmPasswordController = TextEditingController();
   
   // Instance of ApiService to handle API calls
-  final ApiService apiService = ApiService();
+  final AuthApiService apiService = AuthApiService();
 
   // Method to handle the signup process
   Future<void> signUp(BuildContext context) async {

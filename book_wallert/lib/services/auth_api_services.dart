@@ -3,7 +3,7 @@ import 'package:book_wallert/ipaddress.dart';
 import 'package:http/http.dart' as http;
 import 'package:book_wallert/models/user.dart';
 
-class ApiService {
+class AuthApiService {
   static final String _baseUrl =
       'http://${ip}:3000/api/auth'; // Replace with your server URL
 

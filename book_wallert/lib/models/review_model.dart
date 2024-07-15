@@ -1,22 +1,18 @@
-// review_model.dart
-
 class ReviewModel {
   final String imagePath;
   final String bookName;
   final String authorName;
-  final String description;
+  final String context;
   final double rating;
-  final String reviewedBy;
-  final String userName;
+  final String reviwerName;
 
   ReviewModel({
     required this.imagePath,
     required this.bookName,
     required this.authorName,
-    required this.description,
+    required this.context,
     required this.rating,
-    required this.reviewedBy,
-    required this.userName,
+    required this.reviwerName,
   });
 
   factory ReviewModel.fromJson(Map<String, dynamic> json) {
@@ -24,10 +20,9 @@ class ReviewModel {
       imagePath: json['imagePath'],
       bookName: json['bookName'],
       authorName: json['authorName'],
-      description: json['description'],
+      context: json['context'],
       rating: json['rating'].toDouble(),
-      reviewedBy: json['reviewedBy'],
-      userName: json['userName'],
+      reviwerName: json['reviwerName'],
     );
   }
 
@@ -36,10 +31,9 @@ class ReviewModel {
       'imagePath': imagePath,
       'bookName': bookName,
       'authorName': authorName,
-      'description': description,
+      'context': context,
       'rating': rating,
-      'reviewedBy': reviewedBy,
-      'userName': userName,
+      'reviwerName': reviwerName,
     };
   }
 }
