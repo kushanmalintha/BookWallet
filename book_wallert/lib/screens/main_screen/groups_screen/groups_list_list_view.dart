@@ -1,4 +1,5 @@
 import 'package:book_wallert/dummy_data/group_dummy_data.dart';
+import 'package:book_wallert/widgets/cards/group_cards/group_card_suggestion.dart';
 import 'package:book_wallert/widgets/cards/group_cards/group_card_trending.dart';
 import 'package:book_wallert/widgets/cards/group_cards/group_card_yourgroup.dart';
 import 'package:book_wallert/colors.dart';
@@ -29,7 +30,7 @@ class GroupsListViewSuggestion extends StatelessWidget {
       body: ListView.builder(
         itemCount: 20,
         itemBuilder: (context, index) {
-          return GroupCardYourgroup(group: dummyGroup);
+          return GroupCardSuggestion(group: dummyGroup);
         },
       ),
     );
