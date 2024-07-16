@@ -8,8 +8,9 @@ class SignupController {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
-  
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
   // Instance of ApiService to handle API calls
   final AuthApiService apiService = AuthApiService();
 
@@ -32,16 +33,22 @@ class SignupController {
         passwordController.text,
       );
       // Navigate to the login screen upon successful signup
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
+      if (context.mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+        );
+      }
     } catch (e) {
       // Print the error and show a failure message if signup fails
       print(e);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to sign up')),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to sign up'),
+          ),
+        );
+      }
     }
   }
 }
