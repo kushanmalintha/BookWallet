@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/models/book_model.dart'; // Import your BookModel class
 
 class BookProfileScreenDetails extends StatelessWidget {
-  const BookProfileScreenDetails({super.key});
+  final BookModel book;
+
+  const BookProfileScreenDetails({super.key, required this.book});
 
   @override
   Widget build(BuildContext context) {
@@ -17,49 +20,50 @@ class BookProfileScreenDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: 140,
-                  height: 230,
-                  decoration: const BoxDecoration(
+                  width: 60,
+                  height: 100,
+                  decoration: BoxDecoration(
                     color: MyColors.bgColor,
                     image: DecorationImage(
-                      image: AssetImage('images/Book_Image1.jpg'),
+                      image: AssetImage(book
+                          .imageUrl), // Use the imageUrl from the BookModel object
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
                 const SizedBox(width: 20),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Dune Messiah',
-                        style: TextStyle(
+                        book.title, // Use the title from the BookModel object
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: MyColors.textColor,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
-                        'Author: Frank Herbert',
-                        style: TextStyle(
+                        'Author: ${book.author}', // Use the author from the BookModel object
+                        style: const TextStyle(
                           fontSize: 18,
                           color: MyColors.textColor,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
-                        'Genre: Science Fiction',
-                        style: TextStyle(
+                        'Genre: ${book.genre}', // Use the genre from the BookModel object
+                        style: const TextStyle(
                           fontSize: 18,
                           color: MyColors.textColor,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
-                        'Rating: 8.9/10',
-                        style: TextStyle(
+                        'Rating: ${book.totalRating}/10', // Use the totalRating from the BookModel object
+                        style: const TextStyle(
                           fontSize: 18,
                           color: MyColors.textColor,
                         ),
@@ -71,7 +75,7 @@ class BookProfileScreenDetails extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             const Text(
-              'About: Dune Messiah is a continuation of the book series dune messiah...',
+              'About: Dune Messiah is a continuation of the book series Dune Messiah...', // You can add an 'about' property to the BookModel if needed
               style: TextStyle(
                 fontSize: 16,
                 color: MyColors.textColor,

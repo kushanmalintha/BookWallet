@@ -1,3 +1,4 @@
+import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_details.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_list_view.dart';
 import 'package:flutter/material.dart';
@@ -58,8 +59,8 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
-            const SliverToBoxAdapter(
-              child: BookProfileScreenDetails(),
+            SliverToBoxAdapter(
+              child: BookProfileScreenDetails(book: dummyBook),
             ),
             SliverToBoxAdapter(
               child: SelectionBar(

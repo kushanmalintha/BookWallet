@@ -1,3 +1,4 @@
+import 'package:book_wallert/dummy_data/group_dummy_data.dart';
 import 'package:book_wallert/screens/main_screen/group_profile_screen/group_profile_screen_list_view.dart';
 import 'package:book_wallert/screens/main_screen/group_profile_screen/group_profile_screen_details.dart';
 import 'package:flutter/material.dart';
@@ -62,8 +63,8 @@ class _GroupProfileScreenBodyState extends State<GroupProfileScreenBody>
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
-          const SliverToBoxAdapter(
-            child: GroupProfileScreenDetails(),
+          SliverToBoxAdapter(
+            child: GroupProfileScreenDetails(group: dummyGroup),
           ),
           SliverToBoxAdapter(
             child: SelectionBar(

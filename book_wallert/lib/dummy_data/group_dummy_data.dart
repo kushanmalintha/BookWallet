@@ -5,4 +5,6 @@ GroupModel dummyGroup = GroupModel(
   memberCount: 234,
   discussionCount: 23455,
   imageUrl: 'images/groupImage1.jpg',
+  about: 'If you are a Harry Potter fan or a potterHead!! join us now!!',
+  memberIds: [],
 );
