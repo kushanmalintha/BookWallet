@@ -17,15 +17,20 @@ class BookCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // Navigate to BookProfileScreenBody when the card is tapped
-        screenChange(context, const BookProfileScreenBody());
+        screenChange(context, BookProfileScreenBody(book: book));
       },
       child: Card(
         color: MyColors.panelColor, // Card background color
         child: ListTile(
           iconColor: MyColors.nonSelectedItemColor,
-          leading: Image.asset(
-            book.imageUrl, // Use imageUrl from the book object
-            scale: 1,
+          leading: SizedBox(
+            width: 80,
+            child: Image.network(
+                book.imageUrl, // Use imageUrl from the book object
+                scale: 1, errorBuilder: (context, error, stackTrace) {
+              return const Icon(
+                  Icons.error); // Display error icon if image fails to load
+            }),
           ),
           title: Text(
             book.title, // Use title from the book object
@@ -34,7 +39,7 @@ class BookCard extends StatelessWidget {
             ),
           ),
           subtitle: Text(
-            '${book.author}\nPages: ${book.pages}\nGenre: ${book.genre}\nTotal Rating: ${book.totalRating}/10',
+            '${book.author}\nPages: ${(book.pages == 0) ? '-' : book.pages}\nGenre: ${book.genre.join(", ")}\nTotal Rating: ${book.totalRating}/10',
             style: const TextStyle(
               color: MyColors.textColor, // Text color
             ),

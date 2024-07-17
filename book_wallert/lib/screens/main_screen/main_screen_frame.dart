@@ -1,3 +1,7 @@
+import 'package:book_wallert/dummy_data/book_dummy_data.dart';
+import 'package:book_wallert/functions/global_navigator_functions.dart';
+import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
+import 'package:book_wallert/screens/search_screens/search_list_screen_body.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/books_list_screen_body.dart';
 import 'package:book_wallert/screens/main_screen/groups_screen/groups_list_screen_body.dart';
@@ -36,11 +40,24 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  void _searchBooks(String searchText) {
+    // Navigate to BookProfileScreenBody when the card is tapped
+    setState(() {});
+    _navigatorKey.currentState!.pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => IndexedStack(
+          index: 0,
+          children: [SearchListScreenBody(searchText: searchText)],
+        ),
+      ),
+    );
+  }
+
   // List of screens to display based on the selected index
   List<Widget> screens = const [
     HomeListScreenBody(),
-    GroupListScreenBody(),
     BookListScreenBody(),
+    GroupListScreenBody(),
     UserProfileScreenBody(),
   ];
 
@@ -50,9 +67,9 @@ class _MainScreenState extends State<MainScreen> {
       case 0:
         return 'BookWallet';
       case 1:
-        return 'Groups';
-      case 2:
         return 'Books';
+      case 2:
+        return 'Groups';
       case 3:
         return 'Profile';
       default:
@@ -65,7 +82,8 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
       appBar: TopPanel(
-        title: _getName(_selectedIndex), // Top panel with dynamic title
+        title: _getName(_selectedIndex),
+        searchTrigger: _searchBooks, // Top panel with dynamic title
       ),
       body: PopScope(
         canPop: false, // Disable popping from the stack

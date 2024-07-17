@@ -27,12 +27,12 @@ class BottomNavigation extends StatelessWidget {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.group),
-          label: 'Groups',
-        ),
-        BottomNavigationBarItem(
           icon: Icon(Icons.library_books),
           label: 'Books',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.group),
+          label: 'Groups',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),

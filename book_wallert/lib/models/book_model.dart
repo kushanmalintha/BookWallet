@@ -2,8 +2,8 @@ class BookModel {
   final String title;
   final String author;
   final int pages;
-  final String genre;
-  final double totalRating;
+  final List<dynamic> genre;
+  final String totalRating;
   final String imageUrl;
 
   BookModel({
@@ -21,7 +21,7 @@ class BookModel {
       author: json['author'],
       pages: json['pages'],
       genre: json['genre'],
-      totalRating: json['totalRating'].toDouble(),
+      totalRating: json['totalRating'],
       imageUrl: json['imageUrl'],
     );
   }

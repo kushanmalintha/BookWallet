@@ -1,4 +1,4 @@
-import 'package:book_wallert/dummy_data/book_dummy_data.dart';
+import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_details.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_list_view.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,9 @@ import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 
 class BookProfileScreenBody extends StatefulWidget {
-  const BookProfileScreenBody({super.key});
+  final BookModel book;
+
+  const BookProfileScreenBody({super.key, required this.book});
 
   @override
   State<BookProfileScreenBody> createState() {
@@ -60,7 +62,7 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
           controller: _scrollController,
           slivers: [
             SliverToBoxAdapter(
-              child: BookProfileScreenDetails(book: dummyBook),
+              child: BookProfileScreenDetails(book: widget.book),
             ),
             SliverToBoxAdapter(
               child: SelectionBar(

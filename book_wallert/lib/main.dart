@@ -1,6 +1,7 @@
 import 'package:book_wallert/screens/login_screens/login_screen.dart';
 import 'package:book_wallert/screens/login_screens/signup_screen.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
+import 'package:book_wallert/screens/search_screens/search_list_screen_body.dart';
 import 'package:book_wallert/screens/settings_screens/edit_user_info.dart';
 import 'package:book_wallert/screens/settings_screens/setting_screen.dart';
 import 'package:book_wallert/screens/test_screens/screen3/screen3.dart';

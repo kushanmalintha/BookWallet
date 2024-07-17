@@ -1,3 +1,4 @@
+import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class BookRecommendedCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // Navigate to BookProfileScreenBody when the card is tapped
-        screenChange(context, const BookProfileScreenBody());
+        screenChange(context, BookProfileScreenBody( book: dummyBook));
       },
       child: Card(
         color: MyColors.panelColor, // Card background color
