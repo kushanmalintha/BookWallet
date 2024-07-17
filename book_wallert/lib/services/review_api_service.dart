@@ -6,7 +6,8 @@ import '../models/review_model.dart'; // Import ReviewModel for data parsing
 
 class ReviewService {
   final String apiUrl =
-      'http://${ip}:3000/api/posts/review'; // API URL for fetching posts
+      'http://${ip}:3000/api/posts/reviews'; // API URL for fetching
+  // http://localhost:3000/api/posts/reviews
 
   Future<List<ReviewModel>> fetchPosts(int page) async {
     final response =
