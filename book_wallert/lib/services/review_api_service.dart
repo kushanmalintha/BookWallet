@@ -15,6 +15,7 @@ class ReviewService {
 
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body); // Decode JSON response
+      print(data);
       return data
           .map((item) => ReviewModel.fromJson(item))
           .toList(); // Convert JSON to ReviewModel list

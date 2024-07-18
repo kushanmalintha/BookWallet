@@ -2,9 +2,10 @@ class BookModel {
   final String title;
   final String author;
   final int pages;
-  final List<dynamic> genre;
+  final String genre;
   final String totalRating;
   final String imageUrl;
+  final String description;
 
   BookModel({
     required this.title,
@@ -13,6 +14,7 @@ class BookModel {
     required this.genre,
     required this.totalRating,
     required this.imageUrl,
+    required this.description,
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class BookModel {
       genre: json['genre'],
       totalRating: json['totalRating'],
       imageUrl: json['imageUrl'],
+      description: json['description'],
     );
   }
 
@@ -34,6 +37,7 @@ class BookModel {
       'genre': genre,
       'totalRating': totalRating,
       'imageUrl': imageUrl,
+      'description': description,
     };
   }
 }

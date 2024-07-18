@@ -52,7 +52,7 @@ class _BookScreenBodyState extends State<BookListScreenBody>
       body: TabBarView(
         // adding corrosponding screens to each button on SelectionBar.
         controller: _tabController,
-        children: [
+        children: const [
           BookListView(screenName: 'Recommended'), // Recommended
           BookListView(screenName: 'Trending'), // Trending
           BookListView(screenName: 'Wishlist'), // Wishlist

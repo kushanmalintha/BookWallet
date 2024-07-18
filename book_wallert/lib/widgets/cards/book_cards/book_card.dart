@@ -39,7 +39,7 @@ class BookCard extends StatelessWidget {
             ),
           ),
           subtitle: Text(
-            '${book.author}\nPages: ${(book.pages == 0) ? '-' : book.pages}\nGenre: ${book.genre.join(", ")}\nTotal Rating: ${book.totalRating}/10',
+            '${book.author}\nPages: ${(book.pages == 0) ? '-' : book.pages}\nGenre: ${book.genre}\nTotal Rating: ${book.totalRating}/10',
             style: const TextStyle(
               color: MyColors.textColor, // Text color
             ),

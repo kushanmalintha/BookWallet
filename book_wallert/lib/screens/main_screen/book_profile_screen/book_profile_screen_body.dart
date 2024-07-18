@@ -12,36 +12,29 @@ class BookProfileScreenBody extends StatefulWidget {
 
   @override
   State<BookProfileScreenBody> createState() {
-    // returns a screen as state
     return _BookProfileScreenBodyState();
   }
 }
 
 class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
     with SingleTickerProviderStateMixin {
-  // ''with ticker'' is to make sure connnection between clicking and swiping
   late TabController _tabController;
   late ScrollController _scrollController;
 
-  // add name to buttons on panel
   final List<String> _tabNames = [
     'Reviews',
     'Locations',
     'Read Online',
   ];
 
-  // Set a scroll threshold
   final double scrollThreshold = 300;
+  bool _isWriting = false;
+  final TextEditingController _textController = TextEditingController();
 
   @override
   void initState() {
-    // Tab controller
     super.initState();
-    _tabController = TabController(
-        length: _tabNames.length,
-        vsync: this); // animation details are mentioned here
-
-    // Scroll controller
+    _tabController = TabController(length: _tabNames.length, vsync: this);
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
   }
@@ -54,32 +47,131 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
   }
 
   @override
+  void dispose() {
+    _textController.dispose();
+    _scrollController.dispose();
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
-      body: Center(
-        child: CustomScrollView(
-          controller: _scrollController,
-          slivers: [
-            SliverToBoxAdapter(
-              child: BookProfileScreenDetails(book: widget.book),
-            ),
-            SliverToBoxAdapter(
-              child: SelectionBar(
-                  tabController: _tabController, tabNames: _tabNames),
-            ),
-            SliverFillRemaining(
-              child: TabBarView(
-                // adding corresponding screens to each button on SelectionBar.
-                controller: _tabController,
-                children: [
-                  BookProfileScreenListView(screenName: 'Reviews'), // Reviews
-                  BookProfileScreenListView(
-                      screenName: 'Locations'), // Locations
-                  BookProfileScreenListView(
-                      screenName: 'Read Online'), // Read Online
+      body: GestureDetector(
+        onTap: () {
+          if (_isWriting) {
+            setState(() {
+              _isWriting = false;
+            });
+          }
+        },
+        child: Stack(
+          children: [
+            Center(
+              child: CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: BookProfileScreenDetails(book: widget.book),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SelectionBar(
+                        tabController: _tabController, tabNames: _tabNames),
+                  ),
+                  SliverFillRemaining(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        BookProfileScreenListView(
+                            screenName: 'Reviews'), // Reviews
+                        BookProfileScreenListView(
+                            screenName: 'Locations'), // Locations
+                        BookProfileScreenListView(
+                            screenName: 'Read Online'), // Read Online
+                      ],
+                    ),
+                  ),
                 ],
               ),
+            ),
+            Positioned(
+              right: 16.0,
+              bottom: 16.0,
+              child:
+                  _isWriting ? _buildTextInput() : _buildFloatingActionButton(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFloatingActionButton() {
+    return FloatingActionButton(
+      backgroundColor: MyColors.selectedItemColor,
+      onPressed: () {
+        setState(() {
+          _isWriting = true;
+        });
+      },
+      child: const Icon(Icons.add),
+    );
+  }
+
+  Widget _buildTextInput() {
+    return GestureDetector(
+      onTap: () {
+        // Prevent the outer GestureDetector from closing the input
+      },
+      child: Container(
+        constraints: const BoxConstraints(maxHeight: 300),
+        width: MediaQuery.of(context).size.width - 32.0,
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        decoration: BoxDecoration(
+          color: MyColors.panelColor,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: const [
+            BoxShadow(
+              color: MyColors.bgColor,
+              blurRadius: 4.0,
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: TextField(
+                  style: const TextStyle(color: MyColors.textColor),
+                  controller: _textController,
+                  maxLines: null,
+                  onChanged: (text) {
+                    setState(() {
+                      // Adjust the height based on the content
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    hintStyle: TextStyle(color: MyColors.text2Color),
+                    hintText: ('Write your review...'),
+                    border: InputBorder.none,
+                  ),
+                  autofocus: true,
+                ),
+              ),
+            ),
+            IconButton(
+              color: MyColors.selectedItemColor,
+              icon: const Icon(Icons.send),
+              onPressed: () {
+                // Handle send action
+                print('Review sent: ${_textController.text}');
+                _textController.clear();
+                setState(() {
+                  _isWriting = false;
+                });
+              },
             ),
           ],
         ),

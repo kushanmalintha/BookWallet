@@ -48,6 +48,8 @@ class _TopPanelState extends State<TopPanel> {
         _popScope();
       },
       child: AppBar(
+        foregroundColor: MyColors.navigationBarColor,
+        scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: MyColors.navigationBarColor,
         title: _isSearching

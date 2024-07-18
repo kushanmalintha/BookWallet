@@ -24,7 +24,7 @@ class BookCompletedCard extends StatelessWidget {
         color: MyColors.panelColor, // Card background color
         child: ListTile(
           iconColor: MyColors.nonSelectedItemColor,
-          leading: Image.asset(
+          leading: Image.network(
             book.imageUrl, // Use imageUrl from the book object
             scale: 1,
           ),

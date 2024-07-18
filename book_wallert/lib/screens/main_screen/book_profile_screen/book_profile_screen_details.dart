@@ -13,9 +13,16 @@ class BookProfileScreenDetails extends StatelessWidget {
       color: MyColors.bgColor,
       child: Column(
         children: [
+          const SizedBox(
+            height: 60,
+          ),
           SizedBox(
-            height: 200,
-            child: Image.asset(book.imageUrl),
+            height: 250,
+            // width: 400,
+            child: Image.network(
+              book.imageUrl,
+              fit: BoxFit.fitHeight,
+            ),
           ),
           Text(
             book.title, // Use the title from the BookModel object
@@ -47,7 +54,7 @@ class BookProfileScreenDetails extends StatelessWidget {
             ),
           ),
           Text(
-            'About: Dune Messiah is a continuation of the book meawanm suprir stireh bn heta utaja aamaa abakaeue aeb eae ejwwhw ahc foihfsoivh ofshvosvh vhv rhohro rhfhqfpohqwhfqwphicbibdpsiupi qwcuewiuqweuhdqw;hedqwhufh wqiuhfqwfbfjrwfbqiuwciu qwuh upqwhuhqwu cpqwuecw cpquhcpuqehpwhfqwhiqwhf whfhrhh pqwhhwhfqrwhsexy wehfoqwi fhwrhfpqwfriphf qwhrwg series Dune Messiah...', // You can add an 'about' property to the BookModel if needed
+            book.description,
             style: const TextStyle(
               fontSize: 16,
               color: MyColors.textColor,
