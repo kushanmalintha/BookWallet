@@ -115,7 +115,10 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
           _isWriting = true;
         });
       },
-      child: const Icon(Icons.add),
+      child: const Icon(
+        Icons.add,
+        color: MyColors.bgColor,
+      ),
     );
   }
 
@@ -134,7 +137,7 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
           boxShadow: const [
             BoxShadow(
               color: MyColors.bgColor,
-              blurRadius: 4.0,
+              blurRadius: 20.0,
             ),
           ],
         ),

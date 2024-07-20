@@ -37,6 +37,7 @@ dependencies:
   shared_preferences: ^2.2.3
   settings_ui: ^2.0.2
   http: ^1.2.1
+  flutter_spinkit: ^5.1.0
 
 dev_dependencies:
   flutter_test:

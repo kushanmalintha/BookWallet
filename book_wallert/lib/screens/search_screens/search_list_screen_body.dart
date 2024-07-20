@@ -1,6 +1,7 @@
 import 'package:book_wallert/controllers/google_books_controller.dart';
 import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
+import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart'; // Import custom colors
 
@@ -69,21 +70,9 @@ class _SearchListScreenBodyState extends State<SearchListScreenBody> {
             ],
           );
         } else {
-          return _buildProgressIndicator(); // Display loading indicator when reaching end of list
+          return buildProgressIndicator(); // Display loading indicator when reaching end of list
         }
       },
-    );
-  }
-
-  Widget _buildProgressIndicator() {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Center(
-        child: CircularProgressIndicator(
-          color: MyColors
-              .selectedItemColor, // Set color for the circular progress indicator
-        ),
-      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:book_wallert/controllers/review_controller.dart'; // Import ReviewController for fetching data
 import 'package:book_wallert/models/review_model.dart'; // Import ReviewModel for data handling
 import 'package:book_wallert/widgets/cards/review_card.dart'; // Import ReviewCard widget
+import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart'; // Import custom colors
 
@@ -66,21 +67,9 @@ class _HomeListScreenBodyState extends State<HomeListScreenBody> {
             ],
           );
         } else {
-          return _buildProgressIndicator(); // Display loading indicator when reaching end of list
+          return buildProgressIndicator(); // Display loading indicator when reaching end of list
         }
       },
-    );
-  }
-
-  Widget _buildProgressIndicator() {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Center(
-        child: CircularProgressIndicator(
-          color: MyColors
-              .selectedItemColor, // Set color for the circular progress indicator
-        ),
-      ),
     );
   }
 }

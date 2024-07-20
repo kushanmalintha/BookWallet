@@ -1,3 +1,4 @@
+import 'package:book_wallert/controllers/token_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/services/auth_api_services.dart';
 
@@ -21,16 +22,20 @@ class LoginController {
 
       // Print the received token to the console
       print('Token: $token');
+      // Store the token
+      storeToken(token);
 
       // Navigate to the main screen upon successful login
-      if(context.mounted) Navigator.pushNamed(context, '/MainScreen');
+      if (context.mounted) {
+        Navigator.pushNamed(context, '/MainScreen');
+      }
     } catch (e) {
       // Print the error and show a failure message if login fails
       print(e);
-      if(context.mounted) {
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to log in')),
-      );
+          const SnackBar(content: Text('Failed to log in')),
+        );
       }
     }
   }

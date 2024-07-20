@@ -1,3 +1,4 @@
+import 'package:book_wallert/screens/login_screens/loading_screen.dart';
 import 'package:book_wallert/screens/login_screens/login_screen.dart';
 import 'package:book_wallert/screens/login_screens/signup_screen.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
@@ -42,10 +43,11 @@ class MyApp extends StatelessWidget {
       // Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateData()));
       // as the function to the button click at any place
 
-      initialRoute: '/LoginScreen',
+      initialRoute: '/LadingScreen',
 
       routes: {
         // adding routes
+        '/LadingScreen': (context) => LoadingScreen(),
         '/LoginScreen': (context) => LoginScreen(),
         '/SignupScreen': (context) => SignupScreen(),
         '/MainScreen': (context) => const MainScreen(),

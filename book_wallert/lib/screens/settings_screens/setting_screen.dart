@@ -1,3 +1,4 @@
+import 'package:book_wallert/controllers/token_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:book_wallert/colors.dart';
@@ -60,6 +61,7 @@ class Settingscreen extends StatelessWidget {
                 title: const Text('Sign out'),
                 leading: const Icon(Icons.exit_to_app),
                 onPressed: (BuildContext context) {
+                  removeToken(); // remove access token so have to login again
                   Navigator.pushNamed(context, '/LoginScreen');
                 },
               ),

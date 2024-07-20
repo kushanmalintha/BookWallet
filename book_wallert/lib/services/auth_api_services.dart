@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:book_wallert/ipaddress.dart';
+import 'package:book_wallert/controllers/token_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:book_wallert/models/user.dart';
 
@@ -39,6 +41,25 @@ class AuthApiService {
       return jsonDecode(response.body)['token'];
     } else {
       throw Exception('Failed to sign in');
+    }
+  }
+
+  Future<void> fetchProtectedData(BuildContext context) async {
+    final token = await getToken();
+    if (token == null) {
+      if (context.mounted) Navigator.pushNamed(context, '/LoginScreen');
+    } else {
+      final response = await http.get(
+        Uri.parse('$_baseUrl/signup/protected'),
+        headers: {'Authorization': token},
+      );
+
+      if (response.statusCode == 200) {
+        // Handle the response data
+        if (context.mounted) Navigator.pushNamed(context, '/MainScreen');
+      } else {
+        if (context.mounted) Navigator.pushNamed(context, '/LoginScreen');
+      }
     }
   }
 }

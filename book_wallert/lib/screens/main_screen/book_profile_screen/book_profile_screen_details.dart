@@ -10,8 +10,10 @@ class BookProfileScreenDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 0,
       color: MyColors.bgColor,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(
             height: 60,
@@ -48,6 +50,13 @@ class BookProfileScreenDetails extends StatelessWidget {
           ),
           Text(
             'Rating: ${book.totalRating}/10', // Use the totalRating from the BookModel object
+            style: const TextStyle(
+              fontSize: 16,
+              color: MyColors.textColor,
+            ),
+          ),
+          Text(
+            'Pages: ${book.pages}', // Use the totalRating from the BookModel object
             style: const TextStyle(
               fontSize: 16,
               color: MyColors.textColor,

@@ -1,5 +1,6 @@
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
+import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/models/book_model.dart';
@@ -22,35 +23,32 @@ class BookCard extends StatelessWidget {
       child: Card(
         color: MyColors.panelColor, // Card background color
         child: ListTile(
-          iconColor: MyColors.nonSelectedItemColor,
-          leading: SizedBox(
-            width: 80,
-            child: Image.network(
-                book.imageUrl, // Use imageUrl from the book object
-                scale: 1, errorBuilder: (context, error, stackTrace) {
-              return const Icon(
-                  Icons.error); // Display error icon if image fails to load
-            }),
-          ),
-          title: Text(
-            book.title, // Use title from the book object
-            style: const TextStyle(
-              color: MyColors.textColor, // Text color
+            iconColor: MyColors.nonSelectedItemColor,
+            leading: SizedBox(
+              width: 80,
+              child: Image.network(
+                  book.imageUrl, // Use imageUrl from the book object
+                  scale: 1, errorBuilder: (context, error, stackTrace) {
+                return const Icon(
+                    Icons.error); // Display error icon if image fails to load
+              }),
             ),
-          ),
-          subtitle: Text(
-            '${book.author}\nPages: ${(book.pages == 0) ? '-' : book.pages}\nGenre: ${book.genre}\nTotal Rating: ${book.totalRating}/10',
-            style: const TextStyle(
-              color: MyColors.textColor, // Text color
+            title: Text(
+              book.title, // Use title from the book object
+              style: const TextStyle(
+                color: MyColors.textColor, // Text color
+              ),
             ),
-          ),
-          trailing: IconButton(
-            icon: const Icon(Icons.favorite_border),
-            onPressed: () {
-              // Add to wishlist action
-            },
-          ),
-        ),
+            subtitle: Text(
+              '${book.author}\nPages: ${(book.pages == 0) ? '-' : book.pages}\nGenre: ${book.genre}\nTotal Rating: ${book.totalRating}/10',
+              style: const TextStyle(
+                color: MyColors.textColor, // Text color
+              ),
+            ),
+            trailing: CustomPopupMenuButtons(
+                items: ['items'],
+                onItemTap: [() {}],
+                icon: Icon(Icons.more_vert_rounded))),
       ),
     );
   }

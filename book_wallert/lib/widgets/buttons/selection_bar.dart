@@ -26,7 +26,9 @@ class SelectionBar extends StatelessWidget {
       splashBorderRadius: BorderRadius.circular(50), // roundness of the button
       indicatorColor: MyColors.selectedItemColor, // below line color
       controller: tabController, // making contollers equal
-      tabs: tabNames.map((tabName) => Tab(text: tabName)).toList(), // creating buttons with given names
+      tabs: tabNames
+          .map((tabName) => Tab(text: tabName))
+          .toList(), // creating buttons with given names
     );
   }
 }

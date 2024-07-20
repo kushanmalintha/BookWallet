@@ -1,15 +1,11 @@
 import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/dummy_data/review_dummy_data.dart';
+import 'package:book_wallert/models/review_model.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter/widgets.dart';
 
 class ReviewCard extends StatelessWidget {
-  final Review review = Review(
-    title: 'Dune Messiah',
-    author: 'Frank Herbert',
-    rating: 8.9,
-    reviewText:
-        'Dune Messiah continues the story of Paul Atreides, now Emperor of the Known Universe and known as Muad\'Dib. As he grapples with immense power, political enemies, and a conspiracy within his own.',
-  );
+  final ReviewModel review = dummyReview;
 
   ReviewCard({super.key});
 
@@ -36,13 +32,13 @@ class ReviewCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        review.title,
+                        review.bookName,
                         style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: MyColors.textColor),
                       ),
-                      Text(review.author,
+                      Text(review.authorName,
                           style: const TextStyle(color: MyColors.textColor)),
                       Row(
                         children: [
@@ -58,7 +54,7 @@ class ReviewCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            Text(review.reviewText,
+            Text(review.context,
                 style: const TextStyle(color: MyColors.textColor)),
             const SizedBox(height: 16),
             const Row(
@@ -81,18 +77,4 @@ class ReviewCard extends StatelessWidget {
       ),
     );
   }
-}
-
-class Review {
-  final String title;
-  final String author;
-  final double rating;
-  final String reviewText;
-
-  Review({
-    required this.title,
-    required this.author,
-    required this.rating,
-    required this.reviewText,
-  });
 }

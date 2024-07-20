@@ -1,3 +1,4 @@
+import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 
@@ -89,32 +90,23 @@ class _TopPanelState extends State<TopPanel> {
               });
             },
           ),
-          PopupMenuButton<String>(
-            elevation: 10,
-            shadowColor: MyColors.bgColor,
-            color: MyColors.nonSelectedItemColor,
+          CustomPopupMenuButtons(
+            items: const [
+              'Test Screens',
+              'Settings',
+            ],
+            onItemTap: [
+              () {
+                Navigator.pushNamed(context, '/TestScreen');
+              },
+              () {
+                Navigator.pushNamed(context, '/SettingsScreen');
+              },
+            ],
             icon: const Icon(
               Icons.menu,
               color: MyColors.nonSelectedItemColor,
             ),
-            onSelected: (String result) {
-              // Handle menu item selections
-              if (result == 'Test Screens') {
-                Navigator.pushNamed(context, '/TestScreen');
-              } else if (result == 'Settings') {
-                Navigator.pushNamed(context, '/SettingsScreen');
-              }
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-              const PopupMenuItem<String>(
-                value: 'Test Screens',
-                child: Text('Test Screens'),
-              ),
-              const PopupMenuItem<String>(
-                value: 'Settings',
-                child: Text('Settings'),
-              ),
-            ],
           ),
         ],
       ),
