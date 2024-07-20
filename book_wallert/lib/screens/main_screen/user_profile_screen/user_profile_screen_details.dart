@@ -1,4 +1,5 @@
 import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/widgets/buttons/custom_button.dart';
 import 'package:flutter/material.dart';
 
 // Constants
@@ -28,30 +29,42 @@ class UserProfileDetails extends StatelessWidget {
     return Container(
       color: MyColors.bgColor,
       padding: const EdgeInsets.all(paddingValue),
-      child: const Column(
+      child: Column(
         children: [
           Row(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: avatarRadius,
                 backgroundColor: MyColors.nonSelectedItemColor,
                 backgroundImage: AssetImage(profileImagePath),
               ),
-              SizedBox(width: spacingValue),
-              Text(
-                '$firstName $lastName',
-                style: TextStyle(
-                    color: MyColors.textColor, fontSize: headerFontSize),
+              const SizedBox(width: spacingValue),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    '$firstName $lastName',
+                    style: TextStyle(
+                        color: MyColors.textColor, fontSize: headerFontSize),
+                  ),
+                  CustomToggleButton(
+                    beforeText: 'Follow',
+                    afterText: 'Following',
+                    press: () {},
+                    horizontalSpace: 18,
+                    verticalalSpace: 6,
+                  ),
+                ],
               ),
             ],
           ),
-          SizedBox(height: spacingValue),
-          Text(
+          const SizedBox(height: spacingValue),
+          const Text(
             bioText,
             style: TextStyle(color: MyColors.textColor),
             textAlign: TextAlign.justify,
           ),
-          BioDetails(), // Added the BioDetails widget here
+          const BioDetails(), // Added the BioDetails widget here
         ],
       ),
     );
@@ -118,21 +131,3 @@ class BioDetails extends StatelessWidget {
     );
   }
 }
-
-// class Review {
-//   final String firstName;
-//   final String lastName;
-//   final String bioText;
-//   final String worksAt;
-//   final String studiedAt;
-//   final String interestedIn;
-
-//   Review({
-//     required this.firstName,
-//     required this.lastName,
-//     required this.bioText,
-//     required this.worksAt,
-//     required this.studiedAt,
-//     required this.interestedIn,
-//   });
-// }
