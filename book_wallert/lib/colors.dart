@@ -9,4 +9,5 @@ class MyColors {
   static const Color nonSelectedItemColor = Color(0xFFB4BCB3);
   static const Color navigationBarColor = Color(0xFF282A24);
   static const Color titleColor = Color(0xFFFFFFFF);
+  static const Color starColor = Colors.amber;
 }

@@ -1,6 +1,7 @@
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
+import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/models/book_model.dart';
@@ -20,7 +21,7 @@ class BookRecommendedCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // Navigate to BookProfileScreenBody when the card is tapped
-        screenChange(context, BookProfileScreenBody( book: dummyBook));
+        screenChange(context, BookProfileScreenBody(book: dummyBook));
       },
       child: Card(
         color: MyColors.panelColor, // Card background color
@@ -42,12 +43,20 @@ class BookRecommendedCard extends StatelessWidget {
               color: MyColors.textColor, // Text color
             ),
           ),
-          trailing: IconButton(
-            icon: const Icon(Icons.favorite_border),
-            onPressed: () {
-              // Add to wishlist action
-            },
-          ),
+          trailing: CustomPopupMenuButtons(
+              items: const [
+                'Add this book to Wishlist',
+                'Add this book to Completed',
+              ],
+              onItemTap: [
+                // Item actions
+                () {},
+                () {},
+              ],
+              icon: const Icon(
+                Icons.more_vert_rounded,
+                color: MyColors.nonSelectedItemColor,
+              )),
         ),
       ),
     );
