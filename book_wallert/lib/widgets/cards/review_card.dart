@@ -1,4 +1,5 @@
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
+import 'package:book_wallert/widgets/cards/rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/models/review_model.dart';
 import 'package:book_wallert/colors.dart';
@@ -86,12 +87,20 @@ class ReviewCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        '${review.rating}/10',
-                        style: const TextStyle(
-                          color: MyColors.text2Color,
-                          fontSize: 14,
-                        ),
+                      Row(
+                        children: <Widget>[
+                          const Text(
+                            'Rating: ',
+                            style: TextStyle(
+                              color: MyColors.text2Color,
+                              fontSize: 14,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          RatingBar(rating: review.rating),
+                        ],
                       ),
                       GestureDetector(
                         onTap: () => {print('hello')},
@@ -117,59 +126,57 @@ class ReviewCard extends StatelessWidget {
                       ),
                     ],
                   ),
+                  //const SizedBox(height: 10),
                   const Divider(color: MyColors.nonSelectedItemColor),
                   SizedBox(
-                    height: 20,
+                    height: 34,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Row(
-                          children: <Widget>[
-                            IconButton(
-                              icon: const Icon(Icons.thumb_up),
-                              color: MyColors.nonSelectedItemColor,
-                              iconSize: 20,
-                              onPressed: () {
-                                // like function
-                              },
-                            ),
-                            const Text(
-                              '100',
-                              style: TextStyle(color: MyColors.text2Color),
-                            ),
-                          ],
+                        IconButton(
+                          icon: const Icon(Icons.thumb_up),
+                          color: MyColors.nonSelectedItemColor,
+                          iconSize: 20,
+                          onPressed: () {
+                            // like function
+                          },
                         ),
-                        Row(
-                          children: <Widget>[
-                            IconButton(
-                              icon: const Icon(Icons.comment_rounded),
-                              color: MyColors.nonSelectedItemColor,
-                              iconSize: 20,
-                              onPressed: () {
-                                // comment function
-                              },
-                            ),
-                            const Text(
-                              '100',
-                              style: TextStyle(color: MyColors.text2Color),
-                            ),
-                          ],
+                        Transform.translate(
+                          offset: const Offset(-20, 0),
+                          child: const Text(
+                            '100',
+                            style: TextStyle(color: MyColors.text2Color),
+                          ),
                         ),
-                        Row(
-                          children: <Widget>[
-                            IconButton(
-                              icon: const Icon(Icons.share),
-                              color: MyColors.nonSelectedItemColor,
-                              iconSize: 20,
-                              onPressed: () {
-                                // share function
-                              },
-                            ),
-                            const Text(
-                              '100',
-                              style: TextStyle(color: MyColors.text2Color),
-                            ),
-                          ],
+                        IconButton(
+                          icon: const Icon(Icons.comment_rounded),
+                          color: MyColors.nonSelectedItemColor,
+                          iconSize: 20,
+                          onPressed: () {
+                            // comment function
+                          },
+                        ),
+                        Transform.translate(
+                          offset: const Offset(-20, 0),
+                          child: const Text(
+                            '100',
+                            style: TextStyle(color: MyColors.text2Color),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.share),
+                          color: MyColors.nonSelectedItemColor,
+                          iconSize: 20,
+                          onPressed: () {
+                            // share function
+                          },
+                        ),
+                        Transform.translate(
+                          offset: const Offset(-20, 0),
+                          child: const Text(
+                            '100',
+                            style: TextStyle(color: MyColors.text2Color),
+                          ),
                         ),
                       ],
                     ),
