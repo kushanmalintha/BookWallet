@@ -76,7 +76,7 @@ class ReviewCard extends StatelessWidget {
                                 color: MyColors.textColor,
                                 fontSize: 14,
                               ),
-                              textAlign: TextAlign.justify,
+                              textAlign: TextAlign.start,
                             ),
                           ],
                         ),
