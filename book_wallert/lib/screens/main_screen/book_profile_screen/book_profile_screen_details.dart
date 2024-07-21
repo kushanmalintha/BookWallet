@@ -12,6 +12,7 @@ class BookProfileScreenDetails extends StatelessWidget {
     return Card(
       elevation: 0,
       color: MyColors.bgColor,
+      margin: const EdgeInsets.all(15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
