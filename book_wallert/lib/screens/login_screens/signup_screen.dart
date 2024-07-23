@@ -1,8 +1,8 @@
 import 'package:book_wallert/controllers/signup_controller.dart';
+import 'package:book_wallert/textbox/custom_textbox1.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/login_screens/login_screen.dart';
 import 'package:book_wallert/widgets/buttons/custom_button1.dart';
-import 'package:book_wallert/textbox/custom_textbox.dart';
 import 'package:book_wallert/colors.dart';
 
 // SignupScreen widget to handle user signup UI and interaction
@@ -39,30 +39,30 @@ class SignupScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10), // Add some space between widgets
             // CustomTextBox for username input
-            CustomTextBox(
-              hintText: "UserName",
+            CustomTextBox1(
+              lableText: "UserName",
               type: TextInputType.name,
               controller: _signupController.usernameController,
             ),
             const SizedBox(height: 10), // Add some space between widgets
             // CustomTextBox for email input
-            CustomTextBox(
-              hintText: "Email",
+            CustomTextBox1(
+              lableText: "Email",
               type: TextInputType.emailAddress,
               controller: _signupController.emailController,
             ),
             const SizedBox(height: 10), // Add some space between widgets
             // CustomTextBox for password input
-            CustomTextBox(
-              hintText: "Password",
+            CustomTextBox1(
+              lableText: "Password",
               type: TextInputType.visiblePassword,
               isPassword: true,
               controller: _signupController.passwordController,
             ),
             const SizedBox(height: 10), // Add some space between widgets
             // CustomTextBox for confirm password input
-            CustomTextBox(
-              hintText: "Confirm Password",
+            CustomTextBox1(
+              lableText: "Confirm Password",
               type: TextInputType.visiblePassword,
               isPassword: true,
               controller: _signupController.confirmPasswordController,

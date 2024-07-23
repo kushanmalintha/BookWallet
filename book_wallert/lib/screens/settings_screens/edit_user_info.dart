@@ -52,18 +52,18 @@ class EditUserInfo extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               CustomTextBox1(
-                labelText: "Username",
+                lableText: "Username",
                 type: TextInputType.text,
                 controller: _userController.usernameController,
               ),
               const SizedBox(height: 20),
               CustomTextBox1(
-                  labelText: 'Email',
+                  lableText: 'Email',
                   type: TextInputType.emailAddress,
                   controller: _userController.emailController),
               const SizedBox(height: 20),
               CustomTextBox1(
-                  labelText: 'Password',
+                  lableText: 'Password',
                   type: TextInputType.visiblePassword,
                   isPassword: true,
                   controller: _userController.passwordController),

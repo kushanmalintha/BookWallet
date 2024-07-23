@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // A custom text box widget
 class CustomTextBox1 extends StatefulWidget {
   // Hint text to be displayed inside the text box
-  final String labelText;
+  final String lableText;
   // Keyboard type for the text box (e.g., text, number, email, etc.)
   final TextInputType type;
   // To make password invisible
@@ -15,7 +15,7 @@ class CustomTextBox1 extends StatefulWidget {
   // Constructor to initialize hintText, type, isPassword, and controller
   const CustomTextBox1({
     super.key,
-    required this.labelText,
+    required this.lableText,
     required this.type,
     required this.controller,
     this.isPassword = false,
@@ -43,7 +43,9 @@ class _CustomTextBoxState extends State<CustomTextBox1> {
         ),
         // Define the decoration for the text box
         decoration: InputDecoration(
-          labelText: widget.labelText,
+          focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: MyColors.selectedItemColor)),
+          labelText: widget.lableText,
           labelStyle: const TextStyle(color: MyColors.textColor),
           // Set the border style for the text box
           suffixIcon: widget.isPassword
