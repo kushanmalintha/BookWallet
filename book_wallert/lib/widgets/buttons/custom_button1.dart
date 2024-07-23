@@ -18,6 +18,15 @@ class CustomButton1 extends StatelessWidget {
   // Border color of the button
   final Color borderColor;
 
+  // Horizontal space
+  final double horizontalSpace;
+
+  // Vertical space
+  final double verticalSpace;
+
+  // Font size
+  final double textSize;
+
   // Constructor to initialize the button properties
   const CustomButton1({
     super.key,
@@ -26,6 +35,9 @@ class CustomButton1 extends StatelessWidget {
     this.backgroundColor = MyColors.selectedItemColor,
     this.textColor = MyColors.bgColor,
     this.borderColor = MyColors.textColor,
+    this.horizontalSpace = 30,
+    this.verticalSpace = 10,
+    this.textSize = 18,
   });
 
   @override
@@ -34,7 +46,8 @@ class CustomButton1 extends StatelessWidget {
       // Define the button's style
       style: TextButton.styleFrom(
         // Padding inside the button
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+        padding: EdgeInsets.symmetric(
+            vertical: verticalSpace, horizontal: horizontalSpace),
         // Background color of the button
         backgroundColor: backgroundColor,
         // border color of the button
@@ -47,9 +60,9 @@ class CustomButton1 extends StatelessWidget {
       // Define the child widget (text) of the button
       child: Text(
         text,
-        style: const TextStyle(
+        style: TextStyle(
           // Font size of the text
-          fontSize: 18,
+          fontSize: textSize,
         ),
       ),
     );

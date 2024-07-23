@@ -70,6 +70,19 @@ class BookProfileScreenDetails extends StatelessWidget {
               color: MyColors.textColor,
             ),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                'Resource',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: MyColors.textColor.withOpacity(0.3),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
