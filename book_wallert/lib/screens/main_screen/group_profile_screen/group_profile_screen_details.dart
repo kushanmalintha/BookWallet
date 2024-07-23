@@ -1,7 +1,8 @@
 import 'package:book_wallert/models/group_model.dart';
 import 'package:book_wallert/widgets/buttons/custom_button.dart';
 import 'package:book_wallert/colors.dart';
-import 'package:flutter/material.dart'; // Import your GroupModel class
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart'; // Import your GroupModel class
 
 class GroupProfileScreenDetails extends StatelessWidget {
   final GroupModel group;
@@ -11,52 +12,42 @@ class GroupProfileScreenDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 160,
+      padding: const EdgeInsets.all(16),
+      height: 300,
       color: MyColors.bgColor,
-      child: Stack(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Positioned(
-            top: 10,
-            left: 10,
-            child: CircleAvatar(
-              backgroundImage: AssetImage(group
-                  .imageUrl), // Use the imageUrl from the GroupModel object
-              radius: 60,
+          const SizedBox(
+            height: 10,
+          ),
+          CircleAvatar(
+            backgroundImage: AssetImage(
+                group.imageUrl), // Use the imageUrl from the GroupModel object
+            radius: 70,
+          ),
+          Text(
+            group.name, // Use the name from the GroupModel object
+            style: const TextStyle(
+              color: MyColors.textColor,
+              fontSize: 20,
             ),
           ),
-          Positioned(
-            top: 10,
-            left: 150,
-            child: Text(
-              group.name, // Use the name from the GroupModel object
-              style: const TextStyle(
-                color: MyColors.textColor,
-                fontSize: 20,
-              ),
+          Text(
+            '${group.about}', // Use the about from the GroupModel object
+            style: const TextStyle(
+              color: MyColors.textColor,
+              fontSize: 15,
             ),
           ),
-          Positioned(
-            top: 40,
-            left: 150,
-            right: 15,
-            child: Text(
-              'About: ${group.about}', // Use the about from the GroupModel object
-              style: const TextStyle(
-                color: MyColors.textColor,
-                fontSize: 15,
-              ),
-              textAlign: TextAlign.justify,
-            ),
-          ),
-          Positioned(
-            top: 100,
-            left: 150,
-            right: 100,
+          SizedBox(
+            width: 150,
             child: CustomToggleButton(
               beforeText: 'Send Request',
               afterText: 'Requested',
               verticalalSpace: 10,
-              horizontalSpace: 0,
+              horizontalSpace: 10,
               textSize: 15,
               press: () {
                 // button function
