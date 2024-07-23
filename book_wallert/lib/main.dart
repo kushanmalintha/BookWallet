@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
         '/screen7': (context) => const Screen7(),
         '/screen8': (context) => const Screen8(),
         '/SettingsScreen': (context) => const Settingscreen(),
-        '/EditUserInfo': (context) => const EditUserInfo(),
+        '/EditUserInfo': (context) => EditUserInfo(),
         '/Profile': (context) => const UserProfileScreenBody(),
       },
     );

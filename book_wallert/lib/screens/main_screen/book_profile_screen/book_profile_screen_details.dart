@@ -12,6 +12,7 @@ class BookProfileScreenDetails extends StatelessWidget {
     return Card(
       elevation: 0,
       color: MyColors.bgColor,
+      margin: const EdgeInsets.all(15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -68,6 +69,19 @@ class BookProfileScreenDetails extends StatelessWidget {
               fontSize: 16,
               color: MyColors.textColor,
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                'Resource',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: MyColors.textColor.withOpacity(0.3),
+                ),
+              ),
+            ],
           ),
         ],
       ),
