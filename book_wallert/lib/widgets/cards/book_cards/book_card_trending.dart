@@ -39,9 +39,11 @@ class BookTrendingCard extends StatelessWidget {
               const SizedBox(
                   width: 8), // Space between the number and the image
               Image.network(
-                book.imageUrl, // Use imageUrl from the book object
-                scale: 1,
-              ),
+                  book.imageUrl, // Use imageUrl from the book object
+                  scale: 1, errorBuilder: (context, error, stackTrace) {
+                return const Icon(
+                    Icons.error); // Display error icon if image fails to load
+              }),
             ],
           ),
           title: Text(
