@@ -1,6 +1,3 @@
-import 'package:book_wallert/dummy_data/book_dummy_data.dart';
-import 'package:book_wallert/functions/global_navigator_functions.dart';
-import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
 import 'package:book_wallert/screens/search_screens/search_list_screen_body.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/books_list_screen_body.dart';

@@ -3,7 +3,6 @@ import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
 import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart';
-import 'package:book_wallert/colors.dart'; // Import custom colors
 
 // ignore: must_be_immutable
 class SearchListScreenBody extends StatefulWidget {

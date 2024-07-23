@@ -3,7 +3,6 @@ import 'package:book_wallert/models/review_model.dart'; // Import ReviewModel fo
 import 'package:book_wallert/widgets/cards/review_card.dart'; // Import ReviewCard widget
 import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart';
-import 'package:book_wallert/colors.dart'; // Import custom colors
 
 class HomeListScreenBody extends StatefulWidget {
   const HomeListScreenBody({super.key});
