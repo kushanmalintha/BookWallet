@@ -40,7 +40,7 @@ class BookRecommendedCard extends StatelessWidget {
           subtitle: Text(
             '${book.author}\nPages: ${book.pages}\nGenre: ${book.genre}\nTotal Rating: ${book.totalRating}/10\nSuggested by: $suggester',
             style: const TextStyle(
-              color: MyColors.textColor, // Text color
+              color: MyColors.text2Color, // Text color
             ),
           ),
           trailing: CustomPopupMenuButtons(

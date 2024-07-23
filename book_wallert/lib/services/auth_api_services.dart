@@ -41,7 +41,7 @@ class AuthApiService {
       return jsonDecode(response.body)['token'];
     } else {
       throw Exception('Failed to sign in');
-    }
+    } 
   }
 
   Future<void> fetchProtectedData(BuildContext context) async {

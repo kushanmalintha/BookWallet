@@ -18,7 +18,7 @@ class BookCompletedCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // Navigate to BookProfileScreenBody when the card is tapped
-        screenChange(context, BookProfileScreenBody( book: dummyBook));
+        screenChange(context, BookProfileScreenBody(book: dummyBook));
       },
       child: Card(
         color: MyColors.panelColor, // Card background color
@@ -37,7 +37,7 @@ class BookCompletedCard extends StatelessWidget {
           subtitle: Text(
             '${book.author}\nPages: ${book.pages}\nGenre: ${book.genre}\nTotal Rating: ${book.totalRating}/10',
             style: const TextStyle(
-              color: MyColors.textColor, // Text color
+              color: MyColors.text2Color, // Text color
             ),
           ),
           trailing: IconButton(

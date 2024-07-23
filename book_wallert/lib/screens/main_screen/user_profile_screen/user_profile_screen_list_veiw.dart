@@ -1,5 +1,6 @@
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card_completed.dart';
+import 'package:book_wallert/widgets/frames/book_reading_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
 //import 'package:book_wallert/cards/book_cards/book_card_recommended.dart';
@@ -18,8 +19,11 @@ class UserProfileListVeiw extends StatelessWidget {
       case 'Reviews':
         return ReviewCard();
       case 'Reading':
-        return BookCard(
-          book: dummyBook,
+        return BookReadingProgressBar(
+          progress: 0.4,
+          child: BookCard(
+            book: dummyBook,
+          ),
         );
       case 'Wishlist':
         return BookWishlistCard(
