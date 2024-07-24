@@ -34,7 +34,7 @@ class UserController {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Failed to updateoi'),
+            content: Text('Failed to update'),
           ),
         );
       }
