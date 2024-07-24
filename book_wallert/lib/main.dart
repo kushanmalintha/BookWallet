@@ -1,3 +1,4 @@
+import 'package:book_wallert/dummy_data/group_dummy_data.dart';
 import 'package:book_wallert/screens/login_screens/loading_screen.dart';
 import 'package:book_wallert/screens/login_screens/login_screen.dart';
 import 'package:book_wallert/screens/login_screens/signup_screen.dart';
@@ -5,13 +6,13 @@ import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profil
 import 'package:book_wallert/screens/settings_screens/edit_user_info.dart';
 import 'package:book_wallert/screens/settings_screens/setting_screen.dart';
 import 'package:book_wallert/screens/test_screens/screen3/screen3.dart';
+import 'package:book_wallert/screens/test_screens/screen5/screen5.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/main_screen/main_screen_frame.dart';
 import 'package:book_wallert/screens/test_screens/test_screen_frame.dart';
 import 'package:book_wallert/screens/test_screens/screen1/screen1.dart';
 import 'package:book_wallert/screens/test_screens/screen2/screen2.dart';
 import 'package:book_wallert/screens/test_screens/screen4/screen4.dart';
-import 'package:book_wallert/screens/test_screens/screen5/screen5.dart';
 import 'package:book_wallert/screens/test_screens/screen6/screen6.dart';
 import 'package:book_wallert/screens/test_screens/screen7/screen7.dart';
 import 'package:book_wallert/screens/test_screens/screen8/screen8.dart';
@@ -56,8 +57,8 @@ class MyApp extends StatelessWidget {
         '/screen2': (context) => const Screen2(),
         '/screen3': (context) => const Screen3(),
         '/screen4': (context) => const Screen4(),
-        '/screen5': (context) => const Screen5(),
-        '/screen6': (context) => const Screen6(),
+        '/screen5': (context) =>  const Screen5(),
+        '/screen6': (context) =>  Screen6(group:dummyGroup, User: null,),
         '/screen7': (context) => const Screen7(),
         '/screen8': (context) => const Screen8(),
         '/SettingsScreen': (context) => const Settingscreen(),

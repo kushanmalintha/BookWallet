@@ -8,7 +8,7 @@ import 'package:book_wallert/models/user.dart';
 class AuthApiService {
   static final String _baseUrl =
       'http://${ip}:3000/api/auth'; // Replace with your server URL
-
+        
   Future<User> signUp(String username, String email, String password) async {
     final response = await http.post(
       Uri.parse('$_baseUrl/signup'),
