@@ -27,7 +27,7 @@ class AuthApiService {
     }
   }
 
-  Future<String> signIn(String email, String password) async {
+  Future<Map<String, dynamic>> signIn(String email, String password) async {
     final response = await http.post(
       Uri.parse('$_baseUrl/signin'),
       headers: {'Content-Type': 'application/json'},
@@ -38,28 +38,29 @@ class AuthApiService {
     );
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body)['token'];
+      return jsonDecode(response.body);
     } else {
       throw Exception('Failed to sign in');
-    } 
+    }
   }
 
-  Future<void> fetchProtectedData(BuildContext context) async {
+  static Future<String?> fetchProtectedData(BuildContext context) async {
     final token = await getToken();
     if (token == null) {
       if (context.mounted) Navigator.pushNamed(context, '/LoginScreen');
     } else {
+      // print('whaaaaaat: $_baseUrl/protected');
       final response = await http.get(
-        Uri.parse('$_baseUrl/signup/protected'),
+        Uri.parse('$_baseUrl/protected'),
         headers: {'Authorization': token},
       );
-
       if (response.statusCode == 200) {
         // Handle the response data
-        if (context.mounted) Navigator.pushNamed(context, '/MainScreen');
+        return response.body;
       } else {
-        if (context.mounted) Navigator.pushNamed(context, '/LoginScreen');
+        return null;
       }
     }
+    return null;
   }
 }

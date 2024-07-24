@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:book_wallert/controllers/token_controller.dart';
+import 'package:book_wallert/functions/global_user_provider.dart';
+import 'package:book_wallert/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/services/auth_api_services.dart';
 
@@ -15,16 +19,24 @@ class LoginController {
   Future<void> login(BuildContext context) async {
     try {
       // Attempt to log in the user using the provided credentials
-      String token = await apiService.signIn(
+      Map<String, dynamic> response = await apiService.signIn(
         emailController.text,
         passwordController.text,
+      );
+
+      // Extract token and user details from the response
+      String token = response['token'];
+      User user = User(
+        userId: response['userId'],
+        username: response['username'],
+        email: response['email'],
       );
 
       // Print the received token to the console
       print('Token: $token');
       // Store the token
       storeToken(token);
-
+      setUser(user);
       // Navigate to the main screen upon successful login
       if (context.mounted) {
         Navigator.pushNamed(context, '/MainScreen');
@@ -37,6 +49,22 @@ class LoginController {
           const SnackBar(content: Text('Failed to log in')),
         );
       }
+    }
+  }
+
+  static Future<void> loginWithToken(BuildContext context) async {
+    final response = await AuthApiService.fetchProtectedData(context);
+    if (response != null) {
+      // Handle the response data
+      User user = User.fromJson(jsonDecode(response));
+      // Update the user provider
+      setUser(user);
+      // print(globalUser!.id);
+      // print(globalUser!.username);
+      // print(globalUser!.email);
+      if (context.mounted) Navigator.pushNamed(context, '/MainScreen');
+    } else {
+      if (context.mounted) Navigator.pushNamed(context, '/LoginScreen');
     }
   }
 }
