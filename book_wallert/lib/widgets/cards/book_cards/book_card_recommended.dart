@@ -27,10 +27,12 @@ class BookRecommendedCard extends StatelessWidget {
         color: MyColors.panelColor, // Card background color
         child: ListTile(
           iconColor: MyColors.nonSelectedItemColor,
-          leading: Image.network(
-            book.imageUrl, // Use imageUrl from the book object
-            scale: 1,
-          ),
+          leading:Image.network(
+                  book.imageUrl, // Use imageUrl from the book object
+                  scale: 1, errorBuilder: (context, error, stackTrace) {
+                return const Icon(
+                    Icons.error); // Display error icon if image fails to load
+              }),
           title: Text(
             book.title, // Use title from the book object
             style: const TextStyle(
@@ -40,7 +42,7 @@ class BookRecommendedCard extends StatelessWidget {
           subtitle: Text(
             '${book.author}\nPages: ${book.pages}\nGenre: ${book.genre}\nTotal Rating: ${book.totalRating}/10\nSuggested by: $suggester',
             style: const TextStyle(
-              color: MyColors.textColor, // Text color
+              color: MyColors.text2Color, // Text color
             ),
           ),
           trailing: CustomPopupMenuButtons(

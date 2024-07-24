@@ -1,5 +1,6 @@
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/custom_button.dart';
+import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:flutter/material.dart';
 
 // Constants
@@ -26,48 +27,77 @@ class UserProfileDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: MyColors.bgColor,
-      padding: const EdgeInsets.all(paddingValue),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const CircleAvatar(
-                radius: avatarRadius,
-                backgroundColor: MyColors.nonSelectedItemColor,
-                backgroundImage: AssetImage(profileImagePath),
-              ),
-              const SizedBox(width: spacingValue),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    '$firstName $lastName',
-                    style: TextStyle(
-                        color: MyColors.textColor, fontSize: headerFontSize),
-                  ),
-                  CustomToggleButton(
-                    beforeText: 'Follow',
-                    afterText: 'Following',
-                    press: () {},
-                    horizontalSpace: 18,
-                    verticalalSpace: 6,
-                  ),
-                ],
-              ),
+    return Stack(children: [
+      Center(
+          child: Container(
+        color: MyColors.bgColor,
+        padding: const EdgeInsets.all(paddingValue),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const CircleAvatar(
+                  radius: avatarRadius,
+                  backgroundColor: MyColors.nonSelectedItemColor,
+                  backgroundImage: AssetImage(profileImagePath),
+                ),
+                const SizedBox(width: spacingValue),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      '$firstName $lastName',
+                      style: TextStyle(
+                          color: MyColors.textColor, fontSize: headerFontSize),
+                    ),
+                    CustomToggleButton(
+                      beforeText: 'Follow',
+                      afterText: 'Following',
+                      press: () {},
+                      horizontalSpace: 18,
+                      verticalalSpace: 6,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: spacingValue),
+            const Text(
+              bioText,
+              style: TextStyle(color: MyColors.textColor),
+              textAlign: TextAlign.justify,
+            ),
+            const BioDetails(), // Added the BioDetails widget here
+          ],
+        ),
+      )),
+      Positioned(
+        top: 16,
+        right: 10,
+        child: CustomPopupMenuButtons(
+            items: const [
+              'Share',
+              'Block',
+              'Report',
             ],
-          ),
-          const SizedBox(height: spacingValue),
-          const Text(
-            bioText,
-            style: TextStyle(color: MyColors.textColor),
-            textAlign: TextAlign.justify,
-          ),
-          const BioDetails(), // Added the BioDetails widget here
-        ],
-      ),
-    );
+            onItemTap: [
+              // Item actions
+              () {
+                print("i love Share");
+              },
+              () {
+                print("i love Block");
+              },
+              () {
+                print("i love Report");
+              },
+            ],
+            icon: const Icon(
+              Icons.more_vert_rounded,
+              color: MyColors.nonSelectedItemColor,
+            )),
+      )
+    ]);
   }
 }
 

@@ -18,16 +18,18 @@ class BookCompletedCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // Navigate to BookProfileScreenBody when the card is tapped
-        screenChange(context, BookProfileScreenBody( book: dummyBook));
+        screenChange(context, BookProfileScreenBody(book: dummyBook));
       },
       child: Card(
         color: MyColors.panelColor, // Card background color
         child: ListTile(
           iconColor: MyColors.nonSelectedItemColor,
-          leading: Image.network(
-            book.imageUrl, // Use imageUrl from the book object
-            scale: 1,
-          ),
+          leading:
+              Image.network(book.imageUrl, // Use imageUrl from the book object
+                  scale: 1, errorBuilder: (context, error, stackTrace) {
+            return const Icon(
+                Icons.error); // Display error icon if image fails to load
+          }),
           title: Text(
             book.title, // Use title from the book object
             style: const TextStyle(
@@ -37,7 +39,7 @@ class BookCompletedCard extends StatelessWidget {
           subtitle: Text(
             '${book.author}\nPages: ${book.pages}\nGenre: ${book.genre}\nTotal Rating: ${book.totalRating}/10',
             style: const TextStyle(
-              color: MyColors.textColor, // Text color
+              color: MyColors.text2Color, // Text color
             ),
           ),
           trailing: IconButton(

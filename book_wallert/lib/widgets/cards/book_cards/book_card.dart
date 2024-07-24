@@ -42,7 +42,7 @@ class BookCard extends StatelessWidget {
             subtitle: Text(
               '${book.author}\nPages: ${(book.pages == 0) ? '-' : book.pages}\nGenre: ${book.genre}\nTotal Rating: ${book.totalRating}/10',
               style: const TextStyle(
-                color: MyColors.textColor, // Text color
+                color: MyColors.text2Color, // Text color
               ),
             ),
             trailing: CustomPopupMenuButtons(
