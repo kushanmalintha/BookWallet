@@ -1,14 +1,14 @@
 class User {
-  int _id;
+  int _userId;
   String _username;
   String _email;
 
-  User({required int id, required String username, required String email})
-      : _id = id,
+  User({required int userId, required String username, required String email})
+      : _userId = userId,
         _username = username,
         _email = email;
 
-  int get id => _id;
+  int get userId => _userId;
   String get username => _username;
   String get email => _email;
 
@@ -22,7 +22,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'],
+      userId: json['userId'],
       username: json['username'],
       email: json['email'],
     );
@@ -30,7 +30,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': _id,
+      'userId': _userId,
       'username': _username,
       'email': _email,
     };

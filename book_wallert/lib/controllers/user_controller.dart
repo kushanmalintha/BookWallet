@@ -1,3 +1,5 @@
+import 'package:book_wallert/functions/global_user_provider.dart';
+import 'package:book_wallert/models/user.dart';
 import 'package:book_wallert/screens/main_screen/main_screen_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/services/user_api_service.dart';
@@ -11,8 +13,16 @@ class UserController {
 
   Future<void> editUserDetails(BuildContext context) async {
     try {
-      await userApiService.editUserDetails(usernameController.text,
-          emailController.text, passwordController.text);
+      print(usernameController.text);
+      print(emailController.text);
+      print(passwordController.text);
+      User user = await userApiService.editUserDetailsService(
+          usernameController.text,
+          emailController.text,
+          passwordController.text);
+
+      setUser(user); // updating the global user object
+
       if (context.mounted) {
         Navigator.push(
           context,
