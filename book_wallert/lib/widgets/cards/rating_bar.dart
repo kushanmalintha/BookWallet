@@ -48,6 +48,12 @@ class RatingBar extends StatelessWidget {
             Icon(Icons.star, color: MyColors.nonSelectedItemColor, size: size));
       }
     }
+    starList.add(
+      Text(
+        '($rating)',
+        style: const TextStyle(color: MyColors.text2Color),
+      ),
+    );
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: starList,
