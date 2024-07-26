@@ -1,4 +1,3 @@
-import 'package:book_wallert/dummy_data/group_dummy_data.dart';
 import 'package:book_wallert/screens/login_screens/loading_screen.dart';
 import 'package:book_wallert/screens/login_screens/login_screen.dart';
 import 'package:book_wallert/screens/login_screens/signup_screen.dart';
@@ -57,8 +56,8 @@ class MyApp extends StatelessWidget {
         '/screen2': (context) => const Screen2(),
         '/screen3': (context) => const Screen3(),
         '/screen4': (context) => const Screen4(),
-        '/screen5': (context) =>  const Screen5(),
-        '/screen6': (context) =>  Screen6(group:dummyGroup, User: null,),
+        '/screen5': (context) => const Screen5(),
+        '/screen6': (context) => const Screen6(),
         '/screen7': (context) => const Screen7(),
         '/screen8': (context) => const Screen8(),
         '/SettingsScreen': (context) => const Settingscreen(),
