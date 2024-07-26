@@ -26,6 +26,8 @@ class GroupModel {
     );
   }
 
+  get reviewerName => null;
+
   Map<String, dynamic> toJson() {
     return {
       'name': name,
