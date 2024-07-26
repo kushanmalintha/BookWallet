@@ -65,7 +65,7 @@ class UserProfileDetails extends StatelessWidget {
             const Text(
               bioText,
               style: TextStyle(color: MyColors.textColor),
-              textAlign: TextAlign.justify,
+              textAlign: TextAlign.start,
             ),
             const BioDetails(), // Added the BioDetails widget here
           ],
