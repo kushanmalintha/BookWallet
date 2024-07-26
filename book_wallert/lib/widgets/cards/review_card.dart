@@ -110,7 +110,7 @@ class ReviewCard extends StatelessWidget {
                               'Reviewed by: ${review.reviwerName}',
                               style: const TextStyle(
                                 color: MyColors.textColor,
-                                fontSize: 14,
+                                fontSize: 12,
                               ),
                             ),
                             const SizedBox(
