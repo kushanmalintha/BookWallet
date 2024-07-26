@@ -1,9 +1,12 @@
 import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/dummy_data/group_dummy_data.dart';
 import 'package:book_wallert/dummy_data/review_dummy_data.dart';
 import 'package:book_wallert/screens/test_screens/screen5/shareby_frame.dart';
 import 'package:book_wallert/screens/test_screens/screen5/trendingwidget_frame.dart';
+import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
 import 'package:book_wallert/widgets/cards/group_cards/group_card_suggestion.dart';
+import 'package:book_wallert/widgets/cards/review_card2.dart';
 import 'package:flutter/material.dart';
 
 class Screen5 extends StatelessWidget {
@@ -28,8 +31,8 @@ class Screen5 extends StatelessWidget {
           ),
           RankedCard(
             rank: 3,
-            child: GroupCardSuggestion(
-              group: dummyGroup,
+            child: BookCard(
+              book: dummyBook,
             ),
           ),
           RankedCard(
@@ -41,9 +44,7 @@ class Screen5 extends StatelessWidget {
           SharedByCard(
             sharedBy: dummyReview.reviwerName,
             imagePath: dummyReview.imagePath,
-            child: GroupCardSuggestion(
-              group: dummyGroup,
-            ),
+            child: ReviewCard(),
           )
         ],
       ),
