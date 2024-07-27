@@ -1,5 +1,4 @@
 import 'package:book_wallert/controllers/user_controller.dart';
-import 'package:book_wallert/screens/settings_screens/setting_screen.dart';
 import 'package:book_wallert/textbox/custom_textbox1.dart';
 import 'package:book_wallert/widgets/buttons/custom_button1.dart';
 import 'package:flutter/material.dart';

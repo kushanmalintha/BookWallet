@@ -1,6 +1,5 @@
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/models/user.dart';
-import 'package:book_wallert/screens/main_screen/main_screen_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/services/user_api_service.dart';
 
