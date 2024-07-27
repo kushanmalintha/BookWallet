@@ -211,7 +211,7 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
             child: RatingBar(rating: _rating),
           ),
           Positioned(
-            right: 30, // Adjust left position to avoid overlap
+            right: 50, // Adjust left position to avoid overlap
             child: IconButton(
                 onPressed: _increaseRating,
                 icon: const Icon(Icons.add),
