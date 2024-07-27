@@ -106,11 +106,25 @@ class ReviewCard extends StatelessWidget {
                         onTap: () => {print('hello')},
                         child: Row(
                           children: <Widget>[
-                            Text(
-                              'Reviewed by: ${review.reviwerName}',
-                              style: const TextStyle(
-                                color: MyColors.textColor,
-                                fontSize: 12,
+                            RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  const TextSpan(
+                                    text: 'Reviewed by: ',
+                                    style: TextStyle(
+                                      color: MyColors.text2Color,
+                                      fontSize: 8,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: review.reviwerName,
+                                    style: const TextStyle(
+                                      color: MyColors.textColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             const SizedBox(
