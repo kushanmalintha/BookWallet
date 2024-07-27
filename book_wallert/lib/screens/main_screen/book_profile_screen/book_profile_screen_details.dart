@@ -68,6 +68,13 @@ class BookProfileScreenDetails extends StatelessWidget {
                 ),
               ),
               Text(
+                book.ISBN, // Use the ISBN from the BookModel object
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: MyColors.textColor,
+                ),
+              ),
+              Text(
                 book.description,
                 style: const TextStyle(
                   fontSize: 16,
