@@ -2,15 +2,26 @@ class User {
   int _userId;
   String _username;
   String _email;
+  String _description;
+  String _imageUrl;
 
-  User({required int userId, required String username, required String email})
-      : _userId = userId,
+  User({
+    required int userId,
+    required String username,
+    required String email,
+    String description = '',
+    String imageUrl = 'images/userimage.jpg',
+  })  : _userId = userId,
         _username = username,
-        _email = email;
+        _email = email,
+        _description = description,
+        _imageUrl = imageUrl;
 
   int get userId => _userId;
   String get username => _username;
   String get email => _email;
+  String get description => _description;
+  String get imageUrl => _imageUrl;
 
   set username(String username) {
     _username = username;
@@ -20,11 +31,21 @@ class User {
     _email = email;
   }
 
+  set description(String description) {
+    _description = description;
+  }
+
+  set imageUrl(String imageUrl) {
+    _imageUrl = imageUrl;
+  }
+
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       userId: json['userId'],
       username: json['username'],
       email: json['email'],
+      description: json['description'] ?? '',
+      imageUrl: json['imageUrl'] ?? 'images/userimage.jpg',
     );
   }
 
@@ -33,6 +54,8 @@ class User {
       'userId': _userId,
       'username': _username,
       'email': _email,
+      'description': _description,
+      'imageUrl': _imageUrl,
     };
   }
 }

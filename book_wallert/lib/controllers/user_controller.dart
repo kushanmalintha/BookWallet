@@ -24,10 +24,7 @@ class UserController {
       setUser(user); // updating the global user object
 
       if (context.mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const MainScreen()),
-        );
+        Navigator.pop(context);
       }
     } catch (e) {
       print(e);

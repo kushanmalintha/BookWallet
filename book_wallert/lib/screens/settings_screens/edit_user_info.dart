@@ -78,11 +78,7 @@ class EditUserInfo extends StatelessWidget {
                     textSize: 15,
                     backgroundColor: MyColors.textColor,
                     press: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Settingscreen()),
-                      );
+                      Navigator.pop(context);
                     },
                   ),
                   CustomButton1(
