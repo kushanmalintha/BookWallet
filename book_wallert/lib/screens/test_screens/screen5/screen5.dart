@@ -42,7 +42,7 @@ class Screen5 extends StatelessWidget {
             ),
           ),
           SharedByCard(
-            sharedBy: dummyReview.reviwerName,
+            sharedBy: [dummyReview.reviwerName],
             imagePath: dummyReview.imagePath,
             child: ReviewCard(),
           )

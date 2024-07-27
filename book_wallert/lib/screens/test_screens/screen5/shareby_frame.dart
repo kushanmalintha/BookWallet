@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class SharedByCard extends StatelessWidget {
   final Widget child;
-  final String sharedBy;
+  final List<String> sharedBy;
   final String imagePath;
   // final Color cardColor;
 
