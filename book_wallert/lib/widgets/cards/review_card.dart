@@ -1,3 +1,4 @@
+import 'package:book_wallert/widgets/buttons/show_liked_by.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:book_wallert/widgets/cards/rating_bar.dart';
 import 'package:flutter/material.dart';
@@ -157,9 +158,18 @@ class ReviewCard extends StatelessWidget {
                         ),
                         Transform.translate(
                           offset: const Offset(-20, 0),
-                          child: const Text(
-                            '100',
-                            style: TextStyle(color: MyColors.text2Color),
+                          child: TextButton(
+                            onPressed: () {
+                              RenderBox box =
+                                  context.findRenderObject() as RenderBox;
+                              Offset position = box.localToGlobal(Offset.zero);
+                              ShowLikeMenu.show(
+                                  context, position.translate(140, 120));
+                            },
+                            child: const Text(
+                              '100',
+                              style: TextStyle(color: MyColors.text2Color),
+                            ),
                           ),
                         ),
                         IconButton(

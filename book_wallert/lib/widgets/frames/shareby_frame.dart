@@ -30,7 +30,7 @@ class SharedByCard extends StatelessWidget {
 
             Container(
               height: 1, // Height of the divider line
-              color: Colors.grey[400], // Color of the divider line
+              color: MyColors.nonSelectedItemColor, // Color of the divider line
               margin: const EdgeInsets.symmetric(
                   vertical: 10), // Margin around the divider line
             ),
