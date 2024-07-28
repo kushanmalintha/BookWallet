@@ -1,26 +1,27 @@
-import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_details.dart';
+import 'package:book_wallert/dummy_data/user_dummy.dart';
+import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_review_listview.dart';
 import 'package:flutter/material.dart';
+import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_details.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_list_veiw.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 
 class UserProfileScreenBody extends StatefulWidget {
-  const UserProfileScreenBody({super.key});
+  final int userId;
+
+  const UserProfileScreenBody({super.key, required this.userId});
 
   @override
   State<UserProfileScreenBody> createState() {
-    // returns a screen as state
     return _UserProfileScreenBodyState();
   }
 }
 
 class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
     with SingleTickerProviderStateMixin {
-  // ''with ticker'' is to make sure connnection between clicking and swiping
   late TabController _tabController;
   late ScrollController _scrollController;
 
-  // add name to buttons on panel
   final List<String> _tabNames = [
     'Reviews',
     'Reading',
@@ -28,18 +29,12 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
     'Completed',
   ];
 
-  // Set a scroll threshold
   final double scrollThreshold = 330;
 
   @override
   void initState() {
-    // Tab controller
     super.initState();
-    _tabController = TabController(
-        length: _tabNames.length,
-        vsync: this); // animation details are mentioned here
-
-    // Scroll controller
+    _tabController = TabController(length: _tabNames.length, vsync: this);
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
   }
@@ -58,7 +53,6 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
     super.dispose();
   }
 
-  // Build widget
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,8 +60,8 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
-          const SliverToBoxAdapter(
-            child: UserProfileDetails(), // Top details section
+          SliverToBoxAdapter(
+            child: UserProfileDetails(user: dummyUser), // Top details section
           ),
           SliverToBoxAdapter(
             child: SelectionBar(
@@ -77,11 +71,11 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
             child: TabBarView(
               // adding corresponding screens to each button on SelectionBar.
               controller: _tabController,
-              children: const [
-                UserProfileListVeiw(screenName: 'Reviews'), // Recommended
-                UserProfileListVeiw(screenName: 'Reading'), // Trending
-                UserProfileListVeiw(screenName: 'Wishlist'), // Wishlist
-                UserProfileListVeiw(screenName: 'Completed'), // Completed
+              children: [
+                UserProfileReviewListView(userId: widget.userId), // Reviews
+                const UserProfileListVeiw(screenName: 'Reading'), // Reading
+                const UserProfileListVeiw(screenName: 'Wishlist'), // Wishlist
+                const UserProfileListVeiw(screenName: 'Completed'), // Completed
               ],
             ),
           ),
