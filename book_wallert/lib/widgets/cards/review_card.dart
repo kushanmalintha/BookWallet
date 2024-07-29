@@ -1,9 +1,9 @@
-import 'package:book_wallert/countfunction.dart';
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
+import 'package:book_wallert/dummy_data/user_dummy.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
-import 'package:book_wallert/widgets/buttons/react_menu.dart';
+import 'package:book_wallert/screens/review_screens/review_screen_body.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:book_wallert/widgets/cards/rating_bar.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +20,6 @@ class ReviewCard extends StatefulWidget {
 }
 
 class _ReviewCardState extends State<ReviewCard> {
-  CountReact countReact = CountReact();
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -85,13 +83,39 @@ class _ReviewCardState extends State<ReviewCard> {
                               textAlign: TextAlign.justify,
                             ),
                             const Divider(color: MyColors.nonSelectedItemColor),
-                            Text(
-                              widget.review.context,
-                              style: const TextStyle(
-                                color: MyColors.textColor,
-                                fontSize: 14,
+                            GestureDetector(
+                              onTap: () {
+                                screenChange(context,
+                                    ReviewScreenBody(review: widget.review));
+                              },
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          widget.review.context,
+                                          style: const TextStyle(
+                                            color: MyColors.textColor,
+                                            fontSize: 14,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const Text(
+                                          'see more',
+                                          style: TextStyle(
+                                              color:
+                                                  MyColors.selectedItemColor),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              textAlign: TextAlign.start,
                             ),
                           ],
                         ),
@@ -119,7 +143,8 @@ class _ReviewCardState extends State<ReviewCard> {
                       ),
                       GestureDetector(
                         onTap: () => {
-                          screenChange(context, const UserProfileScreenBody())
+                          screenChange(context,
+                              UserProfileScreenBody(userId: dummyUser.userId)),
                         },
                         child: Row(
                           children: <Widget>[
@@ -170,25 +195,18 @@ class _ReviewCardState extends State<ReviewCard> {
                           iconSize: 20,
                           onPressed: () {
                             // like function
-                            setState(() {
-                              countReact.likeIncrease();
-                            });
                           },
                         ),
                         Transform.translate(
-                          offset: const Offset(-30, 0),
+                          offset: const Offset(-20, 0),
                           child: TextButton(
                             onPressed: () {
-                              // RenderBox box =
-                              //     context.findRenderObject() as RenderBox;
-                              // Offset position = box.localToGlobal(Offset.zero);
-                              ReactMenu.show(context);
-                              // context, position.translate(80, 135));
+                              screenChange(context,
+                                  ReviewScreenBody(review: widget.review));
                             },
-                            child: Text(
-                              countReact.likeCount.toString(),
-                              style:
-                                  const TextStyle(color: MyColors.text2Color),
+                            child: const Text(
+                              '100',
+                              style: TextStyle(color: MyColors.text2Color),
                             ),
                           ),
                         ),
@@ -201,10 +219,16 @@ class _ReviewCardState extends State<ReviewCard> {
                           },
                         ),
                         Transform.translate(
-                          offset: const Offset(-10, 0),
-                          child: const Text(
-                            '100',
-                            style: TextStyle(color: MyColors.text2Color),
+                          offset: const Offset(-20, 0),
+                          child: TextButton(
+                            onPressed: () {
+                              screenChange(context,
+                                  ReviewScreenBody(review: widget.review));
+                            },
+                            child: const Text(
+                              '100',
+                              style: TextStyle(color: MyColors.text2Color),
+                            ),
                           ),
                         ),
                         IconButton(
@@ -212,22 +236,19 @@ class _ReviewCardState extends State<ReviewCard> {
                           color: MyColors.nonSelectedItemColor,
                           iconSize: 20,
                           onPressed: () {
-                            // share function
-                            setState(() {
-                              countReact.shareIncrease();
-                            });
+                            // like function
                           },
                         ),
                         Transform.translate(
-                          offset: const Offset(-30, 0),
+                          offset: const Offset(-20, 0),
                           child: TextButton(
                             onPressed: () {
-                              ReactMenu.show(context);
+                              screenChange(context,
+                                  ReviewScreenBody(review: widget.review));
                             },
-                            child: Text(
-                              countReact.shareCount.toString(),
-                              style:
-                                  const TextStyle(color: MyColors.text2Color),
+                            child: const Text(
+                              '100',
+                              style: TextStyle(color: MyColors.text2Color),
                             ),
                           ),
                         ),
