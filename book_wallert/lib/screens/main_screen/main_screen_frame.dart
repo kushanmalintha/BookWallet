@@ -55,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
     HomeListScreenBody(),
     BookListScreenBody(),
     GroupListScreenBody(),
-    UserProfileScreenBody(),
+    UserProfileScreenBody(userId: 1,),
   ];
 
   // Method to get the title of the current screen based on the selected index

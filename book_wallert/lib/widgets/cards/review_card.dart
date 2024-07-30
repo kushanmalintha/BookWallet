@@ -1,15 +1,25 @@
-import 'package:book_wallert/widgets/buttons/show_liked_by.dart';
+import 'package:book_wallert/dummy_data/book_dummy_data.dart';
+import 'package:book_wallert/dummy_data/user_dummy.dart';
+import 'package:book_wallert/functions/global_navigator_functions.dart';
+import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
+import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
+import 'package:book_wallert/screens/review_screens/review_screen_body.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:book_wallert/widgets/cards/rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/models/review_model.dart';
 import 'package:book_wallert/colors.dart';
 
-class ReviewCard extends StatelessWidget {
+class ReviewCard extends StatefulWidget {
   final ReviewModel review;
 
   const ReviewCard({super.key, required this.review});
 
+  @override
+  State<ReviewCard> createState() => _ReviewCardState();
+}
+
+class _ReviewCardState extends State<ReviewCard> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -27,13 +37,14 @@ class ReviewCard extends StatelessWidget {
                     children: <Widget>[
                       GestureDetector(
                         onTap: () {
-                          print("hello");
+                          screenChange(
+                              context, BookProfileScreenBody(book: dummyBook));
                         },
                         child: SizedBox(
                           //height: 120,
                           width: 80,
                           child: Image.asset(
-                            review.imagePath,
+                            widget.review.imagePath,
                             fit: BoxFit.cover,
                             errorBuilder: (BuildContext context,
                                 Object exception, StackTrace? stackTrace) {
@@ -51,10 +62,11 @@ class ReviewCard extends StatelessWidget {
                           children: <Widget>[
                             GestureDetector(
                               onTap: () {
-                                print("hello");
+                                screenChange(context,
+                                    BookProfileScreenBody(book: dummyBook));
                               },
                               child: Text(
-                                review.bookName,
+                                widget.review.bookName,
                                 style: const TextStyle(
                                   color: MyColors.textColor,
                                   fontSize: 18,
@@ -63,7 +75,7 @@ class ReviewCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'Author: ${review.authorName}',
+                              'Author: ${widget.review.authorName}',
                               style: const TextStyle(
                                 color: MyColors.text2Color,
                                 fontSize: 15,
@@ -71,13 +83,39 @@ class ReviewCard extends StatelessWidget {
                               textAlign: TextAlign.justify,
                             ),
                             const Divider(color: MyColors.nonSelectedItemColor),
-                            Text(
-                              review.context,
-                              style: const TextStyle(
-                                color: MyColors.textColor,
-                                fontSize: 14,
+                            GestureDetector(
+                              onTap: () {
+                                screenChange(context,
+                                    ReviewScreenBody(review: widget.review));
+                              },
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          widget.review.context,
+                                          style: const TextStyle(
+                                            color: MyColors.textColor,
+                                            fontSize: 14,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const Text(
+                                          'see more',
+                                          style: TextStyle(
+                                              color:
+                                                  MyColors.selectedItemColor),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              textAlign: TextAlign.start,
                             ),
                           ],
                         ),
@@ -100,11 +138,14 @@ class ReviewCard extends StatelessWidget {
                           const SizedBox(
                             width: 5,
                           ),
-                          RatingBar(rating: review.rating),
+                          RatingBar(rating: widget.review.rating),
                         ],
                       ),
                       GestureDetector(
-                        onTap: () => {print('hello')},
+                        onTap: () => {
+                          screenChange(context,
+                              UserProfileScreenBody(userId: dummyUser.userId)),
+                        },
                         child: Row(
                           children: <Widget>[
                             RichText(
@@ -118,7 +159,7 @@ class ReviewCard extends StatelessWidget {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: review.reviwerName,
+                                    text: widget.review.reviwerName,
                                     style: const TextStyle(
                                       color: MyColors.textColor,
                                       fontSize: 14,
@@ -160,11 +201,8 @@ class ReviewCard extends StatelessWidget {
                           offset: const Offset(-20, 0),
                           child: TextButton(
                             onPressed: () {
-                              RenderBox box =
-                                  context.findRenderObject() as RenderBox;
-                              Offset position = box.localToGlobal(Offset.zero);
-                              ShowLikeMenu.show(
-                                  context, position.translate(140, 120));
+                              screenChange(context,
+                                  ReviewScreenBody(review: widget.review));
                             },
                             child: const Text(
                               '100',
@@ -182,9 +220,15 @@ class ReviewCard extends StatelessWidget {
                         ),
                         Transform.translate(
                           offset: const Offset(-20, 0),
-                          child: const Text(
-                            '100',
-                            style: TextStyle(color: MyColors.text2Color),
+                          child: TextButton(
+                            onPressed: () {
+                              screenChange(context,
+                                  ReviewScreenBody(review: widget.review));
+                            },
+                            child: const Text(
+                              '100',
+                              style: TextStyle(color: MyColors.text2Color),
+                            ),
                           ),
                         ),
                         IconButton(
@@ -192,14 +236,20 @@ class ReviewCard extends StatelessWidget {
                           color: MyColors.nonSelectedItemColor,
                           iconSize: 20,
                           onPressed: () {
-                            // share function
+                            // like function
                           },
                         ),
                         Transform.translate(
                           offset: const Offset(-20, 0),
-                          child: const Text(
-                            '100',
-                            style: TextStyle(color: MyColors.text2Color),
+                          child: TextButton(
+                            onPressed: () {
+                              screenChange(context,
+                                  ReviewScreenBody(review: widget.review));
+                            },
+                            child: const Text(
+                              '100',
+                              style: TextStyle(color: MyColors.text2Color),
+                            ),
                           ),
                         ),
                       ],

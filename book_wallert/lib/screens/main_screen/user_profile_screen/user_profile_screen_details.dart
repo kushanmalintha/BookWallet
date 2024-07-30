@@ -1,17 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/models/user.dart';
 import 'package:book_wallert/widgets/buttons/custom_button.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
-import 'package:flutter/material.dart';
-
-// Constants
-const String firstName = 'Kumarathunga';
-const String lastName = 'Munidasa';
-const String profileImagePath = 'images/groupImage1.jpg';
-const String bioText =
-    'I am an avid reader and book collector with a passion for fiction, historical novels, and fantasy. '
-    'I am always on the lookout for the next great read and love diving into different worlds through books. '
-    'When I am not reading, I enjoy discussing literature and sharing recommendations. '
-    'Let us connect and explore our favorite stories together!';
 
 const String location = 'Colombo, Sri Lanka';
 const String workplace = 'Bookworm Inc.';
@@ -23,7 +14,10 @@ const double spacingValue = 8;
 const double headerFontSize = 20;
 
 class UserProfileDetails extends StatelessWidget {
-  const UserProfileDetails({super.key});
+  final User user;
+  //fetchUserById(int userId)   use this function to get details
+
+  const UserProfileDetails({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -36,18 +30,18 @@ class UserProfileDetails extends StatelessWidget {
           children: [
             Row(
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: avatarRadius,
                   backgroundColor: MyColors.nonSelectedItemColor,
-                  backgroundImage: AssetImage(profileImagePath),
+                  backgroundImage: NetworkImage(user.imageUrl),
                 ),
                 const SizedBox(width: spacingValue),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      '$firstName $lastName',
-                      style: TextStyle(
+                    Text(
+                      user.username,
+                      style: const TextStyle(
                           color: MyColors.textColor, fontSize: headerFontSize),
                     ),
                     CustomToggleButton(
@@ -62,12 +56,12 @@ class UserProfileDetails extends StatelessWidget {
               ],
             ),
             const SizedBox(height: spacingValue),
-            const Text(
-              bioText,
-              style: TextStyle(color: MyColors.textColor),
+            Text(
+              user.description,
+              style: const TextStyle(color: MyColors.textColor),
               textAlign: TextAlign.start,
             ),
-            const BioDetails(), // Added the BioDetails widget here
+            const BioDetails(), // Updated the BioDetails widget here
           ],
         ),
       )),
@@ -81,15 +75,14 @@ class UserProfileDetails extends StatelessWidget {
               'Report',
             ],
             onItemTap: [
-              // Item actions
               () {
-                print("i love Share");
+                print("Share");
               },
               () {
-                print("i love Block");
+                print("Block");
               },
               () {
-                print("i love Report");
+                print("Report");
               },
             ],
             icon: const Icon(
@@ -161,3 +154,5 @@ class BioDetails extends StatelessWidget {
     );
   }
 }
+
+
