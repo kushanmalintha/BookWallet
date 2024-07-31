@@ -5,17 +5,17 @@ class ReviewScreenListView extends StatelessWidget {
   final String screenName;
   final List<String> screens = [
     // name to screens
-    'Like',
     'Comment',
+    'Like',
     'Share',
   ];
 
   Widget getScreen(String screenName) {
     switch (screenName) {
       // functions to return a screen
-      case 'Like':
-        return ReactUserCard();
       case 'Comment':
+        return ReactUserCard();
+      case 'Like':
         return ReactUserCard();
       case 'Share':
         return ReactUserCard();

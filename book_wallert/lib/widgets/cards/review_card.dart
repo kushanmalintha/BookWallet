@@ -4,7 +4,9 @@ import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
 import 'package:book_wallert/screens/review_screens/review_screen_body.dart';
+import 'package:book_wallert/widgets/buttons/comment_button.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
+import 'package:book_wallert/widgets/buttons/like_button.dart';
 import 'package:book_wallert/widgets/cards/rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/models/review_model.dart';
@@ -20,6 +22,14 @@ class ReviewCard extends StatefulWidget {
 }
 
 class _ReviewCardState extends State<ReviewCard> {
+  bool _isComment = false;
+
+  void _handleCommentChanged(bool value) {
+    setState(() {
+      _isComment = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -41,7 +51,6 @@ class _ReviewCardState extends State<ReviewCard> {
                               context, BookProfileScreenBody(book: dummyBook));
                         },
                         child: SizedBox(
-                          //height: 120,
                           width: 80,
                           child: Image.asset(
                             widget.review.imagePath,
@@ -108,8 +117,7 @@ class _ReviewCardState extends State<ReviewCard> {
                                         const Text(
                                           'see more',
                                           style: TextStyle(
-                                              color:
-                                                  MyColors.selectedItemColor),
+                                              color: MyColors.text2Color),
                                         ),
                                       ],
                                     ),
@@ -135,9 +143,7 @@ class _ReviewCardState extends State<ReviewCard> {
                               fontSize: 14,
                             ),
                           ),
-                          const SizedBox(
-                            width: 5,
-                          ),
+                          const SizedBox(width: 5),
                           RatingBar(rating: widget.review.rating),
                         ],
                       ),
@@ -169,9 +175,7 @@ class _ReviewCardState extends State<ReviewCard> {
                                 ],
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
+                            const SizedBox(width: 10),
                             const CircleAvatar(
                               backgroundImage:
                                   AssetImage('images/Book_Image1.jpg'),
@@ -182,79 +186,24 @@ class _ReviewCardState extends State<ReviewCard> {
                       ),
                     ],
                   ),
-                  //const SizedBox(height: 10),
                   const Divider(color: MyColors.nonSelectedItemColor),
                   SizedBox(
                     height: 34,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.thumb_up),
-                          color: MyColors.nonSelectedItemColor,
-                          iconSize: 20,
-                          onPressed: () {
-                            // like function
-                          },
+                        LikeButton(review: widget.review, icon: Icons.thumb_up),
+                        CommentButton(
+                          review: widget.review,
+                          icon: Icons.comment,
+                          isComment: _isComment,
+                          onCommentChanged: _handleCommentChanged,
                         ),
-                        Transform.translate(
-                          offset: const Offset(-20, 0),
-                          child: TextButton(
-                            onPressed: () {
-                              screenChange(context,
-                                  ReviewScreenBody(review: widget.review));
-                            },
-                            child: const Text(
-                              '100',
-                              style: TextStyle(color: MyColors.text2Color),
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.comment_rounded),
-                          color: MyColors.nonSelectedItemColor,
-                          iconSize: 20,
-                          onPressed: () {
-                            // comment function
-                          },
-                        ),
-                        Transform.translate(
-                          offset: const Offset(-20, 0),
-                          child: TextButton(
-                            onPressed: () {
-                              screenChange(context,
-                                  ReviewScreenBody(review: widget.review));
-                            },
-                            child: const Text(
-                              '100',
-                              style: TextStyle(color: MyColors.text2Color),
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.share),
-                          color: MyColors.nonSelectedItemColor,
-                          iconSize: 20,
-                          onPressed: () {
-                            // like function
-                          },
-                        ),
-                        Transform.translate(
-                          offset: const Offset(-20, 0),
-                          child: TextButton(
-                            onPressed: () {
-                              screenChange(context,
-                                  ReviewScreenBody(review: widget.review));
-                            },
-                            child: const Text(
-                              '100',
-                              style: TextStyle(color: MyColors.text2Color),
-                            ),
-                          ),
-                        ),
+                        LikeButton(review: widget.review, icon: Icons.share),
                       ],
                     ),
                   ),
+                  if (_isComment) _buildTextInput(),
                 ],
               ),
             ),
@@ -277,8 +226,71 @@ class _ReviewCardState extends State<ReviewCard> {
                 Icons.more_vert_rounded,
                 color: MyColors.nonSelectedItemColor,
               )),
-        )
+        ),
       ],
+    );
+  }
+
+  Widget _buildTextInput() {
+    return GestureDetector(
+      onTap: () {
+        // Prevent the outer GestureDetector from closing the input
+      },
+      child: Stack(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width - 32.0,
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            decoration: BoxDecoration(
+              color: MyColors.panelColor,
+              borderRadius: BorderRadius.circular(8.0),
+              boxShadow: const [
+                BoxShadow(
+                  color: MyColors.bgColor,
+                  blurRadius: 20.0,
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        style: const TextStyle(color: MyColors.textColor),
+                        minLines: 1,
+                        maxLines: 10, // Set a maximum number of lines
+                        onChanged: (text) {
+                          setState(() {
+                            // Adjust the height based on the content
+                          });
+                        },
+                        decoration: const InputDecoration(
+                          hintStyle: TextStyle(color: MyColors.text2Color),
+                          hintText: 'Write your review...',
+                          border: InputBorder.none,
+                        ),
+                        autofocus: true,
+                      ),
+                    ),
+                    IconButton(
+                      color: MyColors.selectedItemColor,
+                      icon: const Icon(Icons.send),
+                      onPressed: () {
+                        // Handle send action
+                        setState(() {
+                          _isComment = false;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
