@@ -20,7 +20,7 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody>
   late TabController _tabController;
   late ScrollController _scrollController;
 
-  final List<String> _tabNames = ['Like', 'Comment', 'Share'];
+  final List<String> _tabNames = ['Comment', 'Like', 'Share'];
 
   final double scrollThreshold = 300;
 
@@ -69,8 +69,8 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody>
                   child: TabBarView(
                     controller: _tabController,
                     children: [
-                      ReviewScreenListView(screenName: 'Like'),
                       ReviewScreenListView(screenName: 'Comment'),
+                      ReviewScreenListView(screenName: 'Like'),
                       ReviewScreenListView(screenName: 'Share')
                     ],
                   ),
