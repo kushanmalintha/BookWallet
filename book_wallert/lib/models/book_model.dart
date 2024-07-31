@@ -3,8 +3,10 @@ class BookModel {
   final String author;
   final int pages;
   final String genre;
-  final String ISBN;
+  final String ISBN10;
+  final String ISBN13;
   final String totalRating;
+  final String publishedDate;
   final String imageUrl;
   final String description;
 
@@ -13,7 +15,9 @@ class BookModel {
     required this.author,
     required this.pages,
     required this.genre,
-    required this.ISBN,
+    required this.ISBN10,
+    required this.ISBN13,
+    required this.publishedDate,
     required this.totalRating,
     required this.imageUrl,
     required this.description,
@@ -25,7 +29,9 @@ class BookModel {
       author: json['author'],
       pages: json['pages'],
       genre: json['genre'],
-      ISBN: json['ISBN'],
+      ISBN10: json['ISBN10'],
+      ISBN13: json['ISBN13'],
+      publishedDate: json['publishedDate'],
       totalRating: json['totalRating'],
       imageUrl: json['imageUrl'],
       description: json['description'],
@@ -38,7 +44,9 @@ class BookModel {
       'author': author,
       'pages': pages,
       'genre': genre,
-      'ISBN': ISBN,
+      'ISBN10': ISBN10,
+      'ISBN13': ISBN13,
+      'publishedDate': publishedDate,
       'totalRating': totalRating,
       'imageUrl': imageUrl,
       'description': description,
