@@ -1,11 +1,13 @@
 import 'package:book_wallert/models/book_model.dart';
 
 BookModel dummyBook = BookModel(
-  title: 'Dune Messiah',
+  title: 'hobbo  Messiah',
   author: 'Frank Herbert',
   pages: 256,
   genre: 'Science Fiction',
-  ISBN: '',
+  ISBN10: '332235',
+  ISBN13: '425425554',
+  publishedDate: '1923-04-10',
   totalRating: '9.8',
   imageUrl:
       'http://books.google.com/books/content?id=Zj5SKtDz2bUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
