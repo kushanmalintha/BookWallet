@@ -1,21 +1,55 @@
 import 'dart:convert';
 import 'package:book_wallert/ipaddress.dart';
 import 'package:http/http.dart' as http;
+import 'package:book_wallert/models/book_model.dart';
 
 class ReviewPostApiService {
-  static final String _baseUrl = 'http://${ip}:3000/api/reviews';
-  Future<String?> reviewPost(String review) async {
+  static final String _baseUrl = 'http://${ip}:3000/api/book-review/add';
+
+  Future<void> reviewPost(
+      BookModel book, String reviewText, double rating, int userId) async {
     final response = await http.post(
-      Uri.parse('$_baseUrl/reviewpost'),
+      Uri.parse(_baseUrl),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'review': review}),
+      body: jsonEncode({
+        'book': {
+          'title': book.title,
+          'ISBN10': book.ISBN10,
+          'ISBN13': book.ISBN13,
+          'publication_date': book.publishedDate,
+          'description': book.description,
+          'author': book.author,
+          'rating': book.totalRating, // Assuming this is the book rating
+          'genre': book.genre,
+          'imageUrl':book.imageUrl
+        },
+        'review': {
+          'user_id': userId,
+          'context': reviewText,
+          'rating': rating,
+          'group_id': null, // Set to null if not used
+        },
+      }),
     );
 
-    if (response.statusCode == 200) {
-      //return jsonDecode(response.body);
-      return null;
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 201) {
+      // Successful response handling
+      print('Review posted successfully');
+    } else if (response.statusCode == 400) {
+      // Bad request
+      print('Bad request: ${response.body}');
+    } else if (response.statusCode == 401) {
+      // Unauthorized
+      print('Unauthorized access');
+    } else if (response.statusCode == 500) {
+      // Server error
+      print('Server error: ${response.body}');
     } else {
-      throw Exception('Failed to post review');
+      // Other unexpected status code
+      print('Unexpected error: ${response.statusCode}');
     }
   }
 }

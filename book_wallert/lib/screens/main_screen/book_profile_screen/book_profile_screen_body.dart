@@ -1,11 +1,11 @@
-import 'package:book_wallert/controllers/review_post_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:book_wallert/models/book_model.dart';
+import 'package:book_wallert/controllers/review_post_controller.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_details.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_list_view.dart';
 import 'package:book_wallert/widgets/cards/rating_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
+import 'package:book_wallert/colors.dart';
 
 class BookProfileScreenBody extends StatefulWidget {
   final BookModel book;
@@ -19,7 +19,7 @@ class BookProfileScreenBody extends StatefulWidget {
 
 class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
     with SingleTickerProviderStateMixin {
-  final ReviewPostController _reviewPostController = ReviewPostController();
+  late final ReviewPostController _reviewPostController;
   late TabController _tabController;
   late ScrollController _scrollController;
 
@@ -31,7 +31,6 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
 
   final double scrollThreshold = 300;
   bool _isWriting = false;
-  //final TextEditingController _textController = TextEditingController();
   double _rating = 0.0;
 
   @override
@@ -40,6 +39,8 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
     _tabController = TabController(length: _tabNames.length, vsync: this);
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
+    _reviewPostController =
+        ReviewPostController(widget.book); // Initialize with the current book
   }
 
   void _scrollListener() {
@@ -67,7 +68,6 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
 
   @override
   void dispose() {
-    //_textController.dispose();
     _scrollController.dispose();
     _tabController.dispose();
     super.dispose();
@@ -191,12 +191,11 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
                       color: MyColors.selectedItemColor,
                       icon: const Icon(Icons.send),
                       onPressed: () {
-                        // Handle send action
-                        //print('Review sent: ${_textController.text}');
-                        //_textController.clear();
                         setState(() {
                           _isWriting = false;
                         });
+                        _reviewPostController.rating =
+                            _rating; // Set the rating
                         _reviewPostController.reviewPost(context);
                       },
                     ),
