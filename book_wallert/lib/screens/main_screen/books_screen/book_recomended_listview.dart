@@ -17,7 +17,7 @@ class _BookRecomendedListviewState extends State<BookRecomendedListview> {
     // Placeholder implementation for now
     return Center(
       child: Text(
-        'Completed for user ID: ${widget.globalUserId}',
+        'recomanded for user ID: ${widget.globalUserId}',
         style: TextStyle(color: MyColors.selectedItemColor),
       ),
     );
