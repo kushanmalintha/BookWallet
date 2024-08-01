@@ -119,7 +119,7 @@ class _ReviewCardState extends State<ReviewCard> {
                       ),
                       GestureDetector(
                         onTap: () => {
-                          screenChange(context, const UserProfileScreenBody())
+                          screenChange(context, const UserProfileScreenBody(userId: 1,))
                         },
                         child: Row(
                           children: <Widget>[
