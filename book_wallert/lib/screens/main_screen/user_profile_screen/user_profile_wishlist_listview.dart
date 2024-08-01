@@ -1,23 +1,23 @@
 import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
 
-class UserProfileReviewListView extends StatefulWidget {
+class UserProfileWishlistListView extends StatefulWidget {
   final int userId;
 
-  const UserProfileReviewListView({super.key, required this.userId});
+  const UserProfileWishlistListView({super.key, required this.userId});
 
   @override
-  State<UserProfileReviewListView> createState() => _UserProfileReviewListViewState();
+  State<UserProfileWishlistListView> createState() => _UserProfileWishlistListViewState();
 }
 
-class _UserProfileReviewListViewState extends State<UserProfileReviewListView> {
+class _UserProfileWishlistListViewState extends State<UserProfileWishlistListView> {
   @override
   Widget build(BuildContext context) {
     // Fetch reviews based on the userId and display them
     // Placeholder implementation for now
     return Center(
       child: Text(
-        'Reviews for user ID: ${widget.userId}',
+        'Wishlist for user ID: ${widget.userId}',
         style: TextStyle(color: MyColors.selectedItemColor),
       ),
     );
