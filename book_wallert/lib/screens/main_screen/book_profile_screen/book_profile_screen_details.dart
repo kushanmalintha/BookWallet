@@ -54,7 +54,7 @@ class BookProfileScreenDetails extends StatelessWidget {
                 ),
               ),
               Text(
-                'Rating: ${book.totalRating}/10', // Use the totalRating from the BookModel object
+                'Rating: ${book.totalRating}/5', // Use the totalRating from the BookModel object
                 style: const TextStyle(
                   fontSize: 16,
                   color: MyColors.textColor,
@@ -99,7 +99,7 @@ class BookProfileScreenDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    'Resource',
+                    'Resource: ${book.resource}',
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       fontSize: 16,
@@ -146,87 +146,3 @@ class BookProfileScreenDetails extends StatelessWidget {
   }
 }
 
-
-
-
-
-
-
-
-
-// Card(
-//       color: MyColors.bgColor,
-//       child: Container(
-//         width: double.infinity, // Take full width of the screen
-//         padding: const EdgeInsets.all(16.0), // Adjust padding within the card
-//         child: Column(
-//           children: [
-//             Row(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Container(
-//                   width: 60,
-//                   height: 100,
-//                   decoration: BoxDecoration(
-//                     color: MyColors.bgColor,
-//                     image: DecorationImage(
-//                       image: AssetImage(book
-//                           .imageUrl), // Use the imageUrl from the BookModel object
-//                       fit: BoxFit.cover,
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(width: 20),
-//                 Expanded(
-//                   child: Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       Text(
-//                         book.title, // Use the title from the BookModel object
-//                         style: const TextStyle(
-//                           fontSize: 24,
-//                           fontWeight: FontWeight.bold,
-//                           color: MyColors.textColor,
-//                         ),
-//                       ),
-//                       const SizedBox(height: 10),
-//                       Text(
-//                         'Author: ${book.author}', // Use the author from the BookModel object
-//                         style: const TextStyle(
-//                           fontSize: 18,
-//                           color: MyColors.textColor,
-//                         ),
-//                       ),
-//                       const SizedBox(height: 10),
-//                       Text(
-//                         'Genre: ${book.genre}', // Use the genre from the BookModel object
-//                         style: const TextStyle(
-//                           fontSize: 18,
-//                           color: MyColors.textColor,
-//                         ),
-//                       ),
-//                       const SizedBox(height: 10),
-//                       Text(
-//                         'Rating: ${book.totalRating}/10', // Use the totalRating from the BookModel object
-//                         style: const TextStyle(
-//                           fontSize: 18,
-//                           color: MyColors.textColor,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             const SizedBox(height: 10),
-//             const Text(
-//               'About: Dune Messiah is a continuation of the book series Dune Messiah...', // You can add an 'about' property to the BookModel if needed
-//               style: TextStyle(
-//                 fontSize: 16,
-//                 color: MyColors.textColor,
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );

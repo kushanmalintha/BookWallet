@@ -4,6 +4,7 @@ class Review {
   int _bookId;
   String _comment;
   double _rating;
+  String _imageUrl;
 
   Review({
     required int id,
@@ -11,11 +12,13 @@ class Review {
     required int bookId,
     required String comment,
     required double rating,
+    required String imageUrl,
   })  : _id = id,
         _userId = userId,
         _bookId = bookId,
         _comment = comment,
-        _rating = rating;
+        _rating = rating,
+        _imageUrl = imageUrl;
 
   int get id => _id;
   int get userId => _userId;
@@ -39,6 +42,7 @@ class Review {
       bookId: json['bookId'],
       comment: json['comment'],
       rating: json['rating'].toDouble(),
+      imageUrl: json['imageUrl'],
     );
   }
 
@@ -49,6 +53,7 @@ class Review {
       'bookId': _bookId,
       'comment': _comment,
       'rating': _rating,
+      'imageUrl': _imageUrl,
     };
   }
 }

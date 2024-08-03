@@ -18,7 +18,7 @@ class _BookCompletedListviewState extends State<BookCompletedListview> {
     return Center(
       child: Text(
         'Completed for user ID: ${widget.globalUserId}',
-        style: TextStyle(color: MyColors.selectedItemColor),
+        style: const TextStyle(color: MyColors.selectedItemColor),
       ),
     );
   }

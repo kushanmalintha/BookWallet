@@ -18,7 +18,7 @@ class _BookWishlistListviewState extends State<BookWishlistListview> {
     return Center(
       child: Text(
         'whislist for user ID: ${widget.globalUserId}',
-        style: TextStyle(color: MyColors.selectedItemColor),
+        style: const TextStyle(color: MyColors.selectedItemColor),
       ),
     );
   }

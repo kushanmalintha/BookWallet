@@ -1,4 +1,3 @@
-import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_completed_listview.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_recomended_listview.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_whislist_listview.dart';
