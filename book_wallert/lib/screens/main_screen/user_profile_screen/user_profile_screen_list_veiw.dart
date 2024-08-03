@@ -26,11 +26,11 @@ class UserProfileListVeiw extends StatelessWidget {
           ),
         );
       case 'Wishlist':
-        return BookWishlistCard(
+        return BookCard(
           book: dummyBook,
         );
       case 'Completed':
-        return BookCompletedCard(
+        return BookCard(
           book: dummyBook,
         );
     }
