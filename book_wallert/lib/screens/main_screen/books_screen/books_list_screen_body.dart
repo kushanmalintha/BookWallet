@@ -7,12 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_list_view.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
-import 'package:flutter/widgets.dart';
 
 class BookListScreenBody extends StatefulWidget {
   final int globalUserId;
-  
-  const BookListScreenBody({super.key,required this.globalUserId});
+
+  const BookListScreenBody({super.key, required this.globalUserId});
 
   @override
   State<BookListScreenBody> createState() {
@@ -60,11 +59,17 @@ class _BookScreenBodyState extends State<BookListScreenBody>
       body: TabBarView(
         // adding corrosponding screens to each button on SelectionBar.
         controller: _tabController,
-        children:  [
-          BookRecomendedListview(globalUserId: widget.globalUserId ,), // Recommended
+        children: [
+          BookRecomendedListview(
+            globalUserId: widget.globalUserId,
+          ), // Recommended
           const BookListView(screenName: 'Trending'), // Trending
-          BookWishlistListView(userId: 1,), // Wishlist
-          BookCompletedListview(globalUserId: widget.globalUserId,), // Completed
+          BookWishlistListview(
+            globalUserId: widget.globalUserId,
+          ), // Wishlist
+          BookCompletedListview(
+            globalUserId: widget.globalUserId,
+          ), // Completed
         ],
       ),
     );

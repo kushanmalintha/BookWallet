@@ -1,11 +1,11 @@
 import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
 
-class RankedCard extends StatelessWidget {
+class TrendingFrame extends StatelessWidget {
   final int rank;
   final Widget child;
 
-  const RankedCard({
+  const TrendingFrame({
     super.key,
     required this.rank,
     required this.child,

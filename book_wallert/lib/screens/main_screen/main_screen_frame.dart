@@ -52,11 +52,11 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   // List of screens to display based on the selected index
-  List<Widget> screens = const [
-    HomeListScreenBody(),
-    BookListScreenBody(globalUserId: 1,),
-    GroupListScreenBody(globalUserId: 1,),
-    UserProfileScreenBody(userId: 1,),
+  List<Widget> screens = [
+    const HomeListScreenBody(),
+    BookListScreenBody(globalUserId: globalUser!.userId),
+    const GroupListScreenBody(),
+    UserProfileScreenBody(userId: globalUser!.userId),
   ];
 
   // Method to get the title of the current screen based on the selected index

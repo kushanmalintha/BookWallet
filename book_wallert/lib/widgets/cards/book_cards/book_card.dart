@@ -45,10 +45,13 @@ class BookCard extends StatelessWidget {
                 color: MyColors.text2Color, // Text color
               ),
             ),
-            trailing: CustomPopupMenuButtons(
-                items: ['items'],
-                onItemTap: [() {}],
-                icon: Icon(Icons.more_vert_rounded))),
+            trailing: CustomPopupMenuButtons(items: [
+              'Recommond book to followers',
+              'Add to wishlist',
+            ], onItemTap: [
+              () {},
+              () {},
+            ], icon: Icon(Icons.more_vert_rounded))),
       ),
     );
   }

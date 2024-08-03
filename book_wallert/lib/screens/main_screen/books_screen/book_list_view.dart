@@ -1,4 +1,5 @@
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
+import 'package:book_wallert/widgets/frames/trendingwidget_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card_recommended.dart';
@@ -14,17 +15,29 @@ class BookListView extends StatelessWidget {
     switch (screenName) {
       // functions to return a screen
       case 'Recommended':
-        return BookRecommendedCard(suggester: 'Ravindu', book: dummyBook,);
+        return BookRecommendedCard(
+          suggester: 'Ravindu',
+          book: dummyBook,
+        );
       case 'Trending':
-        return BookTrendingCard(
-          trendingNumber: 1, book: dummyBook,
+        return TrendingFrame(
+          rank: 1,
+          child: BookCard(
+            book: dummyBook,
+          ),
         );
       case 'Wishlist':
-        return BookWishlistCard(book: dummyBook,);
+        return BookCard(
+          book: dummyBook,
+        );
       case 'Completed':
-        return BookCompletedCard(book: dummyBook,);
+        return BookCard(
+          book: dummyBook,
+        );
     }
-    return BookCard(book: dummyBook,);
+    return BookCard(
+      book: dummyBook,
+    );
   }
 
   const BookListView({super.key, required this.screenName});
