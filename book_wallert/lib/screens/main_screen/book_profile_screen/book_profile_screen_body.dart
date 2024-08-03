@@ -103,11 +103,14 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
                       controller: _tabController,
                       children: [
                         BookProfileScreenListView(
-                            screenName: 'Reviews'), // Reviews
+                            screenName: 'Reviews',
+                            book: widget.book), // Reviews
                         BookProfileScreenListView(
-                            screenName: 'Locations'), // Locations
+                            screenName: 'Locations',
+                            book: widget.book), // Locations
                         BookProfileScreenListView(
-                            screenName: 'Read Online'), // Read Online
+                            screenName: 'Read Online',
+                            book: widget.book), // Read Online
                       ],
                     ),
                   ),
