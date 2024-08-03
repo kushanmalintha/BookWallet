@@ -9,6 +9,7 @@ class BookModel {
   final String publishedDate;
   final String imageUrl;
   final String description;
+  final String resource;
 
   BookModel({
     required this.title,
@@ -21,6 +22,7 @@ class BookModel {
     required this.totalRating,
     required this.imageUrl,
     required this.description,
+    required this.resource,
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,7 @@ class BookModel {
       totalRating: json['totalRating'],
       imageUrl: json['imageUrl'],
       description: json['description'],
+      resource: json['resource'],
     );
   }
 
@@ -50,6 +53,7 @@ class BookModel {
       'totalRating': totalRating,
       'imageUrl': imageUrl,
       'description': description,
+      'resource': resource,
     };
   }
 }

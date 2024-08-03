@@ -12,5 +12,7 @@ BookModel dummyBook = BookModel(
   imageUrl:
       'http://books.google.com/books/content?id=Zj5SKtDz2bUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
   description:
-      'Dune Messiah is a continuation of the book meawanm suprir stireh bn heta utaja aamaa abakaeue aeb eae ejwwhw ahc foihfsoivh ofshvosvh vhv r', // You can add an 'about' property to the BookModel if needed
+      'Dune Messiah is a continuation of the book meawanm suprir stireh bn heta utaja aamaa abakaeue aeb eae ejwwhw ahc foihfsoivh ofshvosvh vhv r',
+  resource:
+      'eewegerwree', // You can add an 'about' property to the BookModel if needed
 );

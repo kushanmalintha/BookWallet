@@ -1,4 +1,5 @@
-import 'package:book_wallert/widgets/cards/react_user_card.dart';
+import 'package:book_wallert/dummy_data/user_dummy.dart';
+import 'package:book_wallert/widgets/cards/user_card.dart';
 import 'package:flutter/material.dart';
 
 class ReviewScreenListView extends StatelessWidget {
@@ -14,13 +15,13 @@ class ReviewScreenListView extends StatelessWidget {
     switch (screenName) {
       // functions to return a screen
       case 'Comment':
-        return ReactUserCard();
+        return ReactUserCard(user: dummyUser);
       case 'Like':
-        return ReactUserCard();
+        return ReactUserCard(user: dummyUser);
       case 'Share':
-        return ReactUserCard();
+        return ReactUserCard(user: dummyUser);
     }
-    return ReactUserCard();
+    return ReactUserCard(user: dummyUser);
   }
 
   ReviewScreenListView({super.key, required this.screenName});

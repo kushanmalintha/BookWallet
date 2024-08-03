@@ -6,5 +6,5 @@ User dummyUser = User(
   email: 'john.doe@example.com',
   description:
       'A passionate developer with a love for creating innovative solutions.',
-  // imageUrl: 'https://example.com/images/john_doe.png',
+  imageUrl: 'https://example.com/images/john_doe.png',
 );
