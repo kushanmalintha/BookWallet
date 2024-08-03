@@ -62,7 +62,9 @@ class MyApp extends StatelessWidget {
         '/screen8': (context) => const Screen8(),
         '/SettingsScreen': (context) => const Settingscreen(),
         '/EditUserInfo': (context) => EditUserInfo(),
-        '/Profile': (context) => const UserProfileScreenBody(userId: 1,),
+        '/Profile': (context) => const UserProfileScreenBody(
+              userId: 1,
+            ),
       },
     );
   }
