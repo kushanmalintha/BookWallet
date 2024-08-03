@@ -1,5 +1,7 @@
 import 'package:book_wallert/dummy_data/user_dummy.dart';
+import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_completed_listview.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_review_listview.dart';
+import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_wishlist_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_details.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_list_veiw.dart';
@@ -74,8 +76,8 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
               children: [
                 UserProfileReviewListView(userId: widget.userId), // Reviews
                 const UserProfileListVeiw(screenName: 'Reading'), // Reading
-                const UserProfileListVeiw(screenName: 'Wishlist'), // Wishlist
-                const UserProfileListVeiw(screenName: 'Completed'), // Completed
+                UserProfileWishlistListView(userId: widget.userId), // Wishlist
+                UserProfileCompletedListView(userId: widget.userId), // Completed
               ],
             ),
           ),
