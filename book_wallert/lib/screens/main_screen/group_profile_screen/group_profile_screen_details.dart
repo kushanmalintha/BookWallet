@@ -93,6 +93,7 @@ class GroupProfileScreenDetails extends StatelessWidget {
             child: SizedBox(
               width: 120,
               child: CustomToggleButton(
+                isSelected: false,
                 beforeText: 'Send Request',
                 afterText: 'Requested',
                 verticalalSpace: 5,

@@ -1,3 +1,4 @@
+import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_review_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/controllers/review_post_controller.dart';
@@ -102,12 +103,15 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
                     child: TabBarView(
                       controller: _tabController,
                       children: [
+                        BookProfileScreenReviewListView(
+                            screenName: 'Reviews',
+                            book: widget.book), // Reviews
                         BookProfileScreenListView(
-                            screenName: 'Reviews'), // Reviews
+                            screenName: 'Locations',
+                            book: widget.book), // Locations
                         BookProfileScreenListView(
-                            screenName: 'Locations'), // Locations
-                        BookProfileScreenListView(
-                            screenName: 'Read Online'), // Read Online
+                            screenName: 'Read Online',
+                            book: widget.book), // Read Online
                       ],
                     ),
                   ),

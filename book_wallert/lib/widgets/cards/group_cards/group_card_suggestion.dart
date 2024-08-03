@@ -73,6 +73,7 @@ class GroupCardSuggestion extends StatelessWidget {
                     Row(
                       children: [
                         CustomToggleButton(
+                          isSelected: false,
                           beforeText:
                               'Send Request', // Button text before toggle
                           afterText: 'Requested', // Button text after toggle

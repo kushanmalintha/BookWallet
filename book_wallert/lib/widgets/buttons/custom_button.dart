@@ -35,13 +35,15 @@ class CustomToggleButton extends StatefulWidget {
 
   // Font size
   final double textSize;
-
+  // State variable to track if the button is selected or not
+  bool isSelected = false;
   // Constructor for initializing the custom button
   CustomToggleButton({
     super.key,
     required this.beforeText,
     required this.afterText,
     required this.press,
+    required this.isSelected,
     this.backgroundColorSelected = MyColors.selectedItemColor,
     this.backgroundColorNotSelected = MyColors.nonSelectedItemColor,
     this.textColorSelected = MyColors.bgColor,
@@ -59,16 +61,13 @@ class CustomToggleButton extends StatefulWidget {
 }
 
 class _CustomToggleButtonState extends State<CustomToggleButton> {
-  // State variable to track if the button is selected or not
-  bool isSelected = false;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         // Update the state to toggle selection and call the press function
         setState(() {
-          isSelected = !isSelected;
+          widget.isSelected = !widget.isSelected;
         });
         widget.press(); // Call the function provided in the press parameter
       },
@@ -77,7 +76,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
             vertical: widget.verticalalSpace,
             horizontal: widget.horizontalSpace),
         decoration: BoxDecoration(
-          color: isSelected
+          color: widget.isSelected
               ? widget.backgroundColorNotSelected
               : widget.backgroundColorSelected,
           borderRadius: BorderRadius.circular(200), // Circular border radius
@@ -86,14 +85,16 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
         ),
         child: Center(
           child: Text(
-            isSelected
+            widget.isSelected
                 ? widget.afterText
                 : widget.beforeText, // Display text on the button
             style: TextStyle(
               fontSize: widget.textSize,
-              color: isSelected
-                  ? widget.textColorSelected
-                  : widget.textColorSelected,
+              color: widget.isSelected
+                  ? widget
+                      .textColorSelected // Use selected text color when isSelected is true
+                  : widget
+                      .textColorNotSelected, // Use not selected text color when isSelected is false
               fontWeight: FontWeight.bold,
             ),
           ),

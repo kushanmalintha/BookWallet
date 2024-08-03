@@ -21,7 +21,8 @@ class ReviewPostApiService {
           'author': book.author,
           'rating': book.totalRating, // Assuming this is the book rating
           'genre': book.genre,
-          'imageUrl':book.imageUrl
+          'imageUrl': book.imageUrl,
+          'resource': book.resource
         },
         'review': {
           'user_id': userId,

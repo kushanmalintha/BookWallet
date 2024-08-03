@@ -8,7 +8,7 @@ import 'package:book_wallert/models/user.dart';
 class AuthApiService {
   static final String _baseUrl =
       'http://${ip}:3000/api/auth'; // Replace with your server URL
-        
+
   Future<User> signUp(String username, String email, String password) async {
     final response = await http.post(
       Uri.parse('$_baseUrl/signup'),
@@ -22,8 +22,12 @@ class AuthApiService {
 
     if (response.statusCode == 201) {
       return User.fromJson(jsonDecode(response.body)['user']);
+    } else if (response.statusCode == 400) {
+      throw Exception('Bad request');
+    } else if (response.statusCode == 404) {
+      throw Exception('Not found');
     } else {
-      throw Exception('Failed to sign up');
+      throw Exception('Failed to signup');
     }
   }
 
