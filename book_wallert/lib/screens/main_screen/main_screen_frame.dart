@@ -1,3 +1,4 @@
+import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/search_screens/search_list_screen_body.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/books_list_screen_body.dart';
@@ -54,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> screens = const [
     HomeListScreenBody(),
     BookListScreenBody(globalUserId: 1,),
-    GroupListScreenBody(),
+    GroupListScreenBody(globalUserId: 1,),
     UserProfileScreenBody(userId: 1,),
   ];
 
