@@ -23,10 +23,39 @@ class ReviewCard extends StatefulWidget {
 
 class _ReviewCardState extends State<ReviewCard> {
   bool _isComment = false;
+  bool _isOverflow = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _checkOverflow());
+  }
 
   void _handleCommentChanged(bool value) {
     setState(() {
       _isComment = value;
+    });
+  }
+
+  void _checkOverflow() {
+    final textSpan = TextSpan(
+      text: widget.review.context.length > 50
+          ? '${widget.review.context.substring(0, 50)}...'
+          : widget.review.context,
+      style: const TextStyle(
+        color: MyColors.textColor,
+        fontSize: 14,
+      ),
+    );
+    final textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout(
+      maxWidth: MediaQuery.of(context).size.width,
+    );
+    setState(() {
+      _isOverflow = widget.review.context.length > 50;
     });
   }
 
@@ -105,20 +134,21 @@ class _ReviewCardState extends State<ReviewCard> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          widget.review.context,
+                                          widget.review.context.length > 50
+                                              ? '${widget.review.context.substring(0, 50)}...'
+                                              : widget.review.context,
                                           style: const TextStyle(
                                             color: MyColors.textColor,
                                             fontSize: 14,
                                           ),
                                           textAlign: TextAlign.start,
-                                          maxLines: 3,
-                                          overflow: TextOverflow.ellipsis,
                                         ),
-                                        const Text(
-                                          'see more',
-                                          style: TextStyle(
-                                              color: MyColors.text2Color),
-                                        ),
+                                        if (_isOverflow)
+                                          const Text(
+                                            'see more',
+                                            style: TextStyle(
+                                                color: MyColors.text2Color),
+                                          ),
                                       ],
                                     ),
                                   ),
