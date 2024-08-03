@@ -6,16 +6,18 @@ class ReviewForUserController {
   List<ReviewModel> reviews = [];
   bool isloading = false;
   int currentPage = 1;
-  int? userId;
+  int userId;
+
+  ReviewForUserController(this.userId);
 
   Future<void> fetchPosts(Function(List<ReviewModel>) onDataFetched) async {
-    if (isloading || userId == null) return;
+    if (isloading) return;
 
     isloading = true;
 
     try {
       List<ReviewModel> fetchedReviews =
-          await _reviewForUserService.fetchPosts(userId!, currentPage);
+          await _reviewForUserService.fetchPosts(userId, currentPage);
       reviews.addAll(fetchedReviews);
       currentPage++;
       onDataFetched(reviews);

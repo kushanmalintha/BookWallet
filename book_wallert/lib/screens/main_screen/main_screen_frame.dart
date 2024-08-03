@@ -1,3 +1,4 @@
+import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/search_screens/search_list_screen_body.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/books_list_screen_body.dart';
@@ -51,11 +52,11 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   // List of screens to display based on the selected index
-  List<Widget> screens = const [
-    HomeListScreenBody(),
-    BookListScreenBody(globalUserId: 1,),
-    GroupListScreenBody(),
-    UserProfileScreenBody(userId: 1,),
+  List<Widget> screens = [
+    const HomeListScreenBody(),
+    BookListScreenBody(globalUserId: globalUser!.userId),
+    const GroupListScreenBody(),
+    UserProfileScreenBody(userId: globalUser!.userId),
   ];
 
   // Method to get the title of the current screen based on the selected index

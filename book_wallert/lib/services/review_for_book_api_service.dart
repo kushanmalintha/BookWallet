@@ -44,12 +44,12 @@ class BookIdService {
   Future<int> fetchId(BookModel book) async {
     int? bookId;
 
-    if (book.ISBN13 != null && book.ISBN13!.isNotEmpty) {
-      bookId = await fetchIdUsingISBN(book.ISBN13!);
+    if (book.ISBN13.isNotEmpty) {
+      bookId = await fetchIdUsingISBN(book.ISBN13);
     }
 
-    if (bookId == null && book.ISBN10 != null && book.ISBN10!.isNotEmpty) {
-      bookId = await fetchIdUsingISBN(book.ISBN10!);
+    if (bookId == null && book.ISBN10.isNotEmpty) {
+      bookId = await fetchIdUsingISBN(book.ISBN10);
     }
 
     if (bookId != null) {
