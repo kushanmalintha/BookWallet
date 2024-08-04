@@ -1,25 +1,46 @@
-import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/controllers/wishlist_controller.dart';
+import 'package:book_wallert/services/wishlist_api_service.dart';
+import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
 import 'package:flutter/material.dart';
+//import 'wishlist_controller.dart';
+//import 'book_card.dart'; // Assuming you have a BookCard widget
 
-class BookWishlistListview extends StatefulWidget {
-  final int globalUserId;
+class BookWishlistListView extends StatefulWidget {
+  final int userId;
 
-  const BookWishlistListview({super.key, required this.globalUserId});
+  BookWishlistListView({required this.userId});
 
   @override
-  State<BookWishlistListview> createState() => _BookWishlistListviewState();
+  State<BookWishlistListView> createState() => _BookWishlistListViewState();
 }
 
-class _BookWishlistListviewState extends State<BookWishlistListview> {
+class _BookWishlistListViewState extends State<BookWishlistListView> {
+  late WishlistController _wishlistController;
+
+  @override
+  void initState() {
+    super.initState();
+    _wishlistController = WishlistController(WishlistApiService());
+    _fetchWishlist();
+  }
+
+  Future<void> _fetchWishlist() async {
+    await _wishlistController.fetchWishlist(widget.userId);
+    setState(() {}); // Update the state to refresh the UI after data is fetched
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Fetch reviews based on the userId and display them
-    // Placeholder implementation for now
-    return Center(
-      child: Text(
-        'whislist for user ID: ${widget.globalUserId}',
-        style: const TextStyle(color: MyColors.selectedItemColor),
-      ),
-    );
+    return _wishlistController.isLoading
+        ? Center(child: CircularProgressIndicator())
+        : _wishlistController.wishlistBooks.isEmpty
+            ? Center(child: Text('No books in wishlist'))
+            : ListView.builder(
+                itemCount: _wishlistController.wishlistBooks.length,
+                itemBuilder: (context, index) {
+                  return BookCard(
+                      book: _wishlistController.wishlistBooks[index]);
+                },
+              );
   }
 }

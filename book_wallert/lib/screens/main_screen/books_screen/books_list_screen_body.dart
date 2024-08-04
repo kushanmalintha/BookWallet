@@ -1,3 +1,5 @@
+import 'package:book_wallert/controllers/wishlist_controller.dart';
+import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_completed_listview.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_recomended_listview.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_whislist_listview.dart';
@@ -62,9 +64,7 @@ class _BookScreenBodyState extends State<BookListScreenBody>
             globalUserId: widget.globalUserId,
           ), // Recommended
           const BookListView(screenName: 'Trending'), // Trending
-          BookWishlistListview(
-            globalUserId: widget.globalUserId,
-          ), // Wishlist
+          BookWishlistListView(userId:  widget.globalUserId,), // Wishlist
           BookCompletedListview(
             globalUserId: widget.globalUserId,
           ), // Completed

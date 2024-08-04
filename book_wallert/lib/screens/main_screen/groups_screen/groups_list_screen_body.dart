@@ -1,11 +1,14 @@
+import 'package:book_wallert/screens/main_screen/groups_screen/group_fandon_listview.dart';
+import 'package:book_wallert/screens/main_screen/groups_screen/group_suggestion_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 import 'groups_list_list_view.dart';
 
 class GroupListScreenBody extends StatefulWidget {
+  final int globalUserId;
   const GroupListScreenBody({
-    super.key,
+    super.key, required this.globalUserId,
   });
 
   @override
@@ -53,10 +56,10 @@ class _GroupListScreenBodyState extends State<GroupListScreenBody>
       body: TabBarView(
         // adding corrosponding screens to each button on SelectionBar.
         controller: _tabController,
-        children: const [
-          GroupsListViewFandom(), // Your fandoms
-          GroupsListViewTrending(), // Trending
-          GroupsListViewSuggestion(), // Suggestions
+        children:  [
+          GroupFandomListview(globalUserId: widget.globalUserId,), // Your fandoms
+          const GroupsListViewTrending(), // Trending
+          GroupSuggestionListview(globalUserId: widget.globalUserId,), // Suggestions
         ],
       ),
     );
