@@ -30,7 +30,7 @@ class ReviewScreenDetails extends StatelessWidget {
                     },
                     child: SizedBox(
                       width: 80,
-                      child: Image.asset(review.imagePath, fit: BoxFit.cover),
+                      child: Image.network(review.imagePath, fit: BoxFit.cover),
                     ),
                   ),
                   const SizedBox(height: 5),

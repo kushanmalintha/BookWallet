@@ -18,7 +18,7 @@ class _UserProfileCompletedListViewState extends State<UserProfileCompletedListV
     return Center(
       child: Text(
         'Completed for user ID: ${widget.userId}',
-        style: TextStyle(color: MyColors.selectedItemColor),
+        style: const TextStyle(color: MyColors.selectedItemColor),
       ),
     );
   }

@@ -1,12 +1,9 @@
 import 'package:book_wallert/functions/global_user_provider.dart';
-import 'package:book_wallert/ipaddress.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/models/user.dart';
 import 'package:book_wallert/widgets/buttons/custom_button.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:book_wallert/controllers/user_follow_controller.dart';
 
 const String location = 'Colombo, Sri Lanka';
@@ -24,7 +21,7 @@ class UserProfileDetails extends StatefulWidget {
   const UserProfileDetails({super.key, required this.user});
 
   @override
-  _UserProfileDetailsState createState() => _UserProfileDetailsState();
+  State<UserProfileDetails> createState() => _UserProfileDetailsState();
 }
 
 class _UserProfileDetailsState extends State<UserProfileDetails> {

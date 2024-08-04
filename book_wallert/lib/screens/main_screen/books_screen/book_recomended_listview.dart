@@ -18,7 +18,7 @@ class _BookRecomendedListviewState extends State<BookRecomendedListview> {
     return Center(
       child: Text(
         'recomanded for user ID: ${widget.globalUserId}',
-        style: TextStyle(color: MyColors.selectedItemColor),
+        style: const TextStyle(color: MyColors.selectedItemColor),
       ),
     );
   }

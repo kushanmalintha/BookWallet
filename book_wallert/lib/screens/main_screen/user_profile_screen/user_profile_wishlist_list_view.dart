@@ -18,7 +18,7 @@ class _UserProfileWishlistListViewState extends State<UserProfileWishlistListVie
     return Center(
       child: Text(
         'Wishlist for user ID: ${widget.userId}',
-        style: TextStyle(color: MyColors.selectedItemColor),
+        style: const TextStyle(color: MyColors.selectedItemColor),
       ),
     );
   }

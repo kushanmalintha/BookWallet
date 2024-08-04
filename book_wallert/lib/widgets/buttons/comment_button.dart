@@ -75,7 +75,7 @@ class _CommentButtonState extends State<CommentButton>
             screenChange(context, ReviewScreenBody(review: widget.review));
           },
           child: Text('${_commentCount}',
-              style: TextStyle(color: MyColors.textColor)),
+              style: const TextStyle(color: MyColors.textColor)),
         ),
       ],
     );

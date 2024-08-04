@@ -3,7 +3,6 @@ import 'package:book_wallert/widgets/buttons/custom_button.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart'; // Import your GroupModel class
 
 class GroupProfileScreenDetails extends StatelessWidget {
   final GroupModel group;
@@ -37,7 +36,7 @@ class GroupProfileScreenDetails extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${group.about}', // Use the about from the GroupModel object
+                  group.about, // Use the about from the GroupModel object
                   style: const TextStyle(
                     color: MyColors.textColor,
                     fontSize: 15,

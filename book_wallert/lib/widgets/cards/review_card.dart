@@ -81,7 +81,7 @@ class _ReviewCardState extends State<ReviewCard> {
                         },
                         child: SizedBox(
                           width: 80,
-                          child: Image.asset(
+                          child: Image.network(
                             widget.review.imagePath,
                             fit: BoxFit.cover,
                             errorBuilder: (BuildContext context,
