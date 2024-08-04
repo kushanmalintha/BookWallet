@@ -38,7 +38,8 @@ class _BookWishlistListViewState extends State<BookWishlistListView> {
             : ListView.builder(
                 itemCount: _wishlistController.wishlistBooks.length,
                 itemBuilder: (context, index) {
-                  return BookCard(book: _wishlistController.wishlistBooks[index]);
+                  return BookCard(
+                      book: _wishlistController.wishlistBooks[index]);
                 },
               );
   }

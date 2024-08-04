@@ -64,9 +64,7 @@ class _BookScreenBodyState extends State<BookListScreenBody>
             globalUserId: widget.globalUserId,
           ), // Recommended
           const BookListView(screenName: 'Trending'), // Trending
-          BookWishlistListview(
-            globalUserId: widget.globalUserId,
-          ), // Wishlist
+          BookWishlistListView(userId:  widget.globalUserId,), // Wishlist
           BookCompletedListview(
             globalUserId: widget.globalUserId,
           ), // Completed
