@@ -1,4 +1,6 @@
+import 'package:book_wallert/controllers/book_recommended_controller.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
+import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,24 @@ class BookCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final BookRecommendController bookRecommendController =
+        BookRecommendController(globalUser!.userId);
+    // void recommendBook(book) async {
+    //   try {
+    //     await bookRecommendController.fetchBookId(book);
+    //     await bookRecommendController.postRecommendation(
+    //         globalUser!.userId, bookRecommendController.bookId!);
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       const SnackBar(
+    //           content: Text('Book recommended to followers successfully.')),
+    //     );
+    //   } catch (e) {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text('Error recommending book: $e')),
+    //     );
+    //   }
+    // }
+
     return GestureDetector(
       onTap: () {
         // Navigate to BookProfileScreenBody when the card is tapped
@@ -49,8 +69,23 @@ class BookCard extends StatelessWidget {
               'Recommond book to followers',
               'Add to wishlist',
             ], onItemTap: [
-              () {},
-              () {},
+              () async {
+                try {
+                  await bookRecommendController.fetchBookId(book);
+                  await bookRecommendController.postRecommendation(
+                      globalUser!.userId, bookRecommendController.bookId!);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text(
+                            'Book recommended to followers successfully.')),
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error recommending book: $e')),
+                  );
+                }
+              },
+              () {}, // Praveen meka witharak wenas karapn buuruwaaa
             ], icon: const Icon(Icons.more_vert_rounded))),
       ),
     );
