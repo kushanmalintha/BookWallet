@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class BookWishlistListView extends StatefulWidget {
   final int userId;
 
-  BookWishlistListView({required this.userId});
+  const BookWishlistListView({super.key, required this.userId});
 
   @override
   State<BookWishlistListView> createState() => _BookWishlistListViewState();

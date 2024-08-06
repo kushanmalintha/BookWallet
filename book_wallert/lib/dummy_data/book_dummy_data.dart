@@ -8,7 +8,7 @@ BookModel dummyBook = BookModel(
   ISBN10: '332235',
   ISBN13: '425425554',
   publishedDate: '1923-04-10',
-  totalRating: '9.8',
+  totalRating: 3,
   imageUrl:
       'http://books.google.com/books/content?id=Zj5SKtDz2bUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
   description:
