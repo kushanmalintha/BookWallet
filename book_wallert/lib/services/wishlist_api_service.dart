@@ -26,7 +26,8 @@ import 'package:http/http.dart' as http;
 
 class WishlistApiService {
   static final String baseUrl = 'http://${ip}:3000/api/wishlist';
-  static final String WishlistBaseUrl = 'http://${ip}:3000/api/wishlist/wishlistBooks';
+  static final String WishlistBaseUrl =
+      'http://${ip}:3000/api/wishlist/wishlistBooks';
 
   Future<List<BookModel>> fetchWishlist(int userId) async {
     final response = await http.get(Uri.parse('$baseUrl/$userId'));
@@ -65,7 +66,7 @@ class WishlistApiService {
       );
 
       if (response.statusCode == 200) {
-        print('Book recommended to the followers successfully.');
+        print('Book added to wishlist successfully.');
       } else {
         print(
             'Failed to recommend details. Status code: ${response.statusCode}');

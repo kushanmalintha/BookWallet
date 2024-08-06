@@ -21,7 +21,8 @@ class BookCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final BookRecommendController bookRecommendController =
         BookRecommendController(globalUser!.userId);
-    
+    final WishlistController wishlistController =
+        WishlistController(WishlistApiService());
 
     return GestureDetector(
       onTap: () {
@@ -80,8 +81,7 @@ class BookCard extends StatelessWidget {
                       globalUser!.userId, bookRecommendController.bookId!);
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                        content: Text(
-                            'Book recommended to followers successfully.')),
+                        content: Text('Book added to wishlist successfully.')),
                   );
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
