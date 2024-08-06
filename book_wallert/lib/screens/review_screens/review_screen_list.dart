@@ -15,13 +15,13 @@ class ReviewScreenListView extends StatelessWidget {
     switch (screenName) {
       // functions to return a screen
       case 'Comment':
-        return ReactUserCard(user: dummyUser);
+        return UserCard(user: dummyUser);
       case 'Like':
-        return ReactUserCard(user: dummyUser);
+        return UserCard(user: dummyUser);
       case 'Share':
-        return ReactUserCard(user: dummyUser);
+        return UserCard(user: dummyUser);
     }
-    return ReactUserCard(user: dummyUser);
+    return UserCard(user: dummyUser);
   }
 
   ReviewScreenListView({super.key, required this.screenName});

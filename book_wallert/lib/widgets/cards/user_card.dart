@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:book_wallert/models/user.dart';
 import 'package:book_wallert/controllers/user_follow_controller.dart'; // Ensure correct import
 
-class ReactUserCard extends StatefulWidget {
+class UserCard extends StatefulWidget {
   final User user;
 
-  const ReactUserCard({super.key, required this.user});
+  const UserCard({super.key, required this.user});
 
   @override
-  _ReactUserCardState createState() => _ReactUserCardState();
+  _UserCardState createState() => _UserCardState();
 }
 
-class _ReactUserCardState extends State<ReactUserCard> {
+class _UserCardState extends State<UserCard> {
   bool _isFollowing = false;
 
   @override
