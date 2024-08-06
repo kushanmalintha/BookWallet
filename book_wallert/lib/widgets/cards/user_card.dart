@@ -98,7 +98,7 @@ class _UserCardState extends State<UserCard> {
               ),
             ),
             const SizedBox(
-              width: 130,
+              width: 100,
             ), // Pushes the button to the right side;
             SizedBox(
               height: 30,
