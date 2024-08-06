@@ -20,6 +20,7 @@ class BookIdService {
           'description': book.description,
           'author': book.author,
           'rating': book.totalRating, // Assuming this is the book rating
+          'pages': book.pages,
           'genre': book.genre,
           'imageUrl': book.imageUrl,
           'resource': book.resource
