@@ -54,7 +54,7 @@ class _MainScreenState extends State<MainScreen> {
   // List of screens to display based on the selected index
   List<Widget> screens = [
     const HomeListScreenBody(),
-    BookListScreenBody(globalUserId: globalUser!.userId),
+    BookListScreenBody(userId: globalUser!.userId),
     GroupListScreenBody(
       globalUserId: globalUser!.userId,
     ),

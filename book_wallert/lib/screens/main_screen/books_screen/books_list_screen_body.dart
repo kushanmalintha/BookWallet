@@ -1,5 +1,3 @@
-import 'package:book_wallert/controllers/wishlist_controller.dart';
-import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_completed_listview.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_recomended_listview.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_whislist_listview.dart';
@@ -9,9 +7,9 @@ import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 
 class BookListScreenBody extends StatefulWidget {
-  final int globalUserId;
+  final int userId;
 
-  const BookListScreenBody({super.key, required this.globalUserId});
+  const BookListScreenBody({super.key, required this.userId});
 
   @override
   State<BookListScreenBody> createState() {
@@ -60,13 +58,13 @@ class _BookScreenBodyState extends State<BookListScreenBody>
         // adding corrosponding screens to each button on SelectionBar.
         controller: _tabController,
         children: [
-          BookRecomendedListview(
-            globalUserId: widget.globalUserId,
-          ), // Recommended
+          BookRecomendedListview(userId: widget.userId), // Recommended
           const BookListView(screenName: 'Trending'), // Trending
-          BookWishlistListView(userId:  widget.globalUserId,), // Wishlist
+          BookWishlistListView(
+            userId: widget.userId,
+          ), // Wishlist
           BookCompletedListview(
-            globalUserId: widget.globalUserId,
+            globalUserId: widget.userId,
           ), // Completed
         ],
       ),

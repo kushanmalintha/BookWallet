@@ -32,20 +32,33 @@ class RecommendDetailsService {
 // Fetch recommended books for user
 class BookForRecommendService {
   String apiUrl(int userId) =>
-      'http://$ip:3000/api/reviews/getReviewWithBookId/$userId';
+      'http://$ip:3000/api/user/recommendedBooks/$userId';
   // http://localhost:3000/api/user/recommendedBooks/69
 
   Future<List<BookModel>> fetchBooks(int userId, int page) async {
-    final response = await http.get(Uri.parse('${apiUrl(userId)}?page=$page'));
+    final url = '${apiUrl(userId)}?page=$page';
+    print('Fetching books from URL: $url'); // Debugging step
+
+    final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);
-      if (data.isNotEmpty) {
-        return data.map((item) => BookModel.fromJson(item)).toList();
-      } else {
-        return [];
-      }
+      // print('title ${data[0]["title"].runtimeType}');
+      // print('authore ${data[0]["author"].runtimeType}');
+      // print('pages ${data[0]["pages"].runtimeType}');
+      // print('gener ${data[0]["genre"].runtimeType}');
+      // print('isbn10 ${data[0]["ISBN10"].runtimeType}');
+      // print('isbn13 ${data[0]["ISBN13"].runtimeType}');
+      // print('rating ${data[0]["totalRating"].runtimeType}');
+      // print('pub date ${data[0]["publishedDate"].runtimeType}');
+      // print('img ${data[0]["imageUrl"].runtimeType}');
+      // print('des ${data[0]["description"].runtimeType}');
+      // print('res ${data[0]["resource"].runtimeType}');
+      print(data);
+      return data.map((item) => BookModel.fromJson(item)).toList();
     } else {
+      print('Failed to load books with status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
       throw Exception('Failed to load books');
     }
   }
