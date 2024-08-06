@@ -19,21 +19,6 @@ class BookCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final BookRecommendController bookRecommendController =
         BookRecommendController(globalUser!.userId);
-    // void recommendBook(book) async {
-    //   try {
-    //     await bookRecommendController.fetchBookId(book);
-    //     await bookRecommendController.postRecommendation(
-    //         globalUser!.userId, bookRecommendController.bookId!);
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       const SnackBar(
-    //           content: Text('Book recommended to followers successfully.')),
-    //     );
-    //   } catch (e) {
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(content: Text('Error recommending book: $e')),
-    //     );
-    //   }
-    // }
 
     return GestureDetector(
       onTap: () {

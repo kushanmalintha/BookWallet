@@ -5,24 +5,24 @@ class BookModel {
   final String genre;
   final String ISBN10;
   final String ISBN13;
-  final String totalRating;
+  final int totalRating;
   final String publishedDate;
   final String imageUrl;
   final String description;
   final String resource;
 
   BookModel({
-    required this.title,
-    required this.author,
-    required this.pages,
-    required this.genre,
-    required this.ISBN10,
-    required this.ISBN13,
-    required this.publishedDate,
-    required this.totalRating,
-    required this.imageUrl,
-    required this.description,
-    required this.resource,
+    this.title = '',
+    this.author = '',
+    this.pages = 0,
+    this.genre = '',
+    this.ISBN10 = '',
+    this.ISBN13 = '',
+    this.publishedDate = '',
+    this.totalRating = 0,
+    this.imageUrl = '',
+    this.description = '',
+    this.resource = '',
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {

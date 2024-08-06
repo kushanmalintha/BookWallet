@@ -1,6 +1,6 @@
 import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/services/book_recommended_api_service.dart';
-import 'package:book_wallert/services/fetch_bookId_from_ISBN.dart';
+import 'package:book_wallert/services/fetch_bookId_from_isbn.dart';
 
 class BookRecommendController {
   final BookIdService _bookIdService = BookIdService();
@@ -8,7 +8,7 @@ class BookRecommendController {
       RecommendDetailsService();
   final BookForRecommendService _bookForRecommendService =
       BookForRecommendService();
-  List<BookModel> recommedBooks = [];
+  List<BookModel> recommendBooks = [];
   bool isLoading = false;
   int currentPage = 1;
   int userId;
@@ -27,16 +27,16 @@ class BookRecommendController {
 
   // Fetch books to the followers
   Future<void> fetchBooks(Function(List<BookModel>) onDataFetched) async {
-    if (isLoading || bookId == null) return;
+    if (isLoading) return;
 
     isLoading = true;
 
     try {
       List<BookModel> fetchedReviews =
-          await _bookForRecommendService.fetchBooks(bookId!, currentPage);
-      recommedBooks.addAll(fetchedReviews);
+          await _bookForRecommendService.fetchBooks(userId, currentPage);
+      recommendBooks.addAll(fetchedReviews);
       currentPage++;
-      onDataFetched(recommedBooks);
+      onDataFetched(recommendBooks);
     } catch (e) {
       print('Error fetching posts: $e');
     } finally {
