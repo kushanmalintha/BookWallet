@@ -26,6 +26,7 @@ import 'package:http/http.dart' as http;
 
 class WishlistApiService {
   static final String baseUrl = 'http://${ip}:3000/api/wishlist';
+  static final String WishlistBaseUrl = 'http://${ip}:3000/api/wishlist/wishlistBooks';
 
   Future<List<BookModel>> fetchWishlist(int userId) async {
     final response = await http.get(Uri.parse('$baseUrl/$userId'));
@@ -52,6 +53,26 @@ class WishlistApiService {
       }).toList();
     } else {
       throw Exception('Failed to load wishlist');
+    }
+  }
+
+  Future<void> postwhislistDetails(int userId, int bookId) async {
+    final url = Uri.parse('$WishlistBaseUrl/$bookId/$userId');
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        print('Book recommended to the followers successfully.');
+      } else {
+        print(
+            'Failed to recommend details. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('An error occurred while recommending details: $e');
     }
   }
 }
