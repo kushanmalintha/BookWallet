@@ -8,20 +8,41 @@ class BookIdService {
 
   Future<int> fetchId(BookModel book) async {
     int? bookId;
+    final response = await http.put(
+      Uri.parse(apiUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'book': {
+          'title': book.title,
+          'ISBN10': book.ISBN10,
+          'ISBN13': book.ISBN13,
+          'publication_date': book.publishedDate,
+          'description': book.description,
+          'author': book.author,
+          'rating': book.totalRating, // Assuming this is the book rating
+          'genre': book.genre,
+          'imageUrl': book.imageUrl,
+          'resource': book.resource
+        },
+      }),
+    );
+    print(response.body);
+    bookId = jsonDecode(response.body)["bookId"];
+    return bookId!;
 
-    if (book.ISBN13.isNotEmpty) {
-      bookId = await fetchIdUsingISBN(book.ISBN13);
-    }
+    // if (book.ISBN13.isNotEmpty) {
+    //   bookId = await fetchIdUsingISBN(book.ISBN13);
+    // }
 
-    if (bookId == null && book.ISBN10.isNotEmpty) {
-      bookId = await fetchIdUsingISBN(book.ISBN10);
-    }
+    // if (bookId == null && book.ISBN10.isNotEmpty) {
+    //   bookId = await fetchIdUsingISBN(book.ISBN10);
+    // }
 
-    if (bookId != null) {
-      return bookId;
-    } else {
-      throw Exception('Failed to get the book id using both ISBN13 and ISBN10');
-    }
+    // if (bookId != null) {
+    //   return bookId;
+    // } else {
+    //   throw Exception('Failed to get the book id using both ISBN13 and ISBN10');
+    // }
   }
 
   Future<int?> fetchIdUsingISBN(String ISBN) async {

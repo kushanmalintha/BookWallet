@@ -37,14 +37,14 @@ class WishlistApiService {
       return data.map((json) {
         return BookModel(
           title: json['title'],
-          ISBN10: json['ISBN10'],
+          ISBN10: json['ISBN10'].toString(),
           ISBN13: json['ISBN13'].toString(), // Convert to String if needed
           publishedDate:
               json['publication_date'], // Mapping database field to model
           description: json['description'],
           pages: json['pages'],
           author: json['author'],
-          totalRating: json['rating'].toString(), // Convert to String if needed
+          totalRating: json['rating'], // Convert to String if needed
           genre: json['genre'],
           imageUrl: json['imageUrl'],
           resource: json['resource'],
