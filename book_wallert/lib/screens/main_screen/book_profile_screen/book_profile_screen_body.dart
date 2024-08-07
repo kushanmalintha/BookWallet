@@ -1,3 +1,5 @@
+import 'package:book_wallert/controllers/get_book_api_controller.dart';
+import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_review_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/models/book_model.dart';
@@ -8,9 +10,11 @@ import 'package:book_wallert/widgets/cards/rating_bar.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 import 'package:book_wallert/colors.dart';
 
+// ignore: must_be_immutable
 class BookProfileScreenBody extends StatefulWidget {
-  final BookModel book;
-  const BookProfileScreenBody({super.key, required this.book});
+  BookModel? book;
+  int bookId;
+  BookProfileScreenBody({super.key, this.book, this.bookId = -1});
 
   @override
   State<BookProfileScreenBody> createState() {
@@ -23,6 +27,7 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
   late final ReviewPostController _reviewPostController;
   late TabController _tabController;
   late ScrollController _scrollController;
+  late GetBookController _getBookController;
 
   final List<String> _tabNames = [
     'Reviews',
@@ -40,8 +45,19 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
     _tabController = TabController(length: _tabNames.length, vsync: this);
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
-    _reviewPostController =
-        ReviewPostController(widget.book); // Initialize with the current book
+    if (widget.bookId != -1) {
+      _getBookController = GetBookController(widget.bookId);
+      _fetchBookDetails();
+    }
+    _reviewPostController = ReviewPostController(
+        widget.book ?? dummyBook); // Initialize with the current book
+  }
+
+  Future<void> _fetchBookDetails() async {
+    BookModel fetchedBook = await _getBookController.fetchBook();
+    setState(() {
+      widget.book = fetchedBook;
+    });
   }
 
   void _scrollListener() {
@@ -93,7 +109,7 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
                 controller: _scrollController,
                 slivers: [
                   SliverToBoxAdapter(
-                    child: BookProfileScreenDetails(book: widget.book),
+                    child: BookProfileScreenDetails(book: widget.book!),
                   ),
                   SliverToBoxAdapter(
                     child: SelectionBar(
@@ -105,13 +121,13 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
                       children: [
                         BookProfileScreenReviewListView(
                             screenName: 'Reviews',
-                            book: widget.book), // Reviews
+                            book: widget.book!), // Reviews
                         BookProfileScreenListView(
                             screenName: 'Locations',
-                            book: widget.book), // Locations
+                            book: widget.book!), // Locations
                         BookProfileScreenListView(
                             screenName: 'Read Online',
-                            book: widget.book), // Read Online
+                            book: widget.book!), // Read Online
                       ],
                     ),
                   ),

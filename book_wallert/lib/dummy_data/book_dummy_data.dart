@@ -1,6 +1,6 @@
 import 'package:book_wallert/models/book_model.dart';
 
-BookModel dummyBook = BookModel(
+final BookModel dummyBook = BookModel(
   title: 'hobbo  Messiah',
   author: 'Frank Herbert',
   pages: 256,

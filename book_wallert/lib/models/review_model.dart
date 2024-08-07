@@ -1,4 +1,7 @@
 class ReviewModel {
+  final int reviewId;
+  final int bookId;
+  final int userId;
   final String imagePath;
   final String bookName;
   final String authorName;
@@ -7,6 +10,9 @@ class ReviewModel {
   final String reviwerName;
 
   ReviewModel({
+    required this.reviewId,
+    required this.bookId,
+    required this.userId,
     required this.imagePath,
     required this.bookName,
     required this.authorName,
@@ -17,6 +23,9 @@ class ReviewModel {
 
   factory ReviewModel.fromJson(Map<String, dynamic> json) {
     return ReviewModel(
+      reviewId: json['reviewId'],
+      bookId: json['bookId'],
+      userId: json['userId'],
       imagePath: json['imagePath'],
       bookName: json['bookName'],
       authorName: json['authorName'],
@@ -28,6 +37,9 @@ class ReviewModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'reviewId': reviewId,
+      'bookId': bookId,
+      'userId': userId,
       'imagePath': imagePath,
       'bookName': bookName,
       'authorName': authorName,

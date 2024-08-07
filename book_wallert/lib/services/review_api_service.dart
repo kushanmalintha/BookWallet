@@ -12,7 +12,6 @@ class ReviewService {
   Future<List<ReviewModel>> fetchPosts(int page) async {
     final response =
         await http.get(Uri.parse('$apiUrl?page=$page')); // Perform GET request
-
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body); // Decode JSON response
       print(data);

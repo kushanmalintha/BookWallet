@@ -1,6 +1,9 @@
 import 'package:book_wallert/models/review_model.dart';
 
 final dummyReview = ReviewModel(
+  reviewId: 1,
+  bookId: 21,
+  userId: 68,
   imagePath: 'images/Book_Image1.jpg',
   bookName: 'Dune Messiah',
   authorName: 'Frank Herbert',
