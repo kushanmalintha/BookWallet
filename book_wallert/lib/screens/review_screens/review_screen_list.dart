@@ -1,39 +1,72 @@
 import 'package:book_wallert/dummy_data/user_dummy.dart';
-import 'package:book_wallert/widgets/cards/user_card.dart';
 import 'package:flutter/material.dart';
+import 'package:book_wallert/controllers/review_likes_controller.dart';
+import 'package:book_wallert/services/review_likes_api_service.dart';
+import 'package:book_wallert/models/user.dart';
+import 'package:book_wallert/widgets/cards/user_card.dart';
 
-class ReviewScreenListView extends StatelessWidget {
+class ReviewScreenListView extends StatefulWidget {
+  final int reviewId; // Assuming reviewId is needed to fetch likes
   final String screenName;
-  final List<String> screens = [
-    // name to screens
-    'Comment',
-    'Like',
-    'Share',
-  ];
+
+  const ReviewScreenListView({
+    super.key,
+    required this.reviewId,
+    required this.screenName,
+  });
+
+  @override
+  _ReviewScreenListViewState createState() => _ReviewScreenListViewState();
+}
+
+class _ReviewScreenListViewState extends State<ReviewScreenListView> {
+  late LikesController _likesController;
+
+  @override
+  void initState() {
+    super.initState();
+    _likesController = LikesController(LikesApiService());
+    if (widget.screenName == 'Like') {
+      _fetchLikes();
+    }
+  }
+
+  Future<void> _fetchLikes() async {
+    await _likesController.fetchLikes(widget.reviewId);
+    setState(() {}); // Refresh the UI after data is fetched
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return getScreen(widget.screenName);
+  }
 
   Widget getScreen(String screenName) {
     switch (screenName) {
-      // functions to return a screen
       case 'Comment':
-        return ReactUserCard(user: dummyUser);
+        return UserCard(user: dummyUser); // Replace with actual user data
       case 'Like':
-        return ReactUserCard(user: dummyUser);
+        return _likesController.isLoading
+            ? Center(child: CircularProgressIndicator())
+            : _likesController.likes.isEmpty
+                ? Center(child: Text('No likes yet'))
+                : ListView.builder(
+                    itemCount: _likesController.likes.length,
+                    itemBuilder: (context, index) {
+                      final like = _likesController.likes[index];
+                      return UserCard(
+                        user: User(
+                          userId: like['user_id'],
+                          username: like['username'],
+                          email: '',
+                        ),
+                      );
+                    },
+                  );
       case 'Share':
-        return ReactUserCard(user: dummyUser);
+        return UserCard(user: dummyUser); // Replace with actual user data
+      default:
+        return UserCard(user: dummyUser); // Replace with actual user data
     }
-    return ReactUserCard(user: dummyUser);
-  }
-
-  ReviewScreenListView({super.key, required this.screenName});
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      // Number of items in the list.
-      itemCount: 10, // Change this to the number of books
-      // Builder function for each list item.
-      itemBuilder: (context, index) {
-        return getScreen(screenName); //
-      },
-    );
   }
 }

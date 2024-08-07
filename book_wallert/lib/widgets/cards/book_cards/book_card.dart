@@ -1,7 +1,9 @@
 import 'package:book_wallert/controllers/book_recommended_controller.dart';
+import 'package:book_wallert/controllers/wishlist_controller.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
+import 'package:book_wallert/services/wishlist_api_service.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
@@ -19,6 +21,8 @@ class BookCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final BookRecommendController bookRecommendController =
         BookRecommendController(globalUser!.userId);
+    final WishlistController wishlistController =
+        WishlistController(WishlistApiService());
 
     return GestureDetector(
       onTap: () {
@@ -70,7 +74,21 @@ class BookCard extends StatelessWidget {
                   );
                 }
               },
-              () {}, // Praveen meka witharak wenas karapn buuruwaaa
+              () async {
+                try {
+                  await bookRecommendController.fetchBookId(book);
+                  await wishlistController.addBookToWishlist(
+                      globalUser!.userId, bookRecommendController.bookId!);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Book added to wishlist successfully.')),
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error recommending book: $e')),
+                  );
+                }
+              }, // Praveen meka witharak wenas karapn buuruwaaa
             ], icon: const Icon(Icons.more_vert_rounded))),
       ),
     );
