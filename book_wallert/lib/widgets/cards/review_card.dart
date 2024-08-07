@@ -76,8 +76,14 @@ class _ReviewCardState extends State<ReviewCard> {
                     children: <Widget>[
                       GestureDetector(
                         onTap: () {
+                          print(
+                              'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa${widget.review.bookId}');
                           screenChange(
-                              context, BookProfileScreenBody(book: dummyBook));
+                              context,
+                              BookProfileScreenBody(
+                                bookId: widget.review.bookId,
+                                book: dummyBook,
+                              ));
                         },
                         child: SizedBox(
                           width: 80,
@@ -100,8 +106,14 @@ class _ReviewCardState extends State<ReviewCard> {
                           children: <Widget>[
                             GestureDetector(
                               onTap: () {
-                                screenChange(context,
-                                    BookProfileScreenBody(book: dummyBook));
+                                print(
+                                    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa${widget.review.bookId}');
+                                screenChange(
+                                    context,
+                                    BookProfileScreenBody(
+                                      bookId: widget.review.bookId,
+                                      book: dummyBook,
+                                    ));
                               },
                               child: Text(
                                 widget.review.bookName,
