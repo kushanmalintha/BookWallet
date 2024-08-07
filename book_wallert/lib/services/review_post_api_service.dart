@@ -8,6 +8,13 @@ class ReviewPostApiService {
 
   Future<void> reviewPost(
       BookModel book, String reviewText, double rating, int userId) async {
+    // print('Book is: ${book}');
+    // print('review text is: ${reviewText}');
+    // print('rating in book is: ${book.totalRating}');
+    // print('rating in book type is: ${(book.totalRating).runtimeType}');
+    // print('user rating num is: ${rating}');
+    // print('user Id is: ${userId}');
+
     final response = await http.post(
       Uri.parse(_baseUrl),
       headers: {'Content-Type': 'application/json'},
@@ -20,7 +27,7 @@ class ReviewPostApiService {
           'description': book.description,
           'author': book.author,
           'rating': book.totalRating, // Assuming this is the book rating
-          'pages' : book.pages,
+          'pages': book.pages,
           'genre': book.genre,
           'imageUrl': book.imageUrl,
           'resource': book.resource
@@ -34,8 +41,8 @@ class ReviewPostApiService {
       }),
     );
 
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    // print('Response status: ${response.statusCode}');
+    // print('Response body: ${response.body}');
 
     if (response.statusCode == 201) {
       // Successful response handling
