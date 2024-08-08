@@ -1,5 +1,4 @@
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/models/review.dart';
 import 'package:book_wallert/models/review_model.dart';
 import 'package:book_wallert/screens/review_screens/review_screen_details.dart';
 import 'package:book_wallert/screens/review_screens/review_screen_list.dart';
@@ -8,7 +7,8 @@ import 'package:flutter/material.dart';
 
 class ReviewScreenBody extends StatefulWidget {
   final ReviewModel review;
-  const ReviewScreenBody({super.key, required this.review});
+  final int index;
+  const ReviewScreenBody({super.key, required this.review, this.index = 0});
 
   @override
   State<ReviewScreenBody> createState() {
@@ -49,6 +49,7 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody>
 
   @override
   Widget build(BuildContext context) {
+    _tabController.index = widget.index;
     return Scaffold(
       backgroundColor: MyColors.bgColor,
       body: Stack(
@@ -69,10 +70,14 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody>
                 SliverFillRemaining(
                   child: TabBarView(
                     controller: _tabController,
-                    children: const [
-                      ReviewScreenListView(reviewId: 36, screenName: 'Comment'),
-                      ReviewScreenListView(reviewId: 36, screenName: 'Like'),
-                      ReviewScreenListView(reviewId: 36, screenName: 'Share')
+                    children: [
+                      ReviewScreenListView(
+                          reviewId: widget.review.reviewId,
+                          screenName: 'Comment'),
+                      ReviewScreenListView(
+                          reviewId: widget.review.reviewId, screenName: 'Like'),
+                      ReviewScreenListView(
+                          reviewId: widget.review.reviewId, screenName: 'Share')
                     ],
                   ),
                 ),

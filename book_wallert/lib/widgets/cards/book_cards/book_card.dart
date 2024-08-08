@@ -58,36 +58,12 @@ class BookCard extends StatelessWidget {
               'Recommond book to followers',
               'Add to wishlist',
             ], onItemTap: [
-              () async {
-                try {
-                  await bookRecommendController.fetchBookId(book);
-                  await bookRecommendController.postRecommendation(
-                      globalUser!.userId, bookRecommendController.bookId!);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text(
-                            'Book recommended to followers successfully.')),
-                  );
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error recommending book: $e')),
-                  );
-                }
+              () {
+                bookRecommendController.recommendBookToFollowers(context, book);
               },
-              () async {
-                try {
-                  await bookRecommendController.fetchBookId(book);
-                  await wishlistController.addBookToWishlist(
-                      globalUser!.userId, bookRecommendController.bookId!);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Book added to wishlist successfully.')),
-                  );
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error recommending book: $e')),
-                  );
-                }
+              () {
+                wishlistController.addBookToWishlistAndNotify(
+                    context, globalUser!.userId, book);
               }, // Praveen meka witharak wenas karapn buuruwaaa
             ], icon: const Icon(Icons.more_vert_rounded))),
       ),

@@ -1,6 +1,8 @@
+import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/controllers/wishlist_controller.dart';
 import 'package:book_wallert/services/wishlist_api_service.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
+import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart';
 //import 'wishlist_controller.dart';
 //import 'book_card.dart'; // Assuming you have a BookCard widget
@@ -32,9 +34,17 @@ class _BookWishlistListViewState extends State<BookWishlistListView> {
   @override
   Widget build(BuildContext context) {
     return _wishlistController.isLoading
+<<<<<<< HEAD
         ? const Center(child: CircularProgressIndicator())
         : _wishlistController.wishlistBooks.isEmpty
             ? const Center(child: Text('No books in wishlist'))
+=======
+        ? Center(child: buildProgressIndicator())
+        : _wishlistController.wishlistBooks.isEmpty
+            ? const Center(
+                child: Text('No books in Wishlist',
+                    style: TextStyle(color: MyColors.textColor)))
+>>>>>>> f110053ff8d9b32e718f6ed964298dcf3376c7cc
             : ListView.builder(
                 itemCount: _wishlistController.wishlistBooks.length,
                 itemBuilder: (context, index) {
