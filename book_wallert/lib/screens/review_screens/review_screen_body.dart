@@ -1,5 +1,4 @@
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/models/review.dart';
 import 'package:book_wallert/models/review_model.dart';
 import 'package:book_wallert/screens/review_screens/review_screen_details.dart';
 import 'package:book_wallert/screens/review_screens/review_screen_list.dart';

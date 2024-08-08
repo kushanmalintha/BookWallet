@@ -1,3 +1,4 @@
+import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/controllers/review_for_user_controller.dart';
 import 'package:book_wallert/widgets/cards/review_card.dart';
 import 'package:book_wallert/widgets/progress_indicators.dart';
@@ -22,22 +23,12 @@ class _UserProfileReviewListViewState extends State<UserProfileReviewListView> {
     super.initState();
     _reviewForUserController = ReviewForUserController(widget.userId);
     _fetchMoreData();
-    _scrollController.addListener(_onScroll);
   }
 
   @override
   void dispose() {
-    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
-  }
-
-  void _onScroll() {
-    if (_scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent &&
-        !_reviewForUserController.isloading) {
-      _fetchMoreData();
-    }
   }
 
   void _fetchMoreData() {
@@ -54,21 +45,26 @@ class _UserProfileReviewListViewState extends State<UserProfileReviewListView> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: _scrollController,
-      itemCount: _reviewForUserController.reviews.length + 1,
-      itemBuilder: (context, index) {
-        if (index < _reviewForUserController.reviews.length) {
-          return Column(
-            children: [
-              getScreen(index),
-              const SizedBox(height: 3),
-            ],
-          );
-        } else {
-          return buildProgressIndicator();
-        }
-      },
-    );
+    return _reviewForUserController.isloading
+        ? Center(child: buildProgressIndicator())
+        : _reviewForUserController.reviews.isEmpty
+            ? const Center(
+                child: Text('No reviews',
+                    style: TextStyle(color: MyColors.textColor)))
+            : ListView.builder(
+                controller: _scrollController,
+                itemCount: _reviewForUserController.reviews.length + 1,
+                itemBuilder: (context, index) {
+                  if (index < _reviewForUserController.reviews.length) {
+                    return Column(
+                      children: [
+                        getScreen(index),
+                        const SizedBox(height: 3),
+                      ],
+                    );
+                  }
+                  return null;
+                },
+              );
   }
 }
