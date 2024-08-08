@@ -1,3 +1,4 @@
+import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/controllers/book_recommended_controller.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
 import 'package:book_wallert/widgets/progress_indicators.dart';
@@ -24,22 +25,12 @@ class _BookRecomendedListviewState extends State<BookRecomendedListview> {
     super.initState();
     _bookRecommendController = BookRecommendController(widget.userId);
     _fetchMoreData();
-    _scrollController.addListener(_onScroll);
   }
 
   @override
   void dispose() {
-    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
-  }
-
-  void _onScroll() {
-    if (_scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent &&
-        !_bookRecommendController.isLoading) {
-      _fetchMoreData();
-    }
   }
 
   void _fetchMoreData() {
@@ -52,21 +43,28 @@ class _BookRecomendedListviewState extends State<BookRecomendedListview> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: _scrollController,
-      itemCount: _bookRecommendController.recommendBooks.length + 1,
-      itemBuilder: (context, index) {
-        if (index < _bookRecommendController.recommendBooks.length) {
-          return Column(
-            children: [
-              const SizedBox(height: 3),
-              BookCard(book: _bookRecommendController.recommendBooks[index]),
-            ],
-          );
-        } else {
-          return buildProgressIndicator();
-        }
-      },
-    );
+    return _bookRecommendController.isLoading
+        ? Center(child: buildProgressIndicator())
+        : _bookRecommendController.recommendBooks.isEmpty
+            ? const Center(
+                child: Text('No books',
+                    style: TextStyle(color: MyColors.textColor)))
+            : ListView.builder(
+                controller: _scrollController,
+                itemCount: _bookRecommendController.recommendBooks.length + 1,
+                itemBuilder: (context, index) {
+                  if (index < _bookRecommendController.recommendBooks.length) {
+                    return Column(
+                      children: [
+                        const SizedBox(height: 3),
+                        BookCard(
+                            book:
+                                _bookRecommendController.recommendBooks[index]),
+                      ],
+                    );
+                  }
+                  return null;
+                },
+              );
   }
 }
