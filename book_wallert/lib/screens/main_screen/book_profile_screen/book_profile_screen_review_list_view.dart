@@ -1,3 +1,4 @@
+import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/controllers/review_for_book_controller.dart';
 import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/widgets/cards/review_card.dart';
@@ -26,12 +27,10 @@ class _BookProfileScreenListViewState
   void initState() {
     super.initState();
     _initializeData();
-    _scrollController.addListener(_onScroll);
   }
 
   @override
   void dispose() {
-    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
   }
@@ -53,43 +52,32 @@ class _BookProfileScreenListViewState
     });
   }
 
-  void _onScroll() {
-    if (_scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent &&
-        !_reviewForBookController.isloading) {
-      _fetchMoreData();
-    }
-  }
-
-  void _fetchMoreData() {
-    _reviewForBookController.fetchPosts((updatedReviews) {
-      setState(() {
-        _reviewForBookController.reviews = updatedReviews;
-      });
-    });
-  }
-
   Widget getScreen(int index) {
     return ReviewCard(review: _reviewForBookController.reviews[index]);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: _scrollController,
-      itemCount: _reviewForBookController.reviews.length + 1,
-      itemBuilder: (context, index) {
-        if (index < _reviewForBookController.reviews.length) {
-          return Column(
-            children: [
-              getScreen(index),
-              const SizedBox(height: 3),
-            ],
-          );
-        } else {
-          return buildProgressIndicator();
-        }
-      },
-    );
+    return _reviewForBookController.isloading
+        ? Center(child: buildProgressIndicator())
+        : _reviewForBookController.reviews.isEmpty
+            ? const Center(
+                child: Text('No reviews',
+                    style: TextStyle(color: MyColors.textColor)))
+            : ListView.builder(
+                controller: _scrollController,
+                itemCount: _reviewForBookController.reviews.length + 1,
+                itemBuilder: (context, index) {
+                  if (index < _reviewForBookController.reviews.length) {
+                    return Column(
+                      children: [
+                        getScreen(index),
+                        const SizedBox(height: 3),
+                      ],
+                    );
+                  }
+                  return null;
+                },
+              );
   }
 }

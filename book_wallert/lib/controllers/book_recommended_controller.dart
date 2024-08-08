@@ -1,6 +1,7 @@
 import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/services/book_recommended_api_service.dart';
 import 'package:book_wallert/services/fetch_bookId_from_isbn.dart';
+import 'package:flutter/material.dart';
 
 class BookRecommendController {
   final BookIdService _bookIdService = BookIdService();
@@ -50,6 +51,22 @@ class BookRecommendController {
       await _recommendDetailsService.postRecommendDetails(userId, bookId);
     } catch (e) {
       throw Exception('Error posting recommendation details: $e');
+    }
+  }
+
+  Future<void> recommendBookToFollowers(
+      BuildContext context, BookModel book) async {
+    try {
+      await fetchBookId(book);
+      await postRecommendation(userId, bookId!);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Book recommended to followers successfully.')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error recommending book: $e')),
+      );
     }
   }
 }
