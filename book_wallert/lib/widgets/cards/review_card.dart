@@ -77,7 +77,11 @@ class _ReviewCardState extends State<ReviewCard> {
                       GestureDetector(
                         onTap: () {
                           screenChange(
-                              context, BookProfileScreenBody(book: dummyBook));
+                              context,
+                              BookProfileScreenBody(
+                                bookId: widget.review.bookId,
+                                book: dummyBook,
+                              ));
                         },
                         child: SizedBox(
                           width: 80,
@@ -100,8 +104,12 @@ class _ReviewCardState extends State<ReviewCard> {
                           children: <Widget>[
                             GestureDetector(
                               onTap: () {
-                                screenChange(context,
-                                    BookProfileScreenBody(book: dummyBook));
+                                screenChange(
+                                    context,
+                                    BookProfileScreenBody(
+                                      bookId: widget.review.bookId,
+                                      book: dummyBook,
+                                    ));
                               },
                               child: Text(
                                 widget.review.bookName,
@@ -230,7 +238,7 @@ class _ReviewCardState extends State<ReviewCard> {
                           review: widget.review,
                           icon: Icons.comment,
                           isComment: _isComment,
-                          commentsCount : widget.review.commentsCount,
+                          commentsCount: widget.review.commentsCount,
                           onCommentChanged: _handleCommentChanged,
                         ),
                         //add the share button
