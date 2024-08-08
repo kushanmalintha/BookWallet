@@ -18,7 +18,7 @@ class _GroupSuggestionListviewState extends State<GroupSuggestionListview> {
     return Center(
       child: Text(
         'Suggestion for user ID: ${widget.globalUserId}',
-        style: TextStyle(color: MyColors.selectedItemColor),
+        style: const TextStyle(color: MyColors.selectedItemColor),
       ),
     );
   }

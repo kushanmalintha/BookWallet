@@ -10,14 +10,16 @@ class CommentButton extends StatefulWidget {
   final bool isComment;
   final VoidCallback? onTap;
   final Function(bool) onCommentChanged;
+  int commentsCount;
 
-  const CommentButton({
+  CommentButton({
     super.key,
     required this.review,
     required this.icon,
     this.onTap,
     required this.isComment,
     required this.onCommentChanged,
+    required this.commentsCount,
   });
 
   @override
@@ -28,8 +30,6 @@ class _CommentButtonState extends State<CommentButton>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
       duration: const Duration(milliseconds: 200), vsync: this, value: 1.0);
-
-  int _commentCount = 100;
 
   @override
   void dispose() {
@@ -44,7 +44,9 @@ class _CommentButtonState extends State<CommentButton>
         GestureDetector(
           onTap: () {
             setState(() {
-              !widget.isComment ? _commentCount++ : _commentCount--;
+              !widget.isComment
+                  ? widget.commentsCount++
+                  : widget.commentsCount--;
             });
             widget.onCommentChanged(!widget.isComment);
             _controller.reverse().then((value) => _controller.forward());
@@ -72,9 +74,14 @@ class _CommentButtonState extends State<CommentButton>
         ),
         TextButton(
           onPressed: () {
-            screenChange(context, ReviewScreenBody(review: widget.review));
+            screenChange(
+                context,
+                ReviewScreenBody(
+                  review: widget.review,
+                  index: 0,
+                ));
           },
-          child: Text('${_commentCount}',
+          child: Text('${widget.commentsCount}',
               style: const TextStyle(color: MyColors.textColor)),
         ),
       ],

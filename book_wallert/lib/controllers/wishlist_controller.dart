@@ -12,6 +12,14 @@ class WishlistController extends ChangeNotifier {
 
   WishlistController(this.apiService);
 
+  Future<void> fetchBookId(BookModel book) async {
+    try {
+      bookId = await _bookIdService.fetchId(book);
+    } catch (e) {
+      throw Exception('Error fetching book ID: $e');
+    }
+  }
+
   Future<void> fetchWishlist(int userId) async {
     // Changed String to int
     isLoading = true;
@@ -44,4 +52,19 @@ class WishlistController extends ChangeNotifier {
       print('Error removing book from wishlist: $e');
     }
   }
+ Future<void> addBookToWishlistAndNotify(
+      BuildContext context, int userId, BookModel book) async {
+    try {
+      await fetchBookId(book);
+      await addBookToWishlist(userId, bookId!);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Book added to wishlist successfully.')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error adding book to wishlist: $e')),
+      );
+    }
+  } 
 }
+
