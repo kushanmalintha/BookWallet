@@ -76,4 +76,21 @@ class WishlistApiService {
       print('An error occurred while recommending details: $e');
     }
   }
+  Future<void> removeBookFromWishlist(int userId, int bookId) async {
+    final url = Uri.parse('$baseUrl/remove/$userId/$bookId');
+    try {
+      final response = await http.delete(url);
+
+      if (response.statusCode == 200) {
+        print('Book removed from wishlist successfully.');
+      } else {
+        print(
+            'Failed to remove from wishlist. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('An error occurred while removing from wishlist: $e');
+    }
+  }
+
 }

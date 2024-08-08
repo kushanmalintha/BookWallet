@@ -36,4 +36,12 @@ class WishlistController extends ChangeNotifier {
       print('Error adding book to recommendation: $e');
     }
   }
+
+  Future<void> removeBookFromWishlist(int userId, int bookId) async {
+    try {
+      await apiService.removeBookFromWishlist(userId, bookId);
+    } catch (e) {
+      print('Error removing book from wishlist: $e');
+    }
+  }
 }
