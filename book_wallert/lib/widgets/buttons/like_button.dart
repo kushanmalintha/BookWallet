@@ -36,20 +36,20 @@ class _LikeButtonState extends State<LikeButton>
     super.initState();
     _controller = AnimationController(
         duration: const Duration(milliseconds: 200), vsync: this, value: 1.0);
-    _fetchLikeCount(); //change
+
     _likeCount = widget.likesCount;
   }
 
-  Future<void> _fetchLikeCount() async {
-    try {
-      final count = await _apiService.fetchLikeCount(widget.review.reviewId);
-      setState(() {
-        _likeCount = count;
-      });
-    } catch (e) {
-      print('Failed to fetch like count: $e');
-    }
-  }
+  // Future<void> _fetchLikeCount() async {
+  //   try {
+  //     final count = await _apiService.fetchLikeCount(widget.review.reviewId);
+  //     setState(() {
+  //       _likeCount = count;
+  //     });
+  //   } catch (e) {
+  //     print('Failed to fetch like count: $e');
+  //   }
+  // }
 
   Future<void> _toggleLike() async {
     try {

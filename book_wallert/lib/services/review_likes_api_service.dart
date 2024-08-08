@@ -21,16 +21,16 @@ class LikesApiService {
     }
   }
 
-  Future<int> fetchLikeCount(int reviewId) async {
-    final response = await http.get(Uri.parse('$baseUrl/$reviewId/like-count'));
+  // Future<int> fetchLikeCount(int reviewId) async {
+  //   final response = await http.get(Uri.parse('$baseUrl/$reviewId/like-count'));
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return data['likeCount'];
-    } else {
-      throw Exception('Failed to load like count');
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     final data = json.decode(response.body);
+  //     return data['likeCount'];
+  //   } else {
+  //     throw Exception('Failed to load like count');
+  //   }
+  // }
 
   Future<void> likeReview(int reviewId, int userId) async {
     final response = await http.post(
