@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:book_wallert/services/checkingWishlist_service.dart';
+import 'package:book_wallert/services/checking_wishlist_service.dart';
 
 class CheckingWishlistController extends ChangeNotifier {
   final CheckingWishlistService checkingWishlistService;
