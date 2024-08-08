@@ -32,9 +32,9 @@ class _BookWishlistListViewState extends State<BookWishlistListView> {
   @override
   Widget build(BuildContext context) {
     return _wishlistController.isLoading
-        ? Center(child: CircularProgressIndicator())
+        ? const Center(child: CircularProgressIndicator())
         : _wishlistController.wishlistBooks.isEmpty
-            ? Center(child: Text('No books in wishlist'))
+            ? const Center(child: Text('No books in wishlist'))
             : ListView.builder(
                 itemCount: _wishlistController.wishlistBooks.length,
                 itemBuilder: (context, index) {

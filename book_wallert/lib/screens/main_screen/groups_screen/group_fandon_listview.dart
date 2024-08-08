@@ -18,7 +18,7 @@ class _GroupFandomListviewState extends State<GroupFandomListview> {
     return Center(
       child: Text(
         'Fandom for user ID: ${widget.globalUserId}',
-        style: TextStyle(color: MyColors.selectedItemColor),
+        style: const TextStyle(color: MyColors.selectedItemColor),
       ),
     );
   }
