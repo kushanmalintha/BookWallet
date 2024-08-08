@@ -76,14 +76,8 @@ class _ReviewCardState extends State<ReviewCard> {
                     children: <Widget>[
                       GestureDetector(
                         onTap: () {
-                          print(
-                              'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa${widget.review.bookId}');
                           screenChange(
-                              context,
-                              BookProfileScreenBody(
-                                bookId: widget.review.bookId,
-                                book: dummyBook,
-                              ));
+                              context, BookProfileScreenBody(book: dummyBook));
                         },
                         child: SizedBox(
                           width: 80,
@@ -106,14 +100,8 @@ class _ReviewCardState extends State<ReviewCard> {
                           children: <Widget>[
                             GestureDetector(
                               onTap: () {
-                                print(
-                                    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa${widget.review.bookId}');
-                                screenChange(
-                                    context,
-                                    BookProfileScreenBody(
-                                      bookId: widget.review.bookId,
-                                      book: dummyBook,
-                                    ));
+                                screenChange(context,
+                                    BookProfileScreenBody(book: dummyBook));
                               },
                               child: Text(
                                 widget.review.bookName,
@@ -234,14 +222,22 @@ class _ReviewCardState extends State<ReviewCard> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        LikeButton(review: widget.review, icon: Icons.thumb_up),
+                        LikeButton(
+                            review: widget.review,
+                            icon: Icons.thumb_up,
+                            likesCount: widget.review.likesCount),
                         CommentButton(
                           review: widget.review,
                           icon: Icons.comment,
                           isComment: _isComment,
+                          commentsCount : widget.review.commentsCount,
                           onCommentChanged: _handleCommentChanged,
                         ),
-                        LikeButton(review: widget.review, icon: Icons.share),
+                        //add the share button
+                        LikeButton(
+                            review: widget.review,
+                            icon: Icons.share,
+                            likesCount: widget.review.likesCount),
                       ],
                     ),
                   ),

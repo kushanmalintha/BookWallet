@@ -1,37 +1,83 @@
-import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/functions/global_navigator_functions.dart';
-import 'package:book_wallert/models/review_model.dart';
-import 'package:book_wallert/screens/review_screens/review_screen_body.dart';
+import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/models/review_model.dart';
+import 'package:book_wallert/services/review_likes_api_service.dart';
+import 'package:book_wallert/screens/review_screens/review_screen_body.dart';
+import 'package:book_wallert/functions/global_navigator_functions.dart'; // Import your global functions
 
 class LikeButton extends StatefulWidget {
   final ReviewModel review;
   final IconData icon;
   final VoidCallback? onTap;
+  final int likesCount;
 
   const LikeButton({
     super.key,
     required this.review,
     required this.icon,
+    required this.likesCount,
     this.onTap,
   });
 
   @override
-  State<LikeButton> createState() => _ReactButtonState();
+  State<LikeButton> createState() => _LikeButtonState();
 }
 
-class _ReactButtonState extends State<LikeButton>
+class _LikeButtonState extends State<LikeButton>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-      duration: const Duration(milliseconds: 200), vsync: this, value: 1.0);
-
+  late final AnimationController _controller;
   bool _isLike = false;
-  int _likeCount = 100;
+  int _likeCount = 0;
+  final LikesApiService _apiService = LikesApiService();
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 200), vsync: this, value: 1.0);
+    _fetchLikeCount(); //change
+    _likeCount = widget.likesCount;
+  }
+
+  Future<void> _fetchLikeCount() async {
+    try {
+      final count = await _apiService.fetchLikeCount(widget.review.reviewId);
+      setState(() {
+        _likeCount = count;
+      });
+    } catch (e) {
+      print('Failed to fetch like count: $e');
+    }
+  }
+
+  Future<void> _toggleLike() async {
+    try {
+      final userId = globalUser?.userId; // Use the global user ID
+      if (userId == null) {
+        // Handle the case where the user is not logged in or userId is not available
+        print('User is not logged in');
+        return;
+      }
+
+      if (_isLike) {
+        await _apiService.unlikeReview(widget.review.reviewId, userId);
+        setState(() {
+          _likeCount--;
+          _isLike = false;
+        });
+      } else {
+        await _apiService.likeReview(widget.review.reviewId, userId);
+        setState(() {
+          _likeCount++;
+          _isLike = true;
+        });
+      }
+      // Trigger animation without affecting button state
+      _controller.forward().then((_) => _controller.reverse());
+    } catch (e) {
+      print('Failed to toggle like: $e');
+    }
   }
 
   @override
@@ -39,42 +85,38 @@ class _ReactButtonState extends State<LikeButton>
     return Row(
       children: [
         GestureDetector(
-          onTap: () {
-            setState(() {
-              _isLike = !_isLike;
-              _isLike ? _likeCount++ : _likeCount--;
-            });
-            _controller.reverse().then((value) => _controller.forward());
-
-            // Call the custom onTap function if provided
-            if (widget.onTap != null) {
-              widget.onTap!();
-            }
-          },
+          onTap: _toggleLike,
           child: ScaleTransition(
             scale: Tween(begin: 0.7, end: 1.0).animate(
                 CurvedAnimation(parent: _controller, curve: Curves.easeOut)),
-            child: _isLike
-                ? Icon(
-                    widget.icon,
-                    size: 20,
-                    color: MyColors.selectedItemColor,
-                  )
-                : Icon(
-                    widget.icon,
-                    size: 20,
-                    color: MyColors.nonSelectedItemColor,
-                  ),
+            child: Icon(
+              widget.icon,
+              size: 20,
+              color: _isLike
+                  ? MyColors.selectedItemColor
+                  : MyColors.nonSelectedItemColor,
+            ),
           ),
         ),
         TextButton(
           onPressed: () {
-            screenChange(context, ReviewScreenBody(review: widget.review));
+            screenChange(
+                context,
+                ReviewScreenBody(
+                  review: widget.review,
+                  index: 1,
+                ));
           },
           child: Text('$_likeCount',
               style: const TextStyle(color: MyColors.textColor)),
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

@@ -8,6 +8,9 @@ class ReviewModel {
   final String context;
   final double rating;
   final String reviwerName;
+  final int likesCount;
+  final int commentsCount;
+  final int sharesCount;
 
   ReviewModel({
     required this.reviewId,
@@ -19,6 +22,9 @@ class ReviewModel {
     required this.context,
     required this.rating,
     required this.reviwerName,
+    required this.likesCount,
+    required this.commentsCount,
+    required this.sharesCount,
   });
 
   factory ReviewModel.fromJson(Map<String, dynamic> json) {
@@ -32,6 +38,9 @@ class ReviewModel {
       context: json['context'],
       rating: json['rating'].toDouble(),
       reviwerName: json['reviwerName'],
+      likesCount: json['likesCount'], // Nullable
+      commentsCount: json['commentsCount'], // Nullable
+      sharesCount: json['sharesCount'], // Nullable
     );
   }
 
@@ -46,6 +55,9 @@ class ReviewModel {
       'context': context,
       'rating': rating,
       'reviwerName': reviwerName,
+      'likesCount': likesCount, // Nullable
+      'commentsCount': commentsCount, // Nullable
+      'sharesCount': sharesCount, // Nullable
     };
   }
 }

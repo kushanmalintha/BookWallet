@@ -20,4 +20,39 @@ class LikesApiService {
       throw Exception('Failed to load likes');
     }
   }
+
+  Future<int> fetchLikeCount(int reviewId) async {
+    final response = await http.get(Uri.parse('$baseUrl/$reviewId/like-count'));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data['likeCount'];
+    } else {
+      throw Exception('Failed to load like count');
+    }
+  }
+
+  Future<void> likeReview(int reviewId, int userId) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/$reviewId/like'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'userId': userId}),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to like review');
+    }
+  }
+
+  Future<void> unlikeReview(int reviewId, int userId) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/$reviewId/unlike'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'userId': userId}),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to unlike review');
+    }
+  }
 }
