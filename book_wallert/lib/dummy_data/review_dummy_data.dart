@@ -10,6 +10,7 @@ final dummyReview = ReviewModel(
   context:
       'Dune Messiah continues the story of Paul Atreides, better known as the Emperor of the Known Universe. This book delves deeper into the political and religious intrigues of the Dune universe.',
   rating: 9.8,
+  date: "5858758577",
   reviwerName: 'BookLover123',
   likesCount: 100,
   commentsCount: 100,

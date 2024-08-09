@@ -224,6 +224,17 @@ class _ReviewCardState extends State<ReviewCard> {
                       ),
                     ],
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        widget.review.date,
+                        style: const TextStyle(
+                            color: MyColors.text2Color,
+                            fontSize: 11), // Apply the style to the Text widget
+                      ),
+                    ],
+                  ),
                   const Divider(color: MyColors.nonSelectedItemColor),
                   SizedBox(
                     height: 34,
