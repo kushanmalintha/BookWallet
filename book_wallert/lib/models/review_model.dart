@@ -7,6 +7,7 @@ class ReviewModel {
   final String authorName;
   final String context;
   final double rating;
+  final String date;
   final String reviwerName;
   final int likesCount;
   final int commentsCount;
@@ -21,6 +22,7 @@ class ReviewModel {
     required this.authorName,
     required this.context,
     required this.rating,
+    required this.date,
     required this.reviwerName,
     required this.likesCount,
     required this.commentsCount,
@@ -37,6 +39,7 @@ class ReviewModel {
       authorName: json['authorName'],
       context: json['context'],
       rating: json['rating'].toDouble(),
+      date: json['date'],
       reviwerName: json['reviwerName'],
       likesCount: json['likesCount'], // Nullable
       commentsCount: json['commentsCount'], // Nullable
@@ -54,6 +57,7 @@ class ReviewModel {
       'authorName': authorName,
       'context': context,
       'rating': rating,
+      'date': date,
       'reviwerName': reviwerName,
       'likesCount': likesCount, // Nullable
       'commentsCount': commentsCount, // Nullable
