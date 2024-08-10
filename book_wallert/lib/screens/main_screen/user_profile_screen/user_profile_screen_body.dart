@@ -1,4 +1,7 @@
+import 'package:book_wallert/controllers/user_profile_controller.dart';
 import 'package:book_wallert/dummy_data/user_dummy.dart';
+import 'package:book_wallert/models/user.dart';
+import 'package:book_wallert/models/user_profile_model.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_completed_list_view.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_review_list_view.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_wishlist_list_view.dart';
@@ -10,8 +13,10 @@ import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 
 class UserProfileScreenBody extends StatefulWidget {
   final int userId;
+  // user model
+  UserProfileModel? userProfile;
 
-  const UserProfileScreenBody({super.key, required this.userId});
+  UserProfileScreenBody({super.key, required this.userId, this.userProfile});
 
   @override
   State<UserProfileScreenBody> createState() {
@@ -23,6 +28,8 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late ScrollController _scrollController;
+  late GetUserProfileController _getUserProfileController;
+  late UserProfileModel _user;
 
   final List<String> _tabNames = [
     'Reviews',
@@ -39,6 +46,16 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
     _tabController = TabController(length: _tabNames.length, vsync: this);
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
+    _getUserProfileController = GetUserProfileController(widget.userId);
+    _fetchUserProfile();
+  }
+
+  Future<void> _fetchUserProfile() async {
+    UserProfileModel fetchedUserProfile =
+        await _getUserProfileController.fetchUserProfile();
+    setState(() {
+      _user = fetchedUserProfile;
+    });
   }
 
   void _scrollListener() {
@@ -63,7 +80,9 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
         controller: _scrollController,
         slivers: [
           SliverToBoxAdapter(
-            child: UserProfileDetails(user: dummyUser), // Top details section
+            child: UserProfileDetails(
+                user: dummyUser,
+                userProfile: widget.userProfile), // Top details section
           ),
           SliverToBoxAdapter(
             child: SelectionBar(
