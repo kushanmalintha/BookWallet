@@ -76,54 +76,17 @@ class BookCard extends StatelessWidget {
                         ? 'Remove from wishlist'
                         : 'Add to wishlist',
                   ], onItemTap: [
-                    () async {
-                      try {
-                        await bookRecommendController.fetchBookId(book);
-                        await bookRecommendController.postRecommendation(
-                            globalUser!.userId,
-                            bookRecommendController.bookId!);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text(
-                                  'Book recommended to followers successfully.')),
-                        );
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text('Error recommending book: $e')),
-                        );
-                      }
+                    () {
+                      bookRecommendController.recommendBookToFollowers(
+                          context, book);
                     },
-                    () async {
-                      try {
-                        await bookRecommendController.fetchBookId(book);
-                        if (checkingWishlistController.isInWishlist) {
-                          // Remove from wishlist
-                          // await wishlistController.removeBookFromWishlist(
-                          //     globalUser!.userId,
-                          //     bookRecommendController.bookId!);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text(
-                                    'Book removed from wishlist successfully.')),
-                          );
-                        } else {
-                          // Add to wishlist
-                          await bookRecommendController.fetchBookId(book);
-                          await wishlistController.addBookToWishlist(
-                              globalUser!.userId,
-                              bookRecommendController.bookId!);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text(
-                                    'Book added to wishlist successfully.')),
-                          );
-                        }
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error: $e')),
-                        );
-                      }
+                    ()  {
+                       
+                         wishlistController.addOrRemoveWishlistBook(
+                       context, book,
+                      checkingWishlistController.isInWishlist,
+                    );
+                    
                     },
                   ], icon: const Icon(Icons.more_vert_rounded));
                 }

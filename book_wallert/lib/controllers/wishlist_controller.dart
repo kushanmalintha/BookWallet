@@ -1,3 +1,5 @@
+import 'package:book_wallert/controllers/book_recommended_controller.dart';
+import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/services/fetch_bookId_from_ISBN.dart';
 import 'package:book_wallert/services/wishlist_api_service.dart';
@@ -6,6 +8,8 @@ import 'package:flutter/material.dart';
 class WishlistController extends ChangeNotifier {
   final BookIdService _bookIdService = BookIdService();
   final WishlistApiService apiService;
+   final BookRecommendController bookRecommendController =
+        BookRecommendController(globalUser!.userId);
   List<BookModel> wishlistBooks = [];
   bool isLoading = false;
   int? bookId;
@@ -66,5 +70,29 @@ class WishlistController extends ChangeNotifier {
       );
     }
   } 
+   Future<void> addOrRemoveWishlistBook(BuildContext context, BookModel book, bool isInWishlist) async {
+    try {
+      await bookRecommendController.fetchBookId(book);
+      if (isInWishlist) {
+        // Remove from wishlist
+         await apiService.removeBookFromWishlist(globalUser!.userId,
+                              bookRecommendController.bookId!);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Book removed from wishlist successfully.')),
+        );
+      } else {
+        // Add to wishlist
+        await apiService.postwhislistDetails(globalUser!.userId,
+                              bookRecommendController.bookId!);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Book added to wishlist successfully.')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+    }
+  }
 }
 
