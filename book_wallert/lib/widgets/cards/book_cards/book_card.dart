@@ -1,8 +1,11 @@
 import 'package:book_wallert/controllers/book_recommended_controller.dart';
+import 'package:book_wallert/controllers/checking_wishlist_controller.dart';
 import 'package:book_wallert/controllers/wishlist_controller.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
+import 'package:book_wallert/ipaddress.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
+import 'package:book_wallert/services/checking_wishlist_service.dart';
 import 'package:book_wallert/services/wishlist_api_service.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +26,8 @@ class BookCard extends StatelessWidget {
         BookRecommendController(globalUser!.userId);
     final WishlistController wishlistController =
         WishlistController(WishlistApiService());
+    final CheckingWishlistController checkingWishlistController =
+        CheckingWishlistController(CheckingWishlistService());
 
     return GestureDetector(
       onTap: () {
@@ -54,18 +59,39 @@ class BookCard extends StatelessWidget {
                 color: MyColors.text2Color, // Text color
               ),
             ),
-            trailing: CustomPopupMenuButtons(items: const [
-              'Recommond book to followers',
-              'Add to wishlist',
-            ], onItemTap: [
-              () {
-                bookRecommendController.recommendBookToFollowers(context, book);
+            trailing: FutureBuilder(
+              future: bookRecommendController.fetchBookId(book).then((_) {
+                return checkingWishlistController.checkWishlistStatus(
+                    globalUser!.userId, bookRecommendController.bookId!);
+              }),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return const Icon(Icons.error);
+                } else {
+                  return CustomPopupMenuButtons(items: [
+                    'Recommend book to followers',
+                    checkingWishlistController.isInWishlist
+                        ? 'Remove from wishlist'
+                        : 'Add to wishlist',
+                  ], onItemTap: [
+                    () {
+                      bookRecommendController.recommendBookToFollowers(
+                          context, book);
+                    },
+                    ()  {
+                       
+                         wishlistController.addOrRemoveWishlistBook(
+                       context, book,
+                      checkingWishlistController.isInWishlist,
+                    );
+                    
+                    },
+                  ], icon: const Icon(Icons.more_vert_rounded));
+                }
               },
-              () {
-                wishlistController.addBookToWishlistAndNotify(
-                    context, globalUser!.userId, book);
-              }, // Praveen meka witharak wenas karapn buuruwaaa
-            ], icon: const Icon(Icons.more_vert_rounded))),
+            )),
       ),
     );
   }
