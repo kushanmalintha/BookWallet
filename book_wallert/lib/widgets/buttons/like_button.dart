@@ -1,3 +1,4 @@
+// widgets/like_button.dart
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
@@ -38,18 +39,27 @@ class _LikeButtonState extends State<LikeButton>
         duration: const Duration(milliseconds: 200), vsync: this, value: 1.0);
 
     _likeCount = widget.likesCount;
+    _checkIfLiked(); // Check if the user has liked the review
   }
 
-  // Future<void> _fetchLikeCount() async {
-  //   try {
-  //     final count = await _apiService.fetchLikeCount(widget.review.reviewId);
-  //     setState(() {
-  //       _likeCount = count;
-  //     });
-  //   } catch (e) {
-  //     print('Failed to fetch like count: $e');
-  //   }
-  // }
+  Future<void> _checkIfLiked() async {
+    try {
+      final userId = globalUser?.userId; // Use the global user ID
+      if (userId == null) {
+        // Handle the case where the user is not logged in or userId is not available
+        print('User is not logged in');
+        return;
+      }
+
+      final isLiked =
+          await _apiService.checkIfLiked(widget.review.reviewId, userId);
+      setState(() {
+        _isLike = isLiked;
+      });
+    } catch (e) {
+      print('Failed to check if liked: $e');
+    }
+  }
 
   Future<void> _toggleLike() async {
     try {
