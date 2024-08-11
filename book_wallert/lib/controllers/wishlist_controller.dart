@@ -1,4 +1,5 @@
 import 'package:book_wallert/controllers/book_recommended_controller.dart';
+import 'package:book_wallert/controllers/token_controller.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/services/fetch_bookId_from_ISBN.dart';
@@ -42,10 +43,10 @@ class WishlistController extends ChangeNotifier {
 
   Future<void> addBookToWishlist(int userId, int bookId) async {
     try {
-      // Add your logic to fetch the bookId from the wishlist if needed
-      await apiService.postwhislistDetails(userId, bookId);
+      String? token = await getToken();  // Get the token
+      await apiService.postwhislistDetails(userId, bookId, token);
     } catch (e) {
-      print('Error adding book to recommendation: $e');
+      print('Error adding book to wishlist: $e');
     }
   }
 
@@ -72,6 +73,7 @@ class WishlistController extends ChangeNotifier {
   } 
    Future<void> addOrRemoveWishlistBook(BuildContext context, BookModel book, bool isInWishlist) async {
     try {
+      String? token = await getToken();
       await bookRecommendController.fetchBookId(book);
       if (isInWishlist) {
         // Remove from wishlist
@@ -83,7 +85,7 @@ class WishlistController extends ChangeNotifier {
       } else {
         // Add to wishlist
         await apiService.postwhislistDetails(globalUser!.userId,
-                              bookRecommendController.bookId!);
+                              bookRecommendController.bookId!, token);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Book added to wishlist successfully.')),
         );
