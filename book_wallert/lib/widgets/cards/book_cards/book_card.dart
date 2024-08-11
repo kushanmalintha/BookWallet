@@ -3,7 +3,6 @@ import 'package:book_wallert/controllers/checking_wishlist_controller.dart';
 import 'package:book_wallert/controllers/wishlist_controller.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
-import 'package:book_wallert/ipaddress.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
 import 'package:book_wallert/services/checking_wishlist_service.dart';
 import 'package:book_wallert/services/wishlist_api_service.dart';
@@ -80,13 +79,12 @@ class BookCard extends StatelessWidget {
                       bookRecommendController.recommendBookToFollowers(
                           context, book);
                     },
-                    ()  {
-                       
-                         wishlistController.addOrRemoveWishlistBook(
-                       context, book,
-                      checkingWishlistController.isInWishlist,
-                    );
-                    
+                    () {
+                      wishlistController.addOrRemoveWishlistBook(
+                        context,
+                        book,
+                        checkingWishlistController.isInWishlist,
+                      );
                     },
                   ], icon: const Icon(Icons.more_vert_rounded));
                 }

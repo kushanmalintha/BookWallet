@@ -1,5 +1,4 @@
 import 'package:book_wallert/functions/global_user_provider.dart';
-import 'package:book_wallert/models/user_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/models/user.dart';
@@ -17,10 +16,9 @@ const double spacingValue = 8;
 const double headerFontSize = 20;
 
 class UserProfileDetails extends StatefulWidget {
-  User? user;
-  UserProfileModel? userProfile;
+  final User user;
 
-  UserProfileDetails({super.key, this.user, this.userProfile});
+  const UserProfileDetails({super.key, required this.user});
 
   @override
   State<UserProfileDetails> createState() => _UserProfileDetailsState();
@@ -38,7 +36,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
   Future<void> _checkFollowStatus() async {
     try {
       bool following = await UserfollowController.checkFollowStatus(
-          globalUser?.userId ?? 0, widget.user!.userId);
+          globalUser?.userId ?? 0, widget.user.userId);
       setState(() {
         _isFollowing = following;
       });
@@ -51,7 +49,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
   Future<void> _followUser() async {
     if (globalUser?.userId != null) {
       final success = await UserfollowController.followUser(
-          globalUser!.userId, widget.user!.userId);
+          globalUser!.userId, widget.user.userId);
       if (success) {
         setState(() {
           _isFollowing = true;
@@ -66,7 +64,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
   Future<void> _unfollowUser() async {
     if (globalUser?.userId != null) {
       final success = await UserfollowController.unfollowUser(
-          globalUser!.userId, widget.user!.userId);
+          globalUser!.userId, widget.user.userId);
       if (success) {
         setState(() {
           _isFollowing = false;
@@ -93,14 +91,14 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                     CircleAvatar(
                       radius: 40,
                       backgroundColor: MyColors.nonSelectedItemColor,
-                      backgroundImage: NetworkImage(widget.user!.imageUrl),
+                      backgroundImage: NetworkImage(widget.user.imageUrl),
                     ),
                     const SizedBox(width: 8),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.userProfile!.username,
+                          widget.user.username,
                           style: const TextStyle(
                               color: MyColors.textColor, fontSize: 20),
                         ),
@@ -120,7 +118,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  widget.user!.description,
+                  widget.user.description,
                   style: const TextStyle(color: MyColors.textColor),
                   textAlign: TextAlign.start,
                 ),

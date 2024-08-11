@@ -8,8 +8,10 @@ class RecommendDetailsService {
   static final String _baseUrl = 'http://$ip:3000/api/user/followers';
   // http://localhost:3000/api/user/followers/recommendedBooks/21/68
 
-  Future<void> postRecommendDetails(int userId, int bookId) async {
-    final url = Uri.parse('$_baseUrl/recommendedBooks/$bookId/$userId');
+  Future<void> postRecommendDetails(
+      int userId, int bookId, String token) async {
+    final url =
+        Uri.parse('$_baseUrl/recommendedBooks/$bookId/$userId?token=$token');
     try {
       final response = await http.post(
         url,
