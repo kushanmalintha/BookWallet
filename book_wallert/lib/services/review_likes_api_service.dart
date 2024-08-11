@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:book_wallert/ipaddress.dart';
+import 'package:book_wallert/controllers/token_controller.dart';
 import 'package:http/http.dart' as http;
 
 class LikesApiService {
@@ -33,26 +34,42 @@ class LikesApiService {
   // }
 
   Future<void> likeReview(int reviewId, int userId) async {
+    final token = await getToken(); // Retrieve the token
+    if (token == null) {
+      throw Exception('Session has expired. Please login again.');
+    }
+
     final response = await http.post(
       Uri.parse('$baseUrl/$reviewId/like'),
       headers: {'Content-Type': 'application/json'},
-      body: json.encode({'userId': userId}),
+      body: json.encode({
+        'userId': userId,
+        'token': token, // Include the token in the JSON body
+      }),
     );
 
     if (response.statusCode != 200) {
-      throw Exception('Failed to like review');
+      throw Exception('Failed to like review: ${response.body}');
     }
   }
 
   Future<void> unlikeReview(int reviewId, int userId) async {
+    final token = await getToken(); // Retrieve the token
+    if (token == null) {
+      throw Exception('Session has expired. Please login again.');
+    }
+
     final response = await http.post(
       Uri.parse('$baseUrl/$reviewId/unlike'),
       headers: {'Content-Type': 'application/json'},
-      body: json.encode({'userId': userId}),
+      body: json.encode({
+        'userId': userId,
+        'token': token, //  For verify the  user
+      }),
     );
 
     if (response.statusCode != 200) {
-      throw Exception('Failed to unlike review');
+      throw Exception('Failed to unlike review: ${response.body}');
     }
   }
 
