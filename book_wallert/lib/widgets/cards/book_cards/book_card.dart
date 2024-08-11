@@ -1,7 +1,6 @@
 import 'package:book_wallert/controllers/book_recommended_controller.dart';
 import 'package:book_wallert/controllers/checking_wishlist_controller.dart';
 import 'package:book_wallert/controllers/wishlist_controller.dart';
-import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
 import 'package:book_wallert/services/checking_wishlist_service.dart';
@@ -31,7 +30,13 @@ class BookCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // Navigate to BookProfileScreenBody when the card is tapped
-        screenChange(context, BookProfileScreenBody(book: book));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BookProfileScreenBody(book: book),
+          ),
+        );
+        // screenChange(context, BookProfileScreenBody(book: book));
       },
       child: Card(
         color: MyColors.panelColor, // Card background color
@@ -65,7 +70,7 @@ class BookCard extends StatelessWidget {
               }),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
+                  return const Icon(Icons.more_vert_rounded);
                 } else if (snapshot.hasError) {
                   return const Icon(Icons.error);
                 } else {
