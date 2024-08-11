@@ -83,12 +83,12 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
     });
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    _tabController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() { 
+  //   // _scrollController.dispose();
+  //   // _tabController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

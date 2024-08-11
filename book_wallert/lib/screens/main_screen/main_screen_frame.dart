@@ -17,51 +17,64 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  // Current index of the selected tab in the bottom navigation bar
   int _selectedIndex = 0;
+  bool _refreshCurrentScreen = false;
 
-  // Key for the Navigator to manage the stack of pages
-  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _homeNavigatorKey =
+      GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _bookNavigatorKey =
+      GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _groupNavigatorKey =
+      GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _profileNavigatorKey =
+      GlobalKey<NavigatorState>();
 
-  // Method to handle bottom navigation bar item taps
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    _navigatorKey.currentState!.pushReplacement(
-      PageRouteBuilder(
-        pageBuilder: (_, __, ___) => IndexedStack(
-          index: _selectedIndex,
-          children: screens,
-        ),
-      ),
-    );
-  }
-
-  void _searchBooks(String searchText) {
-    // Navigate to BookProfileScreenBody when the card is tapped
-    setState(() {});
-    _navigatorKey.currentState!.pushReplacement(
-      PageRouteBuilder(
-        pageBuilder: (_, __, ___) => IndexedStack(
-          index: 0,
-          children: [SearchListScreenBody(searchText: searchText)],
-        ),
-      ),
-    );
-  }
-
-  // List of screens to display based on the selected index
-  List<Widget> screens = [
+  final List<Widget> _screens = [
     const HomeListScreenBody(),
     BookListScreenBody(userId: globalUser!.userId),
-    GroupListScreenBody(
-      globalUserId: globalUser!.userId,
-    ),
+    GroupListScreenBody(globalUserId: globalUser!.userId),
     UserProfileScreenBody(userId: globalUser!.userId),
   ];
 
-  // Method to get the title of the current screen based on the selected index
+  final List<GlobalKey<NavigatorState>> _navigatorKeys = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _navigatorKeys.addAll([
+      _homeNavigatorKey,
+      _bookNavigatorKey,
+      _groupNavigatorKey,
+      _profileNavigatorKey,
+    ]);
+  }
+
+  void _onItemTapped(int index) {
+    if (_selectedIndex == index) {
+      _refreshCurrentScreen = true;
+    }
+    setState(() {
+      _selectedIndex = index;
+    });
+    if (_selectedIndex == index && _refreshCurrentScreen) {
+      _navigatorKeys[_selectedIndex].currentState!.pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => _screens[_selectedIndex],
+            ),
+            (route) => false,
+          );
+      _refreshCurrentScreen = false;
+    }
+  }
+
+  void _searchBooks(String searchText) {
+    _navigatorKeys[_selectedIndex].currentState!.push(
+          MaterialPageRoute(
+            builder: (context) => SearchListScreenBody(searchText: searchText),
+          ),
+        );
+  }
+
   String _getName(int index) {
     switch (index) {
       case 0:
@@ -73,8 +86,17 @@ class _MainScreenState extends State<MainScreen> {
       case 3:
         return 'Profile';
       default:
-        return 'BookWallet'; // Default to HomeListScreenBody
+        return 'BookWallet';
     }
+  }
+
+  Future<bool> _handlePop() async {
+    final navigator = _navigatorKeys[_selectedIndex].currentState;
+    if (navigator != null && navigator.canPop()) {
+      navigator.pop();
+      return Future.value(false);
+    }
+    return Future.value(true);
   }
 
   @override
@@ -83,28 +105,60 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: MyColors.bgColor,
       appBar: TopPanel(
         title: _getName(_selectedIndex),
-        searchTrigger: _searchBooks, // Top panel with dynamic title
+        searchTrigger: _searchBooks,
       ),
-      body: PopScope(
-        canPop: false, // Disable popping from the stack
-        onPopInvoked: (didPop) async {
-          if (_navigatorKey.currentState!.canPop()) {
-            _navigatorKey.currentState!.pop();
-          }
-        },
-        child: Navigator(
-          key: _navigatorKey,
-          onGenerateRoute: (routeSettings) {
-            return MaterialPageRoute(
-              builder: (context) =>
-                  screens[_selectedIndex], // Display the selected screen
-            );
-          },
-        ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: [
+          PopScope(
+            onPopInvokedWithResult: (didPop, result) => _handlePop(),
+            child: Navigator(
+              key: _homeNavigatorKey,
+              onGenerateRoute: (routeSettings) {
+                return MaterialPageRoute(
+                  builder: (context) => _screens[0],
+                );
+              },
+            ),
+          ),
+          PopScope(
+            onPopInvokedWithResult: (didPop, result) => _handlePop(),
+            child: Navigator(
+              key: _bookNavigatorKey,
+              onGenerateRoute: (routeSettings) {
+                return MaterialPageRoute(
+                  builder: (context) => _screens[1],
+                );
+              },
+            ),
+          ),
+          PopScope(
+            onPopInvokedWithResult: (didPop, result) => _handlePop(),
+            child: Navigator(
+              key: _groupNavigatorKey,
+              onGenerateRoute: (routeSettings) {
+                return MaterialPageRoute(
+                  builder: (context) => _screens[2],
+                );
+              },
+            ),
+          ),
+          PopScope(
+            onPopInvokedWithResult: (didPop, result) => _handlePop(),
+            child: Navigator(
+              key: _profileNavigatorKey,
+              onGenerateRoute: (routeSettings) {
+                return MaterialPageRoute(
+                  builder: (context) => _screens[3],
+                );
+              },
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigation(
         selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped, // Handle bottom navigation bar taps
+        onItemTapped: _onItemTapped,
       ),
     );
   }
