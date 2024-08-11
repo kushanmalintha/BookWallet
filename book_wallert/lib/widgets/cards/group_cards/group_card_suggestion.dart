@@ -1,6 +1,5 @@
 // group_card_suggestion.dart
 
-import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/screens/main_screen/group_profile_screen/group_profile_screen_body.dart';
 import 'package:book_wallert/widgets/buttons/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,13 @@ class GroupCardSuggestion extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // Navigate to GroupProfileScreenBody when the card is tapped
-        screenChange(context, const GroupProfileScreenBody());
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const GroupProfileScreenBody(),
+          ),
+        );
+        // screenChange(context, const GroupProfileScreenBody());
       },
       child: Card(
         color: MyColors.panelColor, // Card background color

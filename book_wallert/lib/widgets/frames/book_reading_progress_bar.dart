@@ -1,18 +1,42 @@
-import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
 
-class BookReadingProgressBar extends StatelessWidget {
+class BookReadingProgressBar extends StatefulWidget {
   final Widget child;
   final double progress; // Value between 0 and 1
 
-  const BookReadingProgressBar(
-      {super.key, required this.child, required this.progress})
-      : assert(progress >= 0 && progress <= 1);
+  const BookReadingProgressBar({
+    super.key,
+    required this.child,
+    this.progress = 0,
+  }) : assert(progress >= 0 && progress <= 1);
+
+  @override
+  State<BookReadingProgressBar> createState() => _BookReadingProgressBarState();
+}
+
+class _BookReadingProgressBarState extends State<BookReadingProgressBar> {
+  late double progress;
+
+  @override
+  void initState() {
+    super.initState();
+    progress = widget.progress; // Initialize with the passed progress value
+  }
+
+  @override
+  void didUpdateWidget(covariant BookReadingProgressBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.progress != oldWidget.progress) {
+      setState(() {
+        progress = widget.progress; // Update progress if it changes
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: MyColors.panelColor,
+      color: const Color(0xFF3A3939),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -23,10 +47,10 @@ class BookReadingProgressBar extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(0.0),
-            child: child,
+            child: widget.child,
           ),
           Container(
-            height: 16,
+            height: 2,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(10.0),
@@ -45,7 +69,7 @@ class BookReadingProgressBar extends StatelessWidget {
                         ? const Radius.circular(10.0)
                         : Radius.zero,
                   ),
-                  color: MyColors.selectedItemColor,
+                  color: const Color(0xFF91D786),
                 ),
               ),
             ),
