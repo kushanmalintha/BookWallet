@@ -8,13 +8,13 @@ class RecommendDetailsService {
   static final String _baseUrl = 'http://$ip:3000/api/user/followers';
   // http://localhost:3000/api/user/followers/recommendedBooks/21/68
 
-  Future<void> postRecommendDetails(int userId, int bookId) async {
+  Future<void> postRecommendDetails(
+      int userId, int bookId, String token) async {
     final url = Uri.parse('$_baseUrl/recommendedBooks/$bookId/$userId');
     try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-      );
+      final response = await http.post(url,
+          headers: {'Content-Type': 'application/json'},
+          body: '{"token": "$token"}');
 
       if (response.statusCode == 200) {
         print('Book recommended to the followers successfully.');

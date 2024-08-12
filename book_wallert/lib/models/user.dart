@@ -10,7 +10,7 @@ class User {
     required String username,
     required String email,
     String description = '',
-    String imageUrl = 'images/userimage.jpg',
+    String imageUrl = '',
   })  : _userId = userId,
         _username = username,
         _email = email,
@@ -45,7 +45,7 @@ class User {
       username: json['username'],
       email: json['email'],
       description: json['description'] ?? '',
-      imageUrl: json['imageUrl'] ?? 'images/userimage.jpg',
+      imageUrl: json['imageUrl'] ?? '',
     );
   }
 
