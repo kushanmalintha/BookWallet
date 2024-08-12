@@ -1,5 +1,4 @@
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
-import 'package:book_wallert/dummy_data/user_dummy.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
@@ -61,6 +60,8 @@ class _ReviewCardState extends State<ReviewCard> {
 
   @override
   Widget build(BuildContext context) {
+    //print(widget.review.bookId);
+    print(widget.review.userId);
     return Stack(
       children: [
         Center(
@@ -187,8 +188,10 @@ class _ReviewCardState extends State<ReviewCard> {
                       ),
                       GestureDetector(
                         onTap: () => {
-                          screenChange(context,
-                              UserProfileScreenBody(userId: dummyUser.userId)),
+                          screenChange(
+                              context,
+                              UserProfileScreenBody(
+                                  userId: widget.review.userId)),
                         },
                         child: Row(
                           children: <Widget>[
