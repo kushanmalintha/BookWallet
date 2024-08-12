@@ -1,6 +1,7 @@
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/dummy_data/user_dummy.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
+import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
 import 'package:book_wallert/screens/review_screens/review_screen_body.dart';
@@ -11,6 +12,8 @@ import 'package:book_wallert/widgets/cards/rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/models/review_model.dart';
 import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/services/review_comments_api_service.dart';
+import 'package:book_wallert/controllers/review_comments_controller.dart';
 
 class ReviewCard extends StatefulWidget {
   final ReviewModel review;
@@ -289,6 +292,9 @@ class _ReviewCardState extends State<ReviewCard> {
   }
 
   Widget _buildTextInput() {
+    // Create an instance of CommentController
+    final commentController = CommentController(widget.review.reviewId);
+
     return GestureDetector(
       onTap: () {
         // Prevent the outer GestureDetector from closing the input
@@ -315,17 +321,14 @@ class _ReviewCardState extends State<ReviewCard> {
                   children: [
                     Expanded(
                       child: TextField(
+                        controller: commentController
+                            .commentController, // Use the controller from CommentController
                         style: const TextStyle(color: MyColors.textColor),
                         minLines: 1,
                         maxLines: 10, // Set a maximum number of lines
-                        onChanged: (text) {
-                          setState(() {
-                            // Adjust the height based on the content
-                          });
-                        },
                         decoration: const InputDecoration(
                           hintStyle: TextStyle(color: MyColors.text2Color),
-                          hintText: 'Write your review...',
+                          hintText: 'Write your comment...',
                           border: InputBorder.none,
                         ),
                         autofocus: true,
@@ -334,11 +337,23 @@ class _ReviewCardState extends State<ReviewCard> {
                     IconButton(
                       color: MyColors.selectedItemColor,
                       icon: const Icon(Icons.send),
-                      onPressed: () {
-                        // Handle send action
-                        setState(() {
-                          _isComment = false;
-                        });
+                      onPressed: () async {
+                        // Call the addComment method from CommentController
+                        final commentText =
+                            commentController.commentController.text;
+
+                        if (commentText.isNotEmpty) {
+                          try {
+                            await commentController.addComment(context);
+                            setState(() {
+                              _isComment = false;
+                            });
+                          } catch (e) {
+                            print('Error adding comment: $e');
+                          }
+                        } else {
+                          print('Comment cannot be empty');
+                        }
                       },
                     ),
                   ],
