@@ -51,11 +51,13 @@ class _MainScreenState extends State<MainScreen> {
 
   void _onItemTapped(int index) {
     if (_selectedIndex == index) {
+      // Ensure only work in the second tap
       _refreshCurrentScreen = true;
     }
     setState(() {
       _selectedIndex = index;
     });
+    // Clear the previous route stack when switching tabs
     if (_selectedIndex == index && _refreshCurrentScreen) {
       _navigatorKeys[_selectedIndex].currentState!.pushAndRemoveUntil(
             MaterialPageRoute(
@@ -90,9 +92,10 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  Future<bool> _handlePop() async {
-    final navigator = _navigatorKeys[_selectedIndex].currentState;
-    if (navigator != null && navigator.canPop()) {
+  Future<bool> _onWillPop() async {
+    final NavigatorState navigator =
+        _navigatorKeys[_selectedIndex].currentState!;
+    if (navigator.canPop()) {
       navigator.pop();
       return Future.value(false);
     }
@@ -110,8 +113,8 @@ class _MainScreenState extends State<MainScreen> {
       body: IndexedStack(
         index: _selectedIndex,
         children: [
-          PopScope(
-            onPopInvokedWithResult: (didPop, result) => _handlePop(),
+          WillPopScope(
+            onWillPop: _onWillPop,
             child: Navigator(
               key: _homeNavigatorKey,
               onGenerateRoute: (routeSettings) {
@@ -121,8 +124,8 @@ class _MainScreenState extends State<MainScreen> {
               },
             ),
           ),
-          PopScope(
-            onPopInvokedWithResult: (didPop, result) => _handlePop(),
+          WillPopScope(
+            onWillPop: _onWillPop,
             child: Navigator(
               key: _bookNavigatorKey,
               onGenerateRoute: (routeSettings) {
@@ -132,8 +135,8 @@ class _MainScreenState extends State<MainScreen> {
               },
             ),
           ),
-          PopScope(
-            onPopInvokedWithResult: (didPop, result) => _handlePop(),
+          WillPopScope(
+            onWillPop: _onWillPop,
             child: Navigator(
               key: _groupNavigatorKey,
               onGenerateRoute: (routeSettings) {
@@ -143,8 +146,8 @@ class _MainScreenState extends State<MainScreen> {
               },
             ),
           ),
-          PopScope(
-            onPopInvokedWithResult: (didPop, result) => _handlePop(),
+          WillPopScope(
+            onWillPop: _onWillPop,
             child: Navigator(
               key: _profileNavigatorKey,
               onGenerateRoute: (routeSettings) {

@@ -2,18 +2,17 @@ import 'dart:convert';
 import 'package:book_wallert/ipaddress.dart';
 import 'package:http/http.dart' as http;
 import 'package:book_wallert/models/book_model.dart';
+import 'package:book_wallert/controllers/token_controller.dart';
 
 class ReviewPostApiService {
   static final String _baseUrl = 'http://${ip}:3000/api/book-review/add';
 
   Future<void> reviewPost(
       BookModel book, String reviewText, double rating, int userId) async {
-    // print('Book is: ${book}');
-    // print('review text is: ${reviewText}');
-    // print('rating in book is: ${book.totalRating}');
-    // print('rating in book type is: ${(book.totalRating).runtimeType}');
-    // print('user rating num is: ${rating}');
-    // print('user Id is: ${userId}');
+    final token = await getToken(); // Retrieve the token
+    if (token == null) {
+      throw Exception('Session has expired. Please login again.');
+    }
 
     final response = await http.post(
       Uri.parse(_baseUrl),
@@ -38,11 +37,9 @@ class ReviewPostApiService {
           'rating': rating,
           'group_id': null, // Set to null if not used
         },
+        'token': token, // Include the token to verify
       }),
     );
-
-    // print('Response status: ${response.statusCode}');
-    // print('Response body: ${response.body}');
 
     if (response.statusCode == 201) {
       // Successful response handling
