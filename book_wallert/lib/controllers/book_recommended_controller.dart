@@ -1,3 +1,4 @@
+import 'package:book_wallert/controllers/token_controller.dart';
 import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/services/book_recommended_api_service.dart';
 import 'package:book_wallert/services/fetch_bookId_from_isbn.dart';
@@ -46,9 +47,10 @@ class BookRecommendController {
   }
 
   // Post recommendation details to followers
-  Future<void> postRecommendation(int userId, int bookId) async {
+  Future<void> postRecommendation(int userId, int bookId, String token) async {
     try {
-      await _recommendDetailsService.postRecommendDetails(userId, bookId);
+      await _recommendDetailsService.postRecommendDetails(
+          userId, bookId, token);
     } catch (e) {
       throw Exception('Error posting recommendation details: $e');
     }
@@ -58,7 +60,8 @@ class BookRecommendController {
       BuildContext context, BookModel book) async {
     try {
       await fetchBookId(book);
-      await postRecommendation(userId, bookId!);
+      String? token = await getToken();
+      await postRecommendation(userId, bookId!, token!);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text('Book recommended to followers successfully.')),
