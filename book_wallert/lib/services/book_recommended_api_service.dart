@@ -10,13 +10,11 @@ class RecommendDetailsService {
 
   Future<void> postRecommendDetails(
       int userId, int bookId, String token) async {
-    final url =
-        Uri.parse('$_baseUrl/recommendedBooks/$bookId/$userId?token=$token');
+    final url = Uri.parse('$_baseUrl/recommendedBooks/$bookId/$userId');
     try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-      );
+      final response = await http.post(url,
+          headers: {'Content-Type': 'application/json'},
+          body: '{"token": "$token"}');
 
       if (response.statusCode == 200) {
         print('Book recommended to the followers successfully.');
