@@ -1,6 +1,7 @@
 import 'package:book_wallert/controllers/get_book_api_controller.dart';
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_review_list_view.dart';
+import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/controllers/review_post_controller.dart';
@@ -38,6 +39,7 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
   final double scrollThreshold = 300;
   bool _isWriting = false;
   double _rating = 0.0;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -48,15 +50,20 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
     if (widget.bookId != -1) {
       _getBookController = GetBookController(widget.bookId);
       _fetchBookDetails();
+    } else {
+      _reviewPostController = ReviewPostController(widget.book ?? dummyBook);
+      _isLoading = false; // No need to load if we're using the dummy book
     }
-    _reviewPostController = ReviewPostController(
-        widget.book ?? dummyBook); // Initialize with the current book
+    // _reviewPostController = ReviewPostController(
+    //     widget.book ?? dummyBook); // Initialize with the current book
   }
 
   Future<void> _fetchBookDetails() async {
     BookModel fetchedBook = await _getBookController.fetchBook();
     setState(() {
       widget.book = fetchedBook;
+      _reviewPostController = ReviewPostController(widget.book!);
+      _isLoading = false;
     });
   }
 
@@ -84,7 +91,7 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
   }
 
   // @override
-  // void dispose() { 
+  // void dispose() {
   //   // _scrollController.dispose();
   //   // _tabController.dispose();
   //   super.dispose();
@@ -94,55 +101,59 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
-      body: GestureDetector(
-        onTap: () {
-          if (_isWriting) {
-            setState(() {
-              _isWriting = false;
-            });
-          }
-        },
-        child: Stack(
-          children: [
-            Center(
-              child: CustomScrollView(
-                controller: _scrollController,
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: BookProfileScreenDetails(book: widget.book!),
-                  ),
-                  SliverToBoxAdapter(
-                    child: SelectionBar(
-                        tabController: _tabController, tabNames: _tabNames),
-                  ),
-                  SliverFillRemaining(
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: [
-                        BookProfileScreenReviewListView(
-                            screenName: 'Reviews',
-                            book: widget.book!), // Reviews
-                        BookProfileScreenListView(
-                            screenName: 'Locations',
-                            book: widget.book!), // Locations
-                        BookProfileScreenListView(
-                            screenName: 'Read Online',
-                            book: widget.book!), // Read Online
+      body: _isLoading
+          ? Center(child: buildProgressIndicator())
+          : GestureDetector(
+              onTap: () {
+                if (_isWriting) {
+                  setState(() {
+                    _isWriting = false;
+                  });
+                }
+              },
+              child: Stack(
+                children: [
+                  Center(
+                    child: CustomScrollView(
+                      controller: _scrollController,
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: BookProfileScreenDetails(book: widget.book!),
+                        ),
+                        SliverToBoxAdapter(
+                          child: SelectionBar(
+                              tabController: _tabController,
+                              tabNames: _tabNames),
+                        ),
+                        SliverFillRemaining(
+                          child: TabBarView(
+                            controller: _tabController,
+                            children: [
+                              BookProfileScreenReviewListView(
+                                  screenName: 'Reviews',
+                                  book: widget.book!), // Reviews
+                              BookProfileScreenListView(
+                                  screenName: 'Locations',
+                                  book: widget.book!), // Locations
+                              BookProfileScreenListView(
+                                  screenName: 'Read Online',
+                                  book: widget.book!), // Read Online
+                            ],
+                          ),
+                        ),
                       ],
                     ),
+                  ),
+                  Positioned(
+                    right: 16.0,
+                    bottom: 16.0,
+                    child: _isWriting
+                        ? _buildTextInput()
+                        : _buildFloatingActionButton(),
                   ),
                 ],
               ),
             ),
-            Positioned(
-              right: 16.0,
-              bottom: 16.0,
-              child:
-                  _isWriting ? _buildTextInput() : _buildFloatingActionButton(),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
