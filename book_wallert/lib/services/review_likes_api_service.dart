@@ -47,9 +47,6 @@ class LikesApiService {
         'token': token, // Include the token in the JSON body
       }),
     );
-    print("hihihi $token ");
-    print(userId);
-
     if (response.statusCode != 200) {
       throw Exception('Failed to like review: ${response.body}');
     }
