@@ -29,6 +29,14 @@ class ReviewPostController {
         rating,
         user.userId, // Use the user ID from the global user
       );
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Review posted successfully'),
+          ),
+        );
+      }
       // if (context.mounted) {
       //   Navigator.push(
       //       context,
