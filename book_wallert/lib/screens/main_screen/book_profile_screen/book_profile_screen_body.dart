@@ -1,13 +1,14 @@
 import 'package:book_wallert/controllers/get_book_api_controller.dart';
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_review_list_view.dart';
+import 'package:book_wallert/widgets/buttons/floating_action_button.dart';
+import 'package:book_wallert/widgets/buttons/text_input.dart';
 import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/controllers/review_post_controller.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_details.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_list_view.dart';
-import 'package:book_wallert/widgets/cards/rating_bar.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 import 'package:book_wallert/colors.dart';
 
@@ -148,8 +149,29 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
                     right: 16.0,
                     bottom: 16.0,
                     child: _isWriting
-                        ? _buildTextInput()
-                        : _buildFloatingActionButton(),
+                        ? TextInputWidget(
+                            controller:
+                                _reviewPostController.reviewPostController,
+                            rating: _rating,
+                            hintText: 'Write your review here',
+                            onSendPressed: () {
+                              setState(() {
+                                _isWriting = false;
+                              });
+                              _reviewPostController.rating = _rating;
+                              _reviewPostController.reviewPost(context);
+                            },
+                            onIncreaseRating: _increaseRating,
+                            onDecreaseRating: _decreaseRating,
+                          )
+                        : FloatingActionButtonWidget(
+                            icon: Icon(Icons.add),
+                            onPressed: () {
+                              setState(() {
+                                _isWriting = true;
+                              });
+                            },
+                          ),
                   ),
                 ],
               ),
@@ -157,105 +179,105 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
     );
   }
 
-  Widget _buildFloatingActionButton() {
-    return FloatingActionButton(
-      backgroundColor: MyColors.selectedItemColor,
-      onPressed: () {
-        setState(() {
-          _isWriting = true;
-        });
-      },
-      child: const Icon(
-        Icons.add,
-        color: MyColors.bgColor,
-      ),
-    );
-  }
+  // Widget _buildFloatingActionButton() {
+  //   return FloatingActionButton(
+  //     backgroundColor: MyColors.selectedItemColor,
+  //     onPressed: () {
+  //       setState(() {
+  //         _isWriting = true;
+  //       });
+  //     },
+  //     child: const Icon(
+  //       Icons.add,
+  //       color: MyColors.bgColor,
+  //     ),
+  //   );
+  // }
 
-  Widget _buildTextInput() {
-    return GestureDetector(
-      onTap: () {
-        // Prevent the outer GestureDetector from closing the input
-      },
-      child: Stack(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width - 32.0,
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            decoration: BoxDecoration(
-              color: MyColors.panelColor,
-              borderRadius: BorderRadius.circular(8.0),
-              boxShadow: const [
-                BoxShadow(
-                  color: MyColors.bgColor,
-                  blurRadius: 20.0,
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                const SizedBox(
-                    height: 40), // Adding space for the widgets at the top
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        style: const TextStyle(color: MyColors.textColor),
-                        controller: _reviewPostController.reviewPostController,
-                        minLines: 1,
-                        maxLines: 10, // Set a maximum number of lines
-                        onChanged: (text) {
-                          setState(() {
-                            // Adjust the height based on the content
-                          });
-                        },
-                        decoration: const InputDecoration(
-                          hintStyle: TextStyle(color: MyColors.text2Color),
-                          hintText: 'Write your review...',
-                          border: InputBorder.none,
-                        ),
-                        autofocus: true,
-                      ),
-                    ),
-                    IconButton(
-                      color: MyColors.selectedItemColor,
-                      icon: const Icon(Icons.send),
-                      onPressed: () {
-                        setState(() {
-                          _isWriting = false;
-                        });
-                        _reviewPostController.rating =
-                            _rating; // Set the rating
-                        _reviewPostController.reviewPost(context);
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            top: 20,
-            left: 8,
-            child: RatingBar(rating: _rating),
-          ),
-          Positioned(
-            right: 50, // Adjust left position to avoid overlap
-            child: IconButton(
-                onPressed: _increaseRating,
-                icon: const Icon(Icons.add),
-                color: MyColors.nonSelectedItemColor),
-          ),
-          Positioned(
-            right: 5, // Adjust left position to avoid overlap
-            child: IconButton(
-                onPressed: _decreaseRating,
-                icon: const Icon(Icons.remove),
-                color: MyColors.nonSelectedItemColor),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildTextInput() {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       // Prevent the outer GestureDetector from closing the input
+  //     },
+  //     child: Stack(
+  //       children: [
+  //         Container(
+  //           width: MediaQuery.of(context).size.width - 32.0,
+  //           padding:
+  //               const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+  //           decoration: BoxDecoration(
+  //             color: MyColors.panelColor,
+  //             borderRadius: BorderRadius.circular(8.0),
+  //             boxShadow: const [
+  //               BoxShadow(
+  //                 color: MyColors.bgColor,
+  //                 blurRadius: 20.0,
+  //               ),
+  //             ],
+  //           ),
+  //           child: Column(
+  //             children: [
+  //               const SizedBox(
+  //                   height: 40), // Adding space for the widgets at the top
+  //               Row(
+  //                 children: [
+  //                   Expanded(
+  //                     child: TextField(
+  //                       style: const TextStyle(color: MyColors.textColor),
+  //                       controller: _reviewPostController.reviewPostController,
+  //                       minLines: 1,
+  //                       maxLines: 10, // Set a maximum number of lines
+  //                       onChanged: (text) {
+  //                         setState(() {
+  //                           // Adjust the height based on the content
+  //                         });
+  //                       },
+  //                       decoration: const InputDecoration(
+  //                         hintStyle: TextStyle(color: MyColors.text2Color),
+  //                         hintText: 'Write your review...',
+  //                         border: InputBorder.none,
+  //                       ),
+  //                       autofocus: true,
+  //                     ),
+  //                   ),
+  //                   IconButton(
+  //                     color: MyColors.selectedItemColor,
+  //                     icon: const Icon(Icons.send),
+  //                     onPressed: () {
+  //                       setState(() {
+  //                         _isWriting = false;
+  //                       });
+  //                       _reviewPostController.rating =
+  //                           _rating; // Set the rating
+  //                       _reviewPostController.reviewPost(context);
+  //                     },
+  //                   ),
+  //                 ],
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         Positioned(
+  //           top: 20,
+  //           left: 8,
+  //           child: RatingBar(rating: _rating),
+  //         ),
+  //         Positioned(
+  //           right: 50, // Adjust left position to avoid overlap
+  //           child: IconButton(
+  //               onPressed: _increaseRating,
+  //               icon: const Icon(Icons.add),
+  //               color: MyColors.nonSelectedItemColor),
+  //         ),
+  //         Positioned(
+  //           right: 5, // Adjust left position to avoid overlap
+  //           child: IconButton(
+  //               onPressed: _decreaseRating,
+  //               icon: const Icon(Icons.remove),
+  //               color: MyColors.nonSelectedItemColor),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
