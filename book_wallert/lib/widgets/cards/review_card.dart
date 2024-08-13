@@ -1,3 +1,4 @@
+import 'package:book_wallert/controllers/review_delete_controller.dart';
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
@@ -11,13 +12,12 @@ import 'package:book_wallert/widgets/cards/rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/models/review_model.dart';
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/services/review_comments_api_service.dart';
 import 'package:book_wallert/controllers/review_comments_controller.dart';
 
 class ReviewCard extends StatefulWidget {
   final ReviewModel review;
 
-  const ReviewCard({super.key, required this.review});
+  ReviewCard({super.key, required this.review});
 
   @override
   State<ReviewCard> createState() => _ReviewCardState();
@@ -63,6 +63,8 @@ class _ReviewCardState extends State<ReviewCard> {
 
   @override
   Widget build(BuildContext context) {
+    final ReviewDeleteController reviewDeleteController =
+        ReviewDeleteController(widget.review.reviewId, widget.review.userId);
     //print(widget.review.bookId);
     print(widget.review.userId);
     return Stack(
@@ -276,15 +278,24 @@ class _ReviewCardState extends State<ReviewCard> {
           top: 10,
           right: 10,
           child: CustomPopupMenuButtons(
-              items: const [
-                'Add this book to Wishlist',
-                'Save review',
-              ],
-              onItemTap: [
-                // Item actions
-                () {},
-                () {},
-              ],
+              items: widget.review.userId == globalUser!.userId
+                  ? const [
+                      'Add this book to Wishlist',
+                      'Save review',
+                      'Delete review'
+                    ]
+                  : ['Add this book to Wishlist', 'Save review'],
+              onItemTap: widget.review.userId == globalUser!.userId
+                  ? [
+                      () {},
+                      () {},
+                      () {
+                        // delete function
+                        reviewDeleteController.deleteReview(context);
+                        print('aaaaaaaaaaaaaaa');
+                      }
+                    ]
+                  : [() {}, () {}],
               icon: const Icon(
                 Icons.more_vert_rounded,
                 color: MyColors.nonSelectedItemColor,
