@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:book_wallert/services/review_comments_api_service.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
+import 'package:book_wallert/models/comment_model.dart';
 
 class CommentController {
   final TextEditingController commentController = TextEditingController();
   final CommentApiService commentApiService = CommentApiService();
-  final int reviewId; // ID of the review to comment on
+  final int reviewId;
 
   CommentController(this.reviewId);
 
   Future<void> addComment(BuildContext context) async {
-    final user = globalUser; // Get the global user
+    final user = globalUser;
     if (user == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -24,7 +25,7 @@ class CommentController {
       await commentApiService.addComment(
         reviewId,
         commentController.text,
-        user.userId, // Use the user ID from the global user
+        user.userId,
       );
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -36,7 +37,6 @@ class CommentController {
       }
     } catch (e) {
       print(e);
-
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -44,6 +44,15 @@ class CommentController {
           ),
         );
       }
+    }
+  }
+
+  Future<List<Comment>> fetchComments() async {
+    try {
+      return await commentApiService.fetchComments(reviewId);
+    } catch (e) {
+      print(e);
+      return [];
     }
   }
 }
