@@ -1,13 +1,18 @@
+import 'package:book_wallert/controllers/checking_wishlist_controller.dart';
 import 'package:book_wallert/controllers/review_delete_controller.dart';
+import 'package:book_wallert/controllers/wishlist_controller.dart';
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
 import 'package:book_wallert/screens/review_screens/review_screen_body.dart';
+import 'package:book_wallert/services/checking_wishlist_service.dart';
+import 'package:book_wallert/services/wishlist_api_service.dart';
 import 'package:book_wallert/widgets/buttons/comment_button.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:book_wallert/widgets/buttons/like_button.dart';
+import 'package:book_wallert/widgets/buttons/share_button.dart';
 import 'package:book_wallert/widgets/cards/rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/models/review_model.dart';
@@ -65,6 +70,10 @@ class _ReviewCardState extends State<ReviewCard> {
   Widget build(BuildContext context) {
     final ReviewDeleteController reviewDeleteController =
         ReviewDeleteController(widget.review.reviewId, widget.review.userId);
+    final WishlistController wishlistController =
+        WishlistController(WishlistApiService());
+    final CheckingWishlistController checkingWishlistController =
+        CheckingWishlistController(CheckingWishlistService());
     //print(widget.review.bookId);
     print(widget.review.userId);
     return Stack(
@@ -261,10 +270,10 @@ class _ReviewCardState extends State<ReviewCard> {
                           onCommentChanged: _handleCommentChanged,
                         ),
                         //add the share button
-                        LikeButton(
+                        ShareButton(
                             review: widget.review,
                             icon: Icons.share,
-                            likesCount: widget.review.likesCount),
+                            sharesCount: widget.review.sharesCount),
                       ],
                     ),
                   ),
@@ -287,7 +296,10 @@ class _ReviewCardState extends State<ReviewCard> {
                   : ['Add this book to Wishlist', 'Save review'],
               onItemTap: widget.review.userId == globalUser!.userId
                   ? [
-                      () {},
+                      () {
+                        wishlistController.addBookToWishlist(
+                            globalUser!.userId, widget.review.bookId);
+                      },
                       () {},
                       () {
                         // delete function

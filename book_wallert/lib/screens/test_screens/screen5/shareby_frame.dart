@@ -1,20 +1,23 @@
 import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
 
-class SharedByCard extends StatelessWidget {
+class SharedByCard extends StatefulWidget {
   final Widget child;
   final List<String> sharedBy;
   final String imagePath;
-  // final Color cardColor;
 
   const SharedByCard({
     super.key,
     required this.child,
     required this.sharedBy,
     required this.imagePath,
-    // required this.cardColor,
   });
 
+  @override
+  _SharedByCardState createState() => _SharedByCardState();
+}
+
+class _SharedByCardState extends State<SharedByCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,7 +29,7 @@ class SharedByCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Widget passed as the child
-            child,
+            widget.child,
 
             Container(
               height: 1, // Height of the divider line
@@ -39,13 +42,13 @@ class SharedByCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundImage: AssetImage(
-                    imagePath, // Use imagePath for the sharedBy user
+                    widget.imagePath, // Use imagePath for the sharedBy user
                   ),
                   radius: 10,
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  'Shared by $sharedBy',
+                  'Shared by ${widget.sharedBy.join(', ')}',
                   style: const TextStyle(
                     color: MyColors.textColor,
                     fontSize: 14,

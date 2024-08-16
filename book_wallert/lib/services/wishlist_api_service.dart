@@ -56,24 +56,25 @@ class WishlistApiService {
       throw Exception('Failed to load wishlist');
     }
   }
-
-  Future<void> postwhislistDetails(int userId, int bookId) async {
+ Future<void> postwhislistDetails(int userId, int bookId, String? token) async {
     final url = Uri.parse('$WishlistBaseUrl/$bookId/$userId');
     try {
       final response = await http.post(
         url,
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
       );
 
       if (response.statusCode == 200) {
         print('Book added to wishlist successfully.');
       } else {
-        print(
-            'Failed to recommend details. Status code: ${response.statusCode}');
+        print('Failed to add to wishlist. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
       }
     } catch (e) {
-      print('An error occurred while recommending details: $e');
+      print('An error occurred while adding to wishlist: $e');
     }
   }
   Future<void> removeBookFromWishlist(int userId, int bookId) async {
