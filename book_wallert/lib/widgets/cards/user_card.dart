@@ -71,18 +71,12 @@ class _UserCardState extends State<UserCard> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 80,
+      height: 70,
       child: Card(
         color: MyColors.panelColor,
         child: Row(
           children: [
             const SizedBox(width: 10),
-            CircleAvatar(
-              radius: 20,
-              backgroundImage: NetworkImage(
-                  widget.user.imageUrl), // Assuming User class has imageUrl
-            ),
-            const SizedBox(width: 30),
             GestureDetector(
               onTap: () {
                 screenChange(
@@ -92,25 +86,39 @@ class _UserCardState extends State<UserCard> {
                           widget.user.userId, // Access userId from User object
                     ));
               },
+              child: CircleAvatar(
+                radius: 21,
+                backgroundImage: NetworkImage(
+                    widget.user.imageUrl), // Assuming User class has imageUrl
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
               child: Text(
                 widget.user.username, // Assuming User class has a username
                 style: const TextStyle(color: MyColors.textColor, fontSize: 15),
               ),
             ),
-            const SizedBox(
-              width: 100,
-            ), // Pushes the button to the right side;
             SizedBox(
               height: 30,
-              child: CustomToggleButton(
-                isSelected: _isFollowing,
-                beforeText: 'Follow',
-                afterText: 'Following',
-                press: _isFollowing ? _unfollowUser : _followUser,
-                horizontalSpace: 18,
-                verticalalSpace: 3,
-                textColorSelected: MyColors.bgColor,
-                textColorNotSelected: MyColors.bgColor,
+              width: 100, // Adjust the width here if needed
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      right:
+                          10), // Adjust the padding to move the button slightly to the left
+                  child: CustomToggleButton(
+                    isSelected: _isFollowing,
+                    beforeText: 'Follow',
+                    afterText: 'Following',
+                    press: _isFollowing ? _unfollowUser : _followUser,
+                    horizontalSpace: 7,
+                    verticalalSpace: 3,
+                    textColorSelected: MyColors.bgColor,
+                    textColorNotSelected: MyColors.bgColor,
+                  ),
+                ),
               ),
             ),
           ],
