@@ -2,7 +2,7 @@ class Comment {
   final int commentId;
   final int userId;
   final int reviewId;
-  final String context;
+  late final String context;
   final String date;
   final String time;
   final String username;
