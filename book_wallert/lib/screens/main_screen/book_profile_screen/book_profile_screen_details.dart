@@ -1,3 +1,9 @@
+import 'package:book_wallert/controllers/book_recommended_controller.dart';
+import 'package:book_wallert/controllers/checking_wishlist_controller.dart';
+import 'package:book_wallert/controllers/wishlist_controller.dart';
+import 'package:book_wallert/functions/global_user_provider.dart';
+import 'package:book_wallert/services/checking_wishlist_service.dart';
+import 'package:book_wallert/services/wishlist_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/models/book_model.dart';
@@ -11,6 +17,12 @@ class BookProfileScreenDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final BookRecommendController bookRecommendController =
+        BookRecommendController(globalUser!.userId);
+    final WishlistController wishlistController =
+        WishlistController(WishlistApiService());
+    final CheckingWishlistController checkingWishlistController =
+        CheckingWishlistController(CheckingWishlistService());
     return Stack(
       children: [
         Card(
@@ -114,35 +126,54 @@ class BookProfileScreenDetails extends StatelessWidget {
         Positioned(
           top: 14,
           right: 10,
-          child: CustomPopupMenuButtons(
-              items: const [
-                'Share',
-                'Block',
-                'Report',
-                'Add to Wishlist'
-              ],
-              onItemTap: [
-                // Item actions
-                () {
-                  print("Share");
-                },
-                () {
-                  print("Block");
-                },
-                () {
-                  print("Report");
-                },
-                () {
-                  print("Add to Wishlist");
-                },
-              ],
-              icon: const Icon(
-                Icons.more_vert_rounded,
-                color: MyColors.nonSelectedItemColor,
-              )),
-        )
+          child: FutureBuilder(
+            future: bookRecommendController.fetchBookId(book).then((_) {
+              return checkingWishlistController.checkWishlistStatus(
+                  globalUser!.userId, bookRecommendController.bookId!);
+            }),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Icon(Icons.more_vert_rounded);
+              } else if (snapshot.hasError) {
+                return const Icon(Icons.error);
+              } else {
+                return CustomPopupMenuButtons(
+                  items: [
+                    'Share',
+                    'Block',
+                    'Report',
+                    checkingWishlistController.isInWishlist
+                        ? 'Remove from Wishlist'
+                        : 'Add to Wishlist',
+                  ],
+                  onItemTap: [
+                    () {
+                      print("Share");
+                    },
+                    () {
+                      print("Block");
+                    },
+                    () {
+                      print("Report");
+                    },
+                    () {
+                      wishlistController.addOrRemoveWishlistBook(
+                        context,
+                        book,
+                        checkingWishlistController.isInWishlist,
+                      );
+                    },
+                  ],
+                  icon: const Icon(
+                    Icons.more_vert_rounded,
+                    color: MyColors.nonSelectedItemColor,
+                  ),
+                );
+              }
+            },
+          ),
+        ),
       ],
     );
   }
 }
-
