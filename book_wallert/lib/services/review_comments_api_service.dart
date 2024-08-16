@@ -49,3 +49,56 @@ class CommentApiService {
     }
   }
 }
+
+class CommentUpdateService {
+  static final String _baseUrl = 'http://$ip:3000/api/reviews';
+
+  Future<void> updateComment(
+      int commentId, int userId, String content, String token) async {
+    final url = Uri.parse('$_baseUrl/comments/update/$commentId/$userId');
+    try {
+      final response = await http.put(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: '{"context": "$content","token": "$token"}',
+      );
+
+      if (response.statusCode == 200) {
+        print('Comment updated successfully.');
+      } else {
+        print('Failed to update comment. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('An error occurred while updating comment: $e');
+    }
+  }
+}
+
+class CommentDeleteService {
+  static final String _baseUrl = 'http://$ip:3000/api/reviews';
+
+  Future<void> deleteComment(int commentId, int userId, String token) async {
+    final url = Uri.parse('$_baseUrl/comments/delete/$commentId/$userId');
+    try {
+      final response = await http.delete(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: '{"token": "$token"}',
+      );
+
+      if (response.statusCode == 200) {
+        print('Comment deleted successfully.');
+      } else {
+        print('Failed to delete comment. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('An error occurred while deleting comment: $e');
+    }
+  }
+}
