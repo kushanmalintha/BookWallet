@@ -1,4 +1,5 @@
 import 'package:book_wallert/functions/global_user_provider.dart';
+import 'package:book_wallert/widgets/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/models/user.dart';
@@ -63,16 +64,24 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
 
   Future<void> _unfollowUser() async {
     if (globalUser?.userId != null) {
-      final success = await UserfollowController.unfollowUser(
-          globalUser!.userId, widget.user.userId);
-      if (success) {
-        setState(() {
-          _isFollowing = false;
-        });
-      } else {
-        // Handle error
-        print('Failed to unfollow user');
-      }
+      showConfirmationDialog(
+        context: context,
+        title: 'Unfollow Confirmation',
+        content: 'Are you sure you want to unfollow ${widget.user.username}?',
+        confirmText: 'Unfollow',
+        cancelText: 'Cancel',
+        onConfirm: () async {
+          final success = await UserfollowController.unfollowUser(
+              globalUser!.userId, widget.user.userId);
+          if (success) {
+            setState(() {
+              _isFollowing = false;
+            });
+          } else {
+            print('Failed to unfollow user');
+          }
+        },
+      );
     }
   }
 
@@ -102,7 +111,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                           style: const TextStyle(
                               color: MyColors.textColor, fontSize: 20),
                         ),
-                        CustomToggleButton(
+                        CustomToggleButton1(
                           isSelected: _isFollowing,
                           beforeText: 'Follow',
                           afterText: 'Following',

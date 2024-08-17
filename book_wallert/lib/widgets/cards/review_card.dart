@@ -46,8 +46,8 @@ class _ReviewCardState extends State<ReviewCard> {
 
   void _checkOverflow() {
     final textSpan = TextSpan(
-      text: widget.review.context.length > 50
-          ? '${widget.review.context.substring(0, 50)}...'
+      text: widget.review.context.length > 150
+          ? '${widget.review.context.substring(0, 150)}...'
           : widget.review.context,
       style: const TextStyle(
         color: MyColors.textColor,
@@ -62,7 +62,7 @@ class _ReviewCardState extends State<ReviewCard> {
       maxWidth: MediaQuery.of(context).size.width,
     );
     setState(() {
-      _isOverflow = widget.review.context.length > 50;
+      _isOverflow = widget.review.context.length > 150;
     });
   }
 
@@ -157,8 +157,8 @@ class _ReviewCardState extends State<ReviewCard> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          widget.review.context.length > 50
-                                              ? '${widget.review.context.substring(0, 50)}...'
+                                          widget.review.context.length > 150
+                                              ? '${widget.review.context.substring(0, 150)}...'
                                               : widget.review.context,
                                           style: const TextStyle(
                                             color: MyColors.textColor,

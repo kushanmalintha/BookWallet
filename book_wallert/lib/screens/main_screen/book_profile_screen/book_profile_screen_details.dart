@@ -142,6 +142,7 @@ class BookProfileScreenDetails extends StatelessWidget {
                     'Share',
                     'Block',
                     'Report',
+                    'Recommend book to followers',
                     checkingWishlistController.isInWishlist
                         ? 'Remove from Wishlist'
                         : 'Add to Wishlist',
@@ -155,6 +156,10 @@ class BookProfileScreenDetails extends StatelessWidget {
                     },
                     () {
                       print("Report");
+                    },
+                    () {
+                      bookRecommendController.recommendBookToFollowers(
+                          context, book);
                     },
                     () {
                       wishlistController.addOrRemoveWishlistBook(

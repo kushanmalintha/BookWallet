@@ -9,7 +9,7 @@ class ReviewModel {
   final double rating;
   final String date;
   final String reviwerName;
-  final int likesCount;
+  late final int likesCount;
   final int commentsCount;
   final int sharesCount;
 

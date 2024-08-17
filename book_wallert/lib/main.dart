@@ -1,4 +1,5 @@
 import 'package:book_wallert/functions/global_user_provider.dart';
+import 'package:book_wallert/screens/history_screens/history_screen_frame.dart';
 import 'package:book_wallert/screens/login_screens/loading_screen.dart';
 import 'package:book_wallert/screens/login_screens/login_screen.dart';
 import 'package:book_wallert/screens/login_screens/signup_screen.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         '/screen7': (context) => const Screen7(),
         '/screen8': (context) => const Screen8(),
         '/SettingsScreen': (context) => const Settingscreen(),
+        '/HistoryScreen': (context) => const HistoryScreen(),
         '/EditUserInfo': (context) => EditUserInfo(),
         '/Profile': (context) =>
             UserProfileScreenBody(userId: globalUser!.userId),
