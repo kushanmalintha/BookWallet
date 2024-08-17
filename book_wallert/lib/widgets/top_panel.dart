@@ -91,16 +91,16 @@ class _TopPanelState extends State<TopPanel> {
             },
           ),
           CustomPopupMenuButtons(
-            items: const [
-              'Test Screens',
-              'Settings',
-            ],
+            items: const ['Test Screens', 'Settings', 'History'],
             onItemTap: [
               () {
                 Navigator.pushNamed(context, '/TestScreen');
               },
               () {
                 Navigator.pushNamed(context, '/SettingsScreen');
+              },
+              () {
+                Navigator.pushNamed(context, '/HistoryScreen');
               },
             ],
             icon: const Icon(
