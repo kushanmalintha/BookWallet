@@ -29,7 +29,7 @@ class _HomeListScreenBodyState extends State<HomeListScreenBody> {
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_scrollListener); // Attach scroll listener
+    // _scrollController.addListener(_scrollListener); // Attach scroll listener
     // _reviewController.fetchPosts(
     //     _onDataFetched); // Initial data fetch when widget is first initialized
     _homeScreenController.fetchHomeScreen(_onReviewsFetched, _onBooksFetched);
@@ -37,20 +37,20 @@ class _HomeListScreenBodyState extends State<HomeListScreenBody> {
 
   @override
   void dispose() {
-    _scrollController.removeListener(
-        _scrollListener); // Remove scroll listener to prevent memory leaks
-    _scrollController.dispose(); // Dispose the scroll controller
+    // _scrollController.removeListener(
+    //    _scrollListener); // Remove scroll listener to prevent memory leaks
+    // _scrollController.dispose(); // Dispose the scroll controller
     super.dispose();
   }
 
-  void _scrollListener() {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
-      // _reviewController.fetchPosts(
-      //     _onDataFetched); // Fetch more data when scrolled to the bottom
-      _homeScreenController.fetchHomeScreen(_onReviewsFetched, _onBooksFetched);
-    }
-  }
+  // void _scrollListener() {
+  //   if (_scrollController.position.pixels ==
+  //       _scrollController.position.maxScrollExtent) {
+  //     // _reviewController.fetchPosts(
+  //     //     _onDataFetched); // Fetch more data when scrolled to the bottom
+  //     _homeScreenController.fetchHomeScreen(_onReviewsFetched, _onBooksFetched);
+  //   }
+  // }
 
   void _onReviewsFetched(List<ReviewModel> updatedReviews) {
     setState(() {
