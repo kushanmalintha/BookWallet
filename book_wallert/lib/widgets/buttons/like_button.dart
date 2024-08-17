@@ -97,11 +97,11 @@ class _LikeButtonState extends State<LikeButton>
         GestureDetector(
           onTap: _toggleLike,
           child: ScaleTransition(
-            scale: Tween(begin: 0.7, end: 1.0).animate(
+            scale: Tween(begin: 0.95, end: 1.05).animate(
                 CurvedAnimation(parent: _controller, curve: Curves.easeOut)),
             child: Icon(
               widget.icon,
-              size: 20,
+              size: 21,
               color: _isLike
                   ? MyColors.selectedItemColor
                   : MyColors.nonSelectedItemColor,

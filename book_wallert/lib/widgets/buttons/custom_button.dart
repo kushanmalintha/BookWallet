@@ -103,3 +103,63 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
     );
   }
 }
+
+class CustomToggleButton1 extends StatelessWidget {
+  final String beforeText;
+  final String afterText;
+  final VoidCallback press; // Use VoidCallback for simpler function signature
+  final bool isSelected;
+  final Color backgroundColorSelected;
+  final Color backgroundColorNotSelected;
+  final Color textColorSelected;
+  final Color textColorNotSelected;
+  final Color borderColor;
+  final double horizontalSpace;
+  final double verticalalSpace;
+  final double textSize;
+
+  const CustomToggleButton1({
+    Key? key,
+    required this.beforeText,
+    required this.afterText,
+    required this.press,
+    required this.isSelected,
+    this.backgroundColorSelected = MyColors.selectedItemColor,
+    this.backgroundColorNotSelected = MyColors.nonSelectedItemColor,
+    this.textColorSelected = MyColors.bgColor,
+    this.textColorNotSelected = MyColors.bgColor,
+    this.borderColor = MyColors.nonSelectedItemColor,
+    this.horizontalSpace = 40,
+    this.verticalalSpace = 20,
+    this.textSize = 15,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: press, // Call the function provided in the press parameter
+      child: Container(
+        padding: EdgeInsets.symmetric(
+            vertical: verticalalSpace, horizontal: horizontalSpace),
+        decoration: BoxDecoration(
+          color:
+              isSelected ? backgroundColorNotSelected : backgroundColorSelected,
+          borderRadius: BorderRadius.circular(200), // Circular border radius
+          border: Border.all(color: borderColor, width: 1.5), // Border styling
+        ),
+        child: Center(
+          child: Text(
+            isSelected ? afterText : beforeText, // Display text on the button
+            style: TextStyle(
+              fontSize: textSize,
+              color: isSelected
+                  ? textColorSelected // Use selected text color when isSelected is true
+                  : textColorNotSelected, // Use not selected text color when isSelected is false
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
