@@ -1,11 +1,8 @@
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/controllers/share_controller.dart';
-import 'package:book_wallert/dummy_data/user_dummy.dart';
 import 'package:book_wallert/models/share_model.dart';
-//import 'package:book_wallert/models/shared_review.dart';
-import 'package:book_wallert/screens/test_screens/screen5/shareby_frame.dart';
 import 'package:book_wallert/widgets/cards/review_card.dart';
-//import 'package:book_wallert/widgets/cards/share_by_card.dart';
+import 'package:book_wallert/widgets/frames/shareby_frame.dart';
 import 'package:flutter/material.dart';
 
 class Screen5 extends StatefulWidget {
@@ -58,7 +55,8 @@ class _Screen5State extends State<Screen5> {
                     // Add your static RankedCard widgets here if needed.
                     ..._sharedReviews!.map((sharedReview) => SharedByCard(
                           sharedBy: [sharedReview.sharerUsername],
-                          imagePath: dummyUser.imageUrl, // Assuming this is available in SharedReview
+                          imagePath: sharedReview.imagePath, // Assuming this is available in SharedReview
+                          userId: sharedReview.sharedUserId,
                           child: ReviewCard(review: sharedReview.review),
                         )),
                   ],
