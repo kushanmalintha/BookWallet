@@ -8,7 +8,7 @@ class User {
   User({
     required int userId,
     required String username,
-    required String email,
+    String email = '',
     String description = '',
     String imageUrl = '',
   })  : _userId = userId,
@@ -43,7 +43,7 @@ class User {
     return User(
       userId: json['userId'],
       username: json['username'],
-      email: json['email'],
+      email: json['email'] ?? '',
       description: json['description'] ?? '',
       imageUrl: json['imageUrl'] ?? '',
     );
