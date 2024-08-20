@@ -30,6 +30,27 @@ class ShareService {
       throw Exception('Failed to share review');
     }
   }
+  Future<bool> checkIfShared(int reviewId, int userId) async {
+    final url = Uri.parse('$_baseUrl/check-shared');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'review_id': reviewId,
+        'user_id': userId,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return data['shared'] as bool;
+    } else {
+      throw Exception('Failed to check if review is shared');
+    }
+  }
 
   // Method to fetch shared reviews
   Future<List<SharedReview>> fetchSharedReviews(int userId) async {
@@ -69,6 +90,23 @@ class ShareService {
       }).toList();
     } else {
       throw Exception('Failed to load shared reviews');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> fetchShares(int reviewId) async {
+    final url = Uri.parse('$_baseUrl/$reviewId/shared-users');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data
+          .map((json) => {
+                'user_id': json['user_id'],
+                'username': json['username'],
+              })
+          .toList();
+    } else {
+      throw Exception('Failed to load shares');
     }
   }
 }

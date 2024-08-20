@@ -1,6 +1,6 @@
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:book_wallert/controllers/share_controller.dart';
+import 'package:book_wallert/services/share_service.dart'; // Assuming you have a ShareService
 import 'package:book_wallert/models/review_model.dart';
 import 'package:book_wallert/colors.dart';
 
@@ -21,22 +21,44 @@ class ShareButton extends StatefulWidget {
 }
 
 class _ShareButtonState extends State<ShareButton> {
-  late ShareController _shareController;
+  late ShareService _shareService;
+  bool isShared = false;
 
   @override
   void initState() {
     super.initState();
-    _shareController = ShareController();
+    _shareService = ShareService();
+    _checkIfShared();
+  }
+
+  Future<void> _checkIfShared() async {
+    try {
+      bool shared = await _shareService.checkIfShared(widget.review.reviewId, globalUser!.userId);
+      setState(() {
+        isShared = shared;
+      });
+    } catch (e) {
+      print('Error checking if review is shared: $e');
+    }
   }
 
   void _handleShare() async {
     try {
-      await _shareController.shareReview(widget.review.reviewId, globalUser!.userId);
-      setState(() {
-        widget.sharesCount++;
-      });
+      if (isShared) {
+        await _shareService.shareReview(widget.review.reviewId, globalUser!.userId);
+        setState(() {
+          widget.sharesCount--;
+          isShared = false;
+        });
+      } else {
+        await _shareService.shareReview(widget.review.reviewId, globalUser!.userId);
+        setState(() {
+          widget.sharesCount++;
+          isShared = true;
+        });
+      }
     } catch (e) {
-      print('Error sharing review: $e');
+      print('Error sharing/unsharing review: $e');
     }
   }
 
@@ -47,7 +69,7 @@ class _ShareButtonState extends State<ShareButton> {
         IconButton(
           icon: Icon(
             widget.icon,
-            color: MyColors.nonSelectedItemColor,
+            color: isShared ? MyColors.selectedItemColor : MyColors.nonSelectedItemColor,
           ),
           onPressed: _handleShare,
         ),
