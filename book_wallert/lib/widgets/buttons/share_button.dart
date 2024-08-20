@@ -35,7 +35,7 @@ class _ShareButtonState extends State<ShareButton> {
     try {
       bool shared = await _shareService.checkIfShared(widget.review.reviewId, globalUser!.userId);
       setState(() {
-        isShared = !shared;
+        isShared = shared;
       });
     } catch (e) {
       print('Error checking if review is shared: $e');
