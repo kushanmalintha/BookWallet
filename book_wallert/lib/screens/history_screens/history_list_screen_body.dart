@@ -1,3 +1,4 @@
+import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/history_screens/history_list_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
@@ -28,7 +29,7 @@ class _HistoryListScreenBodyState extends State<HistoryListScreenBody>
     'Reviews',
     'Books',
     'Profiles',
-    'Groups'
+    // 'Groups'
   ];
 
   @override
@@ -58,9 +59,10 @@ class _HistoryListScreenBodyState extends State<HistoryListScreenBody>
         // adding corrosponding screens to each button on SelectionBar.
         controller: _tabController,
         children: [
-          HistoryListListViewAll(), // Your fandoms
-          HistoryListListViewReviews(), // Trending
-          HistoryListListViewBooks(),
+          HistoryListViewAll(),
+          HistoryListViewReviews(userId: globalUser!.userId),
+          HistoryListViewBooks(userId: globalUser!.userId),
+          HistoryListViewUser(userId: globalUser!.userId)
         ],
       ),
     );
