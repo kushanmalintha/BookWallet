@@ -1,4 +1,3 @@
-import 'package:book_wallert/models/review.dart';
 import 'package:book_wallert/models/review_model.dart';
 
 class SharedReview {
@@ -8,7 +7,7 @@ class SharedReview {
   final int sharedUserId;
   final String imagePath; // Adjust this based on your actual data structure
 
-  SharedReview( {
+  SharedReview({
     required this.reviewId,
     required this.sharerUsername,
     required this.review,
@@ -18,11 +17,11 @@ class SharedReview {
 
   factory SharedReview.fromJson(Map<String, dynamic> json) {
     return SharedReview(
-      sharedUserId : json['sharedUserId'],
-      reviewId: json['review_id'],
-      sharerUsername: json['sharer_username'],
+      reviewId: json['reviewId'],
+      sharerUsername: json['sharerUsername'],
       review: ReviewModel.fromJson(json['review']),
-      imagePath: json['imagePath'], // Adjust this based on your actual data structure
+      sharedUserId: json['sharedUserId'],
+      imagePath: json['imagePath'],
     );
   }
 }
