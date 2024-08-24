@@ -21,6 +21,7 @@ class AuthApiService {
         'description': description
       }),
     );
+    print('Response Body: ${response.body}');
 
     if (response.statusCode == 201) {
       return User.fromJson(jsonDecode(response.body)['user']);

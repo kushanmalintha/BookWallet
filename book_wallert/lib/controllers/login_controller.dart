@@ -45,6 +45,10 @@ class LoginController {
     } catch (e) {
       // Print the error and show a failure message if login fails
       print(e);
+      print('login error: $e');
+      if (e is Exception) {
+        print('Exception details: ${e.toString()}');
+      }
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Failed to log in')),

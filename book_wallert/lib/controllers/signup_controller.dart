@@ -39,7 +39,10 @@ class SignupController {
       }
     } catch (e) {
       // Print the error and show a failure message if signup fails
-      print(e);
+      print('Sign up error: $e');
+      if (e is Exception) {
+        print('Exception details: ${e.toString()}');
+      }
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
