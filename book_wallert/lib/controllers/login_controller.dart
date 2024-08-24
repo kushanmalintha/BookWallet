@@ -27,11 +27,12 @@ class LoginController {
       // Extract token and user details from the response
       String token = response['token'];
       User user = User(
-        userId: response['userId'],
-        username: response['username'],
-        email: response['email'],
-      );
+          userId: response['userId'],
+          username: response['username'],
+          email: response['email'],
+          description: response['description']);
 
+      print(user);
       // Print the received token to the console
       print('Token: $token');
       // Store the token

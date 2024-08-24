@@ -7,18 +7,20 @@ class UserController {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   final UserApiService userApiService = UserApiService();
 
   Future<void> editUserDetails(BuildContext context) async {
     try {
-      print(usernameController.text);
-      print(emailController.text);
-      print(passwordController.text);
+      // print(usernameController.text);
+      // print(emailController.text);
+      // print(passwordController.text);
       User user = await userApiService.editUserDetailsService(
           usernameController.text,
           emailController.text,
-          passwordController.text);
+          passwordController.text,
+          descriptionController.text);
 
       setUser(user); // updating the global user object
 

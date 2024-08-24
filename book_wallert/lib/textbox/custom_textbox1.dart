@@ -13,13 +13,17 @@ class CustomTextBox1 extends StatefulWidget {
   final TextEditingController controller;
 
   // Constructor to initialize hintText, type, isPassword, and controller
-  const CustomTextBox1({
-    super.key,
-    required this.lableText,
-    required this.type,
-    required this.controller,
-    this.isPassword = false,
-  });
+  CustomTextBox1(
+      {super.key,
+      required this.lableText,
+      required this.type,
+      required this.controller,
+      this.isPassword = false,
+      String? text}) {
+    if (text != null) {
+      controller.text = text;
+    }
+  }
 
   @override
   State<CustomTextBox1> createState() => _CustomTextBoxState();
@@ -38,6 +42,7 @@ class _CustomTextBoxState extends State<CustomTextBox1> {
       // Decoration for inputs
       child: TextField(
         controller: widget.controller,
+        autofocus: true,
         style: const TextStyle(
           color: MyColors.titleColor,
         ),
