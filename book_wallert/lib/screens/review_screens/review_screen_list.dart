@@ -1,3 +1,4 @@
+import 'package:book_wallert/controllers/share_controller.dart';
 import 'package:book_wallert/dummy_data/user_dummy.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/controllers/review_likes_controller.dart';
@@ -25,19 +26,25 @@ class ReviewScreenListView extends StatefulWidget {
 class _ReviewScreenListViewState extends State<ReviewScreenListView> {
   late LikesController _likesController;
   late CommentController _commentController;
+  late ShareController _shareController; // Declare ShareController
   bool _loadingComments = false;
+  bool _loadingShares = false; // Track share loading state
   List<Comment> _comments = [];
+  List<Map<String, dynamic>> _shares = []; // Store shares data
 
   @override
   void initState() {
     super.initState();
     _likesController = LikesController(LikesApiService());
-    _commentController =
-        CommentController(widget.reviewId); // Initialize CommentController
+    _commentController = CommentController(widget.reviewId); // Initialize CommentController
+    _shareController = ShareController(); // Initialize ShareController
+    
     if (widget.screenName == 'Like') {
       _fetchLikes();
     } else if (widget.screenName == 'Comment') {
       _fetchComments();
+    } else if (widget.screenName == 'Share') {
+      _fetchShares();
     }
   }
 
@@ -54,6 +61,17 @@ class _ReviewScreenListViewState extends State<ReviewScreenListView> {
     setState(() {
       _comments = comments;
       _loadingComments = false;
+    });
+  }
+
+  Future<void> _fetchShares() async {
+    setState(() {
+      _loadingShares = true;
+    });
+    await _shareController.fetchShares(widget.reviewId);
+    setState(() {
+      _shares = _shareController.shares;
+      _loadingShares = false;
     });
   }
 
@@ -95,9 +113,25 @@ class _ReviewScreenListViewState extends State<ReviewScreenListView> {
                     },
                   );
       case 'Share':
-        return UserCard(user: dummyUser); // Replace with actual user data
+        return _loadingShares
+            ? Center(child: CircularProgressIndicator())
+            : _shares.isEmpty
+                ? Center(child: Text('No shares yet'))
+                : ListView.builder(
+                    itemCount: _shares.length,
+                    itemBuilder: (context, index) {
+                      final share = _shares[index];
+                      return UserCard(
+                        user: User(
+                          userId: share['user_id'],
+                          username: share['username'],
+                          email: '', // Adjust if you have email data
+                        ),
+                      );
+                    },
+                  );
       default:
-        return UserCard(user: dummyUser); // Replace with actual user data
+        return Center(child: Text('Invalid screen name'));
     }
   }
 }
