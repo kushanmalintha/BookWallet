@@ -10,6 +10,7 @@ class SignupController {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   // Instance of ApiService to handle API calls
   final AuthApiService apiService = AuthApiService();
@@ -27,11 +28,8 @@ class SignupController {
 
     try {
       // Attempt to sign up the user using the provided credentials
-      await apiService.signUp(
-        usernameController.text,
-        emailController.text,
-        passwordController.text,
-      );
+      await apiService.signUp(usernameController.text, emailController.text,
+          passwordController.text, descriptionController.text);
       // Navigate to the login screen upon successful signup
       if (context.mounted) {
         Navigator.push(
