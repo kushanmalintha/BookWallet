@@ -8,8 +8,8 @@ import 'package:http/http.dart' as http;
 class UserApiService {
   static final String _baseUrl = 'http://$ip:3000/api/auth';
 
-  Future<User> editUserDetailsService(
-      String username, String email, String password) async {
+  Future<User> editUserDetailsService(String username, String email,
+      String password, String description) async {
     if (globalUser == null) {
       throw Exception('User is not logged in');
     }
@@ -25,6 +25,7 @@ class UserApiService {
         'username': username,
         'email': email,
         'password': password,
+        'description': description,
         'token': token,
       }),
     );
@@ -33,7 +34,8 @@ class UserApiService {
       return User(
           userId: int.parse(jsonDecode(response.body)['user']['userId']),
           username: jsonDecode(response.body)['user']['username'],
-          email: jsonDecode(response.body)['user']['email']);
+          email: jsonDecode(response.body)['user']['email'],
+          description: jsonDecode(response.body)['user']['description']);
     } else {
       throw Exception('Failed to update');
     }

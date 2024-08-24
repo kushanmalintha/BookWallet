@@ -1,4 +1,5 @@
 import 'package:book_wallert/controllers/user_controller.dart';
+import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/textbox/custom_textbox1.dart';
 import 'package:book_wallert/widgets/buttons/custom_button1.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ class EditUserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(globalUser!.description);
+    print(globalUser!.email);
     return Scaffold(
       backgroundColor: MyColors.bgColor,
       appBar: AppBar(
@@ -51,12 +54,14 @@ class EditUserInfo extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               CustomTextBox1(
+                text: globalUser!.username,
                 lableText: "Username",
                 type: TextInputType.text,
                 controller: _userController.usernameController,
               ),
               const SizedBox(height: 20),
               CustomTextBox1(
+                  text: globalUser!.email,
                   lableText: 'Email',
                   type: TextInputType.emailAddress,
                   controller: _userController.emailController),
@@ -66,6 +71,13 @@ class EditUserInfo extends StatelessWidget {
                   type: TextInputType.visiblePassword,
                   isPassword: true,
                   controller: _userController.passwordController),
+              const SizedBox(height: 20),
+              CustomTextBox1(
+                  text: globalUser!.description,
+                  lableText: 'description',
+                  type: TextInputType.text,
+                  isPassword: false,
+                  controller: _userController.descriptionController),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
