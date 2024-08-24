@@ -27,11 +27,12 @@ class LoginController {
       // Extract token and user details from the response
       String token = response['token'];
       User user = User(
-        userId: response['userId'],
-        username: response['username'],
-        email: response['email'],
-      );
+          userId: response['userId'],
+          username: response['username'],
+          email: response['email'],
+          description: response['description']);
 
+      print(user);
       // Print the received token to the console
       print('Token: $token');
       // Store the token
@@ -44,6 +45,10 @@ class LoginController {
     } catch (e) {
       // Print the error and show a failure message if login fails
       print(e);
+      print('login error: $e');
+      if (e is Exception) {
+        print('Exception details: ${e.toString()}');
+      }
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Failed to log in')),
