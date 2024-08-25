@@ -32,7 +32,6 @@ class _SharedByCardState extends State<SharedByCard> {
   Widget build(BuildContext context) {
     return Card(
       color: MyColors.panelColor, // Card background color
-      margin: const EdgeInsets.all(8), // Margin around the card
       child: Padding(
         padding: const EdgeInsets.all(10.0), // Padding inside the card
         child: Column(
@@ -42,11 +41,11 @@ class _SharedByCardState extends State<SharedByCard> {
             widget.child,
 
             Container(
-              height: 1, // Height of the divider line
-              color: Colors.grey[400], // Color of the divider line
-              margin: const EdgeInsets.symmetric(
-                  vertical: 10), // Margin around the divider line
-            ),
+                height: 1, // Height of the divider line
+                color: Colors.grey[400], // Color of the divider line
+                margin: const EdgeInsets.only(
+                    bottom: 8) // Margin around the divider line
+                ),
 
             GestureDetector(
               onTap: () => {
