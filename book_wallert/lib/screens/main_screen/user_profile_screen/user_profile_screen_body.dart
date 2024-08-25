@@ -2,6 +2,7 @@ import 'package:book_wallert/controllers/user_profile_controller.dart';
 import 'package:book_wallert/models/user.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_completed_list_view.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_review_list_view.dart';
+import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_timeline_list_view.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_wishlist_list_view.dart';
 import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
     'Reading',
     'Wishlist',
     'Completed',
+    'Timeline',  // New Timeline Tab
   ];
 
   final double scrollThreshold = 330;
@@ -39,7 +41,7 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: _tabNames.length, vsync: this);
+    _tabController = TabController(length: _tabNames.length, vsync: this);  // Updated length
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     _getUserProfileController = GetUserProfileController(widget.userId);
@@ -90,6 +92,7 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
                       const UserProfileListVeiw(screenName: 'Reading'),
                       UserProfileWishlistListView(userId: widget.userId),
                       UserProfileCompletedListView(userId: widget.userId),
+                      UserProfileTimeLineListView(userId: widget.userId),  // New Timeline Tab Content
                     ],
                   ),
                 ),
