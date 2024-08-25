@@ -80,6 +80,7 @@ class _ReviewCardState extends State<ReviewCard> {
       children: [
         Center(
           child: Card(
+            elevation: 0,
             color: MyColors.panelColor,
             child: Padding(
               padding: const EdgeInsets.all(16),
