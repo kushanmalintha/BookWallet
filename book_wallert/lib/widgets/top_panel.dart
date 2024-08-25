@@ -1,6 +1,7 @@
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart'; // Import the barcode scanner package
 
 class TopPanel extends StatefulWidget implements PreferredSizeWidget {
   final String title;
@@ -21,13 +22,25 @@ class _TopPanelState extends State<TopPanel> {
 
   void _handleSearch() {
     final searchText = _searchController.text;
-    // Handle the search action with searchText
     print('Searching for: $searchText');
     widget.searchTrigger(searchText);
-    // You can add your search logic here, like updating the UI or fetching data
     setState(() {
       _isSearching = false;
     });
+  }
+
+  Future<void> _scanBarcode() async {
+    var isbn = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SimpleBarcodeScannerPage(),
+      ),
+    );
+    if (isbn is String && isbn.isNotEmpty) {
+      final searchText = 'isbn:$isbn';
+      _searchController.text = searchText;
+      _handleSearch();
+    }
   }
 
   Future<bool> _popScope() async {
@@ -72,12 +85,18 @@ class _TopPanelState extends State<TopPanel> {
                 ),
               ),
         actions: [
-          if (_isSearching)
+          if (_isSearching) ...[
             IconButton(
               icon: const Icon(Icons.search),
               color: MyColors.nonSelectedItemColor,
               onPressed: _handleSearch,
             ),
+            IconButton(
+              icon: const Icon(Icons.qr_code_scanner),
+              color: MyColors.nonSelectedItemColor,
+              onPressed: _scanBarcode, // Trigger the barcode scanner
+            ),
+          ],
           IconButton(
             icon: Icon(_isSearching ? Icons.close : Icons.search),
             color: MyColors.nonSelectedItemColor,

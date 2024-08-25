@@ -45,6 +45,7 @@ dependencies:
   json_annotation: ^4.9.0
   path_provider: ^2.1.4
   file_picker: ^8.0.0+1
+  simple_barcode_scanner: ^0.0.8  
   # connectivity_plus: ^6.0.5
 
 dev_dependencies:

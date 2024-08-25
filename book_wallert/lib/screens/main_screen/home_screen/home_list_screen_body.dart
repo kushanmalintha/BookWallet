@@ -4,8 +4,10 @@ import 'package:book_wallert/controllers/home_screen_controller.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/models/review_model.dart'; // Import ReviewModel for data handling
+import 'package:book_wallert/models/share_model.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
 import 'package:book_wallert/widgets/cards/review_card.dart'; // Import ReviewCard widget
+import 'package:book_wallert/widgets/frames/shareby_frame.dart';
 import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart';
 
@@ -29,42 +31,43 @@ class _HomeListScreenBodyState extends State<HomeListScreenBody> {
   @override
   void initState() {
     super.initState();
-    // _scrollController.addListener(_scrollListener); // Attach scroll listener
-    // _reviewController.fetchPosts(
-    //     _onDataFetched); // Initial data fetch when widget is first initialized
-    _homeScreenController.fetchHomeScreen(_onReviewsFetched, _onBooksFetched);
+    _scrollController.addListener(_scrollListener); // Attach scroll listener
+    _homeScreenController.fetchHomeScreen(
+        _onReviewsFetched, _onBooksFetched, _onSharesFetched);
   }
 
-  @override
-  void dispose() {
-    // _scrollController.removeListener(
-    //    _scrollListener); // Remove scroll listener to prevent memory leaks
-    // _scrollController.dispose(); // Dispose the scroll controller
-    super.dispose();
-  }
-
-  // void _scrollListener() {
-  //   if (_scrollController.position.pixels ==
-  //       _scrollController.position.maxScrollExtent) {
-  //     // _reviewController.fetchPosts(
-  //     //     _onDataFetched); // Fetch more data when scrolled to the bottom
-  //     _homeScreenController.fetchHomeScreen(_onReviewsFetched, _onBooksFetched);
-  //   }
+  // @override
+  // void dispose() {
+  //   _scrollController.removeListener(
+  //       _scrollListener); // Remove scroll listener to prevent memory leaks
+  //   _scrollController.dispose(); // Dispose the scroll controller
+  //   super.dispose();
   // }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      _homeScreenController.fetchHomeScreen(
+          _onReviewsFetched, _onBooksFetched, _onSharesFetched);
+    }
+  }
 
   void _onReviewsFetched(List<ReviewModel> updatedReviews) {
     setState(() {
-      // _reviewController.reviews =
-      //     updatedReviews; // Update state with the fetched reviews
       _homeScreenController.reviews = updatedReviews;
     });
   }
 
   void _onBooksFetched(List<BookModel> updatedBooks) {
     setState(() {
-      // _reviewController.reviews =
-      //     updatedReviews; // Update state with the fetched reviews
       _homeScreenController.books = updatedBooks;
+      _combineAndShuffleContent();
+    });
+  }
+
+  void _onSharesFetched(List<SharedReview> updatedShares) {
+    setState(() {
+      _homeScreenController.shares = updatedShares;
       _combineAndShuffleContent();
     });
   }
@@ -73,6 +76,7 @@ class _HomeListScreenBodyState extends State<HomeListScreenBody> {
     mixedContent = [];
     mixedContent.addAll(_homeScreenController.reviews);
     mixedContent.addAll(_homeScreenController.books);
+    mixedContent.addAll(_homeScreenController.shares);
     mixedContent.shuffle(Random());
   }
 
@@ -98,6 +102,17 @@ class _HomeListScreenBodyState extends State<HomeListScreenBody> {
               children: [
                 const SizedBox(height: 3),
                 BookCard(book: item),
+              ],
+            );
+          } else if (item is SharedReview) {
+            return Column(
+              children: [
+                const SizedBox(height: 3),
+                SharedByCard(
+                    userId: item.sharedUserId,
+                    imagePath: item.imagePath,
+                    sharedBy: [item.sharerUsername],
+                    child: ReviewCard(review: item.review)),
               ],
             );
           }

@@ -1,8 +1,11 @@
 import 'package:book_wallert/functions/global_user_provider.dart';
-import 'package:book_wallert/screens/history_screens/history_list_list_view.dart';
+import 'package:book_wallert/screens/history_screens/history_screen_all_list_view.dart';
+import 'package:book_wallert/screens/history_screens/history_screen_books_list_view.dart';
+import 'package:book_wallert/screens/history_screens/history_screen_reveiws_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
+import 'package:book_wallert/screens/history_screens/history_screen_users_list_view.dart';
 
 class HistoryListScreenBody extends StatefulWidget {
   final int globalUserId;
@@ -59,10 +62,10 @@ class _HistoryListScreenBodyState extends State<HistoryListScreenBody>
         // adding corrosponding screens to each button on SelectionBar.
         controller: _tabController,
         children: [
-          HistoryListViewAll(),
+          HistoryListViewAll(userId: globalUser!.userId),
           HistoryListViewReviews(userId: globalUser!.userId),
           HistoryListViewBooks(userId: globalUser!.userId),
-          HistoryListViewUser(userId: globalUser!.userId)
+          HistoryListViewUser(userId: globalUser!.userId),
         ],
       ),
     );
