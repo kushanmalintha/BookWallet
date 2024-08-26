@@ -70,7 +70,7 @@ class _ShareButtonState extends State<ShareButton>
       }
 
       if (isShared) {
-        await _shareService.shareReview(widget.review.reviewId, userId);
+        await _shareService.UnshareReview(widget.review.reviewId, userId);
         setState(() {
           _shareCount--;
           isShared = false;

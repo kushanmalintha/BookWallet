@@ -305,7 +305,6 @@ class _ReviewCardState extends State<ReviewCard> {
                       () {
                         // delete function
                         reviewDeleteController.deleteReview(context);
-                        print('aaaaaaaaaaaaaaa');
                       }
                     ]
                   : [() {}, () {}],

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/functions/pdf_utils.dart';
+import 'package:book_wallert/screens/main_screen/books_screen/add_book_screen.dart';
 import 'package:book_wallert/screens/main_screen/pdf_reader/pdf_data_model.dart';
 import 'package:book_wallert/widgets/cards/book_cards/pdf_card.dart';
 import 'package:book_wallert/widgets/frames/book_reading_progress_bar.dart';
@@ -114,6 +116,7 @@ class _PDFManagerScreenState extends State<PDFManagerScreen> {
           'id': newId,
           'progressVisiblity': false,
           'name': fileName,
+          'type': "pdf",
           'path': newFile.path,
           'image': imagePath ?? 'assets/default_thumbnail.png',
           'data': PDFData(id: newId).toJson(),
@@ -178,21 +181,55 @@ class _PDFManagerScreenState extends State<PDFManagerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF191919),
+      backgroundColor: MyColors.bgColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF282A24),
-        title: const Text(
-          'PDF Manager',
-          style: TextStyle(color: Color(0xFFFFFFFF)),
-        ),
+        backgroundColor: MyColors.navigationBarColor,
         actions: [
-          IconButton(
+          PopupMenuButton<String>(
             icon: const Icon(
-              Icons.add,
-              color: Color(0xFFB4BCB3),
+              Icons.playlist_add_sharp,
+              color: MyColors.nonSelectedItemColor,
             ),
-            onPressed: pickPdfFile,
+            onSelected: (value) {
+              switch (value) {
+                case 'Add Physical Book':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddPhysicalBookScreen()),
+                  ).then((_) {
+                    loadPdfFiles();
+                    ();
+                  });
+                  break;
+                case 'Add PDF Book':
+                  pickPdfFile();
+                  break;
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'Add PDF Book',
+                child: Text('Add PDF Book'),
+              ),
+              const PopupMenuItem(
+                value: 'Add Physical Book',
+                child: Text('Add Physical Book'),
+              ),
+            ],
           ),
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.create_new_folder,
+                color: MyColors.nonSelectedItemColor,
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.edit_rounded,
+                color: MyColors.nonSelectedItemColor,
+              )),
         ],
       ),
       body: LayoutBuilder(
@@ -208,22 +245,26 @@ class _PDFManagerScreenState extends State<PDFManagerScreen> {
                   ? BookReadingProgressBar(
                       progress: pdfFiles[index]['data']['progress'] ?? 0,
                       child: PDFCard(
+                        type: pdfFiles[index]['type'],
                         name: pdfFiles[index]['name']!,
                         path: pdfFiles[index]['path']!,
                         imagePath: pdfFiles[index]['image']!,
                         onRename: () => renamePdfFile(index),
                         onDelete: () => deletePdfFile(index),
                         onVisibility: () => changeProgressVisibility(index),
+                        progressVisiblity: pdfFiles[index]['progressVisiblity'],
                         onRefresh: loadPdfFiles,
                       ),
                     )
                   : PDFCard(
+                      type: pdfFiles[index]['type'],
                       name: pdfFiles[index]['name']!,
                       path: pdfFiles[index]['path']!,
                       imagePath: pdfFiles[index]['image']!,
                       onRename: () => renamePdfFile(index),
                       onDelete: () => deletePdfFile(index),
                       onVisibility: () => changeProgressVisibility(index),
+                      progressVisiblity: pdfFiles[index]['progressVisiblity'],
                       onRefresh: loadPdfFiles,
                     );
             },
