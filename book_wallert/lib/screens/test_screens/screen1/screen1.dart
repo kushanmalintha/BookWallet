@@ -11,7 +11,7 @@ class Screen1 extends StatefulWidget {
 
 class _Screen1State extends State<Screen1> {
   File? _imageFile;
-  final String _imageName = 'image3'; // Unique image name
+  final String _imageName = 'image4'; // Unique image name
   final picker = ImagePicker();
   final ImageController _imageController = ImageController();
 
