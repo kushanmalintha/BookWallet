@@ -1,3 +1,4 @@
+import 'package:book_wallert/models/review_model.dart';
 import 'package:book_wallert/models/share_model.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/services/share_service.dart';
@@ -35,6 +36,13 @@ class ShareController extends ChangeNotifier {
     } finally {
       isLoading = false;
       notifyListeners();
+    }
+  }
+   Future<List<ReviewModel>> fetchUserTimeline(int userId) async {
+    try {
+      return await _shareService.fetchUserTimeline(userId);
+    } catch (e) {
+      throw Exception('Failed to fetch user timeline: $e');
     }
   }
   

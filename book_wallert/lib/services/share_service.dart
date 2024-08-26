@@ -30,6 +30,26 @@ class ShareService {
       throw Exception('Failed to share review');
     }
   }
+  Future<void> UnshareReview(int reviewId, int userId) async {
+    final url = Uri.parse('$_baseUrl/share');
+    String? token = await getToken(); // Get the token
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // Add the token to the headers
+      },
+      body: jsonEncode({
+        'review_id': reviewId,
+        'user_id': userId,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to share review');
+    }
+  }
   Future<bool> checkIfShared(int reviewId, int userId) async {
     final url = Uri.parse('$_baseUrl/check-shared');
 
@@ -109,4 +129,40 @@ class ShareService {
       throw Exception('Failed to load shares');
     }
   }
+ Future<List<ReviewModel>> fetchUserTimeline(int userId) async {
+  final url = Uri.parse('$_baseUrl/shared-reviews-timeOrder/$userId');
+  String? token = await getToken(); // Get the token
+
+  final response = await http.get(
+    url,
+    headers: {
+      'Authorization': 'Bearer $token', // Add the token to the headers
+    },
+  );
+
+  if (response.statusCode == 200) {
+    List<dynamic> data = json.decode(response.body);
+    return data.map((json) {
+      return ReviewModel(
+        reviewId: json['review_id'],
+        bookId: json['book_id'],
+        userId: json['user_id'],
+        imagePath: json['imageUrl'], // Ensure this matches the field from the backend
+        bookName: json['title'], // Adjust if needed
+        authorName: json['author'],
+        context: json['context'],
+        rating: json['rating'].toDouble(),
+        date: json['date'],
+        reviwerName: json['reviewer_username'], // Adjust if needed
+        likesCount: json['likesCount'] ?? 0, // Handle null values
+        commentsCount: json['commentsCount'] ?? 0, // Handle null values
+        sharesCount: json['sharesCount'] ?? 0, 
+      );
+    }).toList();
+  } else {
+    throw Exception('Failed to load user timeline');
+  }
+}
+
+  
 }

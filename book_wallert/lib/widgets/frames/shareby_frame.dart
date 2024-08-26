@@ -31,10 +31,10 @@ class _SharedByCardState extends State<SharedByCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 0,
       color: MyColors.panelColor, // Card background color
-      margin: const EdgeInsets.all(8), // Margin around the card
       child: Padding(
-        padding: const EdgeInsets.all(10.0), // Padding inside the card
+        padding: const EdgeInsets.only(bottom: 12), // Padding inside the card
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -42,11 +42,12 @@ class _SharedByCardState extends State<SharedByCard> {
             widget.child,
 
             Container(
-              height: 1, // Height of the divider line
-              color: Colors.grey[400], // Color of the divider line
-              margin: const EdgeInsets.symmetric(
-                  vertical: 10), // Margin around the divider line
-            ),
+                height: 1, // Height of the divider line
+                color:
+                    MyColors.nonSelectedItemColor, // Color of the divider line
+                margin: const EdgeInsets.only(
+                    bottom: 8) // Margin around the divider line
+                ),
 
             GestureDetector(
               onTap: () => {
@@ -57,15 +58,25 @@ class _SharedByCardState extends State<SharedByCard> {
               },
               child: Row(
                 children: [
+                  SizedBox(
+                    width: 10,
+                  ),
                   CircleAvatar(
                     backgroundImage: AssetImage(
                       widget.imagePath, // Use imagePath for the sharedBy user
                     ),
                     radius: 10,
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 7),
                   Text(
-                    'Shared by ${widget.sharedBy.join(', ')}',
+                    'Shared by ',
+                    style: const TextStyle(
+                      color: MyColors.text2Color,
+                      fontSize: 10,
+                    ),
+                  ),
+                  Text(
+                    widget.sharedBy.join(', '),
                     style: const TextStyle(
                       color: MyColors.textColor,
                       fontSize: 14,
