@@ -46,7 +46,7 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
       BookmarkManager.addBookmark(context, currentPage, _bookmarks, setState);
 
   void _showBookmarks() => BookmarkManager.showBookmarks(
-      context, currentPage, pdfController, _bookmarks, setState);
+      context, currentPage, pdfController.setPage, _bookmarks, setState);
 
   Future<void> _loadPDFData() async {
     final directory = await getApplicationDocumentsDirectory();
@@ -99,6 +99,7 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
       final updatedJson = json.map((pdfFile) {
         if (pdfFile['path'] == widget.filePath) {
           pdfFile['data'] = pdfData!.toJson();
+          pdfFile['totalPages'] = totalPages;
         }
         return pdfFile;
       }).toList();

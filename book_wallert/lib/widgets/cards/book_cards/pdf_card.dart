@@ -1,26 +1,30 @@
 import 'dart:io';
-import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/screens/main_screen/pdf_reader/book_viewer_page.dart';
 import 'package:book_wallert/screens/main_screen/pdf_reader/pdf_view_page.dart';
-import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
+import 'package:book_wallert/widgets/buttons/pdf_popup_menu.dart';
 import 'package:flutter/material.dart';
 
 class PDFCard extends StatelessWidget {
+  final String? type;
   final String name;
   final String path;
   final String imagePath;
   final VoidCallback onRename;
   final VoidCallback onDelete;
   final VoidCallback onVisibility;
+  final bool progressVisiblity;
   final VoidCallback onRefresh;
 
   const PDFCard({
     super.key,
+    this.type,
     required this.name,
     required this.path,
     required this.imagePath,
     required this.onRename,
     required this.onDelete,
     required this.onVisibility,
+    required this.progressVisiblity,
     required this.onRefresh,
   });
 
@@ -28,15 +32,27 @@ class PDFCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PDFViewerPage(filePath: path, title: name),
-            fullscreenDialog: true, // This makes the new page fullscreen
-          ),
-        ).then((_) {
-          onRefresh();
-        });
+        if (type == null || type == "pdf") {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PDFViewerPage(filePath: path, title: name),
+            ),
+          ).then((_) {
+            onRefresh();
+          });
+        } else if (type == "physical") {
+          print("Openning non-pdf-screen");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BookViewerPage(filePath: path, title: name),
+            ),
+          ).then((_) {
+            onRefresh();
+          });
+        }
+        ;
       },
       child: AspectRatio(
         aspectRatio: 0.75, // Adjust the aspect ratio as needed
@@ -87,21 +103,11 @@ class PDFCard extends StatelessWidget {
             Positioned(
               top: 1,
               right: 1,
-              child: CustomPopupMenuButtons(
-                items: const [
-                  'Rename',
-                  'Delete',
-                  'Progress Bar',
-                ],
-                onItemTap: [
-                  onRename,
-                  onDelete,
-                  onVisibility,
-                ],
-                icon: const Icon(
-                  Icons.more_vert_rounded,
-                  color: MyColors.text2Color,
-                ),
+              child: PDFPopupMenu(
+                onRename: onRename,
+                onDelete: onDelete,
+                onVisibility: onVisibility,
+                progressVisiblity: progressVisiblity,
               ),
             ),
           ],

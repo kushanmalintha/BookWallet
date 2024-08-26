@@ -1,5 +1,4 @@
 import 'package:book_wallert/controllers/share_controller.dart';
-import 'package:book_wallert/dummy_data/user_dummy.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/controllers/review_likes_controller.dart';
 import 'package:book_wallert/services/review_likes_api_service.dart';
@@ -12,7 +11,6 @@ import 'package:book_wallert/widgets/cards/comment_card.dart'; // Import Comment
 class ReviewScreenListView extends StatefulWidget {
   final int reviewId;
   final String screenName;
-
   const ReviewScreenListView({
     super.key,
     required this.reviewId,
@@ -36,9 +34,10 @@ class _ReviewScreenListViewState extends State<ReviewScreenListView> {
   void initState() {
     super.initState();
     _likesController = LikesController(LikesApiService());
-    _commentController = CommentController(widget.reviewId); // Initialize CommentController
+    _commentController =
+        CommentController(widget.reviewId); // Initialize CommentController
     _shareController = ShareController(); // Initialize ShareController
-    
+
     if (widget.screenName == 'Like') {
       _fetchLikes();
     } else if (widget.screenName == 'Comment') {

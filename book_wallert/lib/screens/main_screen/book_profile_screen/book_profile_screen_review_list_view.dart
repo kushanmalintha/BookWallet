@@ -38,6 +38,7 @@ class _BookProfileScreenListViewState
   Future<void> _initializeData() async {
     try {
       await _reviewForBookController.fetchId(widget.book);
+      // _reviewForBookController.bookId = 1;
       _fetchInitialData();
     } catch (e) {
       print('Error initializing data: $e');

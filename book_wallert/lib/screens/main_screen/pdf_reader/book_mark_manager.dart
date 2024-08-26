@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 
 class BookmarkManager {
   static void addBookmark(
@@ -92,7 +91,7 @@ class BookmarkManager {
   static void showBookmarks(
     BuildContext context,
     int currentPage,
-    PDFViewController pdfController,
+    Function setPage,
     List<Map<String, String>> bookmarks,
     StateSetter setState,
   ) {
@@ -117,7 +116,7 @@ class BookmarkManager {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    pdfController.setPage(int.parse(bookmark['page']!));
+                    setPage(int.parse(bookmark['page']!));
                     setState(() {
                       currentPage = int.parse(bookmark['page']!);
                     });
