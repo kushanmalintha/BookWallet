@@ -28,6 +28,7 @@ class PDFData {
     this.bookmarks = const <Map<String, String>>[],
   });
 
-  factory PDFData.fromJson(Map<String, dynamic> json) => _$PDFDataFromJson(json);
+  factory PDFData.fromJson(Map<String, dynamic> json) =>
+      _$PDFDataFromJson(json);
   Map<String, dynamic> toJson() => _$PDFDataToJson(this);
 }
