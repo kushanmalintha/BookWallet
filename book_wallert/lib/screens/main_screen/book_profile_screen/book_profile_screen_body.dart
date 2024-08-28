@@ -1,6 +1,9 @@
 import 'package:book_wallert/controllers/get_book_api_controller.dart';
-import 'package:book_wallert/dummy_data/book_dummy_data.dart';
+import 'package:book_wallert/controllers/token_controller.dart';
+import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_review_list_view.dart';
+import 'package:book_wallert/services/fetch_bookId_from_ISBN.dart';
+import 'package:book_wallert/services/history_api_service.dart';
 import 'package:book_wallert/widgets/buttons/floating_action_button.dart';
 import 'package:book_wallert/widgets/buttons/text_input.dart';
 import 'package:book_wallert/widgets/progress_indicators.dart';
@@ -12,7 +15,6 @@ import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profil
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 import 'package:book_wallert/colors.dart';
 
-// ignore: must_be_immutable
 class BookProfileScreenBody extends StatefulWidget {
   BookModel? book;
   int bookId;
@@ -27,16 +29,13 @@ class BookProfileScreenBody extends StatefulWidget {
 class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
     with SingleTickerProviderStateMixin {
   late final ReviewPostController _reviewPostController;
+  late final BookIdService _bookIdService;
+  late final GetBookController _getBookController;
+  late final HistoryService _historyService;
   late TabController _tabController;
   late ScrollController _scrollController;
-  late GetBookController _getBookController;
 
-  final List<String> _tabNames = [
-    'Reviews',
-    'Locations',
-    'Read Online',
-  ];
-
+  final List<String> _tabNames = ['Reviews', 'Locations', 'Read Online'];
   final double scrollThreshold = 300;
   bool _isWriting = false;
   double _rating = 0.0;
@@ -45,27 +44,69 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
   @override
   void initState() {
     super.initState();
+    _bookIdService = BookIdService();
     _tabController = TabController(length: _tabNames.length, vsync: this);
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
+    _historyService = HistoryService(globalUser!.userId);
     if (widget.bookId != -1) {
       _getBookController = GetBookController(widget.bookId);
       _fetchBookDetails();
     } else {
-      _reviewPostController = ReviewPostController(widget.book ?? dummyBook);
-      _isLoading = false; // No need to load if we're using the dummy book
+      _fetchBookIdAndDetails();
     }
-    // _reviewPostController = ReviewPostController(
-    //     widget.book ?? dummyBook); // Initialize with the current book
+  }
+
+  Future<void> _fetchBookIdAndDetails() async {
+    try {
+      final bookId = await _bookIdService.fetchId(widget.book!);
+      setState(() {
+        widget.bookId = bookId;
+      });
+      _getBookController = GetBookController(widget.bookId);
+      await _fetchBookDetails();
+    } catch (e) {
+      print('Error fetching book ID and details: $e');
+    }
   }
 
   Future<void> _fetchBookDetails() async {
-    BookModel fetchedBook = await _getBookController.fetchBook();
-    setState(() {
-      widget.book = fetchedBook;
-      _reviewPostController = ReviewPostController(widget.book!);
-      _isLoading = false;
-    });
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      final fetchedBook = await _getBookController.fetchBook();
+      setState(() {
+        widget.book = fetchedBook;
+        _reviewPostController = ReviewPostController(widget.book!);
+        _isLoading = false;
+      });
+
+      await _insertBookHistory();
+    } catch (e) {
+      print('Error fetching book details: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _insertBookHistory() async {
+    try {
+      final token = await getToken(); // Fetch the token using getToken()
+      if (widget.book != null && widget.bookId != -1) {
+        await _historyService.insertBookHistory(token!, widget.bookId);
+      } else {
+        final bookId = await _bookIdService.fetchId(widget.book!);
+        setState(() {
+          widget.bookId = bookId;
+        });
+        await _historyService.insertBookHistory(token!, widget.bookId);
+      }
+    } catch (e) {
+      print('Error inserting book history: $e');
+    }
   }
 
   void _scrollListener() {
@@ -90,13 +131,6 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
       }
     });
   }
-
-  // @override
-  // void dispose() {
-  //   // _scrollController.dispose();
-  //   // _tabController.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -123,23 +157,26 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
                         ),
                         SliverToBoxAdapter(
                           child: SelectionBar(
-                              tabController: _tabController,
-                              tabNames: _tabNames),
+                            tabController: _tabController,
+                            tabNames: _tabNames,
+                          ),
                         ),
                         SliverFillRemaining(
                           child: TabBarView(
                             controller: _tabController,
                             children: [
                               BookProfileScreenReviewListView(
-                                //add bookId
-                                  screenName: 'Reviews',
-                                  book: widget.book!), // Reviews
+                                screenName: 'Reviews',
+                                book: widget.book!,
+                              ), // Reviews
                               BookProfileScreenListView(
-                                  screenName: 'Locations',
-                                  book: widget.book!), // Locations
+                                screenName: 'Locations',
+                                book: widget.book!,
+                              ), // Locations
                               BookProfileScreenListView(
-                                  screenName: 'Read Online',
-                                  book: widget.book!), // Read Online
+                                screenName: 'Read Online',
+                                book: widget.book!,
+                              ), // Read Online
                             ],
                           ),
                         ),
@@ -155,12 +192,12 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
                                 _reviewPostController.reviewPostController,
                             rating: _rating,
                             hintText: 'Write your review here',
-                            onSendPressed: () {
+                            onSendPressed: () async {
                               setState(() {
                                 _isWriting = false;
                               });
                               _reviewPostController.rating = _rating;
-                              _reviewPostController.reviewPost(context);
+                              await _reviewPostController.reviewPost(context);
                             },
                             onIncreaseRating: _increaseRating,
                             onDecreaseRating: _decreaseRating,
@@ -179,106 +216,4 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
             ),
     );
   }
-
-  // Widget _buildFloatingActionButton() {
-  //   return FloatingActionButton(
-  //     backgroundColor: MyColors.selectedItemColor,
-  //     onPressed: () {
-  //       setState(() {
-  //         _isWriting = true;
-  //       });
-  //     },
-  //     child: const Icon(
-  //       Icons.add,
-  //       color: MyColors.bgColor,
-  //     ),
-  //   );
-  // }
-
-  // Widget _buildTextInput() {
-  //   return GestureDetector(
-  //     onTap: () {
-  //       // Prevent the outer GestureDetector from closing the input
-  //     },
-  //     child: Stack(
-  //       children: [
-  //         Container(
-  //           width: MediaQuery.of(context).size.width - 32.0,
-  //           padding:
-  //               const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-  //           decoration: BoxDecoration(
-  //             color: MyColors.panelColor,
-  //             borderRadius: BorderRadius.circular(8.0),
-  //             boxShadow: const [
-  //               BoxShadow(
-  //                 color: MyColors.bgColor,
-  //                 blurRadius: 20.0,
-  //               ),
-  //             ],
-  //           ),
-  //           child: Column(
-  //             children: [
-  //               const SizedBox(
-  //                   height: 40), // Adding space for the widgets at the top
-  //               Row(
-  //                 children: [
-  //                   Expanded(
-  //                     child: TextField(
-  //                       style: const TextStyle(color: MyColors.textColor),
-  //                       controller: _reviewPostController.reviewPostController,
-  //                       minLines: 1,
-  //                       maxLines: 10, // Set a maximum number of lines
-  //                       onChanged: (text) {
-  //                         setState(() {
-  //                           // Adjust the height based on the content
-  //                         });
-  //                       },
-  //                       decoration: const InputDecoration(
-  //                         hintStyle: TextStyle(color: MyColors.text2Color),
-  //                         hintText: 'Write your review...',
-  //                         border: InputBorder.none,
-  //                       ),
-  //                       autofocus: true,
-  //                     ),
-  //                   ),
-  //                   IconButton(
-  //                     color: MyColors.selectedItemColor,
-  //                     icon: const Icon(Icons.send),
-  //                     onPressed: () {
-  //                       setState(() {
-  //                         _isWriting = false;
-  //                       });
-  //                       _reviewPostController.rating =
-  //                           _rating; // Set the rating
-  //                       _reviewPostController.reviewPost(context);
-  //                     },
-  //                   ),
-  //                 ],
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //         Positioned(
-  //           top: 20,
-  //           left: 8,
-  //           child: RatingBar(rating: _rating),
-  //         ),
-  //         Positioned(
-  //           right: 50, // Adjust left position to avoid overlap
-  //           child: IconButton(
-  //               onPressed: _increaseRating,
-  //               icon: const Icon(Icons.add),
-  //               color: MyColors.nonSelectedItemColor),
-  //         ),
-  //         Positioned(
-  //           right: 5, // Adjust left position to avoid overlap
-  //           child: IconButton(
-  //               onPressed: _decreaseRating,
-  //               icon: const Icon(Icons.remove),
-  //               color: MyColors.nonSelectedItemColor),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }
