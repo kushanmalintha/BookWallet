@@ -1,3 +1,4 @@
+import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
 
 Future<void> showConfirmationDialog({
@@ -13,16 +14,23 @@ Future<void> showConfirmationDialog({
     barrierDismissible: false,
     builder: (context) {
       return AlertDialog(
+        backgroundColor: MyColors.nonSelectedItemColor,
         title: Text(title),
         content: Text(content),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text(cancelText),
+            child: Text(
+              cancelText,
+              style: TextStyle(color: MyColors.bgColor),
+            ),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(confirmText),
+            child: Text(
+              confirmText,
+              style: TextStyle(color: MyColors.bgColor),
+            ),
           ),
         ],
       );

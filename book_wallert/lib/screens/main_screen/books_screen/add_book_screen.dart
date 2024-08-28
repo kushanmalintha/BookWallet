@@ -105,6 +105,7 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Physical Book'),
+        actions: [],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

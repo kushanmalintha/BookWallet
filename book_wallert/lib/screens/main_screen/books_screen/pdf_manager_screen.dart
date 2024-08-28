@@ -4,6 +4,7 @@ import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/functions/pdf_utils.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/add_book_screen.dart';
 import 'package:book_wallert/screens/main_screen/pdf_reader/pdf_data_model.dart';
+import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:book_wallert/widgets/cards/book_cards/pdf_card.dart';
 import 'package:book_wallert/widgets/frames/book_reading_progress_bar.dart';
 import 'package:book_wallert/widgets/rename_dialog.dart';
@@ -185,38 +186,27 @@ class _PDFManagerScreenState extends State<PDFManagerScreen> {
       appBar: AppBar(
         backgroundColor: MyColors.navigationBarColor,
         actions: [
-          PopupMenuButton<String>(
+          CustomPopupMenuButtons(
+            items: const ['Add PDF Book', 'Add Physical Book'],
+            onItemTap: [
+              () {
+                pickPdfFile();
+              },
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AddPhysicalBookScreen()),
+                ).then((_) {
+                  loadPdfFiles();
+                  ();
+                });
+              },
+            ],
             icon: const Icon(
               Icons.playlist_add_sharp,
               color: MyColors.nonSelectedItemColor,
             ),
-            onSelected: (value) {
-              switch (value) {
-                case 'Add Physical Book':
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddPhysicalBookScreen()),
-                  ).then((_) {
-                    loadPdfFiles();
-                    ();
-                  });
-                  break;
-                case 'Add PDF Book':
-                  pickPdfFile();
-                  break;
-              }
-            },
-            itemBuilder: (context) => [
-              const PopupMenuItem(
-                value: 'Add PDF Book',
-                child: Text('Add PDF Book'),
-              ),
-              const PopupMenuItem(
-                value: 'Add Physical Book',
-                child: Text('Add Physical Book'),
-              ),
-            ],
           ),
           IconButton(
               onPressed: () {},
