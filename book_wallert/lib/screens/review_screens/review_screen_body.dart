@@ -1,5 +1,7 @@
 import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/controllers/history_controller.dart';
 import 'package:book_wallert/controllers/review_update_controller.dart';
+import 'package:book_wallert/controllers/token_controller.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/models/review_model.dart';
 import 'package:book_wallert/screens/review_screens/review_screen_details.dart';
@@ -12,24 +14,23 @@ import 'package:flutter/material.dart';
 class ReviewScreenBody extends StatefulWidget {
   final ReviewModel review;
   final int index;
+
   const ReviewScreenBody({super.key, required this.review, this.index = 0});
 
   @override
-  State<ReviewScreenBody> createState() {
-    return _ReviewScreenBodyState();
-  }
+  State<ReviewScreenBody> createState() => _ReviewScreenBodyState();
 }
 
 class _ReviewScreenBodyState extends State<ReviewScreenBody>
     with SingleTickerProviderStateMixin {
   late final ReviewUpdateController _reviewUpdateController;
+  late final HistoryController _historyController;
   late TabController _tabController;
   late ScrollController _scrollController;
 
   final List<String> _tabNames = ['Comment', 'Like', 'Share'];
 
   final double scrollThreshold = 300;
-
   bool _isWriting = false;
   late double _rating;
 
@@ -40,8 +41,19 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody>
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     _rating = widget.review.rating;
+
+    // Initialize the ReviewUpdateController and HistoryController
     _reviewUpdateController =
         ReviewUpdateController(widget.review.reviewId, widget.review.userId);
+    _historyController = HistoryController(globalUser!.userId);
+
+    // Insert review history
+    _insertHistory();
+  }
+
+  Future<void> _insertHistory() async {
+    final String? token = await getToken();
+    await _historyController.insertReviewHistory(token, widget.review.reviewId);
   }
 
   void _increaseRating() {
@@ -77,6 +89,7 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody>
   @override
   Widget build(BuildContext context) {
     _tabController.index = widget.index;
+
     return Scaffold(
       backgroundColor: MyColors.bgColor,
       body: Stack(
@@ -104,7 +117,8 @@ class _ReviewScreenBodyState extends State<ReviewScreenBody>
                       ReviewScreenListView(
                           reviewId: widget.review.reviewId, screenName: 'Like'),
                       ReviewScreenListView(
-                          reviewId: widget.review.reviewId, screenName: 'Share')
+                          reviewId: widget.review.reviewId,
+                          screenName: 'Share'),
                     ],
                   ),
                 ),
