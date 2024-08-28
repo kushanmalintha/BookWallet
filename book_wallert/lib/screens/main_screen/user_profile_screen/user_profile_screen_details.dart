@@ -98,9 +98,9 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                 Row(
                   children: [
                     CircleAvatar(
-                      radius: 40,
-                      backgroundColor: MyColors.nonSelectedItemColor,
-                      backgroundImage: NetworkImage(widget.user.imageUrl),
+                      backgroundImage: NetworkImage(globalUser!.imageUrl),
+                      foregroundColor: MyColors.textColor,
+                      radius: 60,
                     ),
                     const SizedBox(width: 8),
                     Column(

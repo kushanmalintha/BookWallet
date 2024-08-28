@@ -1,17 +1,62 @@
+import 'dart:io';
 import 'package:book_wallert/controllers/signup_controller.dart';
+import 'package:book_wallert/controllers/image_controller.dart';
+// import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/textbox/custom_textbox1.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/login_screens/login_screen.dart';
 import 'package:book_wallert/widgets/buttons/custom_button1.dart';
 import 'package:book_wallert/colors.dart';
+import 'package:image_picker/image_picker.dart';
 
-// SignupScreen widget to handle user signup UI and interaction
-class SignupScreen extends StatelessWidget {
-  // Instance of SignupController to manage signup logic
+// StatefulWidget for SignupScreen to manage state
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
+
+  @override
+  _SignupScreenState createState() => _SignupScreenState();
+}
+
+// State class for SignupScreen
+class _SignupScreenState extends State<SignupScreen> {
   final SignupController _signupController = SignupController();
+  File? _imageFile;
+  final picker = ImagePicker();
+  final ImageController _imageController = ImageController();
+  late String _imageName;
 
-  // Constructor
-  SignupScreen({super.key});
+  @override
+  void initState() {
+    super.initState();
+    // Generate a unique ID for the image name during initialization
+    _imageName = 'userprofileimage${generateUniqueId()}';
+  }
+
+  // Generate a unique ID for each image file (based on the current timestamp)
+  String generateUniqueId() {
+    return DateTime.now().millisecondsSinceEpoch.toString();
+  }
+
+  Future<void> _pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
+  Future<void> _uploadImage() async {
+    if (_imageFile == null) return;
+    await _imageController.uploadImageController(_imageFile!, _imageName);
+  }
+
+  void _handleSignUp(BuildContext context) async {
+    // Upload the image before signing up
+    await _uploadImage();
+    // Proceed with sign-up process
+    _signupController.signUp(context, _imageName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +68,7 @@ class SignupScreen extends StatelessWidget {
             mainAxisAlignment:
                 MainAxisAlignment.center, // Center the content vertically
             children: <Widget>[
-              const SizedBox(height: 60),
-              // CircleAvatar widget to display the app logo
-              const CircleAvatar(
-                backgroundImage: AssetImage("images/Book_Image1.jpg"),
-                radius: 60,
-              ),
-              const SizedBox(height: 10), // Add some space between widgets
-              // Welcome text
+              const SizedBox(height: 80),
               const Text(
                 "WELCOME TO BOOKWALLET",
                 style: TextStyle(
@@ -40,21 +78,44 @@ class SignupScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10), // Add some space between widgets
-              // CustomTextBox for username input
+              Stack(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: _imageFile != null
+                        ? FileImage(_imageFile!)
+                        : const AssetImage('assets/images/placeholder.png'),
+                    foregroundColor: MyColors.textColor,
+                    radius: 60,
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () async {
+                        await _pickImage();
+                      },
+                      child: CircleAvatar(
+                        radius: 15,
+                        backgroundColor: MyColors.selectedItemColor,
+                        child: Icon(Icons.edit, color: MyColors.textColor),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10), // Add some space between widgets
               CustomTextBox1(
                 lableText: "UserName",
                 type: TextInputType.name,
                 controller: _signupController.usernameController,
               ),
               const SizedBox(height: 10), // Add some space between widgets
-              // CustomTextBox for email input
               CustomTextBox1(
                 lableText: "Email",
                 type: TextInputType.emailAddress,
                 controller: _signupController.emailController,
               ),
               const SizedBox(height: 10), // Add some space between widgets
-              // CustomTextBox for password input
               CustomTextBox1(
                 lableText: "Password",
                 type: TextInputType.visiblePassword,
@@ -62,7 +123,6 @@ class SignupScreen extends StatelessWidget {
                 controller: _signupController.passwordController,
               ),
               const SizedBox(height: 10), // Add some space between widgets
-              // CustomTextBox for confirm password input
               CustomTextBox1(
                 lableText: "Confirm Password",
                 type: TextInputType.visiblePassword,
@@ -70,7 +130,6 @@ class SignupScreen extends StatelessWidget {
                 controller: _signupController.confirmPasswordController,
               ),
               const SizedBox(height: 10), // Add some space between widgets
-              // CustomTextBox for description input
               CustomTextBox1(
                 lableText: "description",
                 type: TextInputType.name,
@@ -78,13 +137,11 @@ class SignupScreen extends StatelessWidget {
                 controller: _signupController.descriptionController,
               ),
               const SizedBox(height: 10), // Add some space between widgets
-              // CustomButton1 for signup action
               CustomButton1(
                 text: "Sign up",
-                press: () => _signupController.signUp(context),
+                press: () => _handleSignUp(context),
               ),
               const SizedBox(height: 10), // Add some space between widgets
-              // GestureDetector for navigation to the login screen
               GestureDetector(
                 onTap: () {
                   Navigator.push(

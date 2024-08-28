@@ -16,7 +16,7 @@ class SignupController {
   final AuthApiService apiService = AuthApiService();
 
   // Method to handle the signup process
-  Future<void> signUp(BuildContext context) async {
+  Future<void> signUp(BuildContext context, String imageName) async {
     // Check if the passwords match
     if (passwordController.text != confirmPasswordController.text) {
       // Show a message if passwords do not match
@@ -29,7 +29,7 @@ class SignupController {
     try {
       // Attempt to sign up the user using the provided credentials
       await apiService.signUp(usernameController.text, emailController.text,
-          passwordController.text, descriptionController.text);
+          passwordController.text, descriptionController.text, imageName);
       // Navigate to the login screen upon successful signup
       if (context.mounted) {
         Navigator.push(

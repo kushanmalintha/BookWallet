@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'image_controller.dart';
+import '../../../controllers/image_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:book_wallert/colors.dart';
 
@@ -26,12 +26,13 @@ class _Screen1State extends State<Screen1> {
 
   Future<void> _uploadImage() async {
     if (_imageFile == null) return;
-    await _imageController.uploadImage(_imageFile!, _imageName);
+    await _imageController.uploadImageController(_imageFile!, _imageName);
   }
 
   Future<ImageProvider> _fetchImage() async {
     try {
-      final imageModel = await _imageController.fetchImage(_imageName);
+      final imageModel =
+          await _imageController.fetchImageController(_imageName);
       return MemoryImage(imageModel.image);
     } catch (e) {
       return AssetImage('assets/images/placeholder.png');
