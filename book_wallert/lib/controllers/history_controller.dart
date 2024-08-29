@@ -9,7 +9,7 @@ class HistoryController {
   List<BookModel> historyBooks = [];
   List<ReviewModel> historyReviews = [];
   List<User> historyUsers = [];
-  List<dynamic> allItems = []; // list for keep all items 
+  List<dynamic> allItems = []; // list for keep all items
 
   HistoryController(int userId) : historyService = HistoryService(userId);
 
@@ -47,6 +47,22 @@ class HistoryController {
       onSuccess(allItems);
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> insertReviewHistory(token, reviewId) async {
+    try {
+      await historyService.insertReviewHistory(token, reviewId);
+    } catch (e) {
+      print('Error inserting history: $e');
+    }
+  }
+
+  Future<void> insertBookHistory(token, bookId) async {
+    try {
+      await historyService.insertBookHistory(token, bookId);
+    } catch (e) {
+      print('Error inserting history: $e');
     }
   }
 }

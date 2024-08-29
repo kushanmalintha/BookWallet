@@ -15,24 +15,18 @@ class UserProfileReviewListView extends StatefulWidget {
 }
 
 class _UserProfileReviewListViewState extends State<UserProfileReviewListView> {
+  late Future<void> _reviewsFuture;
   late ReviewForUserController _reviewForUserController;
-  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _reviewForUserController = ReviewForUserController(widget.userId);
-    _fetchMoreData();
+    _reviewsFuture = _fetchMoreData();
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _fetchMoreData() {
-    _reviewForUserController.fetchPosts((updatedReviews) {
+  Future<void> _fetchMoreData() async {
+    await _reviewForUserController.fetchPosts((updatedReviews) {
       setState(() {
         _reviewForUserController.reviews = updatedReviews;
       });
@@ -45,26 +39,39 @@ class _UserProfileReviewListViewState extends State<UserProfileReviewListView> {
 
   @override
   Widget build(BuildContext context) {
-    return _reviewForUserController.isloading
-        ? Center(child: buildProgressIndicator())
-        : _reviewForUserController.reviews.isEmpty
-            ? const Center(
-                child: Text('No reviews',
-                    style: TextStyle(color: MyColors.textColor)))
-            : ListView.builder(
-                controller: _scrollController,
-                itemCount: _reviewForUserController.reviews.length + 1,
-                itemBuilder: (context, index) {
-                  if (index < _reviewForUserController.reviews.length) {
-                    return Column(
-                      children: [
-                        getScreen(index),
-                        const SizedBox(height: 3),
-                      ],
-                    );
-                  }
-                  return null;
-                },
+    return FutureBuilder<void>(
+      future: _reviewsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: buildProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Center(
+            child: Text(
+              'Failed to load reviews',
+              style: TextStyle(color: MyColors.textColor),
+            ),
+          );
+        } else if (_reviewForUserController.reviews.isEmpty) {
+          return const Center(
+            child: Text(
+              'No reviews',
+              style: TextStyle(color: MyColors.textColor),
+            ),
+          );
+        } else {
+          return ListView.builder(
+            itemCount: _reviewForUserController.reviews.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  getScreen(index),
+                  const SizedBox(height: 3),
+                ],
               );
+            },
+          );
+        }
+      },
+    );
   }
 }

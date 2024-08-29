@@ -68,4 +68,57 @@ class HistoryService {
       throw Exception('Failed to load items');
     }
   }
+
+  Future<void> insertReviewHistory(String token, int reviewId) async {
+    final url = Uri.parse('http://${ip}:3000/api/history/reviewinsert');
+    final body = json.encode({
+      'token': token,
+      'relevant_id': reviewId,
+    });
+    print(111);
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json'
+        }, // Set the Content-Type header
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        print('History Review inserted successfully');
+      } else {
+        print('Failed to insert history: ${response.body}');
+      }
+    } catch (e) {
+      print('Error inserting history: $e');
+    }
+  }
+
+  Future<void> insertBookHistory(String token, int bookId) async {
+    final url = Uri.parse('http://${ip}:3000/api/history/bookinsert');
+    print("line 100");
+    final body = json.encode({
+      'token': token,
+      'relevant_id': bookId,
+    });
+    print(token);
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json'
+        }, // Set the Content-Type header
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        print('History book inserted successfully');
+      } else {
+        print('Failed to insert history: ${response.body}');
+      }
+    } catch (e) {
+      print('Error inserting history: $e');
+    }
+  }
 }
