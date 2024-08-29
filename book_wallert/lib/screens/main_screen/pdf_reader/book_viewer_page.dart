@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/screens/main_screen/pdf_reader/book_mark_manager.dart';
 import 'package:book_wallert/screens/main_screen/pdf_reader/pdf_data_model.dart';
 import 'package:book_wallert/screens/main_screen/pdf_reader/pdf_slider.dart';
@@ -156,19 +157,27 @@ class _BookViewerPageState extends State<BookViewerPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Current Page: ${currentPage + 1}'),
-                  Text('Total Pages: ${totalPages + 1}'),
+                  Text(
+                    'Current Page: ${currentPage + 1}',
+                    style: TextStyle(color: MyColors.text2Color),
+                  ),
+                  Text(
+                    'Total Pages: ${totalPages + 1}',
+                    style: TextStyle(color: MyColors.text2Color),
+                  ),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
-                cursorColor: const Color.fromARGB(219, 39, 173, 77),
+                cursorColor: MyColors.selectedItemColor,
                 keyboardType: TextInputType.number,
+                style: const TextStyle(color: MyColors.titleColor),
                 decoration: const InputDecoration(
-                  labelText: 'Enter page number',
-                ),
+                    focusColor: MyColors.text2Color,
+                    labelText: 'Enter page number',
+                    fillColor: MyColors.textColor),
                 onSubmitted: (value) {
                   final int page = int.tryParse(value) ?? currentPage;
                   if (page > 0 && page <= totalPages) {

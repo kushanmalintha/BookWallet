@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:book_wallert/controllers/add_reading_books_controller.dart';
 import 'package:book_wallert/screens/main_screen/pdf_reader/pdf_data_model.dart';
+import 'package:http/http.dart' as http;
+import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/models/book_model.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart'; // Import the barcode scanner package
 
-// ignore: must_be_immutable
 class AddPhysicalBookScreen extends StatefulWidget {
   @override
   _AddPhysicalBookScreenState createState() => _AddPhysicalBookScreenState();
@@ -15,6 +19,10 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
   File? _image;
   final _titleController = TextEditingController();
   final _pagesController = TextEditingController();
+  final AddReadingBooksController _addReadingBooksController =
+      AddReadingBooksController();
+  final TextEditingController _searchController = TextEditingController();
+  bool _isSearching = false;
 
   List<Map<String, dynamic>> pdfFiles =
       []; // To hold the list of PDF and physical books
@@ -73,9 +81,10 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
   }
 
   void _addPhysicalBook() {
-    var newBook = null;
+    var newBook;
     if (_titleController.text.isNotEmpty &&
         _pagesController.text.isNotEmpty &&
+        _pagesController.text != "0" &&
         _image != null) {
       final String newId =
           DateTime.now().millisecondsSinceEpoch.toString(); // Unique ID
@@ -97,27 +106,176 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
       });
 
       Navigator.pop(context, newBook); // Pass the new book back if needed
+    } else if (_pagesController.text == "0") {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please Enter the Page Count.'),
+          ),
+        );
+      }
+    } else if (_titleController.text.isNotEmpty &&
+        _pagesController.text.isNotEmpty &&
+        _image == null &&
+        _pagesController.text != "0") {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please Select an Image.'),
+          ),
+        );
+      }
+    } else {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please Enter Book Details.'),
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _scanBarcode() async {
+    _titleController.clear();
+    _pagesController.clear();
+    // _booksController.books = <BookModel>[];
+
+    var isbn = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SimpleBarcodeScannerPage(),
+      ),
+    );
+    if (isbn is String && isbn.isNotEmpty) {
+      String searchText = '';
+      searchText = 'isbn:$isbn';
+      _searchController.text = searchText;
+      await _addReadingBooksController.fetchBooks(context,
+          page: 1, query: _searchController.text);
+      _updateResults();
+    }
+  }
+
+  void _nameSearch() async {
+    _titleController.clear();
+    _pagesController.clear();
+    await _addReadingBooksController.fetchBooks(context,
+        page: 1, query: _searchController.text);
+    _updateResults();
+  }
+
+  void _updateResults() {
+    if (_addReadingBooksController.books.isNotEmpty)
+      setState(() {
+        _titleController.text = _addReadingBooksController.books[0].title;
+        _pagesController.text =
+            _addReadingBooksController.books[0].pages.toString();
+        _fetchAndSaveImage(_addReadingBooksController.books[0].imageUrl);
+        _isSearching = false;
+      });
+  }
+
+  Future<void> _fetchAndSaveImage(String imageUrl) async {
+    try {
+      // Fetch the image data
+      final response = await http.get(Uri.parse(imageUrl));
+      if (response.statusCode == 200) {
+        // Get the temporary directory of the device
+        final directory = await getTemporaryDirectory();
+
+        // Create a unique file path in the temporary directory
+        final uniqueFileName =
+            'temp_image_${DateTime.now().millisecondsSinceEpoch}.jpg';
+        final filePath = '${directory.path}/$uniqueFileName';
+
+        // Write the image data to the file
+        final file = File(filePath);
+        await file.writeAsBytes(response.bodyBytes);
+
+        // Update the _image variable with the newly saved file
+        setState(() {
+          _image = file;
+        });
+      } else {
+        throw Exception('Failed to load image');
+      }
+    } catch (e) {
+      print('Error fetching and saving image: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColors.bgColor,
       appBar: AppBar(
-        title: Text('Add Physical Book'),
-        actions: [],
+        backgroundColor: MyColors.bgColor,
+        automaticallyImplyLeading: false,
+        title: _isSearching
+            ? TextField(
+                controller: _searchController,
+                style: const TextStyle(color: MyColors.titleColor),
+                decoration: const InputDecoration(
+                  hintText: 'Search...',
+                  hintStyle: TextStyle(color: MyColors.nonSelectedItemColor),
+                  border: InputBorder.none,
+                ),
+              )
+            : Text(
+                'Add Physical Book',
+                style: const TextStyle(
+                  color: MyColors.titleColor,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+        actions: [
+          if (_isSearching) ...[
+            IconButton(
+              icon: const Icon(Icons.search),
+              color: MyColors.nonSelectedItemColor,
+              onPressed: _nameSearch,
+            ),
+            IconButton(
+              icon: const Icon(Icons.qr_code_scanner),
+              color: MyColors.nonSelectedItemColor,
+              onPressed: _scanBarcode, // Trigger the barcode scanner
+            ),
+          ],
+          IconButton(
+            icon: Icon(_isSearching ? Icons.close : Icons.search),
+            color: MyColors.nonSelectedItemColor,
+            onPressed: () {
+              setState(() {
+                _isSearching = !_isSearching;
+                if (!_isSearching) {
+                  _searchController.clear();
+                }
+              });
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
+              style: const TextStyle(color: MyColors.textColor),
               controller: _titleController,
-              decoration: InputDecoration(labelText: 'Book Title'),
+              decoration: InputDecoration(
+                labelText: 'Book Title',
+                hintStyle: TextStyle(color: MyColors.nonSelectedItemColor),
+              ),
             ),
             TextField(
+              style: const TextStyle(color: MyColors.textColor),
               controller: _pagesController,
-              decoration: InputDecoration(labelText: 'Total Pages'),
+              decoration: InputDecoration(
+                labelText: 'Total Pages',
+                hintStyle: TextStyle(color: MyColors.nonSelectedItemColor),
+              ),
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: 20),
@@ -125,6 +283,8 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
                 ? Text('No image selected.')
                 : Image.file(_image!, height: 150),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
               children: [
                 ElevatedButton(
                   onPressed: _pickImage,
@@ -146,5 +306,12 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _pagesController.dispose();
+    super.dispose();
   }
 }
