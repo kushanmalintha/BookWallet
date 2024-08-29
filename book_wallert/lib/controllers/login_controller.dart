@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:book_wallert/controllers/token_controller.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/models/user.dart';
@@ -30,6 +29,7 @@ class LoginController {
           userId: response['userId'],
           username: response['username'],
           email: response['email'],
+          imageUrl: response['imageUrl'],
           description: response['description']);
 
       print(user);

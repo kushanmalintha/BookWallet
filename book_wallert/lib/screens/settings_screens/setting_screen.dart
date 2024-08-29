@@ -40,7 +40,7 @@ class Settingscreen extends StatelessWidget {
                           'https://example.com/profile_image.jpg'), // Replace with actual image URL
                     ),
                     SizedBox(width: 10),
-                    Text('User Name'),
+                    Text('Edit User Details'),
                   ],
                 ),
                 onPressed: (BuildContext context) {

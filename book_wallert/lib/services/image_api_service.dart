@@ -1,18 +1,16 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:book_wallert/ipaddress.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart'; // Ensure this import is included
-import 'image_model.dart'; // Import the ImageModel
+import '../models/image_model.dart'; // Import the ImageModel
 
 class ImageService {
   final String _baseUrl =
       'http://${ip}:8000'; // Adjust the base URL as necessary
 
-  Future<void> uploadImage(File imageFile, String imageName) async {
-    String uploadUrl = '$_baseUrl/upload';
+  Future<void> uploadImageService(File imageFile, String imageName) async {
+    String uploadUrl = '$_baseUrl/uploadprofileimage';
 
     // Prepare the multipart request
     var request = http.MultipartRequest('POST', Uri.parse(uploadUrl));
@@ -48,8 +46,8 @@ class ImageService {
     }
   }
 
-  Future<ImageModel> fetchImage(String imageName) async {
-    String fetchUrl = '$_baseUrl/image/$imageName';
+  Future<ImageModel> fetchImageService(String imageName) async {
+    String fetchUrl = '$_baseUrl/getprofileimage/$imageName';
 
     try {
       // Send the GET request
@@ -68,6 +66,22 @@ class ImageService {
       }
     } catch (e) {
       print('Error fetching image: $e');
+      throw e;
+    }
+  }
+
+  Future<void> deleteImageService(String imageName) async {
+    String deleteUrl = '$_baseUrl/deleteprofileimage/$imageName';
+
+    try {
+      var response = await http.delete(Uri.parse(deleteUrl));
+      if (response.statusCode == 200) {
+        print('Successfully deleted image');
+      } else {
+        print('Failed to delete image: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error deleting image: $e');
       throw e;
     }
   }
