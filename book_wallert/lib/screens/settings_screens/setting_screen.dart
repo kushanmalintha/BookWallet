@@ -25,8 +25,6 @@ class Settingscreen extends StatelessWidget {
           leadingIconsColor: MyColors.textColor,
           trailingTextColor: MyColors.text2Color,
           settingsTileTextColor: MyColors.titleColor,
-          //inactiveSwitchColor: Colors.grey,
-          //activeSwitchColor: Colors.green,
         ),
         sections: [
           SettingsSection(
@@ -40,28 +38,18 @@ class Settingscreen extends StatelessWidget {
                           'https://example.com/profile_image.jpg'), // Replace with actual image URL
                     ),
                     SizedBox(width: 10),
-                    Text('User Name'),
+                    Text('Edit User Details'),
                   ],
                 ),
                 onPressed: (BuildContext context) {
                   Navigator.pushNamed(context, '/EditUserInfo');
                 },
               ),
-              // SettingsTile(
-              //   title: const Text('Phone number'),
-              //   leading: const Icon(Icons.phone),
-              //   onPressed: (BuildContext context) {},
-              // ),
-              // SettingsTile(
-              //   title: const Text('Email'),
-              //   leading: const Icon(Icons.email),
-              //   onPressed: (BuildContext context) {},
-              // ),
               SettingsTile(
                 title: const Text('Sign out'),
                 leading: const Icon(Icons.exit_to_app),
                 onPressed: (BuildContext context) {
-                  removeToken(); // remove access token so have to login again
+                  removeToken(); // remove access token so user has to login again
                   Navigator.pushNamed(context, '/LoginScreen');
                 },
               ),
@@ -72,15 +60,20 @@ class Settingscreen extends StatelessWidget {
             tiles: [
               SettingsTile(
                 title: const Text('Language'),
-                //subtitle: Text('English'),
                 leading: const Icon(Icons.language),
                 onPressed: (BuildContext context) {},
               ),
               SettingsTile(
                 title: const Text('Environment'),
-                //subtitle: Text('Production'),
                 leading: const Icon(Icons.cloud_queue),
                 onPressed: (BuildContext context) {},
+              ),
+              SettingsTile(
+                title: const Text('Group Create'),
+                leading: const Icon(Icons.notifications),
+                onPressed: (BuildContext context) {
+                  Navigator.pushNamed(context, '/GroupCreate'); // Navigate to notification screen
+                },
               ),
             ],
           ),
@@ -90,13 +83,11 @@ class Settingscreen extends StatelessWidget {
               SettingsTile.switchTile(
                 title: const Text('Enable Notifications'),
                 leading: const Icon(Icons.notifications_active),
-                //switchValue: true,
                 onToggle: (bool value) {}, initialValue: null,
               ),
               SettingsTile.switchTile(
                 title: const Text('Fingerprint Lock'),
                 leading: const Icon(Icons.fingerprint),
-                //switchValue: false,
                 onToggle: (bool value) {}, initialValue: null,
               ),
             ],
