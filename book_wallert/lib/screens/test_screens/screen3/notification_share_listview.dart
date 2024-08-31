@@ -33,7 +33,7 @@ class NotificationShareListView extends StatelessWidget {
           itemBuilder: (context, index) {
             return ShareNotificationCard(
                 username: notifications[index].sharedUserName,
-                bookName: notifications[index].bookname);
+                bookName: notifications[index].bookname, date: notifications[index].date,);
           },
         );
       },
