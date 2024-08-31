@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:book_wallert/colors.dart';
 
-class Screen3 extends StatelessWidget {
+class Screen3 extends StatefulWidget {
   const Screen3({super.key});
+
+  @override
+  State<Screen3> createState() => _Screen3State();
+}
+
+class _Screen3State extends State<Screen3> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: MyColors.bgColor,
-      body: Center(
-        child: Text(
-          'a test screen',
-          style: TextStyle(color: MyColors.text2Color),
-        ),
-      ),
-    );
+    return const Placeholder();
   }
 }
