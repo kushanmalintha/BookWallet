@@ -27,7 +27,7 @@ class _UserCardState extends State<UserCard> {
 
   Future<void> _checkFollowStatus() async {
     try {
-      bool following = await UserfollowController.checkFollowStatus(
+      bool following = await UserFollowController.checkFollowStatus(
           globalUser?.userId ?? 0, widget.user.userId);
       setState(() {
         _isFollowing = following;
@@ -40,7 +40,7 @@ class _UserCardState extends State<UserCard> {
 
   Future<void> _followUser() async {
     if (globalUser?.userId != null) {
-      final success = await UserfollowController.followUser(
+      final success = await UserFollowController.followUser(
           globalUser!.userId, widget.user.userId);
       if (success) {
         setState(() {
@@ -55,7 +55,7 @@ class _UserCardState extends State<UserCard> {
 
   Future<void> _unfollowUser() async {
     if (globalUser?.userId != null) {
-      final success = await UserfollowController.unfollowUser(
+      final success = await UserFollowController.unfollowUser(
           globalUser!.userId, widget.user.userId);
       if (success) {
         setState(() {
