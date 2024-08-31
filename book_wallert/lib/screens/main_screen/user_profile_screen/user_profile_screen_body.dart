@@ -29,11 +29,11 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
   late GetUserProfileController _getUserProfileController;
 
   final List<String> _tabNames = [
+    'Timeline',  // New Timeline Tab
     'Reviews',
     'Reading',
     'Wishlist',
     'Completed',
-    'Timeline',  // New Timeline Tab
   ];
 
   final double scrollThreshold = 330;
@@ -88,11 +88,11 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
                   child: TabBarView(
                     controller: _tabController,
                     children: [
+                      UserProfileTimeLineListView(userId: widget.userId), 
                       UserProfileReviewListView(userId: widget.userId),
                       const UserProfileListVeiw(screenName: 'Reading'),
                       UserProfileWishlistListView(userId: widget.userId),
                       UserProfileCompletedListView(userId: widget.userId),
-                      UserProfileTimeLineListView(userId: widget.userId),  // New Timeline Tab Content
                     ],
                   ),
                 ),

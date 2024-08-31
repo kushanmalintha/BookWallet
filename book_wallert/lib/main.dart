@@ -6,6 +6,7 @@ import 'package:book_wallert/screens/login_screens/signup_screen.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
 import 'package:book_wallert/screens/settings_screens/edit_user_info.dart';
 import 'package:book_wallert/screens/settings_screens/setting_screen.dart';
+import 'package:book_wallert/screens/test_screens/screen3/notification_body.dart';
 import 'package:book_wallert/screens/test_screens/screen3/screen3.dart';
 import 'package:book_wallert/screens/test_screens/screen5/screen5.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
         '/screen3': (context) => const Screen3(),
         '/screen4': (context) => const Screen4(),
         '/screen5': (context) => const Screen5(),
-        '/screen6': (context) => const Screen6(),
+        '/screen6': (context) => NotificationScreen(globalUserId: globalUser!.userId,),
         '/screen7': (context) => const Screen7(),
         '/screen8': (context) => const Screen8(),
         '/SettingsScreen': (context) => const Settingscreen(),
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
         '/EditUserInfo': (context) => EditUserInfo(),
         '/Profile': (context) =>
             UserProfileScreenBody(userId: globalUser!.userId),
+        '/GroupCreate': (context) => Screen6()
       },
     );
   }
