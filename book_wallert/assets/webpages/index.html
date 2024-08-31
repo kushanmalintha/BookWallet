@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reCAPTCHA</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body style="background-color: rgba(25, 25, 25, 1); text-align: center; padding: 5px;">
+    <div class="g-recaptcha"
+         data-sitekey="6Lf4nzIqAAAAABTaHxQjimdmo3uUyOUOlZRp0ba_"
+         data-callback="captchaCallback"></div>
+    <script>
+        // Define the callback function
+        function captchaCallback(response) {
+            if (window.Captcha) {
+                console.log('Token received:', response); // Debug: Log token
+                window.Captcha.postMessage(response); // Send token back to Flutter
+            } else {
+                console.error('window.Captcha is not defined');
+            }
+        }
+        
+        // Ensure Captcha is ready
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log('reCAPTCHA script loaded');
+        });
+    </script>
+</body>
+</html>
