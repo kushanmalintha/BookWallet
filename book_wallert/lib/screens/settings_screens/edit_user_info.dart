@@ -126,7 +126,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
               ),
               const SizedBox(height: 20),
               CustomTextBox1(
-                text: globalUser!.imageUrl,
+                text: globalUser!.description,
                 lableText: 'Description',
                 type: TextInputType.text,
                 isPassword: false,
