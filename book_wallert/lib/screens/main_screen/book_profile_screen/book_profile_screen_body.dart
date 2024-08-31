@@ -1,6 +1,7 @@
 import 'package:book_wallert/controllers/get_book_api_controller.dart';
 import 'package:book_wallert/controllers/token_controller.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
+import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_locations_list_view.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_review_list_view.dart';
 import 'package:book_wallert/services/fetch_bookId_from_ISBN.dart';
 import 'package:book_wallert/services/history_api_service.dart';
@@ -11,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/controllers/review_post_controller.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_details.dart';
-import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_list_view.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 import 'package:book_wallert/colors.dart';
 
@@ -169,11 +169,11 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
                                 screenName: 'Reviews',
                                 book: widget.book!,
                               ), // Reviews
-                              BookProfileScreenListView(
+                              BookProfileScreenShopListView(
                                 screenName: 'Locations',
                                 book: widget.book!,
                               ), // Locations
-                              BookProfileScreenListView(
+                              BookProfileScreenShopListView(
                                 screenName: 'Read Online',
                                 book: widget.book!,
                               ), // Read Online
