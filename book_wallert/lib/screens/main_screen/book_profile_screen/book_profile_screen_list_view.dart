@@ -1,7 +1,6 @@
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
-import 'package:book_wallert/widgets/cards/locations_card.dart';
 import 'package:book_wallert/widgets/cards/review_card2.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +30,7 @@ class _BookProfileScreenListViewState extends State<BookProfileScreenListView> {
         return ReviewCard();
       case 'Locations':
       case 'Read Online':
-        return LocationsCard();
+      //return LocationsCard();
       default:
         return BookCard(book: dummyBook);
     }

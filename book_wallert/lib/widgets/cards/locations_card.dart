@@ -1,99 +1,110 @@
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/dummy_data/review_dummy_data.dart';
-import 'package:book_wallert/models/review_model.dart';
 import 'package:flutter/material.dart';
-
-const String shopName = "AI STORE";
-const String phoneNumber = "0785104489";
-const String city = "KADUWELA";
-const String shopType = "Book store";
+import 'package:url_launcher/url_launcher.dart';
+import 'package:book_wallert/models/shop_model.dart';
 
 class LocationsCard extends StatelessWidget {
-  final ReviewModel review = dummyReview;
+  final Shop shop;
 
-  LocationsCard({super.key});
+  LocationsCard({super.key, required this.shop});
+
+//For open the call
+  void _launchCaller(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
+//For open the map
+  void _launchMaps(String locationLink) async {
+    final Uri launchUri = Uri.parse(locationLink);
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri);
+    } else {
+      throw 'Could not launch $locationLink';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: MyColors.panelColor,
+      color: Colors.grey[800], // Replace with your color
       margin: const EdgeInsets.all(8),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Column(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  (shopName),
-                  style: TextStyle(
-                    color: MyColors.textColor,
+                  shop.name,
+                  style: const TextStyle(
+                    color: Colors.white, // Replace with your color
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  (shopType),
-                  style: TextStyle(color: MyColors.textColor, fontSize: 15),
+                  shop.category,
+                  style: const TextStyle(color: Colors.white, fontSize: 15),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 Text(
-                  (city),
-                  style: TextStyle(color: MyColors.textColor, fontSize: 15),
+                  shop.locatedCity,
+                  style: const TextStyle(color: Colors.white, fontSize: 15),
                 ),
               ],
             ),
             Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Column(
-                        children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.call,
-                              color: MyColors.selectedItemColor,
-                              size: 40,
-                            ),
-                            onPressed: () {},
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Column(
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.call,
+                            color: MyColors.selectedItemColor,
+                            size: 40,
                           ),
-                          const Text("CALL",
-                              style: TextStyle(
-                                  color: MyColors.textColor, fontSize: 13))
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Column(
-                        children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.directions,
-                              color: MyColors.selectedItemColor,
-                              size: 40,
-                            ),
-                            onPressed: () {},
+                          onPressed: () =>
+                              _launchCaller(shop.phoneNumber), //Launch the call
+                        ),
+                        const Text("CALL",
+                            style: TextStyle(color: Colors.white, fontSize: 13))
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Column(
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.directions,
+                            color: MyColors.selectedItemColor,
+                            size: 40,
                           ),
-                          const Text("DIRECTIONS",
-                              style: TextStyle(
-                                  color: MyColors.textColor, fontSize: 13))
-                        ],
-                      ),
-                      // Text(
-                      //   phoneNumber,
-                      //   style: TextStyle(color: MyColors.textColor, fontSize: 16),
-                      // ),
-                    ],
-                  ),
-                ])
+                          onPressed: () =>
+                              _launchMaps(shop.locationLink), //Launch the Map
+                        ),
+                        const Text("DIRECTIONS",
+                            style: TextStyle(color: Colors.white, fontSize: 13))
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            )
           ],
         ),
       ),

@@ -36,7 +36,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
 
   Future<void> _checkFollowStatus() async {
     try {
-      bool following = await UserfollowController.checkFollowStatus(
+      bool following = await UserFollowController.checkFollowStatus(
           globalUser?.userId ?? 0, widget.user.userId);
       setState(() {
         _isFollowing = following;
@@ -49,7 +49,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
 
   Future<void> _followUser() async {
     if (globalUser?.userId != null) {
-      final success = await UserfollowController.followUser(
+      final success = await UserFollowController.followUser(
           globalUser!.userId, widget.user.userId);
       if (success) {
         setState(() {
@@ -71,7 +71,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
         confirmText: 'Unfollow',
         cancelText: 'Cancel',
         onConfirm: () async {
-          final success = await UserfollowController.unfollowUser(
+          final success = await UserFollowController.unfollowUser(
               globalUser!.userId, widget.user.userId);
           if (success) {
             setState(() {
