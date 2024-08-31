@@ -58,17 +58,20 @@ class AppNotificationShare {
   final String sharedUserName;
 
   final String bookname;
+  
+  final String date;
 
   AppNotificationShare(
       {required this.message,
       required this.sharedUserName,
-      required this.bookname});
+      required this.bookname, required this.date});
 
   factory AppNotificationShare.fromJson(Map<String, dynamic> json) {
     return AppNotificationShare(
       message: json['message'],
       sharedUserName: json['sharedUserName'],
       bookname: json['bookName'],
+      date: json['date'],
     );
   }
 }
