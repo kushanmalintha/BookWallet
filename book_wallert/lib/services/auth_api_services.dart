@@ -10,16 +10,19 @@ class AuthApiService {
       'http://${ip}:3000/api/auth'; // Replace with your server URL
 
   Future<User> signUp(String username, String email, String password,
-      String description, String imageName) async {
+      String description, String imageName, String recaptchaToken) async {
     final response = await http.post(
       Uri.parse('$_baseUrl/signup'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: jsonEncode({
         'username': username,
         'email': email,
         'password': password,
         'description': description,
         'imageUrl': "http://192.168.204.41:8000/getprofileimage/$imageName",
+        'recaptchaToken': recaptchaToken,
       }),
     );
     print('Response Body: ${response.body}');
