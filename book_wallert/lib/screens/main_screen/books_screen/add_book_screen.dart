@@ -4,7 +4,6 @@ import 'package:book_wallert/controllers/add_reading_books_controller.dart';
 import 'package:book_wallert/screens/main_screen/pdf_reader/pdf_data_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/models/book_model.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -181,8 +180,8 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
       // Fetch the image data
       final response = await http.get(Uri.parse(imageUrl));
       if (response.statusCode == 200) {
-        // Get the temporary directory of the device
-        final directory = await getTemporaryDirectory();
+        // Get the application directory of the device
+        final directory = await getApplicationDocumentsDirectory();
 
         // Create a unique file path in the temporary directory
         final uniqueFileName =
