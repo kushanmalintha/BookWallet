@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:book_wallert/controllers/signup_controller.dart';
 import 'package:book_wallert/controllers/image_controller.dart';
-// import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/textbox/custom_textbox1.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/login_screens/login_screen.dart';
 import 'package:book_wallert/widgets/buttons/custom_button1.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
 // StatefulWidget for SignupScreen to manage state
 class SignupScreen extends StatefulWidget {
@@ -24,6 +24,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final picker = ImagePicker();
   final ImageController _imageController = ImageController();
   late String _imageName;
+  bool _isCaptchaVerified = false; // Flag to check if captcha is verified
 
   @override
   void initState() {
@@ -51,10 +52,41 @@ class _SignupScreenState extends State<SignupScreen> {
     await _imageController.uploadImageController(_imageFile!, _imageName);
   }
 
-  void _handleSignUp(BuildContext context) async {
-    // Upload the image before signing up
+  Future<void> _onVerify(String token) async {
+    print('Token in _onVerify: $token');
+    _signupController.recaptchaToken = token;
+    setState(() {
+      _isCaptchaVerified = true;
+    });
+  }
+
+  Future<void> _handleSignUp(BuildContext context) async {
+    if (!_isCaptchaVerified) {
+      // Show WebView for reCAPTCHA verification
+      String? token = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CaptchaVerificationScreen(onVerify: _onVerify),
+        ),
+      );
+      print('Received token from CaptchaVerificationScreen: $token');
+
+      if (token != null) {
+        _signupController.recaptchaToken = token;
+        setState(() {
+          _isCaptchaVerified = true;
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text("Please verify the CAPTCHA to proceed.")),
+        );
+        return;
+      }
+    }
+
+    // If CAPTCHA is verified, upload the image and sign up
     await _uploadImage();
-    // Proceed with sign-up process
     _signupController.signUp(context, _imageName);
   }
 
@@ -172,6 +204,39 @@ class _SignupScreenState extends State<SignupScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+// New screen for CAPTCHA verification
+class CaptchaVerificationScreen extends StatelessWidget {
+  final Future<void> Function(String) onVerify; // Add the onVerify callback
+  const CaptchaVerificationScreen({super.key, required this.onVerify});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("CAPTCHA Verification"),
+      ),
+      body: WebViewPlus(
+        javascriptMode: JavascriptMode.unrestricted,
+        onWebViewCreated: (controller) {
+          controller.loadUrl("assets/webpages/index.html");
+        },
+        javascriptChannels: Set.from([
+          JavascriptChannel(
+            name: 'Captcha',
+            onMessageReceived: (JavascriptMessage message) async {
+              String token = message.message;
+              print('Received token: $token'); // Debug: Log token
+              await onVerify(token); // Call the onVerify method with the token
+              Navigator.pop(
+                  context, token); // Close the WebView after verification
+            },
+          ),
+        ]),
       ),
     );
   }

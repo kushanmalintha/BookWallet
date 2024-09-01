@@ -55,7 +55,7 @@ class _CustomTextBoxState extends State<CustomTextBox> {
           suffixIcon: widget.isPassword
               ? IconButton(
                   icon: Icon(
-                    _isObscured ? Icons.visibility : Icons.visibility_off,
+                    _isObscured ? Icons.visibility_off : Icons.visibility,
                   ),
                   onPressed: () {
                     setState(() {
