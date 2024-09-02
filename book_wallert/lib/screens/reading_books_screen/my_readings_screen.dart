@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/functions/pdf_utils.dart';
-import 'package:book_wallert/screens/main_screen/books_screen/add_book_screen.dart';
-import 'package:book_wallert/screens/main_screen/pdf_reader/pdf_data_model.dart';
+import 'package:book_wallert/screens/reading_books_screen/add_book_screen.dart';
+import 'package:book_wallert/screens/reading_books_screen/pdf_reader/pdf_data_model.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:book_wallert/widgets/cards/book_cards/pdf_card.dart';
 import 'package:book_wallert/widgets/frames/book_reading_progress_bar.dart';
@@ -13,14 +13,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
-class PDFManagerScreen extends StatefulWidget {
-  const PDFManagerScreen({super.key});
+class MyReadingsScreen extends StatefulWidget {
+  const MyReadingsScreen({super.key});
 
   @override
-  State<PDFManagerScreen> createState() => _PDFManagerScreenState();
+  State<MyReadingsScreen> createState() => _MyReadingsScreenState();
 }
 
-class _PDFManagerScreenState extends State<PDFManagerScreen> {
+class _MyReadingsScreenState extends State<MyReadingsScreen> {
   List<Map<String, dynamic>> pdfFiles = [];
 
   @override
@@ -184,6 +184,11 @@ class _PDFManagerScreenState extends State<PDFManagerScreen> {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(
+          "My Readings",
+          style: TextStyle(color: MyColors.titleColor),
+        ),
         backgroundColor: MyColors.navigationBarColor,
         actions: [
           CustomPopupMenuButtons(
@@ -208,12 +213,6 @@ class _PDFManagerScreenState extends State<PDFManagerScreen> {
               color: MyColors.nonSelectedItemColor,
             ),
           ),
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.create_new_folder,
-                color: MyColors.nonSelectedItemColor,
-              )),
           IconButton(
               onPressed: () {},
               icon: Icon(

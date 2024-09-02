@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:book_wallert/controllers/add_reading_books_controller.dart';
-import 'package:book_wallert/screens/main_screen/pdf_reader/pdf_data_model.dart';
+import 'package:book_wallert/screens/reading_books_screen/pdf_reader/pdf_data_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/screens/main_screen/pdf_reader/book_viewer_page.dart';
-import 'package:book_wallert/screens/main_screen/pdf_reader/pdf_view_page.dart';
+import 'package:book_wallert/screens/reading_books_screen/pdf_reader/book_viewer_page.dart';
+import 'package:book_wallert/screens/reading_books_screen/pdf_reader/pdf_view_page.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:book_wallert/widgets/buttons/pdf_popup_menu.dart';
 import 'package:flutter/material.dart';

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:book_wallert/screens/main_screen/pdf_reader/book_mark_manager.dart';
-import 'package:book_wallert/screens/main_screen/pdf_reader/pdf_data_model.dart';
+import 'package:book_wallert/screens/reading_books_screen/pdf_reader/book_mark_manager.dart';
+import 'package:book_wallert/screens/reading_books_screen/pdf_reader/pdf_data_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
