@@ -53,23 +53,6 @@ class SavedService {
     }
   }
 
-  // Future<List<dynamic>> fetchAllItems() async {
-  //   final response =
-  //       await http.get(Uri.parse('http://${ip}:3000/api/history/all/$userId'));
-
-  //   if (response.statusCode == 200) {
-  //     final jsonResponse = jsonDecode(response.body);
-  //     if (jsonResponse is List<dynamic>) {
-  //       print(response.body);
-  //       return jsonResponse;
-  //     } else {
-  //       throw Exception('Expected a JSON list but got a different format');
-  //     }
-  //   } else {
-  //     throw Exception('Failed to load items');
-  //   }
-  // }
-
   Future<void> insertReviewToSaved(String? token, int reviewId) async {
     final url = Uri.parse('http://${ip}:3000/api/saved-items/save/review');
     final body = json.encode({
@@ -113,7 +96,7 @@ class SavedService {
       );
 
       if (response.statusCode == 200) {
-        print('Saved book inserted successfully');
+        print('Book saved successfully');
       } else {
         print('Failed to insert Saved: ${response.body}');
       }
@@ -138,7 +121,7 @@ class SavedService {
       );
 
       if (response.statusCode == 200) {
-        print('User profile saved successfully');
+        print('profile saved successfully');
       } else {
         print('Failed to save user profile: ${response.body}');
       }

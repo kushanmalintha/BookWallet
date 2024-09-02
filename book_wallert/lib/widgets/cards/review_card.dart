@@ -1,7 +1,6 @@
 import 'package:book_wallert/controllers/checking_wishlist_controller.dart';
 import 'package:book_wallert/controllers/review_delete_controller.dart';
 import 'package:book_wallert/controllers/saved_controller.dart';
-import 'package:book_wallert/controllers/token_controller.dart';
 import 'package:book_wallert/controllers/wishlist_controller.dart';
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
@@ -74,8 +73,7 @@ class _ReviewCardState extends State<ReviewCard> {
         ReviewDeleteController(widget.review.reviewId, widget.review.userId);
     final WishlistController wishlistController =
         WishlistController(WishlistApiService());
-    final CheckingWishlistController checkingWishlistController =
-        CheckingWishlistController(CheckingWishlistService());
+    CheckingWishlistController(CheckingWishlistService());
     final savedController = SavedController(globalUser!.userId);
 
     //print(widget.review.bookId);
@@ -295,11 +293,10 @@ class _ReviewCardState extends State<ReviewCard> {
               items: widget.review.userId == globalUser!.userId
                   ? const [
                       'Add this book to Wishlist',
-                      'Save Book',
                       'Save Review',
                       'Delete review'
                     ]
-                  : ['Add this book to Wishlist', 'Save Book', 'Save review'],
+                  : ['Add this book to Wishlist', 'Save review'],
               onItemTap: widget.review.userId == globalUser!.userId
                   ? [
                       () {
@@ -307,11 +304,8 @@ class _ReviewCardState extends State<ReviewCard> {
                             globalUser!.userId, widget.review.bookId);
                       },
                       () {
-                        savedController.insertBookToSaved(widget.review.bookId);
-                      },
-                      () {
                         savedController
-                            .insertReviewToSaved(widget.review.bookId);
+                            .insertReviewToSaved(widget.review.reviewId);
                       },
                       () {
                         // delete function
@@ -321,11 +315,8 @@ class _ReviewCardState extends State<ReviewCard> {
                   : [
                       () {},
                       () {
-                        savedController.insertBookToSaved(widget.review.bookId);
-                      },
-                      () {
                         savedController
-                            .insertReviewToSaved(widget.review.bookId);
+                            .insertReviewToSaved(widget.review.reviewId);
                       },
                     ],
               icon: const Icon(

@@ -5,7 +5,6 @@ import 'package:book_wallert/screens/save_screens/save_screen_users_list_view.da
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
-import 'package:book_wallert/screens/history_screens/history_screen_users_list_view.dart';
 
 class SaveListScreenBody extends StatefulWidget {
   final int globalUserId;

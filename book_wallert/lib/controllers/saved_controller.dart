@@ -41,16 +41,6 @@ class SavedController {
     }
   }
 
-  // Future<void> fetchAllItems(Function(List<dynamic>) onSuccess) async {
-  //   try {
-  //     // Assign the fetched items directly to the class-level allItems list
-  //     allItems = await savedService.fetchAllItems();
-  //     onSuccess(allItems);
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
-
   Future<void> insertReviewToSaved(reviewId) async {
     try {
       final token = await getToken();

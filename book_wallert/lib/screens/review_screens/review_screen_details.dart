@@ -135,7 +135,7 @@ class _ReviewScreenDetailsState extends State<ReviewScreenDetails> {
                       () {},
                       () {
                         savedController
-                            .insertReviewToSaved(widget.review.bookId);
+                            .insertReviewToSaved(widget.review.reviewId);
                       },
                       () {
                         // delete function
@@ -146,7 +146,7 @@ class _ReviewScreenDetailsState extends State<ReviewScreenDetails> {
                       () {},
                       () {
                         savedController
-                            .insertReviewToSaved(widget.review.bookId);
+                            .insertReviewToSaved(widget.review.reviewId);
                       },
                     ],
               icon: const Icon(
