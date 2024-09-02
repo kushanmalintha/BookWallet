@@ -63,7 +63,7 @@ class _NotificationScreenState extends State<NotificationScreen>
         children: [
           NotificationAllListView(), // All notifications
           NotificationLikeListView(globalUserId: widget.globalUserId,), // Likes
-          NotificationCommentListView(), // Comments
+          NotificationCommentListView(globalUserId: widget.globalUserId,), // Comments
           NotificationShareListView(globalUserId: widget.globalUserId), // Shares
         ],
       ),

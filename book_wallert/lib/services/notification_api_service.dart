@@ -30,6 +30,19 @@ class NotificationApiService {
       throw Exception('Failed to load notifications');
     }
   }
+
+  Future<List<AppNotificationComment>> fetchcommentNotifications(int userId) async {
+    final response = await http.get(Uri.parse('$baseUrl/comment/$userId'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> notificationData = json.decode(response.body);
+      return notificationData
+          .map((data) => AppNotificationComment.fromJson(data))
+          .toList();
+    } else {
+      throw Exception('Failed to load notifications');
+    }
+  }
 }
 
 class AppNotificationLike {
@@ -53,6 +66,7 @@ class AppNotificationLike {
   }
 }
 class AppNotificationShare {
+
   final String message;
 
   final String sharedUserName;
@@ -72,6 +86,27 @@ class AppNotificationShare {
       sharedUserName: json['sharedUserName'],
       bookname: json['bookName'],
       date: json['date'],
+    );
+  }
+}
+
+class AppNotificationComment {
+  final String message;
+
+  final String CommentedUserName;
+
+  final String bookname;
+
+  AppNotificationComment(
+      {required this.message,
+      required this.CommentedUserName,
+      required this.bookname});
+
+  factory AppNotificationComment.fromJson(Map<String, dynamic> json) {
+    return AppNotificationComment(
+      message: json['message'],
+      CommentedUserName: json['commentedUserName'],
+      bookname: json['bookName'],
     );
   }
 }
