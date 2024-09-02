@@ -1,3 +1,4 @@
+import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
 
 class PDFSlider extends StatelessWidget {
@@ -13,12 +14,11 @@ class PDFSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      
       height: 20,
       child: Slider(
-        inactiveColor: const Color.fromARGB(219, 130, 131, 130),
-        activeColor: const Color.fromARGB(219, 39, 173, 77),
-        thumbColor: const Color.fromARGB(219, 39, 173, 77),
+        inactiveColor: MyColors.nonSelectedItemColor,
+        activeColor: MyColors.selectedItemColor,
+        thumbColor: MyColors.selectedItemColor,
         value: sliderValue,
         min: 0,
         max: 100,

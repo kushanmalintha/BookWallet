@@ -32,3 +32,4 @@ class PDFData {
       _$PDFDataFromJson(json);
   Map<String, dynamic> toJson() => _$PDFDataToJson(this);
 }
+ 
