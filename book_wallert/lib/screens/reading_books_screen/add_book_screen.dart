@@ -209,7 +209,7 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
       appBar: AppBar(
-        backgroundColor: MyColors.bgColor,
+        backgroundColor: MyColors.navigationBarColor,
         automaticallyImplyLeading: false,
         title: _isSearching
             ? TextField(
