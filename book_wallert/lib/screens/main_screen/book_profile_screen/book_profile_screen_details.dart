@@ -1,5 +1,6 @@
 import 'package:book_wallert/controllers/book_recommended_controller.dart';
 import 'package:book_wallert/controllers/checking_wishlist_controller.dart';
+import 'package:book_wallert/controllers/saved_controller.dart';
 import 'package:book_wallert/controllers/wishlist_controller.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/services/checking_wishlist_service.dart';
@@ -23,6 +24,8 @@ class BookProfileScreenDetails extends StatelessWidget {
         WishlistController(WishlistApiService());
     final CheckingWishlistController checkingWishlistController =
         CheckingWishlistController(CheckingWishlistService());
+    final savedController = SavedController(globalUser!.userId);
+
     return Stack(
       children: [
         Card(
@@ -143,6 +146,7 @@ class BookProfileScreenDetails extends StatelessWidget {
                     'Block',
                     'Report',
                     'Recommend book to followers',
+                    'Save book',
                     checkingWishlistController.isInWishlist
                         ? 'Remove from Wishlist'
                         : 'Add to Wishlist',
@@ -160,6 +164,10 @@ class BookProfileScreenDetails extends StatelessWidget {
                     () {
                       bookRecommendController.recommendBookToFollowers(
                           context, book);
+                    },
+                    () {
+                      savedController
+                          .insertBookToSaved(bookRecommendController.bookId!);
                     },
                     () {
                       wishlistController.addOrRemoveWishlistBook(

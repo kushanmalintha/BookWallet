@@ -1,3 +1,4 @@
+import 'package:book_wallert/controllers/saved_controller.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/widgets/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +20,11 @@ const double headerFontSize = 20;
 class UserProfileDetails extends StatefulWidget {
   final User user;
 
-  const UserProfileDetails({super.key, required this.user});
+  UserProfileDetails({super.key, required this.user});
 
   @override
   State<UserProfileDetails> createState() => _UserProfileDetailsState();
+  final savedController = SavedController(globalUser!.userId);
 }
 
 class _UserProfileDetailsState extends State<UserProfileDetails> {
@@ -140,11 +142,14 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
           top: 16,
           right: 10,
           child: CustomPopupMenuButtons(
-            items: const ['Share', 'Block', 'Report'],
+            items: const ['Share', 'Block', 'Report', 'Save profile'],
             onItemTap: [
               () => print("Share"),
               () => print("Block"),
               () => print("Report"),
+              () {
+                widget.savedController.insertProfileToSaved(widget.user.userId);
+              },
             ],
             icon: const Icon(
               Icons.more_vert_rounded,
