@@ -4,6 +4,7 @@ import 'package:book_wallert/screens/login_screens/loading_screen.dart';
 import 'package:book_wallert/screens/login_screens/login_screen.dart';
 import 'package:book_wallert/screens/login_screens/signup_screen.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
+import 'package:book_wallert/screens/save_screens/save_screen_frame.dart';
 import 'package:book_wallert/screens/settings_screens/edit_user_info.dart';
 import 'package:book_wallert/screens/settings_screens/setting_screen.dart';
 import 'package:book_wallert/screens/test_screens/screen3/notification_body.dart';
@@ -60,11 +61,14 @@ class MyApp extends StatelessWidget {
         '/screen3': (context) => const Screen3(),
         '/screen4': (context) => const Screen4(),
         '/screen5': (context) => const Screen5(),
-        '/screen6': (context) => NotificationScreen(globalUserId: globalUser!.userId,),
+        '/screen6': (context) => NotificationScreen(
+              globalUserId: globalUser!.userId,
+            ),
         '/screen7': (context) => const Screen7(),
         '/screen8': (context) => const Screen8(),
         '/SettingsScreen': (context) => const Settingscreen(),
         '/HistoryScreen': (context) => const HistoryScreen(),
+        '/SaveScreen': (context) => const SaveScreen(),
         '/EditUserInfo': (context) => EditUserInfo(),
         '/Profile': (context) =>
             UserProfileScreenBody(userId: globalUser!.userId),

@@ -1,5 +1,6 @@
 import 'package:book_wallert/controllers/checking_wishlist_controller.dart';
 import 'package:book_wallert/controllers/review_delete_controller.dart';
+import 'package:book_wallert/controllers/saved_controller.dart';
 import 'package:book_wallert/controllers/wishlist_controller.dart';
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
@@ -72,8 +73,9 @@ class _ReviewCardState extends State<ReviewCard> {
         ReviewDeleteController(widget.review.reviewId, widget.review.userId);
     final WishlistController wishlistController =
         WishlistController(WishlistApiService());
-    final CheckingWishlistController checkingWishlistController =
-        CheckingWishlistController(CheckingWishlistService());
+    CheckingWishlistController(CheckingWishlistService());
+    final savedController = SavedController(globalUser!.userId);
+
     //print(widget.review.bookId);
     print(widget.review.userId);
     return Stack(
@@ -291,7 +293,7 @@ class _ReviewCardState extends State<ReviewCard> {
               items: widget.review.userId == globalUser!.userId
                   ? const [
                       'Add this book to Wishlist',
-                      'Save review',
+                      'Save Review',
                       'Delete review'
                     ]
                   : ['Add this book to Wishlist', 'Save review'],
@@ -301,13 +303,22 @@ class _ReviewCardState extends State<ReviewCard> {
                         wishlistController.addBookToWishlist(
                             globalUser!.userId, widget.review.bookId);
                       },
-                      () {},
+                      () {
+                        savedController
+                            .insertReviewToSaved(widget.review.reviewId);
+                      },
                       () {
                         // delete function
                         reviewDeleteController.deleteReview(context);
                       }
                     ]
-                  : [() {}, () {}],
+                  : [
+                      () {},
+                      () {
+                        savedController
+                            .insertReviewToSaved(widget.review.reviewId);
+                      },
+                    ],
               icon: const Icon(
                 Icons.more_vert_rounded,
                 color: MyColors.nonSelectedItemColor,
