@@ -1,6 +1,7 @@
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/controllers/review_comments_controller.dart';
 import 'package:book_wallert/controllers/review_delete_controller.dart';
+import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/models/review_model.dart';
@@ -36,6 +37,8 @@ class _ReviewScreenDetailsState extends State<ReviewScreenDetails> {
   Widget build(BuildContext context) {
     final ReviewDeleteController reviewDeleteController =
         ReviewDeleteController(widget.review.reviewId, widget.review.userId);
+    final savedController = SavedController(globalUser!.userId);
+
     return Stack(
       children: [
         Center(
@@ -124,17 +127,27 @@ class _ReviewScreenDetailsState extends State<ReviewScreenDetails> {
           right: 10,
           child: CustomPopupMenuButtons(
               items: widget.review.userId == globalUser!.userId
-                  ? const ['menu', 'Delete review']
-                  : ['menu'],
+                  ? const ['menu', 'Delete review', 'Save Review']
+                  : ['menu', 'Save Review'],
               onItemTap: widget.review.userId == globalUser!.userId
                   ? [
                       () {},
+                      () {
+                        savedController
+                            .insertReviewToSaved(widget.review.reviewId);
+                      },
                       () {
                         // delete function
                         reviewDeleteController.deleteReview(context);
                       }
                     ]
-                  : [() {}],
+                  : [
+                      () {},
+                      () {
+                        savedController
+                            .insertReviewToSaved(widget.review.reviewId);
+                      },
+                    ],
               icon: const Icon(
                 Icons.more_vert_rounded,
                 color: MyColors.nonSelectedItemColor,
