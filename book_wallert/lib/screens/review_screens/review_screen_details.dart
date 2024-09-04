@@ -2,7 +2,6 @@ import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/controllers/review_comments_controller.dart';
 import 'package:book_wallert/controllers/review_delete_controller.dart';
 import 'package:book_wallert/controllers/saved_controller.dart';
-import 'package:book_wallert/dummy_data/book_dummy_data.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/models/review_model.dart';
@@ -52,8 +51,8 @@ class _ReviewScreenDetailsState extends State<ReviewScreenDetails> {
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      screenChange(
-                          context, BookProfileScreenBody(book: dummyBook));
+                      screenChange(context,
+                          BookProfileScreenBody(bookId: widget.review.bookId));
                     },
                     child: SizedBox(
                       width: 80,
@@ -64,8 +63,8 @@ class _ReviewScreenDetailsState extends State<ReviewScreenDetails> {
                   const SizedBox(height: 5),
                   GestureDetector(
                     onTap: () {
-                      screenChange(
-                          context, BookProfileScreenBody(book: dummyBook));
+                      screenChange(context,
+                          BookProfileScreenBody(bookId: widget.review.bookId));
                     },
                     child: Text(
                       widget.review.bookName,
