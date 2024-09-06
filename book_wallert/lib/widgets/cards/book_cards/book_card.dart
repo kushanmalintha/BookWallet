@@ -1,5 +1,6 @@
 import 'package:book_wallert/controllers/book_recommended_controller.dart';
 import 'package:book_wallert/controllers/checking_wishlist_controller.dart';
+import 'package:book_wallert/controllers/saved_controller.dart';
 import 'package:book_wallert/controllers/wishlist_controller.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
@@ -26,6 +27,7 @@ class BookCard extends StatelessWidget {
         WishlistController(WishlistApiService());
     final CheckingWishlistController checkingWishlistController =
         CheckingWishlistController(CheckingWishlistService());
+    final savedController = SavedController(globalUser!.userId);
 
     return GestureDetector(
       onTap: () {
@@ -76,6 +78,7 @@ class BookCard extends StatelessWidget {
                 } else {
                   return CustomPopupMenuButtons(items: [
                     'Recommend book to followers',
+                    'Save book',
                     checkingWishlistController.isInWishlist
                         ? 'Remove from wishlist'
                         : 'Add to wishlist',
@@ -83,6 +86,10 @@ class BookCard extends StatelessWidget {
                     () {
                       bookRecommendController.recommendBookToFollowers(
                           context, book);
+                    },
+                    () {
+                      savedController
+                          .insertBookToSaved(bookRecommendController.bookId!);
                     },
                     () {
                       wishlistController.addOrRemoveWishlistBook(

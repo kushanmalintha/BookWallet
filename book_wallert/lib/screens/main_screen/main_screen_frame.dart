@@ -50,15 +50,24 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onItemTapped(int index) {
-    if (_selectedIndex == index) {
+    // Ignore taps on index 2 (the gap/Groups button)
+    if (index == 2) {
+      return;
+    }
+
+    // Adjust the selected index to skip over the "Groups" button
+    int newIndex = index > 2 ? index - 1 : index;
+
+    if (_selectedIndex == newIndex) {
       // Ensure only work in the second tap
       _refreshCurrentScreen = true;
     }
     setState(() {
-      _selectedIndex = index;
+      _selectedIndex = newIndex;
     });
+
     // Clear the previous route stack when switching tabs
-    if (_selectedIndex == index && _refreshCurrentScreen) {
+    if (_selectedIndex == newIndex && _refreshCurrentScreen) {
       _navigatorKeys[_selectedIndex].currentState!.pushAndRemoveUntil(
             MaterialPageRoute(
               builder: (context) => _screens[_selectedIndex],
@@ -160,7 +169,8 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
       bottomNavigationBar: BottomNavigation(
-        selectedIndex: _selectedIndex,
+        selectedIndex:
+            _selectedIndex >= 2 ? _selectedIndex + 1 : _selectedIndex,
         onItemTapped: _onItemTapped,
       ),
     );

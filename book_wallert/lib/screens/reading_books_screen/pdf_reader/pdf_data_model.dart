@@ -7,6 +7,7 @@ part 'pdf_data_model.g.dart';
 @JsonSerializable()
 class PDFData {
   String id;
+  int globalId;
   bool isVertical;
   bool pageSnap;
   bool autoSpacing;
@@ -18,6 +19,7 @@ class PDFData {
 
   PDFData({
     required this.id,
+    this.globalId = 0,
     this.isVertical = true,
     this.pageSnap = true,
     this.autoSpacing = true,

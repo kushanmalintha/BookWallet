@@ -1,34 +1,35 @@
-import 'package:book_wallert/screens/main_screen/books_screen/book_completed_listview.dart';
-import 'package:book_wallert/screens/main_screen/books_screen/book_recomended_listview.dart';
-import 'package:book_wallert/screens/main_screen/books_screen/book_whislist_listview.dart';
+import 'package:book_wallert/functions/global_user_provider.dart';
+import 'package:book_wallert/screens/save_screens/save_screen_books_list_view.dart';
+import 'package:book_wallert/screens/save_screens/save_screen_reveiws_list_view.dart';
+import 'package:book_wallert/screens/save_screens/save_screen_users_list_view.dart';
 import 'package:flutter/material.dart';
-import 'package:book_wallert/screens/main_screen/books_screen/book_list_view.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 
-class BookListScreenBody extends StatefulWidget {
-  final int userId;
-
-  const BookListScreenBody({super.key, required this.userId});
+class SaveListScreenBody extends StatefulWidget {
+  final int globalUserId;
+  const SaveListScreenBody({
+    super.key,
+    required this.globalUserId,
+  });
 
   @override
-  State<BookListScreenBody> createState() {
+  State<SaveListScreenBody> createState() {
     // returns a screen as state
-    return _BookScreenBodyState();
+    return _SaveListScreenBodyState();
   }
 }
 
-class _BookScreenBodyState extends State<BookListScreenBody>
+class _SaveListScreenBodyState extends State<SaveListScreenBody>
     with SingleTickerProviderStateMixin {
   // ''with ticker'' is to make sure connnection between clicking and swiping
   late TabController _tabController;
 
   // add name to buttons on panel
   final List<String> _tabNames = [
-    'Recommended',
-    'Trending',
-    'Wishlist',
-    'Completed',
+    'Reviews',
+    'Books',
+    'Profiles',
   ];
 
   @override
@@ -58,14 +59,9 @@ class _BookScreenBodyState extends State<BookListScreenBody>
         // adding corrosponding screens to each button on SelectionBar.
         controller: _tabController,
         children: [
-          BookRecomendedListview(userId: widget.userId), // Recommended
-          const BookListView(screenName: 'Trending'), // Trending
-          BookWishlistListView(
-            userId: widget.userId,
-          ), // Wishlist
-          BookCompletedListview(
-            globalUserId: widget.userId,
-          ), // Completed
+          SavedListViewReviews(userId: globalUser!.userId),
+          SavedListViewBooks(userId: globalUser!.userId),
+          SavedListViewUser(userId: globalUser!.userId),
         ],
       ),
     );

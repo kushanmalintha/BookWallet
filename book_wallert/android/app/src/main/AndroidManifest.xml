@@ -6,7 +6,8 @@
         android:label="book_wallert"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-    >
+        android:usesCleartextTraffic="true"> <!-- remove this (tempory solition to requesting http isted of https) -->
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
