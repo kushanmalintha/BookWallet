@@ -1,7 +1,7 @@
+import 'package:book_wallert/screens/barcode_scanner_screen/barcode_scanning_screen.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
-import 'package:simple_barcode_scanner/simple_barcode_scanner.dart'; // Import the barcode scanner package
 
 class TopPanel extends StatefulWidget implements PreferredSizeWidget {
   final String title;
@@ -30,10 +30,10 @@ class _TopPanelState extends State<TopPanel> {
   }
 
   Future<void> _scanBarcode() async {
-    var isbn = await Navigator.push(
+    final isbn = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const SimpleBarcodeScannerPage(),
+        builder: (context) => const BarcodeScannerSimple(),
       ),
     );
     if (isbn is String && isbn.isNotEmpty) {
