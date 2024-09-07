@@ -11,6 +11,7 @@ class WishlistController extends ChangeNotifier {
   final WishlistApiService apiService;
    final BookRecommendController bookRecommendController =
         BookRecommendController(globalUser!.userId);
+   final WishlistApiService _apiService= WishlistApiService();     
   List<BookModel> wishlistBooks = [];
   bool isLoading = false;
   int? bookId;
@@ -94,6 +95,14 @@ class WishlistController extends ChangeNotifier {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: $e')),
       );
+    }
+  }
+
+  Future<void> wishlistfetchBookId(BookModel book) async {
+    try {
+      bookId = await _apiService.fetchId(book);
+    } catch (e) {
+      throw Exception('Error fetching book ID: $e');
     }
   }
 }

@@ -66,15 +66,15 @@ class BookCard extends StatelessWidget {
               ),
             ),
             trailing: FutureBuilder(
-              future: bookRecommendController.fetchBookId(book).then((_) {
+              future: wishlistController.wishlistfetchBookId(book).then((_) {
                 return checkingWishlistController.checkWishlistStatus(
-                    globalUser!.userId, bookRecommendController.bookId!);
+                    globalUser!.userId, wishlistController.bookId!);
               }),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Icon(Icons.more_vert_rounded);
                 } else if (snapshot.hasError) {
-                  return const Icon(Icons.error);
+                  return const Icon(Icons.more_vert_rounded);
                 } else {
                   return CustomPopupMenuButtons(items: [
                     'Recommend book to followers',
