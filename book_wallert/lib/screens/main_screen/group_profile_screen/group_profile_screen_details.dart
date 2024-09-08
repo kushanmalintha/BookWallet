@@ -19,14 +19,15 @@ class GroupProfileScreenDetails extends StatelessWidget {
             height: 290,
             color: MyColors.bgColor,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 CircleAvatar(
                   backgroundImage: AssetImage(group
                       .imageUrl), // Use the imageUrl from the GroupModel object
                   radius: 70,
                 ),
+                const SizedBox(height: 10), // Space between image and name
                 Text(
                   group.name, // Use the name from the GroupModel object
                   style: const TextStyle(
@@ -34,57 +35,41 @@ class GroupProfileScreenDetails extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
+                  textAlign: TextAlign.center, // Center the group name
                 ),
+                const SizedBox(height: 8), // Space between name and about
                 Text(
                   group.about, // Use the about from the GroupModel object
                   style: const TextStyle(
                     color: MyColors.textColor,
                     fontSize: 15,
                   ),
-                  textAlign: TextAlign.start,
+                  textAlign: TextAlign.center, // Center the about text
                 ),
-                // SizedBox(
-                //   width: 150,
-                //   child: CustomToggleButton(
-                //     beforeText: 'Send Request',
-                //     afterText: 'Requested',
-                //     verticalalSpace: 9,
-                //     horizontalSpace: 9,
-                //     textSize: 15,
-                //     press: () {
-                //       // button function
-                //     },
-                //   ),
-                // ),
               ],
             ),
           ),
-          // You can add more widgets here that you want to overlay on top of the Container
           Positioned(
             top: 16,
-            right: 10,
+            right: 1,
             child: CustomPopupMenuButtons(
-                items: const [
-                  'Group info',
-                  'Search',
-                  'Report',
-                ],
-                onItemTap: [
-                  // Item actions
-                  () {
-                    print("Group info");
-                  },
-                  () {
-                    print("Search");
-                  },
-                  () {
-                    print("Report");
-                  },
-                ],
-                icon: const Icon(
-                  Icons.more_vert_rounded,
-                  color: MyColors.nonSelectedItemColor,
-                )),
+              items: const ['Group info', 'Search', 'Report'],
+              onItemTap: [
+                () {
+                  print("Group info");
+                },
+                () {
+                  print("Search");
+                },
+                () {
+                  print("Report");
+                },
+              ],
+              icon: const Icon(
+                Icons.more_vert_rounded,
+                color: MyColors.nonSelectedItemColor,
+              ),
+            ),
           ),
           Positioned(
             bottom: 1,
@@ -103,7 +88,7 @@ class GroupProfileScreenDetails extends StatelessWidget {
                 },
               ),
             ),
-          )
+          ),
         ],
       ),
     );
