@@ -1,40 +1,48 @@
 class GroupModel {
+  final int group_id;
   final String name;
+  final String about;
+  final String imageUrl;
+  final String? createdAt; // Allow null values
   final int memberCount;
   final int discussionCount;
-  final String imageUrl;
-  final String about;
   final List<String> memberIds;
 
   GroupModel({
+    required this.group_id,
     required this.name,
+    required this.about,
+    required this.imageUrl,
+    this.createdAt, // Optional field
     required this.memberCount,
     required this.discussionCount,
-    required this.imageUrl,
-    required this.about,
     required this.memberIds,
   });
 
   factory GroupModel.fromJson(Map<String, dynamic> json) {
     return GroupModel(
-      name: json['name'],
-      memberCount: json['memberCount'],
-      discussionCount: json['discussionCount'],
-      imageUrl: json['imageUrl'],
-      about: json['about'],
-      memberIds: List<String>.from(json['memberIds']),
+      group_id: json['group_id'], // Ensure correct data type
+      name: json['group_name'],
+      about: json['group_description'],
+      imageUrl: json['group_image_url'],
+      createdAt: json['createdAt'], // Optional, can be null
+      memberCount: json['memberCount'] , // Default to 0 if missing
+      discussionCount: json['discussionCount'] ?? 0, // Default to 0 if missing
+      memberIds: json['memberIds'] != null
+          ? List<String>.from(json['memberIds'])
+          : [], // Handle null case
     );
   }
 
-  get reviewerName => null;
-
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
+      'group_id': group_id,
+      'group_name': name,
+      'group_description': about,
+      'group_image_url': imageUrl,
+      'createdAt': createdAt,
       'memberCount': memberCount,
       'discussionCount': discussionCount,
-      'imageUrl': imageUrl,
-      'about': about,
       'memberIds': memberIds,
     };
   }

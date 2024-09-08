@@ -25,7 +25,7 @@ class GroupProfileScreenListView extends StatelessWidget {
     );
   }
 
-  const GroupProfileScreenListView({super.key, required this.screenName});
+  const GroupProfileScreenListView({super.key, required this.screenName, required int groupId});
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
