@@ -19,21 +19,16 @@ class HomeListScreenBody extends StatefulWidget {
 }
 
 class _HomeListScreenBodyState extends State<HomeListScreenBody> {
-  // final ReviewController _reviewController =
-  //     ReviewController(); // Instance of ReviewController
+  bool isLoaded = false;
   final HomeScreenController _homeScreenController =
       HomeScreenController(globalUser!.userId);
   final ScrollController _scrollController =
       ScrollController(); // Controller for ListView scrolling
 
-  List<dynamic> mixedContent = [];
-
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_scrollListener); // Attach scroll listener
-    _homeScreenController.fetchHomeScreen(
-        _onReviewsFetched, _onBooksFetched, _onSharesFetched);
+    updateScreen();
   }
 
   // @override
@@ -44,52 +39,38 @@ class _HomeListScreenBodyState extends State<HomeListScreenBody> {
   //   super.dispose();
   // }
 
-  void _scrollListener() {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
-      _homeScreenController.fetchHomeScreen(
-          _onReviewsFetched, _onBooksFetched, _onSharesFetched);
+  Future updateScreen() async {
+    if (isLoaded == false) {
+      _scrollController.addListener(_scrollListener); // Attach scroll listener
+      await _homeScreenController.fetchHomeScreen(_upadateScreen1);
+      isLoaded = true;
+      setState(() {});
     }
   }
 
-  void _onReviewsFetched(List<ReviewModel> updatedReviews) {
-    setState(() {
-      _homeScreenController.reviews = updatedReviews;
-    });
+  void _scrollListener() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      _homeScreenController.fetchHomeScreen(_upadateScreen);
+    }
   }
 
-  void _onBooksFetched(List<BookModel> updatedBooks) {
-    setState(() {
-      _homeScreenController.books = updatedBooks;
-      _combineAndShuffleContent();
-    });
+
+  void _upadateScreen() {
+    setState(() {});
   }
 
-  void _onSharesFetched(List<SharedReview> updatedShares) {
-    setState(() {
-      _homeScreenController.shares = updatedShares;
-      _combineAndShuffleContent();
-    });
-  }
-
-  void _combineAndShuffleContent() {
-    mixedContent = [];
-    mixedContent.addAll(_homeScreenController.reviews);
-    mixedContent.addAll(_homeScreenController.books);
-    mixedContent.addAll(_homeScreenController.shares);
-    mixedContent.shuffle(Random());
-  }
-
+  void _upadateScreen1() {}
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       controller:
           _scrollController, // Attach scroll controller to ListView builder
-      itemCount: mixedContent.length +
+      itemCount: _homeScreenController.mixedAllContent.length +
           1, // Number of items in the list +1 for loading indicator
       itemBuilder: (context, index) {
-        if (index < mixedContent.length) {
-          final item = mixedContent[index];
+        if (index < _homeScreenController.mixedAllContent.length) {
+          final item = _homeScreenController.mixedAllContent[index];
           if (item is ReviewModel) {
             return Column(
               children: [

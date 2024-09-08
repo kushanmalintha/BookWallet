@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:book_wallert/controllers/add_reading_books_controller.dart';
 import 'package:book_wallert/screens/reading_books_screen/pdf_reader/pdf_data_model.dart';
+import 'package:book_wallert/screens/barcode_scanner_screen/barcode_scanning_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:simple_barcode_scanner/simple_barcode_scanner.dart'; // Import the barcode scanner package
 
 class AddPhysicalBookScreen extends StatefulWidget {
   @override
@@ -143,7 +143,7 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
     var isbn = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const SimpleBarcodeScannerPage(),
+        builder: (context) => const BarcodeScannerSimple(),
       ),
     );
     if (isbn is String && isbn.isNotEmpty) {

@@ -191,6 +191,12 @@ class _MyReadingsScreenState extends State<MyReadingsScreen> {
         ),
         backgroundColor: MyColors.navigationBarColor,
         actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.edit_rounded,
+                color: MyColors.nonSelectedItemColor,
+              )),
           CustomPopupMenuButtons(
             items: const ['Add PDF Book', 'Add Physical Book'],
             onItemTap: [
@@ -213,12 +219,6 @@ class _MyReadingsScreenState extends State<MyReadingsScreen> {
               color: MyColors.nonSelectedItemColor,
             ),
           ),
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.edit_rounded,
-                color: MyColors.nonSelectedItemColor,
-              )),
         ],
       ),
       body: LayoutBuilder(
