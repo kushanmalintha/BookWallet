@@ -1,11 +1,13 @@
 import 'package:book_wallert/controllers/token_controller.dart';
 import 'package:book_wallert/models/group_model.dart';
+import 'package:book_wallert/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/services/groupService.dart';
 
 class GroupController with ChangeNotifier {
   final GroupService _groupService = GroupService();
   List<GroupModel> groups = [];
+  List<User> groupMembers = [];
 
   Future<void> createGroup(
       String groupName, String groupDescription, String groupImageUrl) async {
@@ -42,6 +44,17 @@ class GroupController with ChangeNotifier {
       callback(group);
     } catch (e) {
       print('Error fetching group by ID: $e');
+    }
+  }
+
+  Future<void> fetchMembersByGroupId(
+      int groupId, Function(List<User>) onSuccess) async {
+    try {
+      groupMembers = await _groupService.getMembersByGroupId(groupId);
+      onSuccess(groupMembers);
+      notifyListeners();
+    } catch (e) {
+      print('Error fetching group members: $e');
     }
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:book_wallert/controllers/GroupController.dart';
+import 'package:book_wallert/controllers/groupController.dart';
 import 'package:book_wallert/models/group_model.dart';
 import 'package:book_wallert/screens/main_screen/group_profile_screen/group_profile_screen_list_view.dart';
 import 'package:book_wallert/screens/main_screen/group_profile_screen/group_profile_screen_details.dart';
