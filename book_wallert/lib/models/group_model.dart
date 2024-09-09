@@ -34,6 +34,8 @@ class GroupModel {
     );
   }
 
+  get id => null;
+
   Map<String, dynamic> toJson() {
     return {
       'group_id': group_id,

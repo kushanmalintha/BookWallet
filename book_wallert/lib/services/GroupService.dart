@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:book_wallert/ipaddress.dart';
 import 'package:http/http.dart' as http;
 import 'package:book_wallert/models/group_model.dart';
+import 'package:book_wallert/models/user.dart';
 
 class GroupService {
   final String _baseUrl =
@@ -67,6 +68,24 @@ class GroupService {
     } else {
       print('Failed to fetch group: ${response.statusCode}');
       throw Exception('Failed to fetch group');
+    }
+  }
+
+  Future<List<User>> getMembersByGroupId(int groupId) async {
+    final url = Uri.parse('$_baseUrl/$groupId/members');
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> membersData = jsonDecode(response.body);
+      return membersData.map((json) => User.fromJson(json)).toList();
+    } else {
+      print('Failed to fetch members: ${response.statusCode}');
+      throw Exception('Failed to fetch members');
     }
   }
 }

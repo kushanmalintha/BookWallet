@@ -1,4 +1,5 @@
 import 'package:book_wallert/models/group_model.dart';
+import 'package:book_wallert/screens/main_screen/group_profile_screen/group_member_screen.dart';
 import 'package:book_wallert/widgets/buttons/custom_button.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
@@ -16,7 +17,7 @@ class GroupProfileScreenDetails extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(14),
-            height: 290,
+            height: 320, // Increased height to accommodate the new button
             color: MyColors.bgColor,
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -71,11 +72,39 @@ class GroupProfileScreenDetails extends StatelessWidget {
               ),
             ),
           ),
+          // Members button
           Positioned(
-            bottom: 1,
+            bottom: 50, // Position above the "Send Request" button
             right: 10,
             child: SizedBox(
-              width: 120,
+              width: 120, // Same width as the "Send Request" button
+              child: ElevatedButton(
+                onPressed: () {
+                  // Navigate to another screen (MembersScreen)
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => GroupMembersScreenBody(
+                              groupId: group.group_id,
+                            )),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: MyColors.panelColor,
+                ),
+                child: const Text(
+                  'Members',
+                  style: TextStyle(color: MyColors.textColor),
+                ),
+              ),
+            ),
+          ),
+          // Send Request button
+          Positioned(
+            bottom: 1, // Position at the bottom
+            right: 10,
+            child: SizedBox(
+              width: 120, // Width of the button
               child: CustomToggleButton(
                 isSelected: false,
                 beforeText: 'Send Request',
@@ -90,6 +119,25 @@ class GroupProfileScreenDetails extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// MembersScreen for navigation
+class MembersScreen extends StatelessWidget {
+  final int groupId;
+
+  const MembersScreen({super.key, required this.groupId});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Group Members'),
+      ),
+      body: Center(
+        child: Text('Displaying members for group: $groupId'),
       ),
     );
   }
