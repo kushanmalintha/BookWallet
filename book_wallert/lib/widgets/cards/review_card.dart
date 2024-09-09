@@ -3,6 +3,7 @@ import 'package:book_wallert/controllers/review_delete_controller.dart';
 import 'package:book_wallert/controllers/saved_controller.dart';
 import 'package:book_wallert/controllers/wishlist_controller.dart';
 import 'package:book_wallert/dummy_data/book_dummy_data.dart';
+import 'package:book_wallert/functions/global_navigator_animation.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
@@ -149,7 +150,7 @@ class _ReviewCardState extends State<ReviewCard> {
                             const Divider(color: MyColors.nonSelectedItemColor),
                             GestureDetector(
                               onTap: () {
-                                screenChange(context,
+                                screenChangeAnimation(context,
                                     ReviewScreenBody(review: widget.review));
                               },
                               child: Row(
