@@ -24,7 +24,7 @@ class GroupCardTrending extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const GroupProfileScreenBody(),
+            builder: (context) => const GroupProfileScreenBody(groupId: 2,),
           ),
         );
         // screenChange(context, const GroupProfileScreenBody());

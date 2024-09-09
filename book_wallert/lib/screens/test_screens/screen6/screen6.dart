@@ -1,4 +1,4 @@
-import 'package:book_wallert/functions/global_user_provider.dart';
+import 'package:book_wallert/widgets/buttons/custom_button1.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:book_wallert/controllers/GroupController.dart';
@@ -10,9 +10,8 @@ class Screen6 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController groupNameController = TextEditingController();
-    final TextEditingController groupDescriptionController = TextEditingController();
-
-    final int userId = globalUser!.userId;
+    final TextEditingController groupDescriptionController =
+        TextEditingController();
 
     return Scaffold(
       backgroundColor: MyColors.bgColor,
@@ -67,6 +66,15 @@ class Screen6 extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: MyColors
+                              .selectedItemColor, // Change this to your desired focused border color
+                          width:
+                              2.0, // Optional: Increase the width when focused
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -84,6 +92,15 @@ class Screen6 extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: MyColors
+                              .selectedItemColor, // Change this to your desired focused border color
+                          width:
+                              2.0, // Optional: Increase the width when focused
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -93,43 +110,57 @@ class Screen6 extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       // Create Group Button
-                      ElevatedButton(
-                        onPressed: () async {
+                      CustomButton1(
+                        text: 'Create Group',
+                        horizontalSpace:
+                            35, // Adjusted to match your original button's padding
+                        verticalSpace:
+                            10, // Adjusted to match your original button's padding
+                        textSize:
+                            15, // Adjusted to match your original button's font size
+                        backgroundColor: MyColors.selectedItemColor,
+                        press: () async {
                           final groupName = groupNameController.text.trim();
-                          final groupDescription = groupDescriptionController.text.trim();
-                          const groupImageUrl = 'http://example.com/image.png'; // Replace with actual image URL
-
-                          if (groupName.isNotEmpty && groupDescription.isNotEmpty) {
-                            await context.read<GroupController>().createGroup(
-                              groupName,
-                              groupDescription,
-                              groupImageUrl,
-                              userId,
+                          final groupDescription =
+                              groupDescriptionController.text.trim();
+                          const groupImageUrl =
+                              'http://example.com/image.png'; // Replace with actual image URL
+                          Navigator.of(context).pop();
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Group created successfully'),
+                              ),
                             );
+                          }
+
+                          if (groupName.isNotEmpty &&
+                              groupDescription.isNotEmpty) {
+                            await context.read<GroupController>().createGroup(
+                                groupName, groupDescription, groupImageUrl);
                           } else {
                             // Show error if fields are empty
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Please fill in all fields')),
+                              const SnackBar(
+                                  content: Text('Please fill in all fields')),
                             );
                           }
                         },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: MyColors.selectedItemColor,
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                        ),
-                        child: const Text('Create Group'),
                       ),
 
                       // Cancel Button
-                      ElevatedButton(
-                        onPressed: () {
+                      CustomButton1(
+                        text: 'Cancel',
+                        horizontalSpace:
+                            30, // Adjusted to match your original button's padding
+                        verticalSpace:
+                            10, // Adjusted to match your original button's padding
+                        textSize:
+                            15, // Adjusted to match your original button's font size
+                        backgroundColor: MyColors.nonSelectedItemColor,
+                        press: () {
                           Navigator.of(context).pop();
                         },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: MyColors.nonSelectedItemColor,
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                        ),
-                        child: const Text('Cancel'),
                       ),
                     ],
                   ),
