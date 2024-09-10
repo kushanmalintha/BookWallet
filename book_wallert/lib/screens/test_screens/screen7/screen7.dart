@@ -1,6 +1,5 @@
 import 'package:book_wallert/screens/barcode_scanner_screen/barcode_scanning_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart'; // Assuming BarcodeScannerSimple is in this package or similar import
 
 class Screen7 extends StatefulWidget {
   const Screen7({super.key});

@@ -10,8 +10,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddPhysicalBookScreen extends StatefulWidget {
+  const AddPhysicalBookScreen({super.key});
+
   @override
-  _AddPhysicalBookScreenState createState() => _AddPhysicalBookScreenState();
+  State<AddPhysicalBookScreen> createState() => _AddPhysicalBookScreenState();
 }
 
 class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
@@ -80,7 +82,7 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
   }
 
   void _addPhysicalBook() {
-    var newBook;
+    Map<String, Object> newBook;
     if (_titleController.text.isNotEmpty &&
         _pagesController.text.isNotEmpty &&
         _pagesController.text != "0" &&
@@ -165,7 +167,7 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
   }
 
   void _updateResults() {
-    if (_addReadingBooksController.books.isNotEmpty)
+    if (_addReadingBooksController.books.isNotEmpty) {
       setState(() {
         _titleController.text = _addReadingBooksController.books[0].title;
         _pagesController.text =
@@ -173,6 +175,7 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
         _fetchAndSaveImage(_addReadingBooksController.books[0].imageUrl);
         _isSearching = false;
       });
+    }
   }
 
   Future<void> _fetchAndSaveImage(String imageUrl) async {
@@ -185,7 +188,7 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
 
         // Create a unique file path in the temporary directory
         final uniqueFileName =
-            'temp_image_${DateTime.now().millisecondsSinceEpoch}.jpg';
+            '${DateTime.now().millisecondsSinceEpoch}.jpg';
         final filePath = '${directory.path}/$uniqueFileName';
 
         // Write the image data to the file
@@ -221,9 +224,9 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
                   border: InputBorder.none,
                 ),
               )
-            : Text(
+            : const Text(
                 'Add Physical Book',
-                style: const TextStyle(
+                style: TextStyle(
                   color: MyColors.titleColor,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -263,7 +266,7 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
             TextField(
               style: const TextStyle(color: MyColors.textColor),
               controller: _titleController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Book Title',
                 hintStyle: TextStyle(color: MyColors.nonSelectedItemColor),
               ),
@@ -271,15 +274,15 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
             TextField(
               style: const TextStyle(color: MyColors.textColor),
               controller: _pagesController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Total Pages',
                 hintStyle: TextStyle(color: MyColors.nonSelectedItemColor),
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _image == null
-                ? Text('No image selected.')
+                ? const Text('No image selected.')
                 : Image.file(_image!, height: 150),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -287,19 +290,19 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
               children: [
                 ElevatedButton(
                   onPressed: _pickImage,
-                  child: Text('Select Image'),
+                  child: const Text('Select Image'),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 ElevatedButton(
                   onPressed: _captureImage,
-                  child: Text('Take Image'),
+                  child: const Text('Take Image'),
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             ElevatedButton(
               onPressed: _addPhysicalBook,
-              child: Text('Add Book'),
+              child: const Text('Add Book'),
             ),
           ],
         ),
