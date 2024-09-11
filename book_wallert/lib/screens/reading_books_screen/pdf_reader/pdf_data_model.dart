@@ -7,7 +7,7 @@ part 'pdf_data_model.g.dart';
 @JsonSerializable()
 class PDFData {
   String id;
-  int globalId;
+  int? globalId;
   bool isVertical;
   bool pageSnap;
   bool autoSpacing;
@@ -19,7 +19,7 @@ class PDFData {
 
   PDFData({
     required this.id,
-    this.globalId = 0,
+    this.globalId,
     this.isVertical = true,
     this.pageSnap = true,
     this.autoSpacing = true,
@@ -28,7 +28,7 @@ class PDFData {
     this.currentPage = 0,
     this.progress = 0,
     this.bookmarks = const <Map<String, String>>[],
-  });
+  }); 
 
   factory PDFData.fromJson(Map<String, dynamic> json) =>
       _$PDFDataFromJson(json);

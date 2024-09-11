@@ -7,8 +7,7 @@ class GoogleBooksController {
   bool isLoading = false; // Flag to track loading state
   int currentPage = 1; // Track the current page of data being fetched
 
-  Future<void> fetchBooks(
-      Function(List<BookModel>) onDataFetched, query) async {
+  Future<void> fetchBooks(Function onDataFetched, query) async {
     if (isLoading) return; // Prevent concurrent requests
 
     isLoading = true; // Set loading state to true
@@ -18,10 +17,10 @@ class GoogleBooksController {
       List<BookModel> fetchedReviews =
           await _googleBooksService.fetchBooks(page: currentPage, query: query);
       // print(
-          // "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr$fetchedReviews");
+      // "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr$fetchedReviews");
       books.addAll(fetchedReviews); // Add fetched reviews to the list
       currentPage++; // Increment page number for the next fetch
-      onDataFetched(books); // Notify the caller with updated reviews
+      onDataFetched(); // Notify the caller with updated reviews
     } catch (e) {
       print('Error fetching posts: $e'); // Print error if fetching fails
     } finally {

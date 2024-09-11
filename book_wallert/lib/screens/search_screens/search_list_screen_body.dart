@@ -1,5 +1,4 @@
 import 'package:book_wallert/controllers/google_books_controller.dart';
-import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
 import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart';
@@ -45,11 +44,8 @@ class _SearchListScreenBodyState extends State<SearchListScreenBody> {
     }
   }
 
-  void _onDataFetched(List<BookModel> updatedReviews) {
-    setState(() {
-      _booksController.books =
-          updatedReviews; // Update state with the fetched reviews
-    });
+  void _onDataFetched() {
+    setState(() {});
   }
 
   @override

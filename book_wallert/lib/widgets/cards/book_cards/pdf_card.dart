@@ -10,6 +10,7 @@ class PDFCard extends StatelessWidget {
   final String name;
   final String path;
   final String imagePath;
+  final int? globalId;
   final VoidCallback onRename;
   final VoidCallback onDelete;
   final VoidCallback onVisibility;
@@ -22,6 +23,7 @@ class PDFCard extends StatelessWidget {
     required this.name,
     required this.path,
     required this.imagePath,
+    required this.globalId,
     required this.onRename,
     required this.onDelete,
     required this.onVisibility,
@@ -31,6 +33,7 @@ class PDFCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("global ID is : $globalId");
     return GestureDetector(
       onTap: () async {
         if (type == null || type == "pdf") {
@@ -111,6 +114,9 @@ class PDFCard extends StatelessWidget {
                   progressVisiblity
                       ? 'Hide Progrress Bar'
                       : 'Add Progrress Bar',
+                  (globalId == null)
+                      ? 'Connect to a Book'
+                      : 'Go to Book profile',
                 ],
                 onItemTap: [
                   () {
@@ -122,6 +128,7 @@ class PDFCard extends StatelessWidget {
                   () {
                     onVisibility();
                   },
+                  () {}
                 ],
                 icon: const Icon(
                   Icons.more_vert,

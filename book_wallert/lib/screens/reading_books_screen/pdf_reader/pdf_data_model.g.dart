@@ -8,7 +8,7 @@ part of 'pdf_data_model.dart';
 
 PDFData _$PDFDataFromJson(Map<String, dynamic> json) => PDFData(
       id: json['id'] as String,
-      globalId: (json['globalId'] as num?)?.toInt() ?? 0,
+      globalId: (json['globalId'] as num?)?.toInt(),
       isVertical: json['isVertical'] as bool? ?? true,
       pageSnap: json['pageSnap'] as bool? ?? true,
       autoSpacing: json['autoSpacing'] as bool? ?? true,
