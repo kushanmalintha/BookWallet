@@ -57,6 +57,7 @@ import 'package:book_wallert/services/user_follow_api_service.dart';
 class UserFollowController {
   static Future<bool> followUser(int followerId, int followedId) async {
     final token = await getToken(); // Retrieve the token
+    print(token);
     return UserFollowService.followUser(followerId, followedId, token!);
   }
 

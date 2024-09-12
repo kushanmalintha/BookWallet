@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'package:book_wallert/ipaddress.dart';
 import 'package:http/http.dart' as http;
+import 'package:book_wallert/models/group_model.dart';
+import 'package:book_wallert/models/user.dart';
 
 class GroupService {
-  final String _baseUrl = 'http://${ip}:3000/api/groups';  // Replace with your API base URL
+  final String _baseUrl =
+      'http://${ip}:3000/api/groups'; // Replace with your API base URL
 
-  Future<void> createGroup(String groupName, String groupDescription, String groupImageUrl,int userId) async {
+  Future<void> createGroup(String groupName, String groupDescription,
+      String groupImageUrl, String token) async {
     final url = Uri.parse('$_baseUrl/create');
     final response = await http.post(
       url,
@@ -16,7 +20,7 @@ class GroupService {
         'group_name': groupName,
         'group_description': groupDescription,
         'group_image_url': groupImageUrl,
-        'user_id': userId,
+        'token': token,
       }),
     );
 
@@ -27,6 +31,61 @@ class GroupService {
       // Handle errors
       print('Failed to create group: ${response.statusCode}');
       throw Exception('Failed to create group');
+    }
+  }
+
+  Future<List<GroupModel>> getGroupsByUserId(String? token) async {
+    final url = Uri.parse('$_baseUrl/user-groups');
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> groupData = jsonDecode(response.body);
+      return groupData.map((json) => GroupModel.fromJson(json)).toList();
+    } else {
+      print('Failed to fetch groups: ${response.statusCode}');
+      throw Exception('Failed to fetch groups');
+    }
+  }
+
+  Future<GroupModel> getGroupById(String groupId) async {
+    final url = Uri.parse('$_baseUrl/$groupId');
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final groupData = jsonDecode(response.body);
+      return GroupModel.fromJson(groupData);
+    } else {
+      print('Failed to fetch group: ${response.statusCode}');
+      throw Exception('Failed to fetch group');
+    }
+  }
+
+  Future<List<User>> getMembersByGroupId(int groupId) async {
+    final url = Uri.parse('$_baseUrl/$groupId/members');
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> membersData = jsonDecode(response.body);
+      return membersData.map((json) => User.fromJson(json)).toList();
+    } else {
+      print('Failed to fetch members: ${response.statusCode}');
+      throw Exception('Failed to fetch members');
     }
   }
 }

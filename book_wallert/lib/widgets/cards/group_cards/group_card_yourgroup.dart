@@ -19,7 +19,9 @@ class GroupCardYourgroup extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const GroupProfileScreenBody(),
+            builder: (context) => GroupProfileScreenBody(
+              groupId: group.group_id,
+            ),
           ),
         );
         // screenChange(context, const GroupProfileScreenBody());

@@ -3,7 +3,6 @@ import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/screens/reading_books_screen/pdf_reader/book_viewer_page.dart';
 import 'package:book_wallert/screens/reading_books_screen/pdf_reader/pdf_view_page.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
-import 'package:book_wallert/widgets/buttons/pdf_popup_menu.dart';
 import 'package:flutter/material.dart';
 
 class PDFCard extends StatelessWidget {
@@ -11,6 +10,7 @@ class PDFCard extends StatelessWidget {
   final String name;
   final String path;
   final String imagePath;
+  final int? globalId;
   final VoidCallback onRename;
   final VoidCallback onDelete;
   final VoidCallback onVisibility;
@@ -23,6 +23,7 @@ class PDFCard extends StatelessWidget {
     required this.name,
     required this.path,
     required this.imagePath,
+    required this.globalId,
     required this.onRename,
     required this.onDelete,
     required this.onVisibility,
@@ -32,6 +33,7 @@ class PDFCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("global ID is : $globalId");
     return GestureDetector(
       onTap: () async {
         if (type == null || type == "pdf") {
@@ -112,6 +114,9 @@ class PDFCard extends StatelessWidget {
                   progressVisiblity
                       ? 'Hide Progrress Bar'
                       : 'Add Progrress Bar',
+                  (globalId == null)
+                      ? 'Connect to a Book'
+                      : 'Go to Book profile',
                 ],
                 onItemTap: [
                   () {
@@ -123,6 +128,7 @@ class PDFCard extends StatelessWidget {
                   () {
                     onVisibility();
                   },
+                  () {}
                 ],
                 icon: const Icon(
                   Icons.more_vert,

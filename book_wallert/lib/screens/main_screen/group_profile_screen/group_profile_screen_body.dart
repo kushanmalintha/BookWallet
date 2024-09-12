@@ -1,45 +1,48 @@
-import 'package:book_wallert/dummy_data/group_dummy_data.dart';
+import 'package:flutter/material.dart';
+import 'package:book_wallert/controllers/groupController.dart';
+import 'package:book_wallert/models/group_model.dart';
 import 'package:book_wallert/screens/main_screen/group_profile_screen/group_profile_screen_list_view.dart';
 import 'package:book_wallert/screens/main_screen/group_profile_screen/group_profile_screen_details.dart';
-import 'package:flutter/material.dart';
-import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
+import 'package:book_wallert/colors.dart';
 
 class GroupProfileScreenBody extends StatefulWidget {
-  const GroupProfileScreenBody({super.key});
+  final int groupId;
+
+  const GroupProfileScreenBody({super.key, required this.groupId});
 
   @override
-  State<GroupProfileScreenBody> createState() {
-    // returns a screen as state
-    return _GroupProfileScreenBodyState();
-  }
+  State<GroupProfileScreenBody> createState() => _GroupProfileScreenBodyState();
 }
 
 class _GroupProfileScreenBodyState extends State<GroupProfileScreenBody>
     with SingleTickerProviderStateMixin {
-  // ''with ticker'' is to make sure connnection between clicking and swiping
   late TabController _tabController;
   late ScrollController _scrollController;
+  late GroupController _groupController;
+  GroupModel? _group;
+  bool _isLoading = true;
 
-  // add name to buttons on panel
-  final List<String> _tabNames = [
-    'Reviews',
-    'Books',
-  ];
-  // Set a scroll threshold
+  final List<String> _tabNames = ['Reviews', 'Books'];
   final double scrollThreshold = 100;
 
   @override
   void initState() {
-    // Tab controller
     super.initState();
-    _tabController = TabController(
-        length: _tabNames.length,
-        vsync: this); // animation details are mentioned here
-
-    // Scroll controller
+    _tabController = TabController(length: _tabNames.length, vsync: this);
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
+    _groupController = GroupController();
+    _fetchGroupDetails();
+  }
+
+  Future<void> _fetchGroupDetails() async {
+    _groupController.fetchGroupById(widget.groupId.toString(), (group) {
+      setState(() {
+        _group = group;
+        _isLoading = false;
+      });
+    });
   }
 
   void _scrollListener() {
@@ -60,28 +63,35 @@ class _GroupProfileScreenBodyState extends State<GroupProfileScreenBody>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          SliverToBoxAdapter(
-            child: GroupProfileScreenDetails(group: dummyGroup),
-          ),
-          SliverToBoxAdapter(
-            child: SelectionBar(
-                tabController: _tabController, tabNames: _tabNames),
-          ),
-          SliverFillRemaining(
-            child: TabBarView(
-              // adding corresponding screens to each button on SelectionBar.
-              controller: _tabController,
-              children: const [
-                GroupProfileScreenListView(screenName: 'Reviews'), // Reviews
-                GroupProfileScreenListView(screenName: 'Books'), // Books
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverToBoxAdapter(
+                  child: GroupProfileScreenDetails(group: _group!),
+                ),
+                SliverToBoxAdapter(
+                  child: SelectionBar(
+                      tabController: _tabController, tabNames: _tabNames),
+                ),
+                SliverFillRemaining(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      GroupProfileScreenListView(
+                        screenName: 'Reviews',
+                        groupId: widget.groupId,
+                      ), // Reviews
+                      GroupProfileScreenListView(
+                        screenName: 'Books',
+                        groupId: widget.groupId,
+                      ), // Books
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

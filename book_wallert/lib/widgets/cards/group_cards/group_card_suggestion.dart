@@ -22,7 +22,7 @@ class GroupCardSuggestion extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const GroupProfileScreenBody(),
+            builder: (context) => const GroupProfileScreenBody(groupId: 1,),
           ),
         );
         // screenChange(context, const GroupProfileScreenBody());

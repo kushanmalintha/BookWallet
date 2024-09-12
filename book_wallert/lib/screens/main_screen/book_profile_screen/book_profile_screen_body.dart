@@ -203,7 +203,7 @@ class _BookProfileScreenBodyState extends State<BookProfileScreenBody>
                             onDecreaseRating: _decreaseRating,
                           )
                         : FloatingActionButtonWidget(
-                            icon: Icon(Icons.add),
+                            icon: const Icon(Icons.add),
                             onPressed: () {
                               setState(() {
                                 _isWriting = true;

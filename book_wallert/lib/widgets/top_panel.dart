@@ -75,6 +75,9 @@ class _TopPanelState extends State<TopPanel> {
                   hintStyle: TextStyle(color: MyColors.nonSelectedItemColor),
                   border: InputBorder.none,
                 ),
+                onSubmitted: (query) {
+                  _handleSearch(); // Call the search function
+                },
               )
             : Text(
                 widget.title,
