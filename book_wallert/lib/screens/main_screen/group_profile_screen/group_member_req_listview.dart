@@ -1,15 +1,16 @@
-import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/controllers/GroupController.dart';
-import 'package:book_wallert/widgets/cards/user_req_card.dart';
-import 'package:book_wallert/widgets/progress_indicators.dart';
-import 'package:flutter/material.dart';
+import 'package:book_wallert/colors.dart'; // Custom color definitions
+import 'package:book_wallert/controllers/GroupController.dart'; // Controller to handle group-related operations
+import 'package:book_wallert/widgets/cards/user_req_card.dart'; // Custom widget for displaying user request cards
+import 'package:book_wallert/widgets/progress_indicators.dart'; // Custom progress indicator widget
+import 'package:flutter/material.dart'; // Core Flutter package for UI building
 
 class GroupMemberReqListview extends StatefulWidget {
-  final int groupId;
+  final int
+      groupId; // Group ID passed to fetch member requests for a specific group
 
   const GroupMemberReqListview({
     super.key,
-    required this.groupId,
+    required this.groupId, // Require the groupId parameter for this widget
   });
 
   @override
@@ -17,39 +18,46 @@ class GroupMemberReqListview extends StatefulWidget {
 }
 
 class _GroupMemberReqListviewState extends State<GroupMemberReqListview> {
-  late GroupController _groupController;
-  final ScrollController _scrollController = ScrollController();
-  bool _isLoading = true;
+  late GroupController
+      _groupController; // Controller instance to manage group member requests
+  final ScrollController _scrollController =
+      ScrollController(); // Scroll controller for handling infinite scrolling
+  bool _isLoading =
+      true; // Flag to track whether data is currently being loaded
 
   @override
   void initState() {
     super.initState();
-    _groupController = GroupController();
-    _fetchMemberRequests();
+    _groupController = GroupController(); // Initialize the GroupController
+    _fetchMemberRequests(); // Fetch member requests when the widget is initialized
 
+    // Listen for scroll events to implement infinite scroll
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _fetchMemberRequests();
+        _fetchMemberRequests(); // Fetch more member requests when the user scrolls to the bottom
       }
     });
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _scrollController
+        .dispose(); // Dispose of the scroll controller to prevent memory leaks
     super.dispose();
   }
 
+  // Fetch member requests for the group
   void _fetchMemberRequests() async {
     setState(() {
-      _isLoading = true;
+      _isLoading = true; // Set loading state to true while fetching data
     });
 
+    // Fetch member requests from the controller using the groupId
     await _groupController.fetchMemberRequestsByGroupId(widget.groupId,
         (updatedUsers) {
       setState(() {
-        _isLoading = false;
+        _isLoading = false; // Set loading state to false once data is fetched
       });
     });
   }
@@ -57,35 +65,42 @@ class _GroupMemberReqListviewState extends State<GroupMemberReqListview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.bgColor,
+      backgroundColor:
+          MyColors.bgColor, // Set the background color of the scaffold
       body: _isLoading && _groupController.memberRequests.isEmpty
           ? Center(
               child:
-                  buildProgressIndicator(), // Show loading indicator if users are being fetched and list is empty
+                  buildProgressIndicator(), // Show loading indicator if data is being fetched and no requests are available yet
             )
           : _groupController.memberRequests.isEmpty
               ? const Center(
                   child: Text(
                     'No users',
-                    style: TextStyle(color: MyColors.textColor),
+                    style: TextStyle(
+                        color: MyColors
+                            .textColor), // Display a "No users" message if there are no member requests
                   ),
-                ) // Show 'No users' message if the list is empty and no more data is being loaded
+                )
               : ListView.builder(
-                  controller: _scrollController,
+                  controller:
+                      _scrollController, // Attach the scroll controller to the list view
                   itemCount: _groupController.memberRequests.length +
-                      (_isLoading ? 1 : 0), // Add an extra item if loading
+                      (_isLoading
+                          ? 1
+                          : 0), // Show an extra item for loading indicator if data is still being fetched
                   itemBuilder: (context, index) {
                     if (index < _groupController.memberRequests.length) {
                       return Column(
                         children: [
-                          const SizedBox(height: 3),
+                          const SizedBox(
+                              height: 3), // Add spacing between request cards
                           UserReqCard(
                               user: _groupController.memberRequests[
-                                  index]), // Use UserCard for displaying users
+                                  index]), // Use UserReqCard to display each user request
                         ],
                       );
                     } else {
-                      return buildProgressIndicator(); // Show loading indicator when more data is being fetched
+                      return buildProgressIndicator(); // Show loading indicator at the bottom if more data is being loaded
                     }
                   },
                 ),
