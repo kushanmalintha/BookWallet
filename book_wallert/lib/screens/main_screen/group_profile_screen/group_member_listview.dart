@@ -20,7 +20,6 @@ class _GroupMemberListviewState extends State<GroupMemberListview> {
   late GroupController _groupController;
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = true;
-  bool _hasMoreData = true; // To handle pagination
 
   @override
   void initState() {
@@ -74,7 +73,7 @@ class _GroupMemberListviewState extends State<GroupMemberListview> {
               : ListView.builder(
                   controller: _scrollController,
                   itemCount: _groupController.groupMembers.length +
-                      (_hasMoreData ? 1 : 0), // Add an extra item if loading
+                      (_isLoading ? 1 : 0), // Add an extra item if loading
                   itemBuilder: (context, index) {
                     if (index < _groupController.groupMembers.length) {
                       return Column(
@@ -85,8 +84,9 @@ class _GroupMemberListviewState extends State<GroupMemberListview> {
                                   index]), // Use UserCard for displaying users
                         ],
                       );
+                    } else {
+                      return buildProgressIndicator(); // Show loading indicator when more data is being fetched
                     }
-                    return null;
                   },
                 ),
     );
