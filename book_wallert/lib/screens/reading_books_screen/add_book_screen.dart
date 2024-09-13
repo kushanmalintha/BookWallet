@@ -4,6 +4,7 @@ import 'package:book_wallert/controllers/add_reading_books_controller.dart';
 import 'package:book_wallert/screens/reading_books_screen/pdf_reader/pdf_data_model.dart';
 import 'package:book_wallert/screens/barcode_scanner_screen/barcode_scanning_screen.dart';
 import 'package:book_wallert/services/fetch_bookId_from_isbn.dart';
+import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
 import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
 import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:http/http.dart' as http;
@@ -29,6 +30,8 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
   final _bookIdService = BookIdService();
   final ScrollController _scrollController = ScrollController();
   bool _textSearched = false;
+  int? _selectedIndex;
+  int? globalId;
 
   List<Map<String, dynamic>> pdfFiles =
       []; // To hold the list of PDF and physical books
@@ -88,21 +91,22 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
 
   void _addPhysicalBook() async {
     Map<String, Object> newBook;
-    int? globalId;
     if (_titleController.text.isNotEmpty &&
         _pagesController.text.isNotEmpty &&
         _pagesController.text != "0" &&
         _image != null) {
-      if (_addReadingBooksController.books.isNotEmpty) {
+      if (_addReadingBooksController.books.isNotEmpty &&
+          _selectedIndex != null) {
         // Checking if connectable to a book
         globalId = await _bookIdService.fetchId(_addReadingBooksController
-            .books[0]); // Updating global book id (from our database)
+                .books[
+            _selectedIndex!]); // Updating global book id (from our database)
       }
       final String newId =
           DateTime.now().millisecondsSinceEpoch.toString(); // Unique ID
       newBook = {
         'id': newId,
-        'progressVisiblity': false,
+        'progressVisiblity': true,
         'name': _titleController.text,
         'type': 'physical', // Differentiating type as 'physical'
         'path': _image!
@@ -153,7 +157,6 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
     _titleController.clear();
     _pagesController.clear();
     _textSearched = false;
-    // _booksController.books = <BookModel>[];
 
     var isbn = await Navigator.push(
       context,
@@ -174,6 +177,7 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
           _pagesController.text =
               _addReadingBooksController.books[0].pages.toString();
           _fetchAndSaveImage(_addReadingBooksController.books[0].imageUrl);
+          _selectedIndex = 0;
         });
       }
     }
@@ -392,12 +396,23 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
                                           // Handle the tap event here
                                           print(
                                               "Book tapped: ${_addReadingBooksController.books[index].title}");
+                                          _selectedIndex = index;
                                           _updateResults(index);
                                           // You can also navigate or show more information about the book here
                                         },
                                         child: Container(
-                                          color: Colors
-                                              .transparent, // Transparent overlay to detect taps
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                _selectedIndex == index
+                                                    ? MyColors.selectedItemColor
+                                                    : Colors.transparent,
+                                                Colors.transparent,
+                                              ],
+                                              begin: Alignment.centerRight,
+                                              end: Alignment.center,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -423,6 +438,38 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
                 onPressed: _addPhysicalBook,
                 child: const Text('Add Book'),
               ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: CustomPopupMenuButtons(
+                  items: [
+                    _selectedIndex == null
+                        ? 'Connect to a Book by Searching or scanning Barcode'
+                        : 'The book is now connected. \n Click if want to remove the Connected Book',
+                  ],
+                  onItemTap: [
+                    () {
+                      _selectedIndex == null
+                          ? () {}
+                          : () {
+                              setState(() {
+                                _selectedIndex = null;
+                              });
+                            };
+                    },
+                  ],
+                  icon: _selectedIndex == null
+                      ? const Icon(
+                          Icons.info,
+                          color: MyColors.nonSelectedItemColor,
+                        )
+                      : const Icon(
+                          Icons.check_circle_outline,
+                          color: MyColors.selectedItemColor,
+                        )),
             ),
           ),
         ],

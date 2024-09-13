@@ -1,21 +1,20 @@
-import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/controllers/notiffication_controller.dart';
 import 'package:book_wallert/services/notification_api_service.dart';
 import 'package:book_wallert/widgets/cards/notification_card.dart';
 import 'package:flutter/material.dart';
 
-class NotificationLikeListView extends StatelessWidget {
+class NotificationCommentListView extends StatelessWidget {
   final int globalUserId;
   final NotificationController _notificationController =
       NotificationController();
 
-  NotificationLikeListView({Key? key, required this.globalUserId})
+  NotificationCommentListView({Key? key, required this.globalUserId})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _notificationController.getLikeNotifications(
+      future: _notificationController.getCommentNotifications(
           globalUserId), // Fetch notifications using the controller
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -26,13 +25,13 @@ class NotificationLikeListView extends StatelessWidget {
           return const Center(child: Text("No notifications"));
         }
 
-        final notifications = snapshot.data as List<AppNotificationLike>;
+        final notifications = snapshot.data as List<AppNotificationComment>;
 
         return ListView.builder(
           itemCount: notifications.length,
           itemBuilder: (context, index) {
             return LikeNotificationCard(
-                username: notifications[index].likedUserName,
+                username: notifications[index].CommentedUserName,
                 bookName: notifications[index].bookname);
           },
         );

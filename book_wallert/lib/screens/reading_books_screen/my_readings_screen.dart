@@ -185,7 +185,7 @@ class _MyReadingsScreenState extends State<MyReadingsScreen> {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
       appBar: AppBar(
-        elevation: 0,
+        scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
         title: const Text(
           "My Readings",
