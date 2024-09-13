@@ -56,7 +56,9 @@ class WishlistApiService {
       throw Exception('Failed to load wishlist');
     }
   }
- Future<void> postwhislistDetails(int userId, int bookId, String? token) async {
+
+  Future<void> postwhislistDetails(
+      int userId, int bookId, String? token) async {
     final url = Uri.parse('$WishlistBaseUrl/$bookId/$userId');
     try {
       final response = await http.post(
@@ -77,6 +79,7 @@ class WishlistApiService {
       print('An error occurred while adding to wishlist: $e');
     }
   }
+
   Future<void> removeBookFromWishlist(int userId, int bookId) async {
     final url = Uri.parse('$baseUrl/remove/$userId/$bookId');
     try {
@@ -94,4 +97,43 @@ class WishlistApiService {
     }
   }
 
+  Future<int> fetchId(BookModel book) async {
+    int? bookId;
+    final response = await http.put(
+      Uri.parse('$baseUrl/wishlistgetId'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'book': {
+          'title': book.title,
+          'ISBN10': book.ISBN10,
+          'ISBN13': book.ISBN13,
+          'publication_date': book.publishedDate,
+          'description': book.description,
+          'author': book.author,
+          'rating': book.totalRating, // Assuming this is the book rating
+          'pages': book.pages,
+          'genre': book.genre,
+          'imageUrl': book.imageUrl,
+          'resource': book.resource
+        },
+      }),
+    );
+    print(response.body);
+    bookId = jsonDecode(response.body)["bookId"];
+    return bookId!;
+
+    // if (book.ISBN13.isNotEmpty) {
+    //   bookId = await fetchIdUsingISBN(book.ISBN13);
+    // }
+
+    // if (bookId == null && book.ISBN10.isNotEmpty) {
+    //   bookId = await fetchIdUsingISBN(book.ISBN10);
+    // }
+
+    // if (bookId != null) {
+    //   return bookId;
+    // } else {
+    //   throw Exception('Failed to get the book id using both ISBN13 and ISBN10');
+    // }
+  }
 }

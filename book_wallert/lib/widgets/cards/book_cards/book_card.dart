@@ -66,9 +66,9 @@ class BookCard extends StatelessWidget {
               ),
             ),
             trailing: FutureBuilder(
-              future: bookRecommendController.fetchBookId(book).then((_) {
+              future: wishlistController.wishlistfetchBookId(book).then((_) {
                 return checkingWishlistController.checkWishlistStatus(
-                    globalUser!.userId, bookRecommendController.bookId!);
+                    globalUser!.userId, wishlistController.BookId!);
               }),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {

@@ -61,7 +61,7 @@ class _NotificationScreenState extends State<NotificationScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          NotificationAllListView(), // All notifications
+          NotificationAllListView(globalUserId: widget.globalUserId,), // All notifications
           NotificationLikeListView(globalUserId: widget.globalUserId,), // Likes
           NotificationCommentListView(globalUserId: widget.globalUserId,), // Comments
           NotificationShareListView(globalUserId: widget.globalUserId), // Shares
