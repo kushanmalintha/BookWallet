@@ -3,6 +3,10 @@ import 'dart:io';
 import 'package:book_wallert/controllers/add_reading_books_controller.dart';
 import 'package:book_wallert/screens/reading_books_screen/pdf_reader/pdf_data_model.dart';
 import 'package:book_wallert/screens/barcode_scanner_screen/barcode_scanning_screen.dart';
+import 'package:book_wallert/services/fetch_bookId_from_isbn.dart';
+import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
+import 'package:book_wallert/widgets/cards/book_cards/book_card.dart';
+import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:http/http.dart' as http;
 import 'package:book_wallert/colors.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +27,11 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
   final AddReadingBooksController _addReadingBooksController =
       AddReadingBooksController();
   final TextEditingController _searchController = TextEditingController();
-  bool _isSearching = false;
+  final _bookIdService = BookIdService();
+  final ScrollController _scrollController = ScrollController();
+  bool _textSearched = false;
+  int? _selectedIndex;
+  int? globalId;
 
   List<Map<String, dynamic>> pdfFiles =
       []; // To hold the list of PDF and physical books
@@ -81,23 +89,31 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
     await file.writeAsString(newContents);
   }
 
-  void _addPhysicalBook() {
+  void _addPhysicalBook() async {
     Map<String, Object> newBook;
     if (_titleController.text.isNotEmpty &&
         _pagesController.text.isNotEmpty &&
         _pagesController.text != "0" &&
         _image != null) {
+      if (_addReadingBooksController.books.isNotEmpty &&
+          _selectedIndex != null) {
+        // Checking if connectable to a book
+        globalId = await _bookIdService.fetchId(_addReadingBooksController
+                .books[
+            _selectedIndex!]); // Updating global book id (from our database)
+      }
       final String newId =
           DateTime.now().millisecondsSinceEpoch.toString(); // Unique ID
       newBook = {
         'id': newId,
-        'progressVisiblity': false,
+        'progressVisiblity': true,
         'name': _titleController.text,
         'type': 'physical', // Differentiating type as 'physical'
         'path': _image!
             .path, // Using the image path as a placeholder for the book cover
         'image': _image!.path,
-        'data': PDFData(id: newId).toJson(), // Store additional data if needed
+        'data': PDFData(id: newId, globalId: globalId)
+            .toJson(), // Store additional data if needed
         'totalPages': int.parse(_pagesController.text),
       };
 
@@ -140,7 +156,7 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
   Future<void> _scanBarcode() async {
     _titleController.clear();
     _pagesController.clear();
-    // _booksController.books = <BookModel>[];
+    _textSearched = false;
 
     var isbn = await Navigator.push(
       context,
@@ -151,10 +167,19 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
     if (isbn is String && isbn.isNotEmpty) {
       String searchText = '';
       searchText = 'isbn:$isbn';
-      _searchController.text = searchText;
       await _addReadingBooksController.fetchBooks(context,
-          page: 1, query: _searchController.text);
-      _updateResults();
+          page: 1, query: searchText);
+
+      // Updating the book details
+      if (_addReadingBooksController.books.isNotEmpty) {
+        setState(() {
+          _titleController.text = _addReadingBooksController.books[0].title;
+          _pagesController.text =
+              _addReadingBooksController.books[0].pages.toString();
+          _fetchAndSaveImage(_addReadingBooksController.books[0].imageUrl);
+          _selectedIndex = 0;
+        });
+      }
     }
   }
 
@@ -163,17 +188,16 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
     _pagesController.clear();
     await _addReadingBooksController.fetchBooks(context,
         page: 1, query: _searchController.text);
-    _updateResults();
+    setState(() {});
   }
 
-  void _updateResults() {
+  void _updateResults(int index) {
     if (_addReadingBooksController.books.isNotEmpty) {
       setState(() {
-        _titleController.text = _addReadingBooksController.books[0].title;
+        _titleController.text = _addReadingBooksController.books[index].title;
         _pagesController.text =
-            _addReadingBooksController.books[0].pages.toString();
-        _fetchAndSaveImage(_addReadingBooksController.books[0].imageUrl);
-        _isSearching = false;
+            _addReadingBooksController.books[index].pages.toString();
+        _fetchAndSaveImage(_addReadingBooksController.books[index].imageUrl);
       });
     }
   }
@@ -187,8 +211,7 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
         final directory = await getApplicationDocumentsDirectory();
 
         // Create a unique file path in the temporary directory
-        final uniqueFileName =
-            '${DateTime.now().millisecondsSinceEpoch}.jpg';
+        final uniqueFileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
         final filePath = '${directory.path}/$uniqueFileName';
 
         // Write the image data to the file
@@ -212,100 +235,244 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
       appBar: AppBar(
-        backgroundColor: MyColors.bgColor,
+        elevation: 0,
+        backgroundColor: MyColors.navigationBarColor,
         automaticallyImplyLeading: false,
-        title: _isSearching
-            ? TextField(
-                controller: _searchController,
-                style: const TextStyle(color: MyColors.titleColor),
-                decoration: const InputDecoration(
-                  hintText: 'Search...',
-                  hintStyle: TextStyle(color: MyColors.nonSelectedItemColor),
-                  border: InputBorder.none,
-                ),
-              )
-            : const Text(
-                'Add Physical Book',
-                style: TextStyle(
-                  color: MyColors.titleColor,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
+        title: const Text(
+          'Add Physical Book',
+          style: TextStyle(
+            color: MyColors.titleColor,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TextField(
+                    style: const TextStyle(color: MyColors.textColor),
+                    controller: _titleController,
+                    decoration: const InputDecoration(
+                      labelText: 'Book Title',
+                      hintStyle:
+                          TextStyle(color: MyColors.nonSelectedItemColor),
+                    ),
+                  ),
+                  TextField(
+                    style: const TextStyle(color: MyColors.textColor),
+                    controller: _pagesController,
+                    decoration: const InputDecoration(
+                      labelText: 'Total Pages',
+                      hintStyle:
+                          TextStyle(color: MyColors.nonSelectedItemColor),
+                    ),
+                    keyboardType: TextInputType.number,
+                  ),
+                  const SizedBox(height: 20),
+                  _image == null
+                      ? const Text(
+                          'No image selected.',
+                          style:
+                              TextStyle(color: MyColors.nonSelectedItemColor),
+                        )
+                      : Image.file(_image!, height: 150),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: _pickImage,
+                        child: const Text('Select Image'),
+                      ),
+                      const SizedBox(width: 20),
+                      ElevatedButton(
+                        onPressed: _captureImage,
+                        child: const Text('Take Image'),
+                      ),
+                    ],
+                  ),
+                  const SpaceBrakerLine(),
+                  GestureDetector(
+                    onTap: _scanBarcode,
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Scan Barcode",
+                          style: TextStyle(color: MyColors.text2Color),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Icon(
+                          Icons.qr_code_scanner,
+                          color: MyColors.nonSelectedItemColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SpaceBrakerLine(),
+                  // Search Input Field
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _textSearched = true;
+                      });
+                      _nameSearch();
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: MyColors
+                                  .nonSelectedItemColor, // Set background color
+                              borderRadius: BorderRadius.circular(
+                                  8), // Optional: for rounded corners
+                            ),
+                            child: TextField(
+                              controller: _searchController,
+                              style: const TextStyle(color: MyColors.bgColor),
+                              decoration: const InputDecoration(
+                                hintText: 'Search...',
+                                hintStyle: TextStyle(
+                                  color:
+                                      MyColors.bgColor, // Set hint text color
+                                ),
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 12), // Padding
+                              ),
+                              onSubmitted: (query) {
+                                setState(() {
+                                  _textSearched = true;
+                                  _nameSearch();
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(
+                          Icons.search,
+                          color: MyColors.nonSelectedItemColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  // ListView for displaying search results
+                  if (_textSearched)
+                    Container(
+                      height: 450, // Set a fixed height for the list view
+                      child: ListView.builder(
+                        controller:
+                            _scrollController, // Attach scroll controller
+                        itemCount: _addReadingBooksController.books.length +
+                            1, // Number of items in the list
+                        itemBuilder: (context, index) {
+                          if (index < _addReadingBooksController.books.length) {
+                            return Column(
+                              children: [
+                                const SizedBox(
+                                    height: 3), // Spacer between cards
+                                Stack(
+                                  children: [
+                                    BookCard(
+                                      book: _addReadingBooksController
+                                          .books[index],
+                                    ),
+                                    // Adding the GestureDetector for a transparent layer
+                                    Positioned.fill(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          // Handle the tap event here
+                                          print(
+                                              "Book tapped: ${_addReadingBooksController.books[index].title}");
+                                          _selectedIndex = index;
+                                          _updateResults(index);
+                                          // You can also navigate or show more information about the book here
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                _selectedIndex == index
+                                                    ? MyColors.selectedItemColor
+                                                    : Colors.transparent,
+                                                Colors.transparent,
+                                              ],
+                                              begin: Alignment.centerRight,
+                                              end: Alignment.center,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ), // Display book card
+                              ],
+                            );
+                          } else {
+                            return buildProgressIndicator(); // Show loading indicator at the end
+                          }
+                        },
+                      ),
+                    ),
+                ],
               ),
-        actions: [
-          if (_isSearching) ...[
-            IconButton(
-              icon: const Icon(Icons.search),
-              color: MyColors.nonSelectedItemColor,
-              onPressed: _nameSearch,
             ),
-            IconButton(
-              icon: const Icon(Icons.qr_code_scanner),
-              color: MyColors.nonSelectedItemColor,
-              onPressed: _scanBarcode, // Trigger the barcode scanner
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: _addPhysicalBook,
+                child: const Text('Add Book'),
+              ),
             ),
-          ],
-          IconButton(
-            icon: Icon(_isSearching ? Icons.close : Icons.search),
-            color: MyColors.nonSelectedItemColor,
-            onPressed: () {
-              setState(() {
-                _isSearching = !_isSearching;
-                if (!_isSearching) {
-                  _searchController.clear();
-                }
-              });
-            },
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: CustomPopupMenuButtons(
+                  items: [
+                    _selectedIndex == null
+                        ? 'Connect to a Book by Searching or scanning Barcode'
+                        : 'The book is now connected. \n Click if want to remove the Connected Book',
+                  ],
+                  onItemTap: [
+                    () {
+                      _selectedIndex == null
+                          ? () {}
+                          : () {
+                              setState(() {
+                                _selectedIndex = null;
+                              });
+                            };
+                    },
+                  ],
+                  icon: _selectedIndex == null
+                      ? const Icon(
+                          Icons.info,
+                          color: MyColors.nonSelectedItemColor,
+                        )
+                      : const Icon(
+                          Icons.check_circle_outline,
+                          color: MyColors.selectedItemColor,
+                        )),
+            ),
           ),
         ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              style: const TextStyle(color: MyColors.textColor),
-              controller: _titleController,
-              decoration: const InputDecoration(
-                labelText: 'Book Title',
-                hintStyle: TextStyle(color: MyColors.nonSelectedItemColor),
-              ),
-            ),
-            TextField(
-              style: const TextStyle(color: MyColors.textColor),
-              controller: _pagesController,
-              decoration: const InputDecoration(
-                labelText: 'Total Pages',
-                hintStyle: TextStyle(color: MyColors.nonSelectedItemColor),
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 20),
-            _image == null
-                ? const Text('No image selected.')
-                : Image.file(_image!, height: 150),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                ElevatedButton(
-                  onPressed: _pickImage,
-                  child: const Text('Select Image'),
-                ),
-                const SizedBox(width: 20),
-                ElevatedButton(
-                  onPressed: _captureImage,
-                  child: const Text('Take Image'),
-                ),
-              ],
-            ),
-            const Spacer(),
-            ElevatedButton(
-              onPressed: _addPhysicalBook,
-              child: const Text('Add Book'),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -315,5 +482,31 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
     _titleController.dispose();
     _pagesController.dispose();
     super.dispose();
+  }
+}
+
+class SpaceBrakerLine extends StatelessWidget {
+  const SpaceBrakerLine({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      // Line Seperator with OR
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Divider(thickness: 1, color: MyColors.nonSelectedItemColor),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            "or",
+            style: TextStyle(color: MyColors.nonSelectedItemColor),
+          ),
+        ),
+        Expanded(
+            child: Divider(thickness: 1, color: MyColors.nonSelectedItemColor)),
+      ],
+    );
   }
 }

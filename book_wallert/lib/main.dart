@@ -4,10 +4,10 @@ import 'package:book_wallert/screens/login_screens/loading_screen.dart';
 import 'package:book_wallert/screens/login_screens/login_screen.dart';
 import 'package:book_wallert/screens/login_screens/signup_screen.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
+import 'package:book_wallert/screens/notifications_screens/notification_body.dart';
 import 'package:book_wallert/screens/save_screens/save_screen_frame.dart';
 import 'package:book_wallert/screens/settings_screens/edit_user_info.dart';
 import 'package:book_wallert/screens/settings_screens/setting_screen.dart';
-import 'package:book_wallert/screens/test_screens/screen3/notification_body.dart';
 import 'package:book_wallert/screens/test_screens/screen3/screen3.dart';
 import 'package:book_wallert/screens/test_screens/screen5/screen5.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         // adding routes
         '/LadingScreen': (context) => LoadingScreen(),
         '/LoginScreen': (context) => LoginScreen(),
-        '/SignupScreen': (context) => SignupScreen(),
+        '/SignupScreen': (context) => const SignupScreen(),
         '/MainScreen': (context) => const MainScreen(),
         '/TestScreen': (context) => const TestScreen(),
         '/screen1': (context) => Screen1(),
@@ -61,9 +61,7 @@ class MyApp extends StatelessWidget {
         '/screen3': (context) => const Screen3(),
         '/screen4': (context) => const Screen4(),
         '/screen5': (context) => const Screen5(),
-        '/screen6': (context) => NotificationScreen(
-              globalUserId: globalUser!.userId,
-            ),
+        '/screen6': (context) => const Screen6(),
         '/screen7': (context) => const Screen7(),
         '/screen8': (context) => const Screen8(),
         '/SettingsScreen': (context) => const Settingscreen(),
@@ -72,7 +70,10 @@ class MyApp extends StatelessWidget {
         '/EditUserInfo': (context) => EditUserInfo(),
         '/Profile': (context) =>
             UserProfileScreenBody(userId: globalUser!.userId),
-        '/GroupCreate': (context) => Screen6()
+        '/GroupCreate': (context) => Screen6(),
+        '/NotificationsScreen': (context) => NotificationScreen(
+              globalUserId: globalUser!.userId,
+            ),
       },
     );
   }

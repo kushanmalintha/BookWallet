@@ -87,14 +87,17 @@ class AppNotificationShare {
   final String bookname;
   
   final String date;
+  
+  final int reviewID;
 
   AppNotificationShare(
       {required this.message,
       required this.sharedUserName,
-      required this.bookname, required this.date});
+      required this.bookname, required this.date, required this.reviewID});
 
   factory AppNotificationShare.fromJson(Map<String, dynamic> json) {
     return AppNotificationShare(
+      reviewID : json['reviewId'],
       message: json['message'],
       sharedUserName: json['sharedUserName'],
       bookname: json['bookName'],
@@ -109,14 +112,17 @@ class AppNotificationComment {
   final String CommentedUserName;
 
   final String bookname;
+  
+  final int reviewID;
 
   AppNotificationComment(
       {required this.message,
       required this.CommentedUserName,
-      required this.bookname});
+      required this.bookname, required this.reviewID});
 
   factory AppNotificationComment.fromJson(Map<String, dynamic> json) {
     return AppNotificationComment(
+      reviewID : json['reviewId'],
       message: json['message'],
       CommentedUserName: json['commentedUserName'],
       bookname: json['bookName'],
@@ -127,26 +133,30 @@ class AppNotificationComment {
 class AppNotificationAll {
   final String message;
 
-  final String CommentedUserName;
+  //final String CommentedUserName;
 
-  final String bookname;
+  // final String bookname;
   
-  final String sharedUserName;
+  // final String sharedUserName;
   
-  final String likedUserName;
+  // final String likedUserName;
+  
+  final int reviewID;
 
   AppNotificationAll(
       {required this.message,
-      required this.CommentedUserName,
-      required this.bookname, required this.sharedUserName, required this.likedUserName});
+      //required this.CommentedUserName,
+      //required this.bookname, required this.sharedUserName, required this.likedUserName
+       required this.reviewID});
 
   factory AppNotificationAll.fromJson(Map<String, dynamic> json) {
     return AppNotificationAll(
       message: json['message'],
-      CommentedUserName: json['commentedUserName'],
-      sharedUserName: json['sharedUserName'],
-      likedUserName: json['likedUserName'],
-      bookname: json['bookName'],
+      //CommentedUserName: json['commentedUserName'],
+      //sharedUserName: json['sharedUserName'],
+      //likedUserName: json['likedUserName'],
+      //bookname: json['bookName'],
+      reviewID : json['reviewId'],
     );
   }
 }

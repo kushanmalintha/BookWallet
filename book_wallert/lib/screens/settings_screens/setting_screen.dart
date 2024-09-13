@@ -70,7 +70,7 @@ class Settingscreen extends StatelessWidget {
               ),
               SettingsTile(
                 title: const Text('Group Create'),
-                leading: const Icon(Icons.notifications),
+                leading: const Icon(Icons.group_add_rounded),
                 onPressed: (BuildContext context) {
                   Navigator.pushNamed(context, '/GroupCreate'); // Navigate to notification screen
                 },

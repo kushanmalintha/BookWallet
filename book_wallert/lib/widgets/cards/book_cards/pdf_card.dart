@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
+import 'package:book_wallert/screens/reading_books_screen/book_connecting_screen.dart';
 import 'package:book_wallert/screens/reading_books_screen/pdf_reader/book_viewer_page.dart';
 import 'package:book_wallert/screens/reading_books_screen/pdf_reader/pdf_view_page.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
@@ -10,6 +12,7 @@ class PDFCard extends StatelessWidget {
   final String name;
   final String path;
   final String imagePath;
+  final int? globalId;
   final VoidCallback onRename;
   final VoidCallback onDelete;
   final VoidCallback onVisibility;
@@ -22,6 +25,7 @@ class PDFCard extends StatelessWidget {
     required this.name,
     required this.path,
     required this.imagePath,
+    required this.globalId,
     required this.onRename,
     required this.onDelete,
     required this.onVisibility,
@@ -43,7 +47,6 @@ class PDFCard extends StatelessWidget {
             onRefresh();
           });
         } else if (type == "physical") {
-          print("Openning non-pdf-screen");
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -111,6 +114,9 @@ class PDFCard extends StatelessWidget {
                   progressVisiblity
                       ? 'Hide Progrress Bar'
                       : 'Add Progrress Bar',
+                  (globalId == null)
+                      ? 'Connect to a Book'
+                      : 'Go to Book profile',
                 ],
                 onItemTap: [
                   () {
@@ -122,6 +128,24 @@ class PDFCard extends StatelessWidget {
                   () {
                     onVisibility();
                   },
+                  () {
+                    (globalId == null)
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const BookConnectingScreen(),
+                            ),
+                          )
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BookProfileScreenBody(
+                                bookId: globalId!,
+                              ),
+                            ),
+                          );
+                  }
                 ],
                 icon: const Icon(
                   Icons.more_vert,

@@ -9,12 +9,13 @@ import 'package:flutter/material.dart';
 class WishlistController extends ChangeNotifier {
   final BookIdService _bookIdService = BookIdService();
   final WishlistApiService apiService;
-   final BookRecommendController bookRecommendController =
-        BookRecommendController(globalUser!.userId);
+  final BookRecommendController bookRecommendController =
+      BookRecommendController(globalUser!.userId);
+  final WishlistApiService _apiService = WishlistApiService();
   List<BookModel> wishlistBooks = [];
   bool isLoading = false;
   int? bookId;
-
+  int? BookId;
   WishlistController(this.apiService);
 
   Future<void> fetchBookId(BookModel book) async {
@@ -43,7 +44,7 @@ class WishlistController extends ChangeNotifier {
 
   Future<void> addBookToWishlist(int userId, int bookId) async {
     try {
-      String? token = await getToken();  // Get the token
+      String? token = await getToken(); // Get the token
       await apiService.postwhislistDetails(userId, bookId, token);
     } catch (e) {
       print('Error adding book to wishlist: $e');
@@ -57,7 +58,8 @@ class WishlistController extends ChangeNotifier {
       print('Error removing book from wishlist: $e');
     }
   }
- Future<void> addBookToWishlistAndNotify(
+
+  Future<void> addBookToWishlistAndNotify(
       BuildContext context, int userId, BookModel book) async {
     try {
       await fetchBookId(book);
@@ -70,22 +72,25 @@ class WishlistController extends ChangeNotifier {
         SnackBar(content: Text('Error adding book to wishlist: $e')),
       );
     }
-  } 
-   Future<void> addOrRemoveWishlistBook(BuildContext context, BookModel book, bool isInWishlist) async {
+  }
+
+  Future<void> addOrRemoveWishlistBook(
+      BuildContext context, BookModel book, bool isInWishlist) async {
     try {
       String? token = await getToken();
       await bookRecommendController.fetchBookId(book);
       if (isInWishlist) {
         // Remove from wishlist
-         await apiService.removeBookFromWishlist(globalUser!.userId,
-                              bookRecommendController.bookId!);
+        await apiService.removeBookFromWishlist(
+            globalUser!.userId, bookRecommendController.bookId!);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Book removed from wishlist successfully.')),
+          const SnackBar(
+              content: Text('Book removed from wishlist successfully.')),
         );
       } else {
         // Add to wishlist
-        await apiService.postwhislistDetails(globalUser!.userId,
-                              bookRecommendController.bookId!, token);
+        await apiService.postwhislistDetails(
+            globalUser!.userId, bookRecommendController.bookId!, token);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Book added to wishlist successfully.')),
         );
@@ -96,5 +101,12 @@ class WishlistController extends ChangeNotifier {
       );
     }
   }
-}
 
+  Future<void> wishlistfetchBookId(BookModel book) async {
+    try {
+      BookId = await _apiService.fetchId(book);
+    } catch (e) {
+      throw Exception('Error fetching book ID: $e');
+    }
+  }
+}

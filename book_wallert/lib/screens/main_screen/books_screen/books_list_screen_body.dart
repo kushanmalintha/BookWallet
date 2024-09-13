@@ -1,5 +1,6 @@
 import 'package:book_wallert/screens/main_screen/books_screen/book_completed_listview.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_recomended_listview.dart';
+import 'package:book_wallert/screens/main_screen/books_screen/book_trending_listview.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_whislist_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/book_list_view.dart';
@@ -59,7 +60,7 @@ class _BookScreenBodyState extends State<BookListScreenBody>
         controller: _tabController,
         children: [
           BookRecomendedListview(userId: widget.userId), // Recommended
-          const BookListView(screenName: 'Trending'), // Trending
+          const TrendingListView(), // Trending
           BookWishlistListView(
             userId: widget.userId,
           ), // Wishlist

@@ -115,12 +115,12 @@ class _MyReadingsScreenState extends State<MyReadingsScreen> {
       setState(() {
         pdfFiles.add({
           'id': newId,
-          'progressVisiblity': false,
+          'progressVisiblity': true,
           'name': fileName,
           'type': "pdf",
           'path': newFile.path,
           'image': imagePath ?? 'assets/default_thumbnail.png',
-          'data': PDFData(id: newId).toJson(),
+          'data': PDFData(id: newId, globalId: null).toJson(),
         });
         savePdfFiles();
       });
@@ -179,13 +179,15 @@ class _MyReadingsScreenState extends State<MyReadingsScreen> {
     });
   }
 
+  // Building screen
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.bgColor,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
-        title: Text(
+        title: const Text(
           "My Readings",
           style: TextStyle(color: MyColors.titleColor),
         ),
@@ -193,7 +195,7 @@ class _MyReadingsScreenState extends State<MyReadingsScreen> {
         actions: [
           IconButton(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.edit_rounded,
                 color: MyColors.nonSelectedItemColor,
               )),
@@ -207,9 +209,9 @@ class _MyReadingsScreenState extends State<MyReadingsScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AddPhysicalBookScreen()),
+                      builder: (context) => const AddPhysicalBookScreen()),
                 ).then((_) {
-                  loadPdfFiles();
+                  loadPdfFiles(); // Refresh screen
                   ();
                 });
               },
@@ -230,14 +232,18 @@ class _MyReadingsScreenState extends State<MyReadingsScreen> {
             ),
             itemCount: pdfFiles.length,
             itemBuilder: (context, index) {
-              return pdfFiles[index]['progressVisiblity'] ?? false
+              return pdfFiles[index]['progressVisiblity'] ??
+                      false // Check if progressbar visible to use the progress frame
                   ? BookReadingProgressBar(
+                      // Progress bar Frame
                       progress: pdfFiles[index]['data']['progress'] ?? 0,
                       child: PDFCard(
                         type: pdfFiles[index]['type'],
                         name: pdfFiles[index]['name']!,
                         path: pdfFiles[index]['path']!,
                         imagePath: pdfFiles[index]['image']!,
+                        globalId:
+                            PDFData.fromJson(pdfFiles[index]['data']!).globalId,
                         onRename: () => renamePdfFile(index),
                         onDelete: () => deletePdfFile(index),
                         onVisibility: () => changeProgressVisibility(index),
@@ -250,6 +256,8 @@ class _MyReadingsScreenState extends State<MyReadingsScreen> {
                       name: pdfFiles[index]['name']!,
                       path: pdfFiles[index]['path']!,
                       imagePath: pdfFiles[index]['image']!,
+                      globalId:
+                          PDFData.fromJson(pdfFiles[index]['data']!).globalId,
                       onRename: () => renamePdfFile(index),
                       onDelete: () => deletePdfFile(index),
                       onVisibility: () => changeProgressVisibility(index),

@@ -23,3 +23,18 @@ class ReviewService {
     }
   }
 }
+
+class GetReviewWithIdService {
+  String apiUrl = 'http://$ip:3000/api/reviews/getReviewWithId';
+
+  Future<ReviewModel> fetchReview(int reviewId) async {
+    final response = await http.get(Uri.parse('$apiUrl/$reviewId'));
+    if (response.statusCode == 200) {
+      // Parse the response as a single JSON object
+      Map<String, dynamic> data = jsonDecode(response.body)[0];
+      return ReviewModel.fromJson(data);
+    } else {
+      throw Exception('Failed to load review');
+    }
+  }
+}
