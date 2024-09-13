@@ -13,4 +13,8 @@ class NotificationController {
    Future<List<AppNotificationComment>> getCommentNotifications(int userId) async {
     return await _apiService.fetchcommentNotifications(userId);
   }
+
+   Future<List<AppNotificationAll>> getAllNotifications(int userId) async {
+    return await _apiService.fetchAllNotifications(userId);
+  }
 }
