@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
+import 'package:book_wallert/screens/reading_books_screen/book_connecting_screen.dart';
 import 'package:book_wallert/screens/reading_books_screen/pdf_reader/book_viewer_page.dart';
 import 'package:book_wallert/screens/reading_books_screen/pdf_reader/pdf_view_page.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
@@ -33,7 +35,6 @@ class PDFCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("global ID is : $globalId");
     return GestureDetector(
       onTap: () async {
         if (type == null || type == "pdf") {
@@ -46,7 +47,6 @@ class PDFCard extends StatelessWidget {
             onRefresh();
           });
         } else if (type == "physical") {
-          print("Openning non-pdf-screen");
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -128,7 +128,24 @@ class PDFCard extends StatelessWidget {
                   () {
                     onVisibility();
                   },
-                  () {}
+                  () {
+                    (globalId == null)
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const BookConnectingScreen(),
+                            ),
+                          )
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BookProfileScreenBody(
+                                bookId: globalId!,
+                              ),
+                            ),
+                          );
+                  }
                 ],
                 icon: const Icon(
                   Icons.more_vert,

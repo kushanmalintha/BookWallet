@@ -1,7 +1,7 @@
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/screens/test_screens/screen3/notification_all_listview.dart';
-import 'package:book_wallert/screens/test_screens/screen3/notification_comment_listview.dart';
-import 'package:book_wallert/screens/test_screens/screen3/notification_like_listview.dart';
+import 'package:book_wallert/screens/notifications_screens/notification_all_listview.dart';
+import 'package:book_wallert/screens/notifications_screens/notification_comment_listview.dart';
+import 'package:book_wallert/screens/notifications_screens/notification_like_listview.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 import 'package:flutter/material.dart';
 import 'notification_share_listview.dart';
