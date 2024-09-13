@@ -2,13 +2,13 @@ import 'package:book_wallert/controllers/token_controller.dart';
 import 'package:book_wallert/models/group_model.dart';
 import 'package:book_wallert/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:book_wallert/services/groupService.dart';
+import 'package:book_wallert/services/group_service.dart';
 
 class GroupController with ChangeNotifier {
   final GroupService _groupService = GroupService();
   List<GroupModel> groups = [];
   List<User> groupMembers = [];
-
+  List<User> memberRequests = []; // List to hold the pending member requests
   Future<void> createGroup(
       String groupName, String groupDescription, String groupImageUrl) async {
     try {
@@ -55,6 +55,29 @@ class GroupController with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print('Error fetching group members: $e');
+    }
+  }
+
+  Future<void> fetchMemberRequestsByGroupId(
+      int groupId, Function(List<User>) onSuccess) async {
+    try {
+      memberRequests = await _groupService.getMemberRequestsByGroupId(groupId);
+      onSuccess(memberRequests);
+      notifyListeners();
+    } catch (e) {
+      print('Error fetching member requests: $e');
+    }
+  }
+
+  // Method to check if the current user is an admin of the group
+  Future<void> checkAdminStatus(int groupId, Function(bool) callback) async {
+    try {
+      final token = await getToken();
+      bool isAdmin = await _groupService.checkAdminStatus(groupId, token!);
+      callback(isAdmin);
+      notifyListeners();
+    } catch (e) {
+      print('Error checking admin status: $e');
     }
   }
 }
