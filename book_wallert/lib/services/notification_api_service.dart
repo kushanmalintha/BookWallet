@@ -64,17 +64,20 @@ class AppNotificationLike {
   final String likedUserName;
 
   final String bookname;
+  
+  final int reviewID;
 
   AppNotificationLike(
       {required this.message,
       required this.likedUserName,
-      required this.bookname});
+      required this.bookname, required this.reviewID});
 
   factory AppNotificationLike.fromJson(Map<String, dynamic> json) {
     return AppNotificationLike(
       message: json['message'],
       likedUserName: json['likedUserName'],
       bookname: json['bookName'],
+      reviewID : json['reviewId'],
     );
   }
 }
