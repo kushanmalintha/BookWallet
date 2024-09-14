@@ -6,17 +6,17 @@ class GroupModel {
   final String? createdAt; // Allow null values
   final int memberCount;
   final int discussionCount;
-  final List<String> memberIds;
+  final List<String>? memberIds;
 
   GroupModel({
     required this.group_id,
     required this.name,
     required this.about,
     required this.imageUrl,
-    this.createdAt, // Optional field
+    this.createdAt,
     required this.memberCount,
     required this.discussionCount,
-    required this.memberIds,
+    this.memberIds,
   });
 
   factory GroupModel.fromJson(Map<String, dynamic> json) {
@@ -26,7 +26,7 @@ class GroupModel {
       about: json['group_description'],
       imageUrl: json['group_image_url'],
       createdAt: json['createdAt'], // Optional, can be null
-      memberCount: json['memberCount'] , // Default to 0 if missing
+      memberCount: json['memberCount'], // Default to 0 if missing
       discussionCount: json['discussionCount'] ?? 0, // Default to 0 if missing
       memberIds: json['memberIds'] != null
           ? List<String>.from(json['memberIds'])
