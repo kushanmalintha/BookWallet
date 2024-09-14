@@ -88,7 +88,8 @@ class GroupService {
       throw Exception('Failed to fetch members');
     }
   }
-   Future<List<User>> getMemberRequestsByGroupId(int groupId) async {
+
+  Future<List<User>> getMemberRequestsByGroupId(int groupId) async {
     final url = Uri.parse('$_baseUrl/$groupId/requests');
     final response = await http.get(
       url,
@@ -105,7 +106,8 @@ class GroupService {
       throw Exception('Failed to fetch member requests');
     }
   }
-   Future<bool> checkAdminStatus(int groupId, String token) async {
+
+  Future<bool> checkAdminStatus(int groupId, String token) async {
     final url = Uri.parse('$_baseUrl/$groupId/check-admin');
     final response = await http.get(
       url,
@@ -122,6 +124,48 @@ class GroupService {
     } else {
       print('Failed to check admin status: ${response.statusCode}');
       throw Exception('Failed to check admin status');
+    }
+  }
+
+  // Accept Member Request
+  Future<void> acceptMemberRequest(
+      int groupId, int userId, String token) async {
+    final url = Uri.parse('$_baseUrl/accept-user');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'user_id': userId,
+        'group_id': groupId,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to accept member request');
+    }
+  }
+
+  // Remove Member Request
+  Future<void> removeMemberRequest(
+      int groupId, int userId, String token) async {
+    final url = Uri.parse('$_baseUrl/request/remove');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'user_id': userId,
+        'group_id': groupId,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to remove member request');
     }
   }
 }
