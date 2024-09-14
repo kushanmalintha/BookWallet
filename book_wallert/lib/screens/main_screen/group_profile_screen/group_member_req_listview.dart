@@ -1,5 +1,5 @@
 import 'package:book_wallert/colors.dart';
-import 'package:book_wallert/controllers/GroupController.dart';
+import 'package:book_wallert/controllers/group_controller.dart';
 import 'package:book_wallert/widgets/cards/user_req_card.dart';
 import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart';
