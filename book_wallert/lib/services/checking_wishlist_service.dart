@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:book_wallert/ipaddress.dart'; // Assuming ip is stored here
 
 class CheckingWishlistService {
-  final String baseUrl = 'http://$ip:3000/api/wishlist/IsinWishlist';
+  final String baseUrl = '${ip}/api/wishlist/IsinWishlist';
 
   Future<bool> isBookInWishlist(int userId, int bookId) async {
     final response = await http.get(Uri.parse('$baseUrl/$userId/$bookId'));

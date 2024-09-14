@@ -11,7 +11,7 @@ class UserActivityService {
 
   Future<List<dynamic>> fetchUserActivity() async {
     try {
-      final url = Uri.parse('http://$ip:3000/api/reviews/activities/$userId');
+      final url = Uri.parse('${ip}/api/reviews/activities/$userId');
       final response = await http.get(url);
       
       if (response.statusCode == 200) {

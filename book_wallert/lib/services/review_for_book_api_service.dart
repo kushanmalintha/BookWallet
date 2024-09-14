@@ -6,7 +6,7 @@ import '../models/review_model.dart';
 
 class ReviewForBookService {
   String apiUrl(int bookId) =>
-      'http://${ip}:3000/api/reviews/getReviewWithBookId/$bookId';
+      '${ip}/api/reviews/getReviewWithBookId/$bookId';
 
   Future<List<ReviewModel>> fetchPosts(int bookId, int page) async {
     final response = await http.get(Uri.parse('${apiUrl(bookId)}?page=$page'));
@@ -22,7 +22,7 @@ class ReviewForBookService {
 }
 
 // class BookIdService {
-//   final String apiUrl = 'http://${ip}:3000/api/book/getBookId';
+//   final String apiUrl = '${ip}/api/book/getBookId';
 
 //   Future<int> fetchId(BookModel book) async {
 //     int? bookId;

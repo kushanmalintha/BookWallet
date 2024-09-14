@@ -6,7 +6,7 @@ import 'package:book_wallert/models/user.dart';
 
 class GroupService {
   final String _baseUrl =
-      'http://${ip}:3000/api/groups'; // Replace with your API base URL
+      '${ip}/api/groups'; // Replace with your API base URL
 
   Future<void> createGroup(String groupName, String groupDescription,
       String groupImageUrl, String token) async {
