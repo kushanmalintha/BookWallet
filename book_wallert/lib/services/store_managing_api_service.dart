@@ -5,7 +5,7 @@ import 'dart:convert';
 import '../models/shop_model.dart';
 
 class ShopService {
-  final String _baseUrl = 'http://$ip:3000/api';
+  final String _baseUrl = '${ip}/api';
 
   Future<List<Shop>> fetchShopsForBook(int bookId) async {
     final response = await http.get(Uri.parse('$_baseUrl/stores/book/$bookId'));

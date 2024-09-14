@@ -6,7 +6,7 @@ import 'package:book_wallert/models/user.dart';
 class UserIdApiService {
   Future<User?> fetchUserById(int userId) async {
     final response =
-        await http.get(Uri.parse('http://$ip:3000/api/auth/users/$userId'));
+        await http.get(Uri.parse('${ip}/api/auth/users/$userId'));
 
     if (response.statusCode == 200) {
       return User.fromJson(jsonDecode(response.body));

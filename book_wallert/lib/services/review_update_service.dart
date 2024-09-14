@@ -5,7 +5,7 @@ import 'package:book_wallert/ipaddress.dart';
 import 'package:http/http.dart' as http;
 
 class ReviewUpdateService {
-  static final String _baseUrl = 'http://$ip:3000/api/reviews';
+  static final String _baseUrl = '${ip}/api/reviews';
 
   Future<void> updateReview(int reviewId, int userId, String content,
       double rating, String token) async {

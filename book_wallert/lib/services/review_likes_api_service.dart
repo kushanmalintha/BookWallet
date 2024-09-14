@@ -4,7 +4,7 @@ import 'package:book_wallert/controllers/token_controller.dart';
 import 'package:http/http.dart' as http;
 
 class LikesApiService {
-  static final String baseUrl = 'http://${ip}:3000/api/reviews';
+  static final String baseUrl = '${ip}/api/reviews';
 
   Future<List<Map<String, dynamic>>> fetchLikes(int reviewId) async {
     final response = await http.get(Uri.parse('$baseUrl/$reviewId/likes'));

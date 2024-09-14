@@ -4,7 +4,7 @@ import 'package:book_wallert/models/book_model.dart';
 import 'package:http/http.dart' as http;
 
 class BookIdService {
-  final String apiUrl = 'http://${ip}:3000/api/book/getBookId';
+  final String apiUrl = '${ip}/api/book/getBookId';
 
   Future<int> fetchId(BookModel book) async {
     int? bookId;

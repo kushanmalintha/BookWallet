@@ -12,7 +12,7 @@ class HistoryService {
 
   Future<List<BookModel>> fetchBooks() async {
     final response = await http.get(
-      Uri.parse('http://$ip:3000/api/history/$userId/books'),
+      Uri.parse('${ip}/api/history/$userId/books'),
     );
 
     if (response.statusCode == 200) {
@@ -26,7 +26,7 @@ class HistoryService {
 
   Future<List<ReviewModel>> fetchReviews() async {
     final response = await http.get(
-      Uri.parse('http://$ip:3000/api/history/$userId/reviews'),
+      Uri.parse('${ip}/api/history/$userId/reviews'),
     );
 
     if (response.statusCode == 200) {
@@ -40,7 +40,7 @@ class HistoryService {
 
   Future<List<User>> fetchUsers() async {
     final response = await http.get(
-      Uri.parse('http://$ip:3000/api/history/$userId/user-details'),
+      Uri.parse('${ip}/api/history/$userId/user-details'),
     );
 
     if (response.statusCode == 200) {
@@ -54,7 +54,7 @@ class HistoryService {
 
   Future<List<dynamic>> fetchAllItems() async {
     final response =
-        await http.get(Uri.parse('http://${ip}:3000/api/history/all/$userId'));
+        await http.get(Uri.parse('${ip}/api/history/all/$userId'));
 
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
@@ -70,7 +70,7 @@ class HistoryService {
   }
 
   Future<void> insertReviewHistory(String token, int reviewId) async {
-    final url = Uri.parse('http://${ip}:3000/api/history/reviewinsert');
+    final url = Uri.parse('${ip}/api/history/reviewinsert');
     final body = json.encode({
       'token': token,
       'relevant_id': reviewId,
@@ -96,7 +96,7 @@ class HistoryService {
   }
 
   Future<void> insertBookHistory(String token, int bookId) async {
-    final url = Uri.parse('http://${ip}:3000/api/history/bookinsert');
+    final url = Uri.parse('${ip}/api/history/bookinsert');
     print("line 100");
     final body = json.encode({
       'token': token,

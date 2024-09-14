@@ -12,7 +12,7 @@ class SavedService {
 
   Future<List<BookModel>> fetchBooks() async {
     final response = await http.get(
-      Uri.parse('http://${ip}:3000/api/saved-items/books/$userId'),
+      Uri.parse('${ip}/api/saved-items/books/$userId'),
     );
 
     if (response.statusCode == 200) {
@@ -26,7 +26,7 @@ class SavedService {
 
   Future<List<ReviewModel>> fetchReviews() async {
     final response = await http.get(
-      Uri.parse('http://${ip}:3000/api/saved-items/reviews/$userId'),
+      Uri.parse('${ip}/api/saved-items/reviews/$userId'),
     );
 
     print(response.body);
@@ -41,7 +41,7 @@ class SavedService {
 
   Future<List<User>> fetchUsers() async {
     final response = await http.get(
-      Uri.parse('http://${ip}:3000/api/saved-items/profiles/$userId'),
+      Uri.parse('${ip}/api/saved-items/profiles/$userId'),
     );
 
     if (response.statusCode == 200) {
@@ -54,7 +54,7 @@ class SavedService {
   }
 
   Future<void> insertReviewToSaved(String? token, int reviewId) async {
-    final url = Uri.parse('http://${ip}:3000/api/saved-items/save/review');
+    final url = Uri.parse('${ip}/api/saved-items/save/review');
     final body = json.encode({
       'token': token,
       'relevant_id': reviewId,
@@ -80,7 +80,7 @@ class SavedService {
   }
 
   Future<void> insertBookToSaved(String? token, int bookId) async {
-    final url = Uri.parse('http://${ip}:3000/api/saved-items/save/book');
+    final url = Uri.parse('${ip}/api/saved-items/save/book');
     final body = json.encode({
       'token': token,
       'relevant_id': bookId,
@@ -106,7 +106,7 @@ class SavedService {
   }
 
   Future<void> insertProfileToSaved(String token, int userId) async {
-    final url = Uri.parse('http://$ip:3000/api/saved-items/save/profile');
+    final url = Uri.parse('${ip}/api/saved-items/save/profile');
     final body = json.encode({
       'token': token,
       'relevant_id': userId,

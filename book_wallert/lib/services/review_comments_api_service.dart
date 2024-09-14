@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:book_wallert/controllers/token_controller.dart';
 
 class CommentApiService {
-  static final String _baseUrl = 'http://${ip}:3000/api/reviews';
+  static final String _baseUrl = '${ip}/api/reviews';
 
   Future<void> addComment(int reviewId, String commentText, int userId) async {
     final token = await getToken(); // Retrieve the token
@@ -51,7 +51,7 @@ class CommentApiService {
 }
 
 class CommentUpdateService {
-  static final String _baseUrl = 'http://$ip:3000/api/reviews';
+  static final String _baseUrl = '${ip}/api/reviews';
 
   Future<void> updateComment(
       int commentId, int userId, String content, String token) async {
@@ -78,7 +78,7 @@ class CommentUpdateService {
 }
 
 class CommentDeleteService {
-  static final String _baseUrl = 'http://$ip:3000/api/reviews';
+  static final String _baseUrl = '${ip}/api/reviews';
 
   Future<void> deleteComment(int commentId, int userId, String token) async {
     final url = Uri.parse('$_baseUrl/comments/delete/$commentId/$userId');

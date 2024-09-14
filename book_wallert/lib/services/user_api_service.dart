@@ -6,7 +6,7 @@ import 'package:book_wallert/models/user.dart';
 import 'package:http/http.dart' as http;
 
 class UserApiService {
-  static final String _baseUrl = 'http://$ip:3000/api/auth';
+  static final String _baseUrl = '${ip}/api/auth';
 
   Future<User> editUserDetailsService(String username, String email,
       String password, String description) async {

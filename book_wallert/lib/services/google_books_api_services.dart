@@ -6,7 +6,7 @@ import '../models/book_model.dart'; // Import your existing BookModel
 
 class GoogleBooksApiService {
   final String apiUrl =
-      'http://${ip}:3000/api/googleapi/search'; // API URL for Google Books API
+      '${ip}/api/googleapi/search'; // API URL for Google Books API
 
   // Function to fetch book details
   Future<List<BookModel>> fetchBooks(

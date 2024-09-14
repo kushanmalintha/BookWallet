@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../models/book_model.dart';
 
 class GetBookService {
-  final String apiUrl = 'http://$ip:3000/api/book/getBookWithBookId';
+  final String apiUrl = '${ip}/api/book/getBookWithBookId';
   // http://localhost:3000/api/book/getBookWithBookId/27
 
   Future<BookModel> fetchBook(int bookId) async {

@@ -5,7 +5,7 @@ import 'package:book_wallert/models/user.dart';
 import 'package:http/http.dart' as http;
 
 class GetUserProfileService {
-  static String apiUrl = 'http://$ip:3000/api/user/getuserprofile';
+  static String apiUrl = '${ip}/api/user/getuserprofile';
 
   Future<User> fetchUserProfile(int userId) async {
     final token = await getToken();
