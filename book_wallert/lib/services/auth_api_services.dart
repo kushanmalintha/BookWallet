@@ -7,7 +7,7 @@ import 'package:book_wallert/models/user.dart';
 
 class AuthApiService {
   static final String _baseUrl =
-      'http://${ip}:3000/api/auth'; // Replace with your server URL
+      '${ip}/api/auth'; // Replace with your server URL
 
   Future<User> signUp(String username, String email, String password,
       String description, String imageName, String recaptchaToken) async {
@@ -51,7 +51,8 @@ class AuthApiService {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      throw Exception('Failed to sign in');
+      print('response IIIIIISSSSS: ${response.body}');
+      throw Exception('Failed to sign in${response}');
     }
   }
 

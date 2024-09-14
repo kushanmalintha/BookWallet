@@ -5,7 +5,7 @@ import '../models/review_model.dart';
 
 class ReviewForUserService {
   String apiUrl(int userId) =>
-      'http://${ip}:3000/api/reviews/getReviewWithUserId/$userId';
+      '${ip}/api/reviews/getReviewWithUserId/$userId';
 
   Future<List<ReviewModel>> fetchPosts(int userId, int page) async {
     final url = '${apiUrl(userId)}?page=$page';

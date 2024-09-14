@@ -6,7 +6,7 @@ import 'package:book_wallert/models/user.dart';
 
 class GroupService {
   final String _baseUrl =
-      'http://${ip}:3000/api/groups'; // Replace with your API base URL
+      '${ip}/api/groups'; // Replace with your API base URL
 
   Future<void> createGroup(String groupName, String groupDescription,
       String groupImageUrl, String token) async {
@@ -86,6 +86,42 @@ class GroupService {
     } else {
       print('Failed to fetch members: ${response.statusCode}');
       throw Exception('Failed to fetch members');
+    }
+  }
+   Future<List<User>> getMemberRequestsByGroupId(int groupId) async {
+    final url = Uri.parse('$_baseUrl/$groupId/requests');
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> requestData = jsonDecode(response.body);
+      return requestData.map((json) => User.fromJson(json)).toList();
+    } else {
+      print('Failed to fetch member requests: ${response.statusCode}');
+      throw Exception('Failed to fetch member requests');
+    }
+  }
+   Future<bool> checkAdminStatus(int groupId, String token) async {
+    final url = Uri.parse('$_baseUrl/$groupId/check-admin');
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // The backend should return a JSON response like: { "isAdmin": true/false }
+      final data = jsonDecode(response.body);
+      return data['isAdmin'];
+    } else {
+      print('Failed to check admin status: ${response.statusCode}');
+      throw Exception('Failed to check admin status');
     }
   }
 }

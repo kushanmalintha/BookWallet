@@ -7,7 +7,7 @@ import 'package:book_wallert/ipaddress.dart';
 //import 'package:book_wallert/services/token_service.dart'; // Import your token service
 
 class ShareService {
-  final String _baseUrl = 'http://${ip}:3000/api/reviews'; // Replace with your actual API endpoint
+  final String _baseUrl = '${ip}/api/reviews'; // Replace with your actual API endpoint
 
   // Method to share a review
   Future<void> shareReview(int reviewId, int userId) async {

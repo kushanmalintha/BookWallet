@@ -3,7 +3,7 @@ import 'package:book_wallert/ipaddress.dart';
 import 'package:http/http.dart' as http;
 
 class NotificationApiService {
-  static String baseUrl = 'http://${ip}:3000/api/notification';
+  static String baseUrl = '${ip}/api/notification';
 
   Future<List<AppNotificationShare>> fetchShareNotifications(int userId) async {
     final response = await http.get(Uri.parse('$baseUrl/share/$userId'));

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 // Post recommendation details
 class RecommendDetailsService {
-  static final String _baseUrl = 'http://$ip:3000/api/user/followers';
+  static final String _baseUrl = '${ip}/api/user/followers';
   // http://localhost:3000/api/user/followers/recommendedBooks/21/68
 
   Future<void> postRecommendDetails(
@@ -32,7 +32,7 @@ class RecommendDetailsService {
 // Fetch recommended books for user
 class BookForRecommendService {
   String apiUrl(int userId) =>
-      'http://$ip:3000/api/user/recommendedBooks/$userId';
+      '${ip}/api/user/recommendedBooks/$userId';
   // http://localhost:3000/api/user/recommendedBooks/69
 
   Future<List<BookModel>> fetchBooks(int userId, int page) async {

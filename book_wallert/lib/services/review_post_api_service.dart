@@ -5,7 +5,7 @@ import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/controllers/token_controller.dart';
 
 class ReviewPostApiService {
-  static final String _baseUrl = 'http://${ip}:3000/api/book-review/add';
+  static final String _baseUrl = '${ip}/api/book-review/add';
 
   Future<void> reviewPost(
       BookModel book, String reviewText, double rating, int userId) async {

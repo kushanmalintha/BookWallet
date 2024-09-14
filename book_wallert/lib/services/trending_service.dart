@@ -4,7 +4,7 @@ import 'package:book_wallert/models/book_model.dart';
 import 'package:http/http.dart' as http;
 
 class TrendingService {
-  static final String baseUrl = 'http://${ip}:3000/api/trending/trendingBooks';
+  static final String baseUrl = '${ip}/api/trending/trendingBooks';
 
   Future<List<BookModel>> fetchTrendingBooks() async {
     final response = await http.get(Uri.parse(baseUrl));

@@ -4,7 +4,7 @@
 // import 'package:http/http.dart' as http;
 
 // class WishlistApiService {
-//   static final String baseUrl = 'http://${ip}:3000/api/wishlist';
+//   static final String baseUrl = '${ip}/api/wishlist';
 
 //   Future<List<BookModel>> fetchWishlist(int userId) async {
 //     final response = await http.get(Uri.parse('$baseUrl/$userId'));
@@ -25,9 +25,9 @@ import 'package:book_wallert/models/book_model.dart';
 import 'package:http/http.dart' as http;
 
 class WishlistApiService {
-  static final String baseUrl = 'http://${ip}:3000/api/wishlist';
+  static final String baseUrl = '${ip}/api/wishlist';
   static final String WishlistBaseUrl =
-      'http://${ip}:3000/api/wishlist/wishlistBooks';
+      '${ip}/api/wishlist/wishlistBooks';
 
   Future<List<BookModel>> fetchWishlist(int userId) async {
     final response = await http.get(Uri.parse('$baseUrl/$userId'));
