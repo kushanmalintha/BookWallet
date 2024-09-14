@@ -80,4 +80,24 @@ class GroupController with ChangeNotifier {
       print('Error checking admin status: $e');
     }
   }
+
+  Future<void> acceptRequest(int groupId, int userId) async {
+    try {
+      final token = await getToken();
+      await _groupService.acceptMemberRequest(groupId, userId, token!);
+      notifyListeners(); // Notify UI to update
+    } catch (e) {
+      print('Error accepting request: $e');
+    }
+  }
+
+  Future<void> removeRequest(int groupId, int userId) async {
+    try {
+      final token = await getToken();
+      await _groupService.removeMemberRequest(groupId, userId, token!);
+      notifyListeners(); // Notify UI to update
+    } catch (e) {
+      print('Error removing request: $e');
+    }
+  }
 }
