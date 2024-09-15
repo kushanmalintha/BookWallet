@@ -140,7 +140,7 @@ class _CustomPopupMenuButtonsDynamicState
             child: CircularProgressIndicator(
               backgroundColor: MyColors.panelColor,
               color: MyColors
-                  .selectedItemColor, // Set color for the circular progress indicator
+                  .nonSelectedItemColor, // Set color for the circular progress indicator
             ), // Loading animation.
           ),
       ],
