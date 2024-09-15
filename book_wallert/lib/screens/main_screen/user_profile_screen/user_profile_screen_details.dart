@@ -113,16 +113,18 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                           style: const TextStyle(
                               color: MyColors.textColor, fontSize: 20),
                         ),
-                        CustomToggleButton1(
-                          isSelected: _isFollowing,
-                          beforeText: 'Follow',
-                          afterText: 'Following',
-                          press: _isFollowing ? _unfollowUser : _followUser,
-                          horizontalSpace: 18,
-                          verticalalSpace: 6,
-                          textColorSelected: MyColors.bgColor,
-                          textColorNotSelected: MyColors.bgColor,
-                        ),
+                        if (widget.user.userId != globalUser!.userId) ...[
+                          CustomToggleButton1(
+                            isSelected: _isFollowing,
+                            beforeText: 'Follow',
+                            afterText: 'Following',
+                            press: _isFollowing ? _unfollowUser : _followUser,
+                            horizontalSpace: 18,
+                            verticalalSpace: 6,
+                            textColorSelected: MyColors.bgColor,
+                            textColorNotSelected: MyColors.bgColor,
+                          )
+                        ],
                       ],
                     ),
                   ],
