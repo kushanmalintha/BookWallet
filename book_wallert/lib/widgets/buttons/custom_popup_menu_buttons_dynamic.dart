@@ -1,5 +1,4 @@
 import 'package:book_wallert/colors.dart'; // Importing custom color palette.
-import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart'; // Importing Flutter's material library for UI components.
 
 /// A custom popup menu widget that displays a list of items when an icon is tapped.
@@ -137,8 +136,12 @@ class _CustomPopupMenuButtonsDynamicState
         ),
         // If _isLoading is true, show a CircularProgressIndicator.
         if (_isLoading)
-          Positioned(
-            child: buildProgressIndicator(), // Loading animation.
+          const Positioned(
+            child: CircularProgressIndicator(
+              backgroundColor: MyColors.panelColor,
+              color: MyColors
+                  .selectedItemColor, // Set color for the circular progress indicator
+            ), // Loading animation.
           ),
       ],
     );
