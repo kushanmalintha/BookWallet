@@ -9,10 +9,12 @@ class CheckingWishlistController extends ChangeNotifier {
 
   CheckingWishlistController(this.checkingWishlistService);
 
-  Future<void> checkWishlistStatus(int userId, int bookId) async {
+  Future<bool> checkWishlistStatus(int userId, int bookId) async {
     try {
-      _isInWishlist = await checkingWishlistService.isBookInWishlist(userId, bookId);
+      _isInWishlist =
+          await checkingWishlistService.isBookInWishlist(userId, bookId);
       notifyListeners();
+      return _isInWishlist;
     } catch (e) {
       throw Exception('Failed to check wishlist status: $e');
     }

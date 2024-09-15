@@ -15,14 +15,15 @@ class WishlistController extends ChangeNotifier {
   List<BookModel> wishlistBooks = [];
   bool isLoading = false;
   int? bookId;
-  int? BookId;
   WishlistController(this.apiService);
 
   Future<void> fetchBookId(BookModel book) async {
-    try {
-      bookId = await _bookIdService.fetchId(book);
-    } catch (e) {
-      throw Exception('Error fetching book ID: $e');
+    if (bookId == null) {
+      try {
+        bookId = await _bookIdService.fetchId(book);
+      } catch (e) {
+        throw Exception('Error fetching book ID: $e');
+      }
     }
   }
 
@@ -104,7 +105,7 @@ class WishlistController extends ChangeNotifier {
 
   Future<void> wishlistfetchBookId(BookModel book) async {
     try {
-      BookId = await _apiService.fetchId(book);
+      bookId = await _apiService.fetchId(book);
     } catch (e) {
       throw Exception('Error fetching book ID: $e');
     }
