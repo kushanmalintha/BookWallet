@@ -1,4 +1,4 @@
-import 'package:book_wallert/controllers/groupController.dart'; // Controller to manage group-related logic
+import 'package:book_wallert/controllers/group_controller.dart';
 import 'package:book_wallert/screens/main_screen/group_profile_screen/group_member_listview.dart'; // Screen for displaying group members
 import 'package:book_wallert/screens/main_screen/group_profile_screen/group_member_req_listview.dart'; // Screen for displaying requested members (pending approval)
 import 'package:flutter/material.dart'; // Flutter core package for building UI

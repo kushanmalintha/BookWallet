@@ -1,4 +1,4 @@
-import 'package:book_wallert/controllers/groupController.dart';
+import 'package:book_wallert/controllers/group_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/models/user.dart'; // User model
 import 'package:book_wallert/colors.dart'; // Custom color class for the app

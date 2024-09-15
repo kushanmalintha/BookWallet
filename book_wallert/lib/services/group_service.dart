@@ -5,8 +5,7 @@ import 'package:book_wallert/models/group_model.dart';
 import 'package:book_wallert/models/user.dart';
 
 class GroupService {
-  final String _baseUrl =
-      '${ip}/api/groups'; // Replace with your API base URL
+  final String _baseUrl = '${ip}/api/groups'; // Replace with your API base URL
 
   Future<void> createGroup(String groupName, String groupDescription,
       String groupImageUrl, String token) async {
@@ -166,6 +165,44 @@ class GroupService {
 
     if (response.statusCode != 200) {
       throw Exception('Failed to remove member request');
+    }
+  }
+
+  // Send Join Request
+  Future<void> sendJoinRequest(int groupId, String token) async {
+    final url = Uri.parse('$_baseUrl/send/join-request');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'group_id': groupId,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to send join request');
+    }
+  }
+
+  // Cancel Join Request
+  Future<void> cancelJoinRequest(int groupId, String token) async {
+    final url = Uri.parse('$_baseUrl/cancel-join-request');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'group_id': groupId,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to cancel join request');
     }
   }
 }
