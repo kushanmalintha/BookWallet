@@ -89,6 +89,15 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
     await file.writeAsString(newContents);
   }
 
+  Future<String> _copyImageToNewPath(File originalFile) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final newFileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
+    final newFilePath = '${directory.path}/$newFileName';
+
+    final newFile = await originalFile.copy(newFilePath);
+    return newFile.path; // Return the new file path
+  }
+
   void _addPhysicalBook() async {
     Map<String, Object> newBook;
     if (_titleController.text.isNotEmpty &&
@@ -104,16 +113,17 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
       }
       final String newId =
           DateTime.now().millisecondsSinceEpoch.toString(); // Unique ID
+      // Copy the image to a new path and get the new path to store image permenetly.
+      final String newImagePath = await _copyImageToNewPath(_image!);
+
       newBook = {
         'id': newId,
         'progressVisiblity': true,
         'name': _titleController.text,
         'type': 'physical', // Differentiating type as 'physical'
-        'path': _image!
-            .path, // Using the image path as a placeholder for the book cover
-        'image': _image!.path,
-        'data': PDFData(id: newId, globalId: globalId)
-            .toJson(), // Store additional data if needed
+        'path': newImagePath, // Update with new path
+        'image': newImagePath, // Use the copied image path here too
+        'data': PDFData(id: newId, globalId: globalId).toJson(),
         'totalPages': int.parse(_pagesController.text),
       };
 
@@ -207,8 +217,8 @@ class _AddPhysicalBookScreenState extends State<AddPhysicalBookScreen> {
       // Fetch the image data
       final response = await http.get(Uri.parse(imageUrl));
       if (response.statusCode == 200) {
-        // Get the application directory of the device
-        final directory = await getApplicationDocumentsDirectory();
+        // Get the temporary directory of the device
+        final directory = await getTemporaryDirectory();
 
         // Create a unique file path in the temporary directory
         final uniqueFileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
