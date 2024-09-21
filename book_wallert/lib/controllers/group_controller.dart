@@ -100,4 +100,30 @@ class GroupController with ChangeNotifier {
       print('Error removing request: $e');
     }
   }
+
+  // Method to send a join request
+  Future<bool> sendJoinRequest(int groupId) async {
+    try {
+      final token = await getToken();
+      await _groupService.sendJoinRequest(groupId, token!);
+      notifyListeners(); // Notify UI to update
+      return true; // Return true if successful
+    } catch (e) {
+      print('Error sending join request: $e');
+      return false; // Return false if there is an error
+    }
+  }
+
+// Method to cancel a join request
+  Future<bool> cancelJoinRequest(int groupId) async {
+    try {
+      final token = await getToken();
+      await _groupService.cancelJoinRequest(groupId, token!);
+      notifyListeners(); // Notify UI to update
+      return true; // Return true if successful
+    } catch (e) {
+      print('Error canceling join request: $e');
+      return false; // Return false if there is an error
+    }
+  }
 }
