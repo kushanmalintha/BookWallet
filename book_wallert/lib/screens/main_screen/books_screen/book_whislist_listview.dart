@@ -16,7 +16,13 @@ class BookWishlistListView extends StatefulWidget {
   State<BookWishlistListView> createState() => _BookWishlistListViewState();
 }
 
-class _BookWishlistListViewState extends State<BookWishlistListView> {
+class _BookWishlistListViewState extends State<BookWishlistListView>
+    with AutomaticKeepAliveClientMixin {
+  // AutomaticKeepAliveClientMixin added to make sure scroll view remains same when moving to other listviews in same screen
+  @override
+  bool get wantKeepAlive =>
+      true; // Keep alive even when move to diffeerent listview
+
   late WishlistController _wishlistController;
 
   @override
@@ -31,20 +37,50 @@ class _BookWishlistListViewState extends State<BookWishlistListView> {
     setState(() {}); // Update the state to refresh the UI after data is fetched
   }
 
+  // Refresh handler (this function runs on refresh sceen)
+  Future<void> _onRefresh() async {
+    setState(() {
+      _wishlistController.wishlistBooks = [];
+    });
+
+    _fetchWishlist();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _wishlistController.isLoading
-        ? Center(child: buildProgressIndicator())
-        : _wishlistController.wishlistBooks.isEmpty
-            ? const Center(
-                child: Text('No books in Wishlist',
-                    style: TextStyle(color: MyColors.textColor)))
-            : ListView.builder(
-                itemCount: _wishlistController.wishlistBooks.length,
-                itemBuilder: (context, index) {
-                  return BookCard(
-                      book: _wishlistController.wishlistBooks[index]);
-                },
-              );
+    super.build(context);
+    return RefreshIndicator(
+      // Add the ability to refresh screen when pull down
+      color: MyColors.selectedItemColor,
+      backgroundColor: MyColors.bgColor,
+      onRefresh: _onRefresh,
+      child: _wishlistController.isLoading
+          ? Center(child: buildProgressIndicator())
+          : _wishlistController.wishlistBooks.isEmpty
+              ? ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: const Center(
+                        child: Text(
+                          'No books in Wishlist',
+                          style: TextStyle(
+                            color: MyColors.textColor,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : ListView.builder(
+                  itemCount: _wishlistController.wishlistBooks.length,
+                  itemBuilder: (context, index) {
+                    return BookCard(
+                        book: _wishlistController.wishlistBooks[index]);
+                  },
+                ),
+    );
   }
 }

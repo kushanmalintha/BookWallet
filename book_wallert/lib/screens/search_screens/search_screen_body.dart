@@ -1,34 +1,32 @@
-import 'package:book_wallert/screens/main_screen/books_screen/book_completed_listview.dart';
-import 'package:book_wallert/screens/main_screen/books_screen/book_recomended_listview.dart';
-import 'package:book_wallert/screens/main_screen/books_screen/book_trending_listview.dart';
-import 'package:book_wallert/screens/main_screen/books_screen/book_whislist_listview.dart';
+import 'package:book_wallert/screens/search_screens/book_search_listview.dart';
+import 'package:book_wallert/screens/search_screens/group_search_listview.dart';
+import 'package:book_wallert/screens/search_screens/user_search_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';
 
-class BookListScreenBody extends StatefulWidget {
-  final int userId;
+class SearchScreenBody extends StatefulWidget {
+  final String searchText;
 
-  const BookListScreenBody({super.key, required this.userId});
+  const SearchScreenBody({super.key, required this.searchText});
 
   @override
-  State<BookListScreenBody> createState() {
+  State<SearchScreenBody> createState() {
     // returns a screen as state
-    return _BookScreenBodyState();
+    return _SearchScreenBodyState();
   }
 }
 
-class _BookScreenBodyState extends State<BookListScreenBody>
+class _SearchScreenBodyState extends State<SearchScreenBody>
     with SingleTickerProviderStateMixin {
   // ''with ticker'' is to make sure connnection between clicking and swiping
   late TabController _tabController;
 
   // add name to buttons on panel
   final List<String> _tabNames = [
-    'Recommended',
-    'Trending',
-    'Wishlist',
-    'Completed',
+    'Books',
+    'Users',
+    'Groups',
   ];
 
   @override
@@ -58,14 +56,9 @@ class _BookScreenBodyState extends State<BookListScreenBody>
         // adding corrosponding screens to each button on SelectionBar.
         controller: _tabController,
         children: [
-          BookRecomendedListview(userId: widget.userId), // Recommended
-          const TrendingListView(), // Trending
-          BookWishlistListView(
-            userId: widget.userId,
-          ), // Wishlist
-          BookCompletedListview(
-            globalUserId: widget.userId,
-          ), // Completed
+          BookSearchListview(searchText: widget.searchText),
+          UserSearchListview(searchText: widget.searchText),
+          GroupSearchListview(searchText: widget.searchText),
         ],
       ),
     );

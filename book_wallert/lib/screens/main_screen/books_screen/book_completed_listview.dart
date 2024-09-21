@@ -10,9 +10,16 @@ class BookCompletedListview extends StatefulWidget {
   State<BookCompletedListview> createState() => _BookCompletedListviewState();
 }
 
-class _BookCompletedListviewState extends State<BookCompletedListview> {
+class _BookCompletedListviewState extends State<BookCompletedListview>
+    with AutomaticKeepAliveClientMixin {
+  // AutomaticKeepAliveClientMixin added to make sure scroll view remains same when moving to other listviews in same screen
+  @override
+  bool get wantKeepAlive =>
+      true; // Keep alive even when move to diffeerent listview
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     // Fetch reviews based on the userId and display them
     // Placeholder implementation for now
     return Center(

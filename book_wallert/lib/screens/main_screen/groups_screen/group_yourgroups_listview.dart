@@ -17,7 +17,13 @@ class YourGroupListView extends StatefulWidget {
   State<YourGroupListView> createState() => _YourGroupListViewState();
 }
 
-class _YourGroupListViewState extends State<YourGroupListView> {
+class _YourGroupListViewState extends State<YourGroupListView>
+    with AutomaticKeepAliveClientMixin {
+  // AutomaticKeepAliveClientMixin added to make sure scroll view remains same when moving to other listviews in same screen
+  @override
+  bool get wantKeepAlive =>
+      true; // Keep alive even when move to diffeerent listview
+
   late GroupController
       _groupController; // Instance of GroupController to fetch and manage group data
   final ScrollController _scrollController =
@@ -61,27 +67,45 @@ class _YourGroupListViewState extends State<YourGroupListView> {
     });
   }
 
+  // Refresh handler (this function runs on refresh sceen)
+  Future<void> _onRefresh() async {
+    setState(() {
+      _groupController.groups = [];
+    });
+
+    _fetchMoreGroups();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor:
-          MyColors.bgColor, // Set the background color of the scaffold
-
-      // If groups are still being loaded and no groups are currently available
-      body: _isLoading && _groupController.groups.isEmpty
-          ? Center(child: buildProgressIndicator()) // Show loading indicator
-
-          // If no groups are found
+    super.build(context); // To keep alive
+    return RefreshIndicator(
+      // Add the ability to refresh screen when pull down
+      color: MyColors.selectedItemColor,
+      backgroundColor: MyColors.bgColor,
+      onRefresh: _onRefresh,
+      child: _isLoading && _groupController.groups.isEmpty
+          ? Center(child: buildProgressIndicator())
           : _groupController.groups.isEmpty
-              ? const Center(
-                  child: Text('No groups found',
-                      style: TextStyle(
-                          color: MyColors
-                              .textColor)), // Display message when no groups are found
+              ? ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: const Center(
+                        child: Text(
+                          'No trending books available',
+                          style: TextStyle(
+                            color: MyColors.textColor,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
-
-              // Display the list of groups
               : ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller:
                       _scrollController, // Attach the scroll controller to detect scrolling events
                   itemCount: _groupController.groups.length +
