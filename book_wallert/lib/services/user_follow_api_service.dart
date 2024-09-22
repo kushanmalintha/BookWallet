@@ -21,7 +21,7 @@ class UserFollowService {
   static Future<bool> followUser(
       int followerId, int followedId, String token) async {
     final response = await http.post(
-      Uri.parse('${ip}/api/users/follow'),
+      Uri.parse('${ip}/api/user/follow'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'followerId': followerId,
@@ -36,7 +36,7 @@ class UserFollowService {
   static Future<bool> unfollowUser(
       int followerId, int followedId, String token) async {
     final response = await http.post(
-      Uri.parse('${ip}/api/users/unfollow'),
+      Uri.parse('${ip}/api/user/unfollow'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'followerId': followerId,
@@ -51,7 +51,7 @@ class UserFollowService {
   static Future<bool> checkFollowStatus(int followerId, int followedId) async {
     final response = await http.get(
       Uri.parse(
-          '${ip}/api/users/check-follow?followerId=$followerId&followedId=$followedId'),
+          '${ip}/api/user/check-follow?followerId=$followerId&followedId=$followedId'),
       headers: {'Content-Type': 'application/json'},
     );
 
