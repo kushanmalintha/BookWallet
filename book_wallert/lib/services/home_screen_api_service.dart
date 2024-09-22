@@ -6,7 +6,7 @@ import '../models/review_model.dart';
 import '../models/book_model.dart';
 
 class HomeScreenService {
-  final String apiUrl = '${ip}/api/getHomeScreen';
+  final String apiUrl = '${ip}/api/home-screen/getHomeScreen';
   List<dynamic> results = [];
 
   Future<List<dynamic>> fetchHomeScreen(int userId, int page) async {
