@@ -23,11 +23,15 @@ class BookProfileScreenShopListView extends StatefulWidget {
 }
 
 class _BookProfileScreenShopListViewState
-    extends State<BookProfileScreenShopListView> {
+    extends State<BookProfileScreenShopListView>
+    with AutomaticKeepAliveClientMixin {
   final ShopController _shopController = ShopController();
   final ReviewForBookController _reviewForBookController =
       ReviewForBookController();
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -57,20 +61,47 @@ class _BookProfileScreenShopListViewState
     }
   }
 
+  Future<void> _onRefresh() async {
+    setState(() {
+      _shopController.shops = [];
+    });
+    await _initializeData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _shopController.isLoading
-        ? Center(child: buildProgressIndicator())
-        : _shopController.shops.isEmpty
-            ? const Center(
-                child: Text('No shops found',
-                    style: TextStyle(color: MyColors.textColor)))
-            : ListView.builder(
-                controller: _scrollController,
-                itemCount: _shopController.shops.length,
-                itemBuilder: (context, index) {
-                  return LocationsCard(shop: _shopController.shops[index]);
-                },
-              );
+    super.build(context);
+    return RefreshIndicator(
+      color: MyColors.selectedItemColor,
+      backgroundColor: MyColors.bgColor,
+      onRefresh: _onRefresh,
+      child: _shopController.isLoading
+          ? Center(child: buildProgressIndicator())
+          : _shopController.shops.isEmpty
+              ? ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      child: const Center(
+                        child: Text(
+                          'No locations',
+                          style: TextStyle(
+                            color: MyColors.textColor,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : ListView.builder(
+                  controller: _scrollController,
+                  itemCount: _shopController.shops.length,
+                  itemBuilder: (context, index) {
+                    return LocationsCard(shop: _shopController.shops[index]);
+                  },
+                ),
+    );
   }
 }
