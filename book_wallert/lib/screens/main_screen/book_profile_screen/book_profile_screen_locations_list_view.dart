@@ -23,11 +23,15 @@ class BookProfileScreenShopListView extends StatefulWidget {
 }
 
 class _BookProfileScreenShopListViewState
-    extends State<BookProfileScreenShopListView> {
+    extends State<BookProfileScreenShopListView>
+    with AutomaticKeepAliveClientMixin {
   final ShopController _shopController = ShopController();
   final ReviewForBookController _reviewForBookController =
       ReviewForBookController();
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -59,6 +63,7 @@ class _BookProfileScreenShopListViewState
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return _shopController.isLoading
         ? Center(child: buildProgressIndicator())
         : _shopController.shops.isEmpty
