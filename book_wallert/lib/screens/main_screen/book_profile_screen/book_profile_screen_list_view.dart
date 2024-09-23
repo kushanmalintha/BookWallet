@@ -16,13 +16,17 @@ class BookProfileScreenListView extends StatefulWidget {
       _BookProfileScreenListViewState();
 }
 
-class _BookProfileScreenListViewState extends State<BookProfileScreenListView> {
+class _BookProfileScreenListViewState extends State<BookProfileScreenListView>
+    with AutomaticKeepAliveClientMixin {
   final ScrollController _scrollController = ScrollController();
   final List<String> screens = [
     'Reviews',
     'Locations',
     'Read online',
   ];
+
+  @override
+  bool get wantKeepAlive => true;
 
   Widget getScreen(String screenName) {
     switch (screenName) {
@@ -38,6 +42,7 @@ class _BookProfileScreenListViewState extends State<BookProfileScreenListView> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ListView.builder(
       controller: _scrollController,
       itemCount: 10,
