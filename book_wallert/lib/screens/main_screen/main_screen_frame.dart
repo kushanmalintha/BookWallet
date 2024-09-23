@@ -1,5 +1,5 @@
 import 'package:book_wallert/functions/global_user_provider.dart';
-import 'package:book_wallert/screens/search_screens/search_list_screen_body.dart';
+import 'package:book_wallert/screens/search_screens/search_screen_body.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/main_screen/books_screen/books_list_screen_body.dart';
 import 'package:book_wallert/screens/main_screen/groups_screen/groups_list_screen_body.dart';
@@ -81,7 +81,7 @@ class _MainScreenState extends State<MainScreen> {
   void _searchBooks(String searchText) {
     _navigatorKeys[_selectedIndex].currentState!.push(
           MaterialPageRoute(
-            builder: (context) => SearchListScreenBody(searchText: searchText),
+            builder: (context) => SearchScreenBody(searchText: searchText),
           ),
         );
   }

@@ -97,16 +97,19 @@ class _TopPanelState extends State<TopPanel> {
                       IconButton(
                         icon: const Icon(Icons.search),
                         color: MyColors.nonSelectedItemColor,
+                        iconSize: 20,
                         onPressed: _handleSearch,
                       ),
                       IconButton(
                         icon: const Icon(Icons.qr_code_scanner),
                         color: MyColors.nonSelectedItemColor,
+                        iconSize: 20,
                         onPressed: _scanBarcode, // Trigger the barcode scanner
                       ),
                       IconButton(
                         icon: const Icon(Icons.close),
                         color: MyColors.nonSelectedItemColor,
+                        iconSize: 20,
                         onPressed: () {
                           setState(() {
                             _isSearching = !_isSearching;
@@ -122,6 +125,7 @@ class _TopPanelState extends State<TopPanel> {
                       IconButton(
                         icon: const Icon(Icons.search),
                         color: MyColors.nonSelectedItemColor,
+                        iconSize: 20,
                         onPressed: () {
                           setState(() {
                             _isSearching = !_isSearching;
@@ -136,6 +140,7 @@ class _TopPanelState extends State<TopPanel> {
                         child: IconButton(
                           icon: const Icon(Icons.notifications_rounded),
                           color: MyColors.nonSelectedItemColor,
+                          iconSize: 20,
                           onPressed: () {
                             setState(() {
                               Navigator.pushNamed(
@@ -166,6 +171,7 @@ class _TopPanelState extends State<TopPanel> {
             icon: const Icon(
               Icons.menu,
               color: MyColors.nonSelectedItemColor,
+              size: 18,
             ),
           ),
         ],
