@@ -78,9 +78,22 @@ class _BookProfileScreenListViewState
       child: _reviewForBookController.isloading
           ? Center(child: buildProgressIndicator()) // Show loading indicator
           : _reviewForBookController.reviews.isEmpty
-              ? const Center(
-                  child: Text('No reviews',
-                      style: TextStyle(color: MyColors.textColor)),
+              ? ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      child: const Center(
+                        child: Text(
+                          'No reviews',
+                          style: TextStyle(
+                            color: MyColors.textColor,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               : ListView.builder(
                   controller: _scrollController,

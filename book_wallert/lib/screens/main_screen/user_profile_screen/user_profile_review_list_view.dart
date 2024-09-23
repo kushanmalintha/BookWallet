@@ -69,11 +69,22 @@ class _UserProfileReviewListViewState extends State<UserProfileReviewListView>
               ),
             );
           } else if (_reviewForUserController.reviews.isEmpty) {
-            return const Center(
-              child: Text(
-                'No reviews',
-                style: TextStyle(color: MyColors.textColor),
-              ),
+            return ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  child: const Center(
+                    child: Text(
+                      'No reviews',
+                      style: TextStyle(
+                        color: MyColors.textColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             );
           } else {
             return ListView.builder(
