@@ -61,21 +61,34 @@ class _BookProfileScreenShopListViewState
     }
   }
 
+  Future<void> _onRefresh() async {
+    setState(() {
+      _shopController.shops = [];
+    });
+    await _initializeData();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return _shopController.isLoading
-        ? Center(child: buildProgressIndicator())
-        : _shopController.shops.isEmpty
-            ? const Center(
-                child: Text('No shops found',
-                    style: TextStyle(color: MyColors.textColor)))
-            : ListView.builder(
-                controller: _scrollController,
-                itemCount: _shopController.shops.length,
-                itemBuilder: (context, index) {
-                  return LocationsCard(shop: _shopController.shops[index]);
-                },
-              );
+    return RefreshIndicator(
+      color: MyColors.selectedItemColor,
+      backgroundColor: MyColors.bgColor,
+      onRefresh: _onRefresh,
+      child: _shopController.isLoading
+          ? Center(child: buildProgressIndicator())
+          : _shopController.shops.isEmpty
+              ? const Center(
+                  child: Text('No shops found',
+                      style: TextStyle(color: MyColors.textColor)),
+                )
+              : ListView.builder(
+                  controller: _scrollController,
+                  itemCount: _shopController.shops.length,
+                  itemBuilder: (context, index) {
+                    return LocationsCard(shop: _shopController.shops[index]);
+                  },
+                ),
+    );
   }
 }
