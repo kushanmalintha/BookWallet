@@ -1,3 +1,4 @@
+import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/controllers/share_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/controllers/review_likes_controller.dart';
@@ -21,14 +22,20 @@ class ReviewScreenListView extends StatefulWidget {
   _ReviewScreenListViewState createState() => _ReviewScreenListViewState();
 }
 
-class _ReviewScreenListViewState extends State<ReviewScreenListView> {
+class _ReviewScreenListViewState extends State<ReviewScreenListView>
+    with AutomaticKeepAliveClientMixin {
   late LikesController _likesController;
   late CommentController _commentController;
   late ShareController _shareController; // Declare ShareController
+  bool _loadingLikes = false;
   bool _loadingComments = false;
   bool _loadingShares = false; // Track share loading state
+  List<Map<String, dynamic>> _likes = [];
   List<Comment> _comments = [];
   List<Map<String, dynamic>> _shares = []; // Store shares data
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -48,8 +55,14 @@ class _ReviewScreenListViewState extends State<ReviewScreenListView> {
   }
 
   Future<void> _fetchLikes() async {
+    setState(() {
+      _loadingLikes = true;
+    });
     await _likesController.fetchLikes(widget.reviewId);
-    setState(() {}); // Refresh the UI after data is fetched
+    setState(() {
+      _likes = _likesController.likes;
+      _loadingLikes = false;
+    });
   }
 
   Future<void> _fetchComments() async {
@@ -74,9 +87,46 @@ class _ReviewScreenListViewState extends State<ReviewScreenListView> {
     });
   }
 
+  Future<void> _onRefresh() async {
+    if (widget.screenName == 'Like') {
+      await _onRefreshLikes();
+    } else if (widget.screenName == 'Comment') {
+      await _onRefreshComments();
+    } else if (widget.screenName == 'Share') {
+      await _onRefreshShares();
+    }
+  }
+
+  Future<void> _onRefreshLikes() async {
+    setState(() {
+      _likesController.likes = [];
+    });
+    _fetchLikes();
+  }
+
+  Future<void> _onRefreshComments() async {
+    setState(() {
+      _commentController.comments = [];
+    });
+    _fetchComments();
+  }
+
+  Future<void> _onRefreshShares() async {
+    setState(() {
+      _shareController.shares = [];
+    });
+    _fetchShares();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return getScreen(widget.screenName);
+    super.build(context);
+    return RefreshIndicator(
+      color: MyColors.selectedItemColor,
+      backgroundColor: MyColors.bgColor,
+      onRefresh: _onRefresh,
+      child: getScreen(widget.screenName),
+    );
   }
 
   Widget getScreen(String screenName) {
@@ -85,7 +135,23 @@ class _ReviewScreenListViewState extends State<ReviewScreenListView> {
         return _loadingComments
             ? Center(child: CircularProgressIndicator())
             : _comments.isEmpty
-                ? Center(child: Text('No comments yet'))
+                ? ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        child: const Center(
+                          child: Text(
+                            'No comments',
+                            style: TextStyle(
+                              color: MyColors.textColor,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 : ListView.builder(
                     itemCount: _comments.length,
                     itemBuilder: (context, index) {
@@ -94,14 +160,30 @@ class _ReviewScreenListViewState extends State<ReviewScreenListView> {
                     },
                   );
       case 'Like':
-        return _likesController.isLoading
+        return _loadingLikes
             ? Center(child: CircularProgressIndicator())
-            : _likesController.likes.isEmpty
-                ? Center(child: Text('No likes yet'))
+            : _likes.isEmpty
+                ? ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        child: const Center(
+                          child: Text(
+                            'No likes',
+                            style: TextStyle(
+                              color: MyColors.textColor,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 : ListView.builder(
-                    itemCount: _likesController.likes.length,
+                    itemCount: _likes.length,
                     itemBuilder: (context, index) {
-                      final like = _likesController.likes[index];
+                      final like = _likes[index];
                       return UserCard(
                         user: User(
                           userId: like['user_id'],
@@ -115,7 +197,23 @@ class _ReviewScreenListViewState extends State<ReviewScreenListView> {
         return _loadingShares
             ? Center(child: CircularProgressIndicator())
             : _shares.isEmpty
-                ? Center(child: Text('No shares yet'))
+                ? ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        child: const Center(
+                          child: Text(
+                            'No shares',
+                            style: TextStyle(
+                              color: MyColors.textColor,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 : ListView.builder(
                     itemCount: _shares.length,
                     itemBuilder: (context, index) {

@@ -18,10 +18,14 @@ class BookProfileScreenReviewListView extends StatefulWidget {
 }
 
 class _BookProfileScreenListViewState
-    extends State<BookProfileScreenReviewListView> {
+    extends State<BookProfileScreenReviewListView>
+    with AutomaticKeepAliveClientMixin {
   final ReviewForBookController _reviewForBookController =
       ReviewForBookController();
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -38,11 +42,17 @@ class _BookProfileScreenListViewState
   Future<void> _initializeData() async {
     try {
       await _reviewForBookController.fetchId(widget.book);
-      // _reviewForBookController.bookId = 1;
       _fetchInitialData();
     } catch (e) {
       print('Error initializing data: $e');
     }
+  }
+
+  Future<void> _onRefresh() async {
+    setState(() {
+      _reviewForBookController.reviews = [];
+    });
+    _fetchInitialData();
   }
 
   void _fetchInitialData() {
@@ -59,26 +69,44 @@ class _BookProfileScreenListViewState
 
   @override
   Widget build(BuildContext context) {
-    return _reviewForBookController.isloading
-        ? Center(child: buildProgressIndicator())
-        : _reviewForBookController.reviews.isEmpty
-            ? const Center(
-                child: Text('No reviews',
-                    style: TextStyle(color: MyColors.textColor)))
-            : ListView.builder(
-                controller: _scrollController,
-                itemCount: _reviewForBookController.reviews.length + 1,
-                itemBuilder: (context, index) {
-                  if (index < _reviewForBookController.reviews.length) {
+    super.build(context); // Ensure state is maintained
+
+    return RefreshIndicator(
+      color: MyColors.selectedItemColor,
+      backgroundColor: MyColors.bgColor,
+      onRefresh: _onRefresh,
+      child: _reviewForBookController.isloading
+          ? Center(child: buildProgressIndicator()) // Show loading indicator
+          : _reviewForBookController.reviews.isEmpty
+              ? ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      child: const Center(
+                        child: Text(
+                          'No reviews',
+                          style: TextStyle(
+                            color: MyColors.textColor,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : ListView.builder(
+                  controller: _scrollController,
+                  itemCount: _reviewForBookController.reviews.length,
+                  itemBuilder: (context, index) {
                     return Column(
                       children: [
                         getScreen(index),
                         const SizedBox(height: 3),
                       ],
                     );
-                  }
-                  return null;
-                },
-              );
+                  },
+                ),
+    );
   }
 }

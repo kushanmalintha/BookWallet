@@ -7,14 +7,20 @@ class UserProfileWishlistListView extends StatefulWidget {
   const UserProfileWishlistListView({super.key, required this.userId});
 
   @override
-  State<UserProfileWishlistListView> createState() => _UserProfileWishlistListViewState();
+  State<UserProfileWishlistListView> createState() =>
+      _UserProfileWishlistListViewState();
 }
 
-class _UserProfileWishlistListViewState extends State<UserProfileWishlistListView> {
+class _UserProfileWishlistListViewState
+    extends State<UserProfileWishlistListView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
     // Fetch reviews based on the userId and display them
     // Placeholder implementation for now
+    super.build(context);
     return Center(
       child: Text(
         'Wishlist for user ID: ${widget.userId}',

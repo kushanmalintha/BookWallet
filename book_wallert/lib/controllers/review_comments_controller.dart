@@ -8,6 +8,7 @@ class CommentController {
   final TextEditingController commentController = TextEditingController();
   final CommentApiService commentApiService = CommentApiService();
   final int reviewId;
+  List<Comment> comments = [];
 
   CommentController(this.reviewId);
 
@@ -50,7 +51,7 @@ class CommentController {
 
   Future<List<Comment>> fetchComments() async {
     try {
-      return await commentApiService.fetchComments(reviewId);
+      return comments = await commentApiService.fetchComments(reviewId);
     } catch (e) {
       print(e);
       return [];
