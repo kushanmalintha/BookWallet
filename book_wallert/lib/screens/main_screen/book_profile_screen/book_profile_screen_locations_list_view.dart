@@ -78,9 +78,22 @@ class _BookProfileScreenShopListViewState
       child: _shopController.isLoading
           ? Center(child: buildProgressIndicator())
           : _shopController.shops.isEmpty
-              ? const Center(
-                  child: Text('No shops found',
-                      style: TextStyle(color: MyColors.textColor)),
+              ? ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      child: const Center(
+                        child: Text(
+                          'No locations',
+                          style: TextStyle(
+                            color: MyColors.textColor,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               : ListView.builder(
                   controller: _scrollController,

@@ -5,6 +5,7 @@ import 'package:book_wallert/models/review_model.dart';
 import 'package:book_wallert/models/share_model.dart';
 import 'package:book_wallert/widgets/cards/review_card.dart';
 import 'package:book_wallert/widgets/frames/shareby_frame.dart';
+import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -52,27 +53,44 @@ class _UserProfileTimeLineListViewState
             backgroundColor: MyColors.bgColor,
             onRefresh: _onRefresh,
             child: controller.isLoading
-                ? Center(child: CircularProgressIndicator())
-                : ListView.builder(
-                    itemCount: controller.userActivities.length,
-                    itemBuilder: (context, index) {
-                      final activity = controller.userActivities[index];
+                ? Center(child: buildProgressIndicator())
+                : controller.userActivities.isEmpty
+                    ? ListView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            child: const Center(
+                              child: Text(
+                                'No user activities',
+                                style: TextStyle(
+                                  color: MyColors.textColor,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : ListView.builder(
+                        itemCount: controller.userActivities.length,
+                        itemBuilder: (context, index) {
+                          final activity = controller.userActivities[index];
 
-                      if (activity is SharedReview) {
-                        return SharedByCard(
-                          child: ReviewCard(review: activity.review),
-                          sharedBy: [activity.sharerUsername],
-                          imagePath: dummyUser.imageUrl,
-                          userId: activity.sharedUserId,
-                        );
-                      } else if (activity is ReviewModel) {
-                        return ReviewCard(review: activity);
-                      } else {
-                        return SizedBox
-                            .shrink(); // For safety, in case of unexpected data
-                      }
-                    },
-                  ),
+                          if (activity is SharedReview) {
+                            return SharedByCard(
+                              child: ReviewCard(review: activity.review),
+                              sharedBy: [activity.sharerUsername],
+                              imagePath: dummyUser.imageUrl,
+                              userId: activity.sharedUserId,
+                            );
+                          } else if (activity is ReviewModel) {
+                            return ReviewCard(review: activity);
+                          } else {
+                            return const SizedBox.shrink(); // Safety check
+                          }
+                        },
+                      ),
           );
         },
       ),

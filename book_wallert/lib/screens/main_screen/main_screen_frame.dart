@@ -50,31 +50,33 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onItemTapped(int index) {
-    // Ignore taps on index 2 (the gap/Groups button)
     if (index == 2) {
-      return;
+      return; // Ignore taps on index 2 (the Groups button)
     }
 
-    // Adjust the selected index to skip over the "Groups" button
     int newIndex = index > 2 ? index - 1 : index;
 
     if (_selectedIndex == newIndex) {
       // Ensure only work in the second tap
       _refreshCurrentScreen = true;
+    } else {
+      _refreshCurrentScreen = false; // Reset refresh flag when switching tabs
     }
+
     setState(() {
       _selectedIndex = newIndex;
     });
 
-    // Clear the previous route stack when switching tabs
+    // If coming back to Home and it's already displayed, pop to it instead of recreating
     if (_selectedIndex == newIndex && _refreshCurrentScreen) {
-      _navigatorKeys[_selectedIndex].currentState!.pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => _screens[_selectedIndex],
-            ),
-            (route) => false,
-          );
-      _refreshCurrentScreen = false;
+      // Check if there's a previous route to pop
+      if (_navigatorKeys[_selectedIndex].currentState!.canPop()) {
+        _navigatorKeys[_selectedIndex]
+            .currentState!
+            .popUntil((route) => route.isFirst);
+      } else {
+        // add here any logic if need to re-create a new refresh(re-create the content) 
+      }
     }
   }
 

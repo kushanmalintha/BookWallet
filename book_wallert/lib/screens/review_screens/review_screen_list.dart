@@ -135,7 +135,23 @@ class _ReviewScreenListViewState extends State<ReviewScreenListView>
         return _loadingComments
             ? Center(child: CircularProgressIndicator())
             : _comments.isEmpty
-                ? Center(child: Text('No comments yet'))
+                ? ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        child: const Center(
+                          child: Text(
+                            'No comments',
+                            style: TextStyle(
+                              color: MyColors.textColor,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 : ListView.builder(
                     itemCount: _comments.length,
                     itemBuilder: (context, index) {
@@ -147,7 +163,23 @@ class _ReviewScreenListViewState extends State<ReviewScreenListView>
         return _loadingLikes
             ? Center(child: CircularProgressIndicator())
             : _likes.isEmpty
-                ? Center(child: Text('No likes yet'))
+                ? ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        child: const Center(
+                          child: Text(
+                            'No likes',
+                            style: TextStyle(
+                              color: MyColors.textColor,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 : ListView.builder(
                     itemCount: _likes.length,
                     itemBuilder: (context, index) {
@@ -165,7 +197,23 @@ class _ReviewScreenListViewState extends State<ReviewScreenListView>
         return _loadingShares
             ? Center(child: CircularProgressIndicator())
             : _shares.isEmpty
-                ? Center(child: Text('No shares yet'))
+                ? ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        child: const Center(
+                          child: Text(
+                            'No shares',
+                            style: TextStyle(
+                              color: MyColors.textColor,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 : ListView.builder(
                     itemCount: _shares.length,
                     itemBuilder: (context, index) {

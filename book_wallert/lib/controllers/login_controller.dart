@@ -1,4 +1,4 @@
-import 'dart:convert';
+//import 'dart:convert';
 import 'package:book_wallert/controllers/token_controller.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/models/user.dart';
@@ -58,10 +58,17 @@ class LoginController {
   }
 
   static Future<void> loginWithToken(BuildContext context) async {
-    final response = await AuthApiService.fetchProtectedData(context);
+    final Map<String, dynamic>? response =
+        await AuthApiService.fetchProtectedData(context);
     if (response != null) {
       // Handle the response data
-      User user = User.fromJson(jsonDecode(response));
+      User user = User(
+          userId: response['userId'],
+          username: response['username'],
+          email: response['email'],
+          imageUrl: response['imageUrl'],
+          description: response['description']);
+      print(user);
       // Update the user provider
       setUser(user);
       // print(globalUser!.id);

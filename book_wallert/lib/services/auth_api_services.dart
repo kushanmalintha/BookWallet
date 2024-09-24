@@ -56,7 +56,8 @@ class AuthApiService {
     }
   }
 
-  static Future<String?> fetchProtectedData(BuildContext context) async {
+  static Future<Map<String, dynamic>?> fetchProtectedData(
+      BuildContext context) async {
     final token = await getToken();
     if (token == null) {
       if (context.mounted) Navigator.pushNamed(context, '/LoginScreen');
@@ -68,7 +69,7 @@ class AuthApiService {
       );
       if (response.statusCode == 200) {
         // Handle the response data
-        return response.body;
+        return jsonDecode(response.body);
       } else {
         return null;
       }
