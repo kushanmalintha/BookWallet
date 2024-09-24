@@ -1,4 +1,3 @@
-import 'package:book_wallert/controllers/checking_wishlist_controller.dart';
 import 'package:book_wallert/controllers/review_delete_controller.dart';
 import 'package:book_wallert/controllers/saved_controller.dart';
 import 'package:book_wallert/controllers/wishlist_controller.dart';
@@ -9,7 +8,6 @@ import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
 import 'package:book_wallert/screens/review_screens/review_screen_body.dart';
-import 'package:book_wallert/services/checking_wishlist_service.dart';
 import 'package:book_wallert/services/wishlist_api_service.dart';
 import 'package:book_wallert/widgets/buttons/comment_button.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
@@ -80,7 +78,6 @@ class _ReviewCardState extends State<ReviewCard> {
         ReviewDeleteController(widget.review.reviewId, widget.review.userId);
     final WishlistController wishlistController =
         WishlistController(WishlistApiService());
-    CheckingWishlistController(CheckingWishlistService());
     final savedController = SavedController(globalUser!.userId);
 
     //print(widget.review.bookId);

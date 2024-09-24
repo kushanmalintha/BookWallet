@@ -66,5 +66,67 @@ class SavedController {
     } catch (e) {
       print('Error inserting to saved: $e');
     }
+  } // Check if a review is saved
+
+  Future<bool> isReviewSaved(reviewId) async {
+    try {
+      final token = await getToken();
+      return await savedService.isReviewSaved(token, reviewId);
+    } catch (e) {
+      print('Error checking review saved status: $e');
+      return false;
+    }
+  }
+
+  // Check if a book is saved
+  Future<bool> isBookSaved(bookId) async {
+    try {
+      final token = await getToken();
+      return await savedService.isBookSaved(token, bookId);
+    } catch (e) {
+      print('Error checking book saved status: $e');
+      return false;
+    }
+  }
+
+  // Check if a profile is saved
+  Future<bool> isProfileSaved(profileId) async {
+    try {
+      final token = await getToken();
+      return await savedService.isProfileSaved(token, profileId);
+    } catch (e) {
+      print('Error checking profile saved status: $e');
+      return false;
+    }
+  }
+
+  // Remove a review from saved items
+  Future<void> removeReviewFromSaved(reviewId) async {
+    try {
+      final token = await getToken();
+      await savedService.removeReviewFromSaved(token, reviewId);
+    } catch (e) {
+      print('Error removing review from saved: $e');
+    }
+  }
+
+  // Remove a book from saved items
+  Future<void> removeBookFromSaved(bookId) async {
+    try {
+      final token = await getToken();
+      await savedService.removeBookFromSaved(token, bookId);
+    } catch (e) {
+      print('Error removing book from saved: $e');
+    }
+  }
+
+  // Remove a profile from saved items
+  Future<void> removeProfileFromSaved(profileId) async {
+    try {
+      final token = await getToken();
+      await savedService.removeProfileFromSaved(token, profileId);
+    } catch (e) {
+      print('Error removing profile from saved: $e');
+    }
   }
 }

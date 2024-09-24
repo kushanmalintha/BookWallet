@@ -12,7 +12,7 @@ class HomeScreenService {
   Future<List<dynamic>> fetchHomeScreen(int userId, int page) async {
     final response = await http.get(Uri.parse('$apiUrl/$userId?page=$page'));
     print(Uri.parse('$apiUrl/$userId?page=$page'));
-    //print('Response Body: ${response.body}');
+    //print('Response Body: ${response.body}'  );
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
 

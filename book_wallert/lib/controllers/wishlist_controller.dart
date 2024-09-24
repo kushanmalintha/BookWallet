@@ -45,6 +45,7 @@ class WishlistController extends ChangeNotifier {
 
   Future<void> addBookToWishlist(int userId, int bookId) async {
     try {
+      print("hi");
       String? token = await getToken(); // Get the token
       await apiService.postwhislistDetails(userId, bookId, token);
     } catch (e) {

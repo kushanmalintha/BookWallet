@@ -129,4 +129,155 @@ class SavedService {
       print('Error saving user profile: $e');
     }
   }
+
+  // Check if a review is saved by the user
+  Future<bool> isReviewSaved(String? token, int reviewId) async {
+    final url = Uri.parse('${ip}/api/saved-items/check/review');
+    final body = json.encode({
+      'token': token,
+      'relevant_id': reviewId,
+    });
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: body,
+      );
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return data[
+            'isSaved']; // Assume response contains { "isSaved": true/false }
+      } else {
+        throw Exception('Failed to check if review is saved');
+      }
+    } catch (e) {
+      print('Error checking review saved status: $e');
+      return false;
+    }
+  }
+
+  // Check if a book is saved by the user
+  Future<bool> isBookSaved(String? token, int bookId) async {
+    final url = Uri.parse('${ip}/api/saved-items/check/book');
+    final body = json.encode({
+      'token': token,
+      'relevant_id': bookId,
+    });
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: body,
+      );
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return data['isSaved'];
+      } else {
+        throw Exception('Failed to check if book is saved');
+      }
+    } catch (e) {
+      print('Error checking book saved status: $e');
+      return false;
+    }
+  }
+
+  // Check if a profile is saved by the user
+  Future<bool> isProfileSaved(String? token, int profileId) async {
+    final url = Uri.parse('${ip}/api/saved-items/check/profile');
+    final body = json.encode({
+      'token': token,
+      'relevant_id': profileId,
+    });
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: body,
+      );
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return data['isSaved'];
+      } else {
+        throw Exception('Failed to check if profile is saved');
+      }
+    } catch (e) {
+      print('Error checking profile saved status: $e');
+      return false;
+    }
+  }
+
+  // Remove a saved review
+  Future<void> removeReviewFromSaved(String? token, int reviewId) async {
+    final url = Uri.parse('${ip}/api/saved-items/remove/review');
+    final body = json.encode({
+      'token': token,
+      'relevant_id': reviewId,
+    });
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: body,
+      );
+      if (response.statusCode == 200) {
+        print('Review removed from saved');
+      } else {
+        print('Failed to remove review: ${response.body}');
+      }
+    } catch (e) {
+      print('Error removing review from saved: $e');
+    }
+  }
+
+  // Remove a saved book
+  Future<void> removeBookFromSaved(String? token, int bookId) async {
+    final url = Uri.parse('${ip}/api/saved-items/remove/book');
+    final body = json.encode({
+      'token': token,
+      'relevant_id': bookId,
+    });
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: body,
+      );
+      if (response.statusCode == 200) {
+        print('Book removed from saved');
+      } else {
+        print('Failed to remove book: ${response.body}');
+      }
+    } catch (e) {
+      print('Error removing book from saved: $e');
+    }
+  }
+
+  // Remove a saved profile
+  Future<void> removeProfileFromSaved(String? token, int profileId) async {
+    final url = Uri.parse('${ip}/api/saved-items/remove/profile');
+    final body = json.encode({
+      'token': token,
+      'relevant_id': profileId,
+    });
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: body,
+      );
+      if (response.statusCode == 200) {
+        print('Profile removed from saved');
+      } else {
+        print('Failed to remove profile: ${response.body}');
+      }
+    } catch (e) {
+      print('Error removing profile from saved: $e');
+    }
+  }
 }
