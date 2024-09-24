@@ -16,10 +16,14 @@ class HistoryListViewUser extends StatefulWidget {
   State<HistoryListViewUser> createState() => _HistoryListUserState();
 }
 
-class _HistoryListUserState extends State<HistoryListViewUser> {
+class _HistoryListUserState extends State<HistoryListViewUser> 
+with AutomaticKeepAliveClientMixin {
   late HistoryController _historyController;
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = true;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -54,22 +58,51 @@ class _HistoryListUserState extends State<HistoryListViewUser> {
     });
   }
 
+  Future<void> _onRefresh() async {
+    setState(() {
+      _historyController.historyUsers = []; // Clear reviews before refresh
+    });
+   await _historyController.fetchUsers((updatedUsers) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    super.build(context); // Required for keeping state alive
+
+    return RefreshIndicator(
+      color: MyColors.selectedItemColor,
+      backgroundColor: MyColors.bgColor,
+      onRefresh: _onRefresh,
+      child: Scaffold(
       backgroundColor: MyColors.bgColor,
       body: _isLoading && _historyController.historyUsers.isEmpty
           ? Center(
               child:
                   buildProgressIndicator()) // Show loading indicator if users are being fetched and list is empty
           : _historyController.historyUsers.isEmpty
-              ? const Center(
-                  child: Text(
-                    'No users',
-                    style: TextStyle(color: MyColors.textColor),
-                  ),
-                ) // Show 'No users' message if the list is empty and no more data is being loaded
-              : ListView.builder(
+              ? ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: const Center(
+                        child: Text(
+                          'No Users',
+                          style: TextStyle(
+                            color: MyColors.textColor,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              :  ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
                   controller: _scrollController,
                   itemCount: _historyController.historyUsers.length +
                       (_isLoading ? 1 : 0), // Add an extra item if loading
@@ -88,6 +121,6 @@ class _HistoryListUserState extends State<HistoryListViewUser> {
                     }
                   },
                 ),
-    );
+    ));
   }
 }

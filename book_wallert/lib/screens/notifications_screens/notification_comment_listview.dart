@@ -7,85 +7,149 @@ import 'package:book_wallert/widgets/cards/notification_card.dart';
 import 'package:book_wallert/widgets/cards/review_card.dart';
 import 'package:flutter/material.dart';
 
-class NotificationCommentListView extends StatelessWidget {
+class NotificationCommentListView extends StatefulWidget {
   final int globalUserId;
+
+  const NotificationCommentListView({
+    Key? key,
+    required this.globalUserId,
+  }) : super(key: key);
+
+  @override
+  _NotificationCommentListViewState createState() =>
+      _NotificationCommentListViewState();
+}
+
+class _NotificationCommentListViewState
+    extends State<NotificationCommentListView> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   final NotificationController _notificationController = NotificationController();
   final ReviewController _reviewController = ReviewController();
+  List<AppNotificationComment> notifications = [];
+  bool isLoading = true;
+  final ScrollController _scrollController = ScrollController();
 
-  NotificationCommentListView({Key? key, required this.globalUserId}) : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    _fetchNotifications();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _fetchNotifications() async {
+    try {
+      final fetchedNotifications = await _notificationController.getCommentNotifications(widget.globalUserId);
+      setState(() {
+        notifications = fetchedNotifications;
+        isLoading = false;
+      });
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _onRefresh() async {
+    setState(() {
+      notifications = [];
+      isLoading = true;
+    });
+    await _fetchNotifications();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _notificationController.getCommentNotifications(globalUserId),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return const Center(child: Text("Error fetching notifications"));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text("No notifications"));
-        }
+    super.build(context);  // Ensure the keep-alive mixin works
 
-        final notifications = snapshot.data as List<AppNotificationComment>;
-
-        return ListView.builder(
-          itemCount: notifications.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () async {
-                // Fetch the review details when the card is clicked
-                ReviewModel review = await _reviewController.fetchReview(notifications[index].reviewID);
-
-                // Show the review in a dialog box
-               showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Dialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8), // Slightly rounded corners
-                      ),
-                      backgroundColor: MyColors.bgColor, // Set background color to your custom color
-                      insetPadding: const EdgeInsets.all(10), // Reduce the outer padding to minimize white border
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 1.0, // Increased width to 90% of the screen
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: MyColors.bgColor, // Background color of the dialog content
-                          borderRadius: BorderRadius.circular(8), // Ensure the inner content has rounded corners too
+    return RefreshIndicator(
+      color: MyColors.selectedItemColor,
+      backgroundColor: MyColors.bgColor,
+      onRefresh: _onRefresh,
+      child: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : notifications.isEmpty
+              ? ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: const Center(
+                        child: Text(
+                          'No notifications',
+                          style: TextStyle(
+                            color: MyColors.textColor,
+                            fontSize: 16,
+                          ),
                         ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min, // Adjust height based on content
-                          children: [
-                            ReviewCard(review: review), // Review card
-                            const SizedBox(height: 8),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text(
-                                  "Close",
-                                  style: TextStyle(color: MyColors.selectedItemColor),
+                      ),
+                    ),
+                  ],
+                )
+              : ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: _scrollController,
+                  itemCount: notifications.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () async {
+                        ReviewModel review = await _reviewController.fetchReview(notifications[index].reviewID);
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              backgroundColor: MyColors.bgColor,
+                              insetPadding: const EdgeInsets.all(10),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 1.0,
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: MyColors.bgColor,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ReviewCard(review: review),
+                                    const SizedBox(height: 8),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text(
+                                          "Close",
+                                          style: TextStyle(
+                                            color: MyColors.selectedItemColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
+                            );
+                          },
+                        );
+                      },
+                      child: CommentNotificationCard(
+                        username: notifications[index].CommentedUserName,
+                        bookName: notifications[index].bookname,
                       ),
                     );
                   },
-                );
-                },
-              child: CommentNotificationCard(
-                username: notifications[index].CommentedUserName,
-                bookName: notifications[index].bookname,
-              ),
-            );
-          },
-        );
-      },
+                ),
     );
   }
 }
