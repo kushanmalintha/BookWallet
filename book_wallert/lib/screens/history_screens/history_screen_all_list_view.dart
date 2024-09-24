@@ -21,11 +21,15 @@ class HistoryListViewAll extends StatefulWidget {
   State<HistoryListViewAll> createState() => _HistoryListViewAllState();
 }
 
-class _HistoryListViewAllState extends State<HistoryListViewAll> {
+class _HistoryListViewAllState extends State<HistoryListViewAll>
+with AutomaticKeepAliveClientMixin  {
   late HistoryController _historyController;
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = true;
   bool _isFetchingMore = false;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -61,9 +65,27 @@ class _HistoryListViewAllState extends State<HistoryListViewAll> {
     });
   }
 
+ Future<void> _onRefresh() async {
+    setState(() {
+      _historyController.allItems = []; // Clear reviews before refresh
+    });
+   await _historyController.fetchAllItems((updatedallItems) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    super.build(context); // Required for keeping state alive
+
+    return RefreshIndicator(
+      color: MyColors.selectedItemColor,
+      backgroundColor: MyColors.bgColor,
+      onRefresh: _onRefresh,
+      child:
+     Scaffold(
       backgroundColor: MyColors.bgColor,
       body: _isLoading && _historyController.allItems.isEmpty
           ? Center(
@@ -122,6 +144,6 @@ class _HistoryListViewAllState extends State<HistoryListViewAll> {
                     }
                   },
                 ),
-    );
+    ));
   }
 }
