@@ -52,7 +52,6 @@ class SavedController {
 
   Future<void> insertBookToSaved(bookId) async {
     try {
-      print("hi");
       final token = await getToken();
       await savedService.insertBookToSaved(token, bookId);
     } catch (e) {

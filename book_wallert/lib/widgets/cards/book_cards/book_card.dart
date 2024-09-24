@@ -40,10 +40,16 @@ class _BookCardState extends State<BookCard> {
     final bookStatusController = BookStatusController(BookStatusService());
     final savedController = SavedController(globalUser!.userId);
 
-// Function to handle the logic when popup is opened
+    // Function to handle the logic when popup is opened
     Future<bool> onOpened(List<String> text) async {
-      // Fetch the book ID asynchronously
       try {
+        await wishlistController.fetchBookId(widget.book);
+        // Check the book ID before proceeding
+        if (wishlistController.bookId == null) {
+          print('Book ID is null');
+          return false;
+        }
+
         // Fetch the book's status (wishlist and saved status)
         await bookStatusController.checkBookStatus(
             globalUser!.userId, wishlistController.bookId!);
@@ -63,6 +69,7 @@ class _BookCardState extends State<BookCard> {
 
         return true;
       } catch (e) {
+        print('Error in onOpened: $e');
         return false;
       }
     }
@@ -105,8 +112,7 @@ class _BookCardState extends State<BookCard> {
             ),
           ),
           trailing: CustomPopupMenuButtonsDynamic(
-            onOpened: onOpened // Call the function to handle logic when opened
-            ,
+            onOpened: onOpened, // Call the function to handle logic when opened
             items: items, // Pass the items list dynamically
             onItemTap: [
               () {
@@ -115,12 +121,15 @@ class _BookCardState extends State<BookCard> {
                     context, widget.book);
               },
               () {
-                // Save book
-                savedController.insertBookToSaved(wishlistController
-                    .bookId!); //book id take from wishlist controller
+                // Save book or remove from saved
+                if (bookStatusController.isSaved) {
+                  savedController
+                      .removeBookFromSaved(wishlistController.bookId!);
+                } else {
+                  savedController.insertBookToSaved(wishlistController.bookId!);
+                }
               },
               () {
-                // Add or remove from wishlist
                 wishlistController.addOrRemoveWishlistBook(
                   context,
                   widget.book,
