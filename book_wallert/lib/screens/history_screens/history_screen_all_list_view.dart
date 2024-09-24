@@ -26,7 +26,7 @@ with AutomaticKeepAliveClientMixin  {
   late HistoryController _historyController;
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = true;
-  bool _isFetchingMore = false;
+  final bool _isFetchingMore = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -92,13 +92,25 @@ with AutomaticKeepAliveClientMixin  {
               child: buildProgressIndicator(),
             )
           : _historyController.allItems.isEmpty
-              ? const Center(
-                  child: Text(
-                    'No items',
-                    style: TextStyle(color: MyColors.textColor),
-                  ),
+              ? ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: const Center(
+                        child: Text(
+                          'No items',
+                          style: TextStyle(
+                            color: MyColors.textColor,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               : ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: _scrollController,
                   itemCount:
                       _historyController.allItems.length + (_isLoading ? 1 : 0),
