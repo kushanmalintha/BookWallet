@@ -16,10 +16,14 @@ class GroupMemberListview extends StatefulWidget {
   State<GroupMemberListview> createState() => _GroupMemberListviewState();
 }
 
-class _GroupMemberListviewState extends State<GroupMemberListview> {
+class _GroupMemberListviewState extends State<GroupMemberListview>
+    with AutomaticKeepAliveClientMixin {
   late GroupController _groupController;
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = true;
+
+  @override
+  bool get wantKeepAlive => true; // Keep alive when moving between list views
 
   @override
   void initState() {
@@ -41,6 +45,7 @@ class _GroupMemberListviewState extends State<GroupMemberListview> {
     super.dispose();
   }
 
+  // Fetch group members asynchronously
   void _fetchMembers() async {
     setState(() {
       _isLoading = true;
@@ -54,23 +59,48 @@ class _GroupMemberListviewState extends State<GroupMemberListview> {
     });
   }
 
+  // Refresh handler (runs when the screen is pulled down to refresh)
+  Future<void> _onRefresh() async {
+    setState(() {
+      _groupController.groupMembers = [];
+    });
+    await _groupController.fetchMembersByGroupId(widget.groupId,
+        (updatedUsers) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    super.build(context);
+    return RefreshIndicator(
+      color: MyColors.selectedItemColor,
       backgroundColor: MyColors.bgColor,
-      body: _isLoading && _groupController.groupMembers.isEmpty
-          ? Center(
-              child:
-                  buildProgressIndicator(), // Show loading indicator if users are being fetched and list is empty
-            )
+      onRefresh: _onRefresh,
+      child: _isLoading && _groupController.groupMembers.isEmpty
+          ? Center(child: buildProgressIndicator())
           : _groupController.groupMembers.isEmpty
-              ? const Center(
-                  child: Text(
-                    'No users',
-                    style: TextStyle(color: MyColors.textColor),
-                  ),
-                ) // Show 'No users' message if the list is empty and no more data is being loaded
+              ? ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: const Center(
+                        child: Text(
+                          'No users',
+                          style: TextStyle(
+                            color: MyColors.textColor,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
               : ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: _scrollController,
                   itemCount: _groupController.groupMembers.length +
                       (_isLoading ? 1 : 0), // Add an extra item if loading
@@ -80,12 +110,12 @@ class _GroupMemberListviewState extends State<GroupMemberListview> {
                         children: [
                           const SizedBox(height: 3),
                           UserCard(
-                              user: _groupController.groupMembers[
-                                  index]), // Use UserCard for displaying users
+                            user: _groupController.groupMembers[index],
+                          ),
                         ],
                       );
                     } else {
-                      return buildProgressIndicator(); // Show loading indicator when more data is being fetched
+                      return buildProgressIndicator(); // Show loading indicator when fetching more data
                     }
                   },
                 ),

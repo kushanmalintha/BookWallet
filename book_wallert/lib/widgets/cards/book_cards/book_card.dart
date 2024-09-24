@@ -1,10 +1,10 @@
 import 'package:book_wallert/controllers/book_recommended_controller.dart';
-import 'package:book_wallert/controllers/checking_wishlist_controller.dart';
+import 'package:book_wallert/controllers/bookStatusController.dart';
 import 'package:book_wallert/controllers/saved_controller.dart';
 import 'package:book_wallert/controllers/wishlist_controller.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
-import 'package:book_wallert/services/checking_wishlist_service.dart';
+import 'package:book_wallert/services/BookStatusService.dart';
 import 'package:book_wallert/services/wishlist_api_service.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons_dynamic.dart';
 import 'package:flutter/material.dart';
@@ -37,40 +37,33 @@ class _BookCardState extends State<BookCard> {
         BookRecommendController(globalUser!.userId);
     final WishlistController wishlistController =
         WishlistController(WishlistApiService());
-    final CheckingWishlistController checkingWishlistController =
-        CheckingWishlistController(CheckingWishlistService());
+    final bookStatusController = BookStatusController(BookStatusService());
     final savedController = SavedController(globalUser!.userId);
 
 // Function to handle the logic when popup is opened
     Future<bool> onOpened(List<String> text) async {
       // Fetch the book ID asynchronously
       try {
-        await wishlistController.fetchBookId(widget.book);
+        // Fetch the book's status (wishlist and saved status)
+        await bookStatusController.checkBookStatus(
+            globalUser!.userId, wishlistController.bookId!);
 
-        // Check if bookId was fetched successfully
-        if (wishlistController.bookId != null) {
-          // Check the wishlist status asynchronously
-          bool? isInWishlist =
-              await checkingWishlistController.checkWishlistStatus(
-                  globalUser!.userId, wishlistController.bookId!);
-
-          // Update the popup items based on the status of the wishlist
-          if (isInWishlist == true) {
-            text[2] =
-                'Remove from wishlist'; // Modify the text for the wishlist option
-          } else {
-            text[2] =
-                'Add to wishlist'; // Modify the text for the wishlist option
-          }
-
-          // If both async operations completed, return true
-          return true;
+        // Modify the popup items based on the fetched status
+        if (bookStatusController.isInWishlist) {
+          text[2] = 'Remove from wishlist'; // Modify the wishlist text
+        } else {
+          text[2] = 'Add to wishlist';
         }
 
-        // Return false if bookId is null or any other issue occurs
+        if (bookStatusController.isSaved) {
+          text[1] = 'Remove from saved books'; // Modify the save text
+        } else {
+          text[1] = 'Save book';
+        }
+
         return true;
       } catch (e) {
-        return true;
+        return false;
       }
     }
 
@@ -123,15 +116,15 @@ class _BookCardState extends State<BookCard> {
               },
               () {
                 // Save book
-                savedController
-                    .insertBookToSaved(bookRecommendController.bookId!);
+                savedController.insertBookToSaved(wishlistController
+                    .bookId!); //book id take from wishlist controller
               },
               () {
                 // Add or remove from wishlist
                 wishlistController.addOrRemoveWishlistBook(
                   context,
                   widget.book,
-                  checkingWishlistController.isInWishlist,
+                  bookStatusController.isInWishlist,
                 );
               },
             ],
