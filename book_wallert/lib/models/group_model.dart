@@ -3,8 +3,8 @@ class GroupModel {
   final String name;
   final String about;
   final String imageUrl;
-  final int memberCount;
-  final int discussionCount;
+  final int? memberCount;
+  final int? discussionCount;
   final List<String>? memberIds;
   late final String? membershipStatus; // New field to handle membership status
 
@@ -13,8 +13,8 @@ class GroupModel {
     required this.name,
     required this.about,
     required this.imageUrl,
-    required this.memberCount,
-    required this.discussionCount,
+    this.memberCount,
+    this.discussionCount,
     this.memberIds,
     this.membershipStatus, // New field added in the constructor
   });

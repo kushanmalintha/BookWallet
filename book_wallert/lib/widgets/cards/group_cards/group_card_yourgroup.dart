@@ -16,7 +16,7 @@ class GroupCardYourgroup extends StatefulWidget {
   });
 
   @override
-  _GroupCardYourgroupState createState() => _GroupCardYourgroupState();
+  State<GroupCardYourgroup> createState() => _GroupCardYourgroupState();
 }
 
 class _GroupCardYourgroupState extends State<GroupCardYourgroup> {
