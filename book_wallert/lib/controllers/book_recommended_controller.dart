@@ -59,17 +59,27 @@ class BookRecommendController {
   Future<void> recommendBookToFollowers(
       BuildContext context, BookModel book) async {
     try {
-      await fetchBookId(book);
-      String? token = await getToken();
-      await postRecommendation(userId, bookId!, token!);
+      await fetchBookId(book); // Fetch the book ID
+      String? token = await getToken(); // Get the authentication token
+      await postRecommendation(
+          userId, bookId!, token!); // Post the recommendation
+
+      // Show success snackbar
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text('Book recommended to followers successfully.')),
+          content: Text('Book recommended to followers successfully.'),
+          duration: Duration(seconds: 2), // Optional: set duration
+        ),
       );
     } catch (e) {
+      // Show error snackbar
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error recommending book: $e')),
+        SnackBar(
+          content: Text('Error recommending book: $e'),
+          duration: Duration(seconds: 2), // Optional: set duration
+        ),
       );
+      print('Error recommending book: $e'); // Print error to console
     }
   }
 }

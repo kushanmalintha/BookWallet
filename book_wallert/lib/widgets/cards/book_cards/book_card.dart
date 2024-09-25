@@ -123,18 +123,22 @@ class _BookCardState extends State<BookCard> {
               () {
                 // Save book or remove from saved
                 if (bookStatusController.isSaved) {
-                  savedController
-                      .removeBookFromSaved(wishlistController.bookId!);
+                  savedController.removeBookFromSaved(
+                      context, wishlistController.bookId!);
                 } else {
-                  savedController.insertBookToSaved(wishlistController.bookId!);
+                  savedController.insertBookToSaved(
+                      context, wishlistController.bookId!);
                 }
               },
               () {
-                wishlistController.addOrRemoveWishlistBook(
-                  context,
-                  widget.book,
-                  bookStatusController.isInWishlist,
-                );
+                //add wishlist and remove wishlist
+                if (bookStatusController.isInWishlist) {
+                  wishlistController.removeBookFromWishlist(
+                      context, wishlistController.bookId!);
+                } else {
+                  wishlistController.addBookToWishlist(
+                      context, wishlistController.bookId!);
+                }
               },
             ],
             icon: const Icon(

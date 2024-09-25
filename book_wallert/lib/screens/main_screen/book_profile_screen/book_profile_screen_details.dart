@@ -5,16 +5,20 @@ import 'package:book_wallert/controllers/wishlist_controller.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/services/BookStatusService.dart';
 import 'package:book_wallert/services/wishlist_api_service.dart';
+import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons_dynamic.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/models/book_model.dart';
 
-import '../../../widgets/buttons/custom_popup_menu_buttons.dart'; // Import your BookModel class
-
 class BookProfileScreenDetails extends StatelessWidget {
   final BookModel book;
+  List<String> items = [
+    'Recommend book to followers',
+    'Save book',
+    'Add to wishlist',
+  ];
 
-  const BookProfileScreenDetails({super.key, required this.book});
+  BookProfileScreenDetails({super.key, required this.book});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +31,38 @@ class BookProfileScreenDetails extends StatelessWidget {
     // final CheckingWishlistController checkingWishlistController =
     //     CheckingWishlistController(CheckingWishlistService());
     final savedController = SavedController(globalUser!.userId);
+    Future<bool> onOpened(List<String> text) async {
+      try {
+        await wishlistController.fetchBookId(book);
+        // Check the book ID before proceeding
+        if (wishlistController.bookId == null) {
+          print('Book ID is null');
+          return false;
+        }
+
+        // Fetch the book's status (wishlist and saved status)
+        await bookStatusController.checkBookStatus(
+            globalUser!.userId, wishlistController.bookId!);
+
+        // Modify the popup items based on the fetched status
+        if (bookStatusController.isInWishlist) {
+          text[2] = 'Remove from wishlist'; // Modify the wishlist text
+        } else {
+          text[2] = 'Add to wishlist';
+        }
+
+        if (bookStatusController.isSaved) {
+          text[1] = 'Remove from saved books'; // Modify the save text
+        } else {
+          text[1] = 'Save book';
+        }
+
+        return true;
+      } catch (e) {
+        print('Error in onOpened: $e');
+        return false;
+      }
+    }
 
     return Stack(
       children: [
@@ -131,61 +167,38 @@ class BookProfileScreenDetails extends StatelessWidget {
         Positioned(
           top: 14,
           right: 10,
-          child: FutureBuilder(
-            future: bookRecommendController.fetchBookId(book).then((_) {
-              return bookStatusController.checkBookStatus(
-            globalUser!.userId, wishlistController.bookId!);
-            }),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Icon(Icons.more_vert_rounded);
-              } else if (snapshot.hasError) {
-                return const Icon(Icons.error);
-              } else {
-                return CustomPopupMenuButtons(
-                  items: [
-                    'Share',
-                    'Block',
-                    'Report',
-                    'Recommend book to followers',
-                    'Save book',
-                    bookStatusController.isInWishlist
-                        ? 'Remove from Wishlist'
-                        : 'Add to Wishlist',
-                  ],
-                  onItemTap: [
-                    () {
-                      print("Share");
-                    },
-                    () {
-                      print("Block");
-                    },
-                    () {
-                      print("Report");
-                    },
-                    () {
-                      bookRecommendController.recommendBookToFollowers(
-                          context, book);
-                    },
-                    () {
-                      savedController
-                          .insertBookToSaved(bookRecommendController.bookId!);
-                    },
-                    () {
-                      wishlistController.addOrRemoveWishlistBook(
-                        context,
-                        book,
-                        bookStatusController.isInWishlist,
-                      );
-                    },
-                  ],
-                  icon: const Icon(
-                    Icons.more_vert_rounded,
-                    color: MyColors.nonSelectedItemColor,
-                  ),
-                );
-              }
-            },
+          child: CustomPopupMenuButtonsDynamic(
+            onOpened: onOpened, // Call the function to handle logic when opened
+            items: items, // Pass the items list dynamically
+            onItemTap: [
+              () {
+                // Recommend book
+                bookRecommendController.recommendBookToFollowers(context, book);
+              },
+              () {
+                // Save book or remove from saved
+                if (bookStatusController.isSaved) {
+                  savedController
+                      .removeBookFromSaved(context,wishlistController.bookId!);
+                } else {
+                  savedController.insertBookToSaved(context, wishlistController.bookId!);
+                }
+              },
+              () {
+                //add wishlist and remove wishlist
+                if (bookStatusController.isInWishlist) {
+                  wishlistController
+                      .removeBookFromWishlist(context, wishlistController.bookId!);
+                } else {
+                  wishlistController
+                      .addBookToWishlist(context, wishlistController.bookId!);
+                }
+              },
+            ],
+            icon: const Icon(
+              Icons.more_vert_rounded,
+              color: MyColors.nonSelectedItemColor,
+            ),
           ),
         ),
       ],

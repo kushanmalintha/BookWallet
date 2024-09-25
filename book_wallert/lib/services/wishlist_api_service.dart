@@ -26,8 +26,7 @@ import 'package:http/http.dart' as http;
 
 class WishlistApiService {
   static final String baseUrl = '${ip}/api/wishlist';
-  static final String WishlistBaseUrl =
-      '${ip}/api/wishlist/wishlistBooks';
+  static final String WishlistBaseUrl = '${ip}/api/wishlist/wishlistBooks';
 
   Future<List<BookModel>> fetchWishlist(int userId) async {
     final response = await http.get(Uri.parse('$baseUrl/$userId'));
@@ -57,9 +56,8 @@ class WishlistApiService {
     }
   }
 
-  Future<void> postwhislistDetails(
-      int userId, int bookId, String? token) async {
-    final url = Uri.parse('$WishlistBaseUrl/$bookId/$userId');
+  Future<void> postwhislistDetails(int bookId, String? token) async {
+    final url = Uri.parse('$WishlistBaseUrl/$bookId');
     try {
       final response = await http.post(
         url,
@@ -80,10 +78,15 @@ class WishlistApiService {
     }
   }
 
-  Future<void> removeBookFromWishlist(int userId, int bookId) async {
-    final url = Uri.parse('$baseUrl/remove/$userId/$bookId');
+  Future<void> removeBookFromWishlist(String? token, int bookId) async {
+    final url = Uri.parse('$baseUrl/remove/$bookId');
     try {
-      final response = await http.delete(url);
+      final response = await http.delete(
+        url,
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
 
       if (response.statusCode == 200) {
         print('Book removed from wishlist successfully.');
