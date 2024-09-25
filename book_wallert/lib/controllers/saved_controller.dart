@@ -3,6 +3,7 @@ import 'package:book_wallert/models/book_model.dart';
 import 'package:book_wallert/models/review_model.dart';
 import 'package:book_wallert/models/user.dart';
 import 'package:book_wallert/services/saved_api_services.dart';
+import 'package:flutter/material.dart';
 
 class SavedController {
   final SavedService savedService;
@@ -41,32 +42,78 @@ class SavedController {
     }
   }
 
-  Future<void> insertReviewToSaved(reviewId) async {
+  Future<void> insertReviewToSaved(BuildContext context, int reviewId) async {
     try {
       final token = await getToken();
       await savedService.insertReviewToSaved(token, reviewId);
+      // Show success snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Review saved successfully!'),
+          duration: Duration(seconds: 2),
+        ),
+      );
     } catch (e) {
+      // Show error snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error inserting to saved: $e'),
+          duration: Duration(seconds: 2),
+        ),
+      );
       print('Error inserting to saved: $e');
     }
   }
 
-  Future<void> insertBookToSaved(bookId) async {
-    try {
-      final token = await getToken();
-      await savedService.insertBookToSaved(token, bookId);
-    } catch (e) {
-      print('Error inserting to saved: $e');
-    }
+ Future<void> insertBookToSaved(BuildContext context, int bookId) async {
+  try {
+    final token = await getToken(); // Get the token
+    await savedService.insertBookToSaved(token, bookId);
+    
+    // Show success snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Book saved successfully!'),
+        duration: Duration(seconds: 2), // Optional: set duration
+      ),
+    );
+  } catch (e) {
+    // Show error snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error inserting book to saved: $e'),
+        duration: Duration(seconds: 2), // Optional: set duration
+      ),
+    );
+    print('Error inserting to saved: $e'); // Print error to console
   }
+}
 
-  Future<void> insertProfileToSaved(userID) async {
-    try {
-      final token = await getToken();
-      await savedService.insertProfileToSaved(token!, userID);
-    } catch (e) {
-      print('Error inserting to saved: $e');
-    }
-  } // Check if a review is saved
+
+Future<void> insertProfileToSaved(BuildContext context, int userID) async {
+  try {
+    final token = await getToken(); // Get the token
+    await savedService.insertProfileToSaved(token!, userID);
+    
+    // Show success snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Profile saved successfully!'),
+        duration: Duration(seconds: 2), // Optional: set duration
+      ),
+    );
+  } catch (e) {
+    // Show error snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error inserting profile to saved: $e'),
+        duration: Duration(seconds: 2), // Optional: set duration
+      ),
+    );
+    print('Error inserting to saved: $e'); // Print error to console
+  }
+}
+
 
   Future<bool> isReviewSaved(reviewId) async {
     try {
@@ -100,33 +147,76 @@ class SavedController {
     }
   }
 
-  // Remove a review from saved items
-  Future<void> removeReviewFromSaved(reviewId) async {
-    try {
-      final token = await getToken();
-      await savedService.removeReviewFromSaved(token, reviewId);
-    } catch (e) {
-      print('Error removing review from saved: $e');
-    }
+ Future<void> removeReviewFromSaved(BuildContext context, int reviewId) async {
+  try {
+    final token = await getToken();
+    await savedService.removeReviewFromSaved(token, reviewId);
+    // Show success snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Review removed from saved items!'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  } catch (e) {
+    // Show error snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error removing review: $e'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+    print('Error removing review from saved: $e');
   }
+}
 
-  // Remove a book from saved items
-  Future<void> removeBookFromSaved(bookId) async {
-    try {
-      final token = await getToken();
-      await savedService.removeBookFromSaved(token, bookId);
-    } catch (e) {
-      print('Error removing book from saved: $e');
-    }
-  }
 
-  // Remove a profile from saved items
-  Future<void> removeProfileFromSaved(profileId) async {
-    try {
-      final token = await getToken();
-      await savedService.removeProfileFromSaved(token, profileId);
-    } catch (e) {
-      print('Error removing profile from saved: $e');
-    }
+Future<void> removeBookFromSaved(BuildContext context, int bookId) async {
+  try {
+    final token = await getToken(); // Get the token
+    await savedService.removeBookFromSaved(token, bookId);
+    
+    // Show success snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Book removed from saved items!'),
+        duration: Duration(seconds: 2), // Optional: set duration
+      ),
+    );
+  } catch (e) {
+    // Show error snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error removing book from saved: $e'),
+        duration: Duration(seconds: 2), // Optional: set duration
+      ),
+    );
+    print('Error removing book from saved: $e'); // Print error to console
   }
+}
+
+
+Future<void> removeProfileFromSaved(BuildContext context, int profileId) async {
+  try {
+    final token = await getToken(); // Get the token
+    await savedService.removeProfileFromSaved(token, profileId);
+    
+    // Show success snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Profile removed from saved items!'),
+        duration: Duration(seconds: 2), // Optional: set duration
+      ),
+    );
+  } catch (e) {
+    // Show error snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error removing profile from saved: $e'),
+        duration: Duration(seconds: 2), // Optional: set duration
+      ),
+    );
+    print('Error removing profile from saved: $e'); // Print error to console
+  }
+}
 }

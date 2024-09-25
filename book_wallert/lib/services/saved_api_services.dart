@@ -132,7 +132,7 @@ class SavedService {
 
   // Check if a review is saved by the user
   Future<bool> isReviewSaved(String? token, int reviewId) async {
-    final url = Uri.parse('${ip}/api/saved-items/check/review');
+    final url = Uri.parse('${ip}/api/saved-items/reviews/is-saved');
     final body = json.encode({
       'token': token,
       'relevant_id': reviewId,
@@ -185,7 +185,7 @@ class SavedService {
 
   // Check if a profile is saved by the user
   Future<bool> isProfileSaved(String? token, int profileId) async {
-    final url = Uri.parse('${ip}/api/saved-items/check/profile');
+    final url = Uri.parse('${ip}/api/saved-items/profiles/is-saved');
     final body = json.encode({
       'token': token,
       'relevant_id': profileId,

@@ -1,13 +1,17 @@
 import 'package:book_wallert/colors.dart';
+import 'package:book_wallert/controllers/BookStatusController.dart';
 import 'package:book_wallert/controllers/review_comments_controller.dart';
 import 'package:book_wallert/controllers/review_delete_controller.dart';
 import 'package:book_wallert/controllers/saved_controller.dart';
+import 'package:book_wallert/controllers/wishlist_controller.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/models/review_model.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
+import 'package:book_wallert/services/BookStatusService.dart';
+import 'package:book_wallert/services/wishlist_api_service.dart';
 import 'package:book_wallert/widgets/buttons/comment_button.dart';
-import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';
+import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons_dynamic.dart';
 import 'package:book_wallert/widgets/buttons/like_button.dart';
 import 'package:book_wallert/widgets/buttons/share_button.dart';
 import 'package:book_wallert/widgets/cards/rating_bar.dart';
@@ -26,6 +30,10 @@ class ReviewScreenDetails extends StatefulWidget {
 
 class _ReviewScreenDetailsState extends State<ReviewScreenDetails> {
   bool _isComment = false;
+  List<String> items = [
+    'Save Review',
+    'Add this book to wishlist',
+  ];
 
   void _handleCommentChanged(bool value) {
     setState(() {
@@ -38,6 +46,41 @@ class _ReviewScreenDetailsState extends State<ReviewScreenDetails> {
     final ReviewDeleteController reviewDeleteController =
         ReviewDeleteController(widget.review.reviewId, widget.review.userId);
     final savedController = SavedController(globalUser!.userId);
+    final bookStatusController = BookStatusController(BookStatusService());
+    final WishlistController wishlistController =
+        WishlistController(WishlistApiService());
+
+    // Function to handle the logic when popup is opened
+    Future<bool> onOpened(List<String> text) async {
+      try {
+        // Check the book ID before proceeding
+        await bookStatusController.checkBookStatus(
+            globalUser!.userId, widget.review.bookId);
+
+        // Modify the popup items based on the fetched status
+        if (bookStatusController.isInWishlist) {
+          text[1] =
+              'Remove this book from wishlist'; // Modify the wishlist text
+        } else {
+          text[1] = 'Add this book to wishlist';
+        }
+
+        if (await savedController.isReviewSaved(widget.review.reviewId)) {
+          text[0] = 'Remove from saved'; // Modify the save text
+        } else {
+          text[0] = 'Save Review';
+        }
+
+        if (widget.review.userId == globalUser!.userId) {
+          text[2] = 'Delete Review';
+        }
+
+        return true;
+      } catch (e) {
+        print('Error in onOpened: $e');
+        return false;
+      }
+    }
 
     return Stack(
       children: [
@@ -125,33 +168,45 @@ class _ReviewScreenDetailsState extends State<ReviewScreenDetails> {
         Positioned(
           top: 10,
           right: 10,
-          child: CustomPopupMenuButtons(
-              items: widget.review.userId == globalUser!.userId
-                  ? const ['menu', 'Delete review', 'Save Review']
-                  : ['menu', 'Save Review'],
-              onItemTap: widget.review.userId == globalUser!.userId
-                  ? [
-                      () {},
-                      () {
-                        savedController
-                            .insertReviewToSaved(widget.review.reviewId);
-                      },
-                      () {
-                        // delete function
-                        reviewDeleteController.deleteReview(context);
-                      }
-                    ]
-                  : [
-                      () {},
-                      () {
-                        savedController
-                            .insertReviewToSaved(widget.review.reviewId);
-                      },
-                    ],
-              icon: const Icon(
-                Icons.more_vert_rounded,
-                color: MyColors.nonSelectedItemColor,
-              )),
+          child: CustomPopupMenuButtonsDynamic(
+            onOpened: onOpened, // Call the function to handle logic when opened
+            items: widget.review.userId == globalUser!.userId
+                ? items + ['Delete Review']
+                : items, // Pass the items list dynamically
+            onItemTap: [
+              () async {
+                // save or remove
+                if (await savedController
+                    .isReviewSaved(widget.review.reviewId)) {
+                  savedController.removeReviewFromSaved(
+                      context, widget.review.reviewId);
+                } else {
+                  savedController.insertReviewToSaved(
+                      context, widget.review.reviewId);
+                }
+              },
+              () {
+                //add wishlist and remove wishlist
+                if (bookStatusController.isInWishlist) {
+                  wishlistController
+                      .removeBookFromWishlist(context, widget.review.bookId);
+                } else {
+                  wishlistController.addBookToWishlist(
+                      context, widget.review.bookId);
+                }
+              },
+              () {
+                if (widget.review.userId == globalUser!.userId) {
+                  // delete function
+                  reviewDeleteController.deleteReview(context);
+                }
+              },
+            ],
+            icon: const Icon(
+              Icons.more_vert_rounded,
+              color: MyColors.nonSelectedItemColor,
+            ),
+          ),
         ),
       ],
     );

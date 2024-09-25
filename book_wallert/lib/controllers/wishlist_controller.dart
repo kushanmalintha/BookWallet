@@ -43,29 +43,59 @@ class WishlistController extends ChangeNotifier {
     }
   }
 
-  Future<void> addBookToWishlist(int userId, int bookId) async {
-    try {
-      print("hi");
-      String? token = await getToken(); // Get the token
-      await apiService.postwhislistDetails(userId, bookId, token);
-    } catch (e) {
-      print('Error adding book to wishlist: $e');
-    }
+Future<void> addBookToWishlist(BuildContext context, int bookId) async {
+  try {
+    String? token = await getToken(); // Get the token
+    await apiService.postwhislistDetails(bookId, token);
+    // Show success snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Book added to wishlist!'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  } catch (e) {
+    // Show error snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error adding book to wishlist: $e'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+    print('Error adding book to wishlist: $e');
   }
+}
 
-  Future<void> removeBookFromWishlist(int userId, int bookId) async {
-    try {
-      await apiService.removeBookFromWishlist(userId, bookId);
-    } catch (e) {
-      print('Error removing book from wishlist: $e');
-    }
+
+Future<void> removeBookFromWishlist(BuildContext context, int bookId) async {
+  try {
+    String? token = await getToken(); // Get the token
+    await apiService.removeBookFromWishlist(token, bookId);
+    // Show success snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Book removed from wishlist!'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  } catch (e) {
+    // Show error snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error removing book from wishlist: $e'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+    print('Error removing book from wishlist: $e');
   }
+}
+
 
   Future<void> addBookToWishlistAndNotify(
       BuildContext context, int userId, BookModel book) async {
     try {
       await fetchBookId(book);
-      await addBookToWishlist(userId, bookId!);
+      await addBookToWishlist(context, bookId!);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Book added to wishlist successfully.')),
       );
@@ -76,33 +106,33 @@ class WishlistController extends ChangeNotifier {
     }
   }
 
-  Future<void> addOrRemoveWishlistBook(
-      BuildContext context, BookModel book, bool isInWishlist) async {
-    try {
-      String? token = await getToken();
-      await bookRecommendController.fetchBookId(book);
-      if (isInWishlist) {
-        // Remove from wishlist
-        await apiService.removeBookFromWishlist(
-            globalUser!.userId, bookRecommendController.bookId!);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('Book removed from wishlist successfully.')),
-        );
-      } else {
-        // Add to wishlist
-        await apiService.postwhislistDetails(
-            globalUser!.userId, bookRecommendController.bookId!, token);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Book added to wishlist successfully.')),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
-    }
-  }
+  // Future<void> addOrRemoveWishlistBook(
+  //     BuildContext context, BookModel book, bool isInWishlist) async {
+  //   try {
+  //     String? token = await getToken();
+  //     await bookRecommendController.fetchBookId(book);
+  //     if (isInWishlist) {
+  //       // Remove from wishlist
+  //       await apiService.removeBookFromWishlist(
+  //           token, bookRecommendController.bookId!);
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(
+  //             content: Text('Book removed from wishlist successfully.')),
+  //       );
+  //     } else {
+  //       // Add to wishlist
+  //       await apiService.postwhislistDetails(
+  //           globalUser!.userId, bookRecommendController.bookId!, token);
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(content: Text('Book added to wishlist successfully.')),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('Error: $e')),
+  //     );
+  //   }
+  // }
 
   Future<void> wishlistfetchBookId(BookModel book) async {
     try {
