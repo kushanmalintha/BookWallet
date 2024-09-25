@@ -53,7 +53,7 @@ class _UserSearchListviewState extends State<UserSearchListview>
   }
 
   // Refresh handler
-  Future<void> _refreshBooks() async {
+  Future<void> _onRefresh() async {
     setState(() {
       _searchScreenController.books = [];
       _searchScreenController.currentPage = 1;
@@ -66,28 +66,50 @@ class _UserSearchListviewState extends State<UserSearchListview>
   Widget build(BuildContext context) {
     super.build(context);
     return RefreshIndicator(
-        color: MyColors.selectedItemColor,
-        backgroundColor: MyColors.bgColor,
-        onRefresh: _refreshBooks,
-        child: ListView.builder(
-          controller:
-              _scrollController, // Attach scroll controller to ListView builder
-          itemCount: _searchScreenController.books.length +
-              1, // Number of items in the list +1 for loading indicator
-          itemBuilder: (context, index) {
-            if (index < _searchScreenController.books.length) {
-              return Column(
-                children: [
-                  const SizedBox(height: 3), // Spacer between cards
-                  BookCard(
-                      book: _searchScreenController
-                          .books[index]), // Display review card
-                ],
-              );
-            } else {
-              return buildProgressIndicator(); // Display loading indicator when reaching end of list
-            }
-          },
-        ));
+      // Add the ability to refresh screen when pull down
+      color: MyColors.selectedItemColor,
+      backgroundColor: MyColors.bgColor,
+      onRefresh: _onRefresh,
+      child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
+        controller:
+            _scrollController, // Attach scroll controller to ListView builder
+        itemCount: _searchScreenController.books.length +
+            1, // Number of items in the list +1 for loading indicator
+        itemBuilder: (context, index) {
+          if (index < _searchScreenController.books.length &&
+              !_searchScreenController.isLoading) {
+            return Column(
+              children: [
+                const SizedBox(height: 3), // Spacer between cards
+                BookCard(
+                    book: _searchScreenController
+                        .books[index]), // Display review card
+              ],
+            );
+          } else if (_searchScreenController.isLoading) {
+            return buildProgressIndicator(); // Display loading indicator when reaching end of list
+          } else {
+            return ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  child: const Center(
+                    child: Text(
+                      'No books',
+                      style: TextStyle(
+                        color: MyColors.textColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+        },
+      ),
+    );
   }
 }

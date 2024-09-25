@@ -1,6 +1,6 @@
-import 'package:book_wallert/screens/search_screens/book_search_listview.dart';
-import 'package:book_wallert/screens/search_screens/group_search_listview.dart';
-import 'package:book_wallert/screens/search_screens/user_search_listview.dart';
+import 'package:book_wallert/screens/main_screen/search_screens/book_search_listview.dart';
+import 'package:book_wallert/screens/main_screen/search_screens/group_search_listview.dart';
+import 'package:book_wallert/screens/main_screen/search_screens/user_search_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/widgets/buttons/selection_bar.dart';

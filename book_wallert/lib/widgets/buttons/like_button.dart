@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:book_wallert/colors.dart';
 import 'package:book_wallert/models/review_model.dart';
 import 'package:book_wallert/services/review_likes_api_service.dart';
-import 'package:book_wallert/screens/review_screens/review_screen_body.dart';
+import 'package:book_wallert/screens/main_screen/review_screens/review_screen_body.dart';
 import 'package:book_wallert/functions/global_navigator_functions.dart'; // Import your global functions
 
 class LikeButton extends StatefulWidget {

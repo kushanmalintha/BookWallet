@@ -7,7 +7,7 @@ import 'package:book_wallert/functions/global_navigator_functions.dart';
 import 'package:book_wallert/functions/global_user_provider.dart';
 import 'package:book_wallert/screens/main_screen/book_profile_screen/book_profile_screen_body.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_body.dart';
-import 'package:book_wallert/screens/review_screens/review_screen_body.dart';
+import 'package:book_wallert/screens/main_screen/review_screens/review_screen_body.dart';
 import 'package:book_wallert/services/wishlist_api_service.dart';
 import 'package:book_wallert/widgets/buttons/comment_button.dart';
 import 'package:book_wallert/widgets/buttons/custom_popup_menu_buttons.dart';

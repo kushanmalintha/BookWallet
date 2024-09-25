@@ -61,7 +61,7 @@ class _BookWishlistListViewState extends State<BookWishlistListView>
                   physics: const AlwaysScrollableScrollPhysics(),
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.3,
                       child: const Center(
                         child: Text(
                           'No books in Wishlist',
@@ -75,6 +75,7 @@ class _BookWishlistListViewState extends State<BookWishlistListView>
                   ],
                 )
               : ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: _wishlistController.wishlistBooks.length,
                   itemBuilder: (context, index) {
                     return BookCard(
