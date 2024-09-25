@@ -88,7 +88,7 @@ with AutomaticKeepAliveClientMixin  {
                       height: MediaQuery.of(context).size.height * 0.8,
                       child: const Center(
                         child: Text(
-                          'No books ',
+                          'No books',
                           style: TextStyle(
                             color: MyColors.textColor,
                             fontSize: 16,
@@ -99,6 +99,8 @@ with AutomaticKeepAliveClientMixin  {
                   ],
                 )
               :  ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+
                   controller: _scrollController,
                   itemCount: _historyController.historyBooks.length +
                       (_isLoading ? 1 : 0), // Add an extra item if loading

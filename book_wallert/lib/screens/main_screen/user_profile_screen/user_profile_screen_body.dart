@@ -1,9 +1,9 @@
 import 'package:book_wallert/controllers/user_profile_controller.dart';
 import 'package:book_wallert/models/user.dart';
+import 'package:book_wallert/screens/main_screen/books_screen/book_whislist_listview.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_completed_list_view.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_review_list_view.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_timeline_list_view.dart';
-import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_wishlist_list_view.dart';
 import 'package:book_wallert/widgets/progress_indicators.dart';
 import 'package:flutter/material.dart';
 import 'package:book_wallert/screens/main_screen/user_profile_screen/user_profile_screen_details.dart';
@@ -91,7 +91,7 @@ class _UserProfileScreenBodyState extends State<UserProfileScreenBody>
                       UserProfileTimeLineListView(userId: widget.userId), 
                       UserProfileReviewListView(userId: widget.userId),
                       const UserProfileListVeiw(screenName: 'Reading'),
-                      UserProfileWishlistListView(userId: widget.userId),
+                      BookWishlistListView(userId: widget.userId),
                       UserProfileCompletedListView(userId: widget.userId),
                     ],
                   ),

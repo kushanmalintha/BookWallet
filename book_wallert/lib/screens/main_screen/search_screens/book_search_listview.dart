@@ -74,12 +74,14 @@ class _BookSearchListviewState extends State<BookSearchListview>
       backgroundColor: MyColors.bgColor,
       onRefresh: _onRefresh,
       child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
         controller:
             _scrollController, // Attach scroll controller to ListView builder
         itemCount: _searchScreenController.books.length +
             1, // Number of items in the list +1 for loading indicator
         itemBuilder: (context, index) {
-          if (index < _searchScreenController.books.length) {
+          if (index < _searchScreenController.books.length &&
+              !_searchScreenController.isLoading) {
             return Column(
               children: [
                 const SizedBox(height: 3), // Spacer between cards
@@ -88,8 +90,26 @@ class _BookSearchListviewState extends State<BookSearchListview>
                         .books[index]), // Display review card
               ],
             );
-          } else {
+          } else if (_searchScreenController.isLoading) {
             return buildProgressIndicator(); // Display loading indicator when reaching end of list
+          } else {
+            return ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  child: const Center(
+                    child: Text(
+                      'No books',
+                      style: TextStyle(
+                        color: MyColors.textColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
           }
         },
       ),
