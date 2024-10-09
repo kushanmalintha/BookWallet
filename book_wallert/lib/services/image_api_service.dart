@@ -7,7 +7,7 @@ import '../models/image_model.dart'; // Import the ImageModel
 
 class ImageService {
   final String _baseUrl =
-      'http://${ip}:8000'; // Adjust the base URL as necessary
+      'http://${ip}:8000/api'; // Adjust the base URL as necessary
 
   Future<void> uploadImageService(File imageFile, String imageName) async {
     String uploadUrl = '$_baseUrl/uploadprofileimage';
