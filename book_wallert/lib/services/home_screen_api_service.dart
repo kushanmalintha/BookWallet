@@ -19,7 +19,6 @@ class HomeScreenService {
       final reviewsData = jsonResponse['reviews'];
       final booksData = jsonResponse['books'];
       final shareData = jsonResponse['shares'];
-
       for (var item in reviewsData) {
         // reviews
         results.add(ReviewModel.fromJson(item));
