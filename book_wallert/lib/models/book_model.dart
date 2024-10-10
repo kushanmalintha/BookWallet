@@ -5,7 +5,7 @@ class BookModel {
   final String genre;
   final String ISBN10;
   final String ISBN13;
-  final int totalRating;
+  final double totalRating;
   final String publishedDate;
   final String imageUrl;
   final String description;
@@ -19,7 +19,7 @@ class BookModel {
     this.ISBN10 = '',
     this.ISBN13 = '',
     this.publishedDate = '',
-    this.totalRating = 0,
+    this.totalRating = 0.0,
     this.imageUrl = '',
     this.description = '',
     this.resource = '',
@@ -34,7 +34,7 @@ class BookModel {
       ISBN10: json['ISBN10'],
       ISBN13: json['ISBN13'],
       publishedDate: json['publishedDate'],
-      totalRating: json['totalRating'],
+      totalRating: json['totalRating'].toDouble(),
       imageUrl: json['imageUrl'],
       description: json['description'],
       resource: json['resource'],
