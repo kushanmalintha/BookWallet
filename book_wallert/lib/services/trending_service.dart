@@ -21,7 +21,7 @@ class TrendingService {
           description: json['description'],
           pages: json['pages'],
           author: json['author'],
-          totalRating: json['rating'],
+          totalRating: json['rating'].toDouble(),
           genre: json['genre'],
           imageUrl: json['imageUrl'],
           resource: json['resource'],

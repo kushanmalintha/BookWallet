@@ -45,7 +45,7 @@ class WishlistApiService {
           description: json['description'],
           pages: json['pages'],
           author: json['author'],
-          totalRating: json['rating'], // Convert to String if needed
+          totalRating: json['rating'].toDouble(),
           genre: json['genre'],
           imageUrl: json['imageUrl'],
           resource: json['resource'],
