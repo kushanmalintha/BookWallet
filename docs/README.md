@@ -71,9 +71,8 @@ This is a sample image, to show how to add images to your page. To learn more op
 - **Social Interaction:** Follow users and create book groups.
 - **Reading Progress:** Track completed books and ongoing reading.
 - **PDF Reader:** Access and read books in PDF format.
-- **Personalized Recommendations:** Get book suggestions using a user preference algorithm.
+- **Personalized Recommendations:** Get book suggestions using a user preference algorithm(under development).
 
-.....
 
 ## Links
 
