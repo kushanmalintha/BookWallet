@@ -20,7 +20,7 @@ To effectively manage and develop BookWallet, we utilized the following tools:
 - **GitHub Projects**: To organize and track tasks using a Kanban board.
   - **GitHub Project Backlog**: [Backlog · @RavinduRepo's BookWallet Project](https://github.com/users/RavinduRepo/projects/1)  
 
-## Frontend Repositor Structure
+## Frontend Repository Structure
 
 ### `lib` Folder
 

@@ -4,12 +4,12 @@ permalink: index.html
 
 # Please update this with your repository name and title
 repository-name: e20-co227-BookWallet
-title:
+title: BookWallet
 ---
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
 
-# Project Title
+# BookWallet
 
 ---
 
@@ -34,11 +34,45 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 ## Introduction
 
- description of the real world problem and solution, impact
+ BookWallet is a social media application designed for book readers, allowing users to share their reading experiences and connect with like-minded individuals. It includes features such as writing and rating book reviews, following others for recommendations, creating book groups, tracking completed books, and reading PDFs online. The app also incorporates a book suggestion system that uses various factors like user preferences, genres, authors, and reading history to provide personalized recommendations(under development).
 
 ## Other Sub Topics
+## Repositories
 
-.....
+### Frontend
+- **Repository:** [BookWallet Frontend](https://github.com/RavinduRepo/BookWallet)
+- **Description:** The frontend interface of the BookWallet application.
+
+### Backend
+- **Repository:** [BookWallet Backend](https://github.com/RavinduRepo/BookWallet-Backend)
+- **Description:** The Node.js server handling backend operations for the BookWallet application.
+
+### User Preference Algorithm
+- **Repository:** [User Preference Algorithm](https://github.com/kushanmalintha/BookWallet-UserPreferAlgorithm)
+- **Description:** The recommendation algorithm for personalized book suggestions based on user preferences.
+
+### Image Handling
+- **Repository:** [Image Upload and Fetch Backend](https://github.com/kushanmalintha/imageUploadAndFetchBackend)
+- **Description:** Backend service for uploading and retrieving images in the BookWallet application.
+
+---
+
+## GitHub Projects
+
+### Task Management
+- **Kanban Board:** [Backlog · @RavinduRepo's BookWallet Project](https://github.com/users/RavinduRepo/projects/1)
+- **Description:** Organized project backlog and task tracking for streamlined development.
+
+---
+
+## Features
+- **Book Reviews:** Write and read reviews on books.
+- **Rating System:** Rate books and view aggregated ratings.
+- **Social Interaction:** Follow users and create book groups.
+- **Reading Progress:** Track completed books and ongoing reading.
+- **PDF Reader:** Access and read books in PDF format.
+- **Personalized Recommendations:** Get book suggestions using a user preference algorithm(under development).
+
 
 ## Links
 
